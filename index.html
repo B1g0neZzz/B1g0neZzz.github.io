@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-12 10:08:49" itemprop="dateModified" datetime="2021-03-12T10:08:49+08:00">2021-03-12</time>
+                <time title="修改时间：2021-03-15 11:23:45" itemprop="dateModified" datetime="2021-03-15T11:23:45+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,7 +208,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="快速排序法的原理"><a href="#快速排序法的原理" class="headerlink" title="快速排序法的原理"></a>快速排序法的原理</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6tszqA"><img src="https://s3.ax1x.com/2021/03/11/6tszqA.png" alt="6tszqA.png"></a></p>
+          <h2 id="快速排序法的原理"><a href="#快速排序法的原理" class="headerlink" title="快速排序法的原理"></a>快速排序法的原理</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tszqA.png" alt="6tszqA.png"></p>
 <ul>
 <li>首先寻找基准元素，这里示例使用第一个元素作为基准元素</li>
 <li>分区（ partition ）：所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准值后面</li>
@@ -217,93 +217,50 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QuickSort(arr , l , r) &#123;</span><br><span class="line">	<span class="comment">// 现在处理的区间，如果没有元素或者只有一个元素</span></span><br><span class="line">	<span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">int</span> p = partition(arr, l, r);</span><br><span class="line">	<span class="comment">// 对 arr[l , p - 1] 进行排序</span></span><br><span class="line">	QuickSort(arr, l , p - <span class="number">1</span>);</span><br><span class="line">	<span class="comment">// 对arr[p + 1, r] 进行排序</span></span><br><span class="line">	QuickSort(arr, p + <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>所以快速排序的核心就是如何进行 partition 。</p>
-<h2 id="最基础的-Partition"><a href="#最基础的-Partition" class="headerlink" title="最基础的 Partition"></a>最基础的 Partition</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6tfMnS"><img src="https://s3.ax1x.com/2021/03/11/6tfMnS.png" alt="6tfMnS.png"></a></p>
+<h2 id="最基础的-Partition"><a href="#最基础的-Partition" class="headerlink" title="最基础的 Partition"></a>最基础的 Partition</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tfMnS.png" alt="6tfMnS.png"></p>
 <p>使用索引<strong>l</strong> 记录基准元素的位置，索引 <strong>j</strong> 记录小于基准值和大于基准值区间的临界点位置，当前访问元素的索引标记为 <strong>i</strong> 。 </p>
 <p>分两种情况来讨论：</p>
 <ol>
 <li><p>如果当前元素比 v 大</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6tf5AH"><img src="https://s3.ax1x.com/2021/03/11/6tf5AH.png" alt="6tf5AH.png"></a></p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tf5AH.png" alt="6tf5AH.png"></p>
 <p>直接将当前元素放在 &gt;v 这一部分的最后，i++ 继续讨论下一个元素</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6tfzNj"><img src="https://s3.ax1x.com/2021/03/11/6tfzNj.png" alt="6tfzNj.png"></a></p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tfzNj.png" alt="6tfzNj.png"></p>
 </li>
 <li><p>如果当前元素比 v 小</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6th1KK"><img src="https://s3.ax1x.com/2021/03/11/6th1KK.png" alt="6th1KK.png"></a></p>
+<p> <img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6th1KK.png" alt="6th1KK.png"></p>
 <p>将索引 <strong>j</strong> 的后一个元素与当前索引 <strong>i</strong> 的元素进行交换。然后 <strong>j++</strong> 和 <strong>i++</strong> 。</p>
 <p>最后，将索引 <strong>l</strong> 和索引 <strong>j</strong> 的元素进行交换。</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/6t4geO"><img src="https://s3.ax1x.com/2021/03/11/6t4geO.png" alt="6t4geO.png"></a></p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6t4geO.png" alt="6t4geO.png"></p>
 </li>
 </ol>
+<h2 id="第一版快速排序法"><a href="#第一版快速排序法" class="headerlink" title="第一版快速排序法"></a>第一版快速排序法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickSort</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">QuickSort</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(E[] arr)</span></span>&#123;</span><br><span class="line">    	sort(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>);    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(E[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">int</span> p = partition(arr, l, r);</span><br><span class="line">        sort(arr, l, p - <span class="number">1</span>);</span><br><span class="line">        sort(arr, p + <span class="number">1</span>, r);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(E[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span>	 </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// arr[l+1...j] &lt; v ; arr[j+1...i] &gt;= v</span></span><br><span class="line">        <span class="keyword">int</span> j = l;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = l + <span class="number">1</span> ; i &lt;= r ; i++)</span><br><span class="line">            <span class="keyword">if</span>(arr[i].compareTo(arr[l]) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="comment">// 如果当前遍历中的元素arr[i] &gt; arr[l] 那么直接i++即可</span></span><br><span class="line">                <span class="comment">// 所以只讨论 arr[i] &lt; arr[l]的情况</span></span><br><span class="line">                j ++;</span><br><span class="line">                swap(arr, i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        swap(arr, l, j);</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(E[] arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        E t = arr[i];</span><br><span class="line">        arr[i] = arr[j];</span><br><span class="line">        arr[j] = t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/hello-world/">
+<h2 id="第一版快速排序法的问题"><a href="#第一版快速排序法的问题" class="headerlink" title="第一版快速排序法的问题"></a>第一版快速排序法的问题</h2><p>当数组有序时，快速排序法的时间复杂度会变为 O(n²)。递归深度会变为 O(n)，数据规模足够大时，会发生栈溢出。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6Uqlrj.png" alt="6Uqlrj.png"></p>
+<h3 id="如何解决？"><a href="#如何解决？" class="headerlink" title="如何解决？"></a>如何解决？</h3><p>为快速排序添加随机化</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6UqvLj.png" alt="img"></p>
+<p>不能每次都选择数组第一个元素作为标定点，而是从数组中随机选取一个元素作为标定点，然后与第一个元素交换。</p>
+<h2 id="优化点一：为快速排序添加随机化-–-代码实现"><a href="#优化点一：为快速排序添加随机化-–-代码实现" class="headerlink" title="优化点一：为快速排序添加随机化 – 代码实现"></a>优化点一：为快速排序添加随机化 – 代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(E[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 生成 [l, r] 之间的随机索引</span></span><br><span class="line">    <span class="comment">// 这里每次调用 partition都会声明一个新的 Random 对象，有优化的空间</span></span><br><span class="line">    <span class="keyword">int</span> p = l + (<span class="keyword">new</span> Random()).nextInt(r - l + <span class="number">1</span>);</span><br><span class="line">    swap(arr, l, p);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// arr[l+1...j] &lt; v ; arr[j+1...i] &gt;= v</span></span><br><span class="line">    <span class="keyword">int</span> j = l;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = l + <span class="number">1</span>; i &lt;= r; i ++)</span><br><span class="line">        <span class="keyword">if</span>(arr[i].compareTo(arr[l]) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            j ++;</span><br><span class="line">            swap(arr, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    swap(arr, l, j);</span><br><span class="line">    <span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="优化点二：双路快速排序法"><a href="#优化点二：双路快速排序法" class="headerlink" title="优化点二：双路快速排序法"></a>优化点二：双路快速排序法</h2><p>如果排序数组中元素都相同时，算法还是会退化成 O(n²) 级别的算法。</p>
+<p>双路快速排序法的 partition 仍然是将小于标定点的元素和大于标定点的元素分成左右两部分，区别在于双路快速排序法将等于标定点的元素平分在数组的两端，且小于标定点的元素和大于标定点的元素也放在数组的两端。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/L$D4Q%7DA1GY~C0BP70_LC19M.png" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/11/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-03-11 14:24:34 / 修改时间：10:27:57" itemprop="dateCreated datePublished" datetime="2021-03-11T14:24:34+08:00">2021-03-11</time>
-            </span>
 
-          
 
-        </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
 
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+
 
       
     </div>
@@ -387,7 +344,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
