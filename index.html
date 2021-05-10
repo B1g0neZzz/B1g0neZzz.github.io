@@ -154,6 +154,259 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/10/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/10/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">线性回归算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-10 12:00:22 / 修改时间：21:55:05" itemprop="dateCreated datePublished" datetime="2021-05-10T12:00:22+08:00">2021-05-10</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是线性回归算法"><a href="#什么是线性回归算法" class="headerlink" title="什么是线性回归算法"></a>什么是线性回归算法</h3><p>如下图，房屋面积与价格呈线性关系</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510120210943.png" alt="image-20210510120210943"></p>
+<p>我们寻找一条直线，最大程度的 “拟合” 样本特征和样本输出标记之间的关系。在这张图中，每个样本只有一个样本特征，就是房屋面积，样本输出标记就是它的价格。 </p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510120335243.png" alt="image-20210510120335243"></p>
+<p>假设我们找到了最佳拟合的直线方程：y = ax + b</p>
+<p>则对于每一个样本点 x<sup>(i)</sup></p>
+<p>根据我们的直线方程，预测值为：<br>$$<br>\hat{y^i} = ax^i + b<br>$$<br>真值为：y<sup>i</sup></p>
+<p>我们希望 y<sup>(i)</sup> 和 $$ \hat{y^i} $$ 的差距尽量小，表达  y<sup>(i)</sup> 和 $$ \hat{y^i} $$ 的差距：</p>
+<p>$$(y^i - \hat{y^i})^2$$</p>
+<p>因为 $$\hat{y^i} = ax^i + b$$</p>
+<p>目标：找到 a 和 b，使得 $$\sum_{i=1}^{m}(y^i - ax^i - b) ^ 2$$ 尽可能小，在这里我们称这个函数为损失函数（loss function），在有的算法中，度量的是拟合的程度，在这种情况下，称之为效用函数（utility function）。</p>
+<p>机器学习算法都是通过分析问题，确定问题的损失函数或者效用函数，通过最优化损失函数或者效用函数，获得机器学习的模型。</p>
+<h3 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h3><p>目标：找到 a 和 b，使得 $$\sum_{i=1}^{m}(y^i - ax^i - b) ^ 2$$ 尽可能小，我们将这个函数成为 $$J(a,b)$$。</p>
+<p>我们对 a 求导，对 b 求导，</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510202922142.png" alt="image-20210510202922142"></p>
+<p>先看对 b 求导，</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203041094.png" alt="image-20210510203041094"></p>
+<p>化简得，</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203203830.png" alt="image-20210510203203830"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203324733.png" alt="image-20210510203324733"></p>
+<p>再进行整理得，</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203354466.png" alt="image-20210510203354466"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203429198.png" alt="image-20210510203429198"></p>
+<p>再将等式两边同时除以 m ，得</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203451952.png" alt="image-20210510203451952"></p>
+<p>再看对 a 求导</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203837896.png" alt="image-20210510203837896"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510203907898.png" alt="image-20210510203907898"></p>
+<p>将 b 代入得</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204029906.png" alt="image-20210510204029906"></p>
+<p>先将外面的 x 乘进括号里</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204137034.png" alt="image-20210510204137034"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204159425.png" alt="image-20210510204159425"></p>
+<p>将前后两项分开</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204225247.png" alt="image-20210510204225247"></p>
+<p>将 a 提出来</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204304423.png" alt="image-20210510204304423"></p>
+<p>得出 a 的表达式</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204346268.png" alt="image-20210510204346268"></p>
+<p>化简可得</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510204828904.png" alt="image-20210510204828904"></p>
+<h3 id="简单线性回归的实现"><a href="#简单线性回归的实现" class="headerlink" title="简单线性回归的实现"></a>简单线性回归的实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = np.array([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>, <span class="number">5.</span>])</span><br><span class="line">y = np.array([<span class="number">1.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">5.</span>])</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">6</span>])</span><br><span class="line">plt.show()</span><br><span class="line">x_mean = np.mean(x)</span><br><span class="line">y_mean = np.mean(y)</span><br><span class="line">num = <span class="number">0.0</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;num 是 numerator 的缩写，是分子的意思&quot;&quot;&quot;</span></span><br><span class="line">d = <span class="number">0.0</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;d 是 denominator 的缩写，是分母的意思&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> x_i, y_i <span class="keyword">in</span> <span class="built_in">zip</span>(x, y)</span><br><span class="line">	num += (x_i - x_mean) * (y_i - y_mean)</span><br><span class="line">    d += (x_i - x_mean) ** <span class="number">2</span></span><br><span class="line">a = num / d</span><br><span class="line">b = y_mean - a * x_mean</span><br><span class="line">y_hat = a * x + b</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">6</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleLinearRegression2</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		<span class="string">&quot;&quot;&quot;初始化Simple Linear Regression 模型&quot;&quot;&quot;</span></span><br><span class="line">		self.a_ = <span class="literal">None</span></span><br><span class="line">		self.b_ = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self, x_train, y_train</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;根据训练数据集x_train , y_train 训练Simple Linear Regrssion 模型&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> x_train.ndim == <span class="number">1</span>, \</span><br><span class="line">        	<span class="string">&quot;Simple Linear Regressor can only solve single feature trainint data&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(x_train) == <span class="built_in">len</span>(y_train), \</span><br><span class="line">        	<span class="string">&quot;the size of x_train must be equal to the size of y_train&quot;</span></span><br><span class="line">            </span><br><span class="line">        x_mean = np.mean(x_train)</span><br><span class="line">        y_mean = np.mean(y_train)</span><br><span class="line">        </span><br><span class="line">        num = <span class="number">0.0</span></span><br><span class="line">        d = <span class="number">0.0</span></span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> <span class="built_in">zip</span>(x_train, y_train):</span><br><span class="line">            num += (x - x_mean) * (y - y_mean)</span><br><span class="line">            d += (x - x_mean) ** <span class="number">2</span></span><br><span class="line">            </span><br><span class="line">         self.a_ = num/d</span><br><span class="line">         self.b_ = y_mean - self.a_ * x_mean</span><br><span class="line">            </span><br><span class="line">         <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">self, x_predict</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;给定待预测数据集x_predict, 返回表示x_predict的结果向量&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> x_predict.ndim = <span class="number">1</span>, \</span><br><span class="line">        	<span class="string">&quot;Simple Linear Regressor can only solve single feature trainint data&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> self.a_ <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self.b_ <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>, \</span><br><span class="line">        	<span class="string">&quot;must fit before predict!&quot;</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> np.array([self._predict(x) <span class="keyword">for</span> x <span class="keyword">in</span> x_predict])</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_predict</span>(<span class="params">self, x_single</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;给定单个待预测数据x_single, 返回x_single的预测结果值&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.a_ * x_single + self.b_</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;SimpleLinearRegression1()&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="向量化运算"><a href="#向量化运算" class="headerlink" title="向量化运算"></a>向量化运算</h3><p>计算 </p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510213826660.png" alt="image-20210510213826660"></p>
+<p>只需要将</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510213843012.png" alt="image-20210510213843012"></p>
+<p>和</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510213851537.png" alt="image-20210510213851537"></p>
+<p>点乘就可以了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleLinearRegression1</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">		<span class="string">&quot;&quot;&quot;初始化Simple Linear Regression 模型&quot;&quot;&quot;</span></span><br><span class="line">		self.a_ = <span class="literal">None</span></span><br><span class="line">		self.b_ = <span class="literal">None</span></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self, x_train, y_train</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;根据训练数据集x_train , y_train 训练Simple Linear Regrssion 模型&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> x_train.ndim == <span class="number">1</span>, \</span><br><span class="line">        	<span class="string">&quot;Simple Linear Regressor can only solve single feature trainint data&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(x_train) == <span class="built_in">len</span>(y_train), \</span><br><span class="line">        	<span class="string">&quot;the size of x_train must be equal to the size of y_train&quot;</span></span><br><span class="line">            </span><br><span class="line">        x_mean = np.mean(x_train)</span><br><span class="line">        y_mean = np.mean(y_train)</span><br><span class="line">        </span><br><span class="line">        num = (x_train - x_mean).dot(y_train - y_mean)</span><br><span class="line">        d = (x_train - x_mean).dot(x_train - x_mean)</span><br><span class="line">            </span><br><span class="line">        self.a_ = num/d</span><br><span class="line">        self.b_ = y_mean - self.a_ * x_mean</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">self, x_predict</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;给定待预测数据集x_predict, 返回表示x_predict的结果向量&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> x_predict.ndim = <span class="number">1</span>, \</span><br><span class="line">        	<span class="string">&quot;Simple Linear Regressor can only solve single feature trainint data&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> self.a_ <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self.b_ <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>, \</span><br><span class="line">        	<span class="string">&quot;must fit before predict!&quot;</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> np.array([self._predict(x) <span class="keyword">for</span> x <span class="keyword">in</span> x_predict])</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_predict</span>(<span class="params">self, x_single</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;给定单个待预测数据x_single, 返回x_single的预测结果值&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.a_ * x_single + self.b_</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;SimpleLinearRegression2()&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/09/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/09/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" class="post-title-link" itemprop="url">逻辑回归</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-09 10:23:43" itemprop="dateCreated datePublished" datetime="2021-05-09T10:23:43+08:00">2021-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-10 11:47:15" itemprop="dateModified" datetime="2021-05-10T11:47:15+08:00">2021-05-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>逻辑回归：解决分类问题</p>
+<p>回归问题怎么解决分类问题？</p>
+<p>将样本的特征和样本发生的概率联系起来，概率是一个数。</p>
+<p>对于逻辑回归来说，我们要得到一个函数 f，来了一个样本后，给到函数，得到的是一个概率值</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509102939638.png" alt="image-20210509102939638"></p>
+<p>之后， 根据概率值 p 进行分类，如果概率值大于0.5，y 的值就为 1，如果概率值小于 0.5, y 的值就为 0。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509103047352.png" alt="image-20210509103047352"></p>
+<p>逻辑回归既可以看做是回归算法，也可以看做是分类算法，通常作为分类算法用，只可以解决二分类问题。</p>
+<h3 id="Sigmoid-函数"><a href="#Sigmoid-函数" class="headerlink" title="Sigmoid 函数"></a>Sigmoid 函数</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509104916809.png" alt="image-20210509104916809"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">t</span>):</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-t))</span><br><span class="line">x = linspace(-<span class="number">10</span>, <span class="number">10</span>, <span class="number">500</span>)</span><br><span class="line">y = sigmoid(x)</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509105806517.png" alt="image-20210509105806517"></p>
+<p>值域（0, 1）</p>
+<p>t &gt; 0 时，p &gt; 0.5</p>
+<p>t &lt; 0 时，p &lt; 0.5</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509110052216.png" alt="image-20210509110052216"></p>
+<h3 id="逻辑回归的损失函数"><a href="#逻辑回归的损失函数" class="headerlink" title="逻辑回归的损失函数"></a>逻辑回归的损失函数</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509111427302.png" alt="image-20210509111427302"></p>
+<p>这是因为</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509111443276.png" alt="image-20210509111443276"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509111751705.png" alt="image-20210509111751705"></p>
+<p>-log(x) 的图像如下图所示,当 p 趋近于 0 时，应该将 y 预测为0，但目前却预测为 1，所以损失趋近于无穷</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509111925087.png" alt="image-20210509111925087"></p>
+<p>-log(1 - x) 的图像如图所示</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509112314251.png" alt="image-20210509112314251"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210509114655706.png" alt="image-20210509114655706"></p>
+<p>会有 m 个样本，将这 m 个样本加在一起就可以了</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510094043895.png" alt="image-20210510094043895"></p>
+<p>这就是逻辑回归相应的损失函数</p>
+<p>又因为</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510094922977.png" alt="image-20210510094922977"></p>
+<p>代入，得</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210510111931549.png" alt="image-20210510111931549"></p>
+<p>使用梯度下降法求解</p>
+<h3 id="实现逻辑回归算法"><a href="#实现逻辑回归算法" class="headerlink" title="实现逻辑回归算法"></a>实现逻辑回归算法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LogisticRegression</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;初始化Logistic Regression模型&quot;&quot;&quot;</span></span><br><span class="line">        self.coef_ = <span class="literal">None</span></span><br><span class="line">        self.intercept_ = <span class="literal">None</span></span><br><span class="line">        self._theta = <span class="literal">None</span></span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">_sigmoid</span>(<span class="params">self, t</span>):</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">1.</span> / (<span class="number">1.</span> + np.exp(-t))</span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self, X_train, y_train, eta=<span class="number">0.01</span>, n_iters=<span class="number">1e4</span></span>):</span></span><br><span class="line">            <span class="string">&quot;&quot;&quot;根据训练数据集X_train, y_train, 使用梯度下降法训练Logistic Regression模型&quot;&quot;&quot;</span></span><br><span class="line">            <span class="keyword">assert</span> X_train.shape[<span class="number">0</span>] == y_train.shape[<span class="number">0</span>], \</span><br><span class="line">            	<span class="string">&quot;the size of X_train must be equal to the size of y_train&quot;</span></span><br><span class="line">                </span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">J</span>(<span class="params">theta, X_b, y</span>):</span></span><br><span class="line">                y_hat = self._sigmoid(X_b.dot(theta))</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">return</span> - np.<span class="built_in">sum</span>(y*np.log(y_hat) + (<span class="number">1</span> - y)*np.log(<span class="number">1</span>-y_hat) / <span class="built_in">len</span>(y))</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/27/K%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -185,7 +438,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 21:05:29" itemprop="dateModified" datetime="2021-05-05T21:05:29+08:00">2021-05-05</time>
+                <time title="修改时间：2021-05-06 10:32:29" itemprop="dateModified" datetime="2021-05-06T10:32:29+08:00">2021-05-06</time>
               </span>
 
           
@@ -240,9 +493,26 @@
 <li>经验数值</li>
 <li>实验搜索</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 寻找最好的 k</span><br><span class="line">best_score &#x3D; 0.0</span><br><span class="line">best_k &#x3D; -1</span><br><span class="line">for k in range(1, 11):</span><br><span class="line">	knn_clf &#x3D; KNeighborsClassifier(n_neighbors&#x3D;k)</span><br><span class="line">	knn_clf.fit(X_train, y_train)</span><br><span class="line">	score &#x3D; knn_clf.score(X_test, y_test)</span><br><span class="line">	if score &gt; best_score:</span><br><span class="line">		best_k &#x3D; k</span><br><span class="line">		best_score &#x3D; score</span><br><span class="line">print(&quot;best_k &#x3D;&quot;, best_k)</span><br><span class="line">print(&quot;best_score &#x3D;&quot;, best_score)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 寻找最好的 k</span><br><span class="line">best_score = <span class="number">0.0</span></span><br><span class="line">best_k = -<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">11</span>):</span><br><span class="line">	knn_clf = KNeighborsClassifier(n_neighbors=k)</span><br><span class="line">	knn_clf.fit(X_train, y_train)</span><br><span class="line">	score = knn_clf.score(X_test, y_test)</span><br><span class="line">	<span class="keyword">if</span> score &gt; best_score:</span><br><span class="line">		best_k = k</span><br><span class="line">		best_score = score</span><br><span class="line">print(<span class="string">&quot;best_k =&quot;</span>, best_k)</span><br><span class="line">print(<span class="string">&quot;best_score =&quot;</span>, best_score)`</span><br></pre></td></tr></table></figure>
 
 
+
+<p>但是 kNN 这个算法不止 k 这一个超参数</p>
+<p>kNN 算法的另一个用法：考虑距离的权重</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210506090620668.png" alt="image-20210506090620668"></p>
+<p>距离的倒数再相加。</p>
+<p>红色：1 蓝色： 1/3 + 1/4 = 7/12 红色胜</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 考虑距离？不考虑距离？</span><br><span class="line">best_method = <span class="string">&quot;&quot;</span></span><br><span class="line">best_score = <span class="number">0.0</span></span><br><span class="line">best_k = -<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> method <span class="keyword">in</span> [<span class="string">&quot;uniform&quot;</span>, <span class="string">&quot;distance&quot;</span>]:</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">11</span>):</span><br><span class="line">	knn_clf = KNeighborsClassifier(n_neighbors=k, weights=method)</span><br><span class="line">	knn_clf.fit(X_train, y_train)</span><br><span class="line">	score = knn_clf.score(X_test, y_test)</span><br><span class="line">	<span class="keyword">if</span> score &gt; best_score:</span><br><span class="line">		best_k = k</span><br><span class="line">		best_score = score</span><br><span class="line">        best_method = method</span><br><span class="line">print(<span class="string">&quot;best_method =&quot;</span>, best_method)</span><br><span class="line">print(<span class="string">&quot;best_k =&quot;</span>, best_k)</span><br><span class="line">print(<span class="string">&quot;best_score =&quot;</span>, best_score)`</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// Grid Search 网格搜索</span><br><span class="line">param_grid = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;weights&#x27;</span>: [<span class="string">&#x27;uniform&#x27;</span>],</span><br><span class="line">        <span class="string">&#x27;n_neighbors&#x27;</span>: [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">11</span>)]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;weights&#x27;</span>: [<span class="string">&#x27;distance&#x27;</span>],</span><br><span class="line">        <span class="string">&#x27;n_neighbors&#x27;</span>: [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">11</span>)],</span><br><span class="line">        <span class="string">&#x27;p&#x27;</span>: [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">knn_clf = KNeighborsClassifier()</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">grid_search = GridSearchCV(knn_clf, param_grid)  </span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line">grid_search.best_estimator_</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据归一化-normalizationz"><a href="#数据归一化-normalizationz" class="headerlink" title="数据归一化 normalizationz"></a>数据归一化 normalizationz</h3><p>最值归一化：把所有数据映射到 0-1 之间</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210506101226495.png" alt="image-20210506101226495"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// 数据归一化处理</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">// 最值归一化</span><br><span class="line">x = np.random.randint(<span class="number">0</span>, <span class="number">100</span>, size=<span class="number">100</span>)</span><br><span class="line">// array([ <span class="number">0</span>,  <span class="number">2</span>, <span class="number">43</span>, <span class="number">59</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">71</span>,  <span class="number">6</span>, <span class="number">39</span>, <span class="number">87</span>, <span class="number">29</span>, <span class="number">37</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">91</span>, <span class="number">42</span>, <span class="number">88</span>,</span><br><span class="line">       <span class="number">77</span>,  <span class="number">6</span>, <span class="number">32</span>, <span class="number">95</span>, <span class="number">60</span>, <span class="number">55</span>, <span class="number">83</span>, <span class="number">51</span>, <span class="number">70</span>, <span class="number">64</span>, <span class="number">75</span>, <span class="number">49</span>, <span class="number">24</span>,  <span class="number">7</span>, <span class="number">12</span>, <span class="number">97</span>, <span class="number">54</span>,</span><br><span class="line">        <span class="number">4</span>, <span class="number">74</span>,  <span class="number">4</span>, <span class="number">92</span>, <span class="number">43</span>,  <span class="number">3</span>, <span class="number">85</span>, <span class="number">69</span>, <span class="number">71</span>, <span class="number">88</span>, <span class="number">82</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">12</span>, <span class="number">69</span>, <span class="number">44</span>, <span class="number">15</span>,</span><br><span class="line">       <span class="number">45</span>,  <span class="number">2</span>,  <span class="number">3</span>, <span class="number">43</span>, <span class="number">90</span>, <span class="number">75</span>, <span class="number">90</span>, <span class="number">71</span>, <span class="number">41</span>, <span class="number">39</span>, <span class="number">63</span>, <span class="number">10</span>, <span class="number">16</span>, <span class="number">62</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">56</span>,</span><br><span class="line">       <span class="number">24</span>, <span class="number">29</span>, <span class="number">95</span>,  <span class="number">0</span>, <span class="number">61</span>, <span class="number">91</span>, <span class="number">56</span>,  <span class="number">0</span>, <span class="number">48</span>, <span class="number">19</span>, <span class="number">95</span>, <span class="number">12</span>, <span class="number">62</span>, <span class="number">16</span>, <span class="number">77</span>,  <span class="number">7</span>, <span class="number">46</span>,</span><br><span class="line">       <span class="number">89</span>, <span class="number">54</span>, <span class="number">90</span>, <span class="number">32</span>,  <span class="number">7</span>, <span class="number">39</span>, <span class="number">25</span>,  <span class="number">6</span>, <span class="number">92</span>, <span class="number">44</span>,  <span class="number">4</span>, <span class="number">43</span>, <span class="number">99</span>, <span class="number">39</span>, <span class="number">60</span>])</span><br><span class="line">(x - np.<span class="built_in">min</span>(x)) / (np.<span class="built_in">max</span>(x) - np.<span class="built_in">min</span>(x))</span><br><span class="line">// array([<span class="number">0.</span>        , <span class="number">0.02020202</span>, <span class="number">0.43434343</span>, <span class="number">0.5959596</span> , <span class="number">0.11111111</span>,</span><br><span class="line">       <span class="number">0.12121212</span>, <span class="number">0.71717172</span>, <span class="number">0.06060606</span>, <span class="number">0.39393939</span>, <span class="number">0.87878788</span>,</span><br><span class="line">       <span class="number">0.29292929</span>, <span class="number">0.37373737</span>, <span class="number">0.58585859</span>, <span class="number">0.5959596</span> , <span class="number">0.91919192</span>,</span><br><span class="line">       <span class="number">0.42424242</span>, <span class="number">0.88888889</span>, <span class="number">0.77777778</span>, <span class="number">0.06060606</span>, <span class="number">0.32323232</span>,</span><br><span class="line">       <span class="number">0.95959596</span>, <span class="number">0.60606061</span>, <span class="number">0.55555556</span>, <span class="number">0.83838384</span>, <span class="number">0.51515152</span>,</span><br><span class="line">       <span class="number">0.70707071</span>, <span class="number">0.64646465</span>, <span class="number">0.75757576</span>, <span class="number">0.49494949</span>, <span class="number">0.24242424</span>,</span><br><span class="line">       <span class="number">0.07070707</span>, <span class="number">0.12121212</span>, <span class="number">0.97979798</span>, <span class="number">0.54545455</span>, <span class="number">0.04040404</span>,</span><br><span class="line">       <span class="number">0.74747475</span>, <span class="number">0.04040404</span>, <span class="number">0.92929293</span>, <span class="number">0.43434343</span>, <span class="number">0.03030303</span>,</span><br><span class="line">       <span class="number">0.85858586</span>, <span class="number">0.6969697</span> , <span class="number">0.71717172</span>, <span class="number">0.88888889</span>, <span class="number">0.82828283</span>,</span><br><span class="line">       <span class="number">0.11111111</span>, <span class="number">0.12121212</span>, <span class="number">0.12121212</span>, <span class="number">0.6969697</span> , <span class="number">0.44444444</span>,</span><br><span class="line">       <span class="number">0.15151515</span>, <span class="number">0.45454545</span>, <span class="number">0.02020202</span>, <span class="number">0.03030303</span>, <span class="number">0.43434343</span>,</span><br><span class="line">       <span class="number">0.90909091</span>, <span class="number">0.75757576</span>, <span class="number">0.90909091</span>, <span class="number">0.71717172</span>, <span class="number">0.41414141</span>,</span><br><span class="line">       <span class="number">0.39393939</span>, <span class="number">0.63636364</span>, <span class="number">0.1010101</span> , <span class="number">0.16161616</span>, <span class="number">0.62626263</span>,</span><br><span class="line">       <span class="number">0.13131313</span>, <span class="number">0.17171717</span>, <span class="number">0.56565657</span>, <span class="number">0.24242424</span>, <span class="number">0.29292929</span>,</span><br><span class="line">       <span class="number">0.95959596</span>, <span class="number">0.</span>        , <span class="number">0.61616162</span>, <span class="number">0.91919192</span>, <span class="number">0.56565657</span>,</span><br><span class="line">       <span class="number">0.</span>        , <span class="number">0.48484848</span>, <span class="number">0.19191919</span>, <span class="number">0.95959596</span>, <span class="number">0.12121212</span>,</span><br><span class="line">       <span class="number">0.62626263</span>, <span class="number">0.16161616</span>, <span class="number">0.77777778</span>, <span class="number">0.07070707</span>, <span class="number">0.46464646</span>,</span><br><span class="line">       <span class="number">0.8989899</span> , <span class="number">0.54545455</span>, <span class="number">0.90909091</span>, <span class="number">0.32323232</span>, <span class="number">0.07070707</span>,</span><br><span class="line">       <span class="number">0.39393939</span>, <span class="number">0.25252525</span>, <span class="number">0.06060606</span>, <span class="number">0.92929293</span>, <span class="number">0.44444444</span>,</span><br><span class="line">       <span class="number">0.04040404</span>, <span class="number">0.43434343</span>, <span class="number">1.</span>        , <span class="number">0.39393939</span>, <span class="number">0.60606061</span>])</span><br><span class="line"></span><br><span class="line">// 均值方差归一化 Standardization</span><br><span class="line">X2 = np.random.randint(<span class="number">0</span>, <span class="number">100</span>, (<span class="number">50</span>, <span class="number">2</span>))</span><br><span class="line">X2 = np.array(X2, dtype=<span class="built_in">float</span>)</span><br><span class="line">X2[:,<span class="number">0</span>] = (X2[:,<span class="number">0</span>] - np.mean(X2[:,<span class="number">0</span>])) / np.std(X2[:,<span class="number">0</span>])</span><br><span class="line">x2[:,<span class="number">1</span>] = (x2[:,<span class="number">1</span>] - np.mean(X2[:,<span class="number">0</span>])) / np.std(X2[:,<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1023,176 +1293,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/" class="post-title-link" itemprop="url">二分查找法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-16 09:48:32" itemprop="dateCreated datePublished" datetime="2021-03-16T09:48:32+08:00">2021-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-19 11:05:03" itemprop="dateModified" datetime="2021-03-19T11:05:03+08:00">2021-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="二分查找法的递归写法"><a href="#二分查找法的递归写法" class="headerlink" title="二分查找法的递归写法"></a>二分查找法的递归写法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">BinarySearch</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(E[] data, E target)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> search(data, <span class="number">0</span>, data.length - <span class="number">1</span>, target);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> &lt;E extends Comparable&lt;E&gt;&gt; <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(E[] data, <span class="keyword">int</span> l, <span class="keyword">int</span> r, E target)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span>(l &gt; r) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">        <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(data[mid].compareTo(target) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(data[mid].compareTo(target) &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> search(data, mid + <span class="number">1</span>, r, target);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> search(data, l, mid - <span class="number">1</span>, target);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">快速排序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-11 15:41:22" itemprop="dateCreated datePublished" datetime="2021-03-11T15:41:22+08:00">2021-03-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-16 10:29:06" itemprop="dateModified" datetime="2021-03-16T10:29:06+08:00">2021-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="快速排序法的原理"><a href="#快速排序法的原理" class="headerlink" title="快速排序法的原理"></a>快速排序法的原理</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tszqA.png" alt="6tszqA.png"></p>
-<ul>
-<li><p>首先寻找基准元素，这里示例使用第一个元素作为基准元素</p>
-</li>
-<li><p>分区（ partition ）：所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准值后面</p>
-</li>
-<li><p>递归地对左右两边的子数列进行递归排序</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1259,7 +1364,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
