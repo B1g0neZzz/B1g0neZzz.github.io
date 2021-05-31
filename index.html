@@ -154,6 +154,234 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/31/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/31/MySQL/" class="post-title-link" itemprop="url">MySQL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-31 15:48:54 / 修改时间：21:11:14" itemprop="dateCreated datePublished" datetime="2021-05-31T15:48:54+08:00">2021-05-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一条SQL查询语句是如何执行的？"><a href="#一条SQL查询语句是如何执行的？" class="headerlink" title="一条SQL查询语句是如何执行的？"></a>一条SQL查询语句是如何执行的？</h1><p>比如，我们有个最简单的表，表里只有一个ID字段，在执行下面这个查询语句时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from T where ID&#x3D;10;</span><br></pre></td></tr></table></figure>
+
+<p>这条语句在 <strong>MySQL</strong> 内部中的执行过程：</p>
+<h2 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h2><p>第一步，我们会连接到这个数据库上，这时候接待你的就是连接器。连接器负责跟客户端建立连接、获取权限、维持和管理连接。连接的命令一般是这么写的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h$ip -P$port -u$user -p</span><br></pre></td></tr></table></figure>
+
+<p>输完命令后，我们就需要在交互对话里面输入密码。虽然密码也可以跟在 <strong>-p</strong> 后面写在命令行中，但这样可能会导致我们的密码泄露。</p>
+<p>连接命令中的 <strong>mysql</strong> 是客户端工具，用来跟服务端进行连接。在完成经典的TCP握手后，连接器就要开始认证我们的身份，这时候用的就是我们输入的用户名和密码。</p>
+<ul>
+<li>如果用户名或密码不对，我们就会受到一个 <strong>“Access denied for user”</strong> 的错误，然后客户端程序结束执行。</li>
+<li>如果用户名密码认证通过，连接器会受到权限表里面查出你拥有的权限。之后，这个连接里面的权限判断逻辑，都将依赖此时读到的权限。</li>
+</ul>
+<p>这就意味着，一个用户成功建立连接后，即使你用管理员账号对这个用户的权限做了修改，也不会影响已经存在连接的权限。修改完成后，只有再新建新的连接才回使用新的权限设置。</p>
+<p>连接完成后，如果我们没有后续的动作，这个连接就处于空闲状态，我们可以在 <strong>show processlist</strong>命令中看到它。下图是 <strong>show processlist</strong> 的结果，其中 <strong>Command</strong> 列显示为“Sleep”的这一行，就表示现在系统里面有一个空闲连接。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210531202142843.png" alt="image-20210531202142843"></p>
+<p>客户端如果太长时间没动静，连接器就会自动将它断开。这个时间是由参数 <strong>wait_timeout</strong> 控制的，默认值是<strong>8</strong>小时。</p>
+<p>如果在连接被断开之后，客户端再次发送请求的话，就会收到一个错误提醒：<strong>Lost connection to MySQL server during query</strong>。这时候如果你要继续，就需要重连，然后再执行请求了。</p>
+<p>数据库里面，长连接是指连接成功后，如果客户端持续有请求，则一直使用同一个连接。短连接是指每次执行完很少的几次查询就断开连接，下次查询再重新建立一个。</p>
+<p>建立连接的过程通常是比较复杂的，所以我们在使用中要尽量减少建立连接的动作，也就是尽量使用长连接。</p>
+<p>但是全部使用长连接后，我们可能会发现，有些时候 <strong>MySQL</strong> 占用内存涨得特别快，这是因为 <strong>MySQL</strong> 在执行过程中临时使用的内存是管理在连接对象里面的。这些资源会在连接断开的时候才释放。所以如果长连接积累下来，可能导致内存占用太大，被系统强行杀掉，从现象看就是 <strong>MySQL</strong> 异常重启了。</p>
+<p>如何解决这个问题？有以下两种解决方案：</p>
+<ol>
+<li>定期断开长连接。使用一段时间，或者程序里面判断执行过一个占用内存的大查询后，断开连接，之后要查询再重连。</li>
+<li>如果我们用的是 <strong>MySQL 5.7</strong> 或更新版本，可以在每次执行一个比较大的操作后，通过执行<strong>mysql_reset_connection</strong> 来重新初始化连接资源。这个过程不需要重连和重新做权限验证，但是会将连接恢复到刚刚创建完时的状态。</li>
+</ol>
+<h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>连接建立完成后，我们就可以执行<strong>select</strong>语句了。执行逻辑就会来到第二步：查询缓存。</p>
+<p>**MySQL **拿到一个查询请求后，会先到查询缓存看看，之前是不是执行过这条语句。之前执行过的语句及其结果可能会以 <strong>key-value</strong> 对的形式，被直接缓存在内存中。 <strong>key</strong> 是查询的语句， <strong>value</strong> 是查询的结果。如果你的查询能够直接在这个缓存中找到 <strong>key</strong>，那么这个 <strong>value</strong> 就会被直接返回给客户端。</p>
+<p>如果语句不在查询缓存中，就会继续后面的执行阶段。执行完成后，执行结果会被存入查询缓存中。我们可以看到，如果查询命中缓存，<strong>MySQL</strong> 不需要执行后面的复杂操作，就可以直接返回结果，这个效率会很高。</p>
+<p><strong>但是大多数情况下我们不要使用查询缓存，为什么呢？因为查询缓存往往弊大于利。</strong></p>
+<p>查询缓存的失效非常频繁，只要有对一个表的更新，这个表上所有的查询缓存都会被清空。因此很可能我们很费劲地把结果存起来，还没使用呢，就被一个更新全清空了。对于更新压力大的数据库来说，查询缓存的命中率会非常低。除非我们的业务就是有一张静态表，很长时间才回更新一次。比如，一个系统配置表，那这张表上的查询才适合使用查询缓存。</p>
+<p>好在 <strong>MySQL</strong> 也提供了这种“按需使用”的方式。我们可以将参数 <strong>query_cache_type</strong> 设置成<strong>DEMAND</strong>，这样对于默认的 <strong>SQL</strong> 语句都不使用查询缓存。而对于你确定要使用查询缓存的语句，可以用 <strong>SQL_CACHE</strong> 显示指定，像下面这个语句一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select SQL_CACHE * from T where ID&#x3D;10;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，<strong>MySQL 8.0</strong> 版本直接将查询缓存的整块功能删掉了，也就是说<strong>8.0</strong>开始彻底没有这个功能了。</p>
+<h3 id="分析器"><a href="#分析器" class="headerlink" title="分析器"></a>分析器</h3><p>如果没有命中查询缓存，就要开始真正执行语句了。首先，<strong>MySQL</strong> 需要知道你要做什么，因此需要对<strong>SQL</strong> 语句做解析。</p>
+<p>分析器先会做“词法分析”。我们输入的是由多个字符串和空格组成的一条 <strong>SQL</strong> 语句，<strong>MySQL</strong> 需要识别出里面的字符串分别是什么，代表什么。</p>
+<p><strong>MySQL</strong> 从你输入的 <strong>“select”</strong> 这个关键词识别出来，这是一个查询语句。它也要把字符串<strong>“T”</strong> 识别成“表名<strong>T</strong>”，把字符串 “<strong>ID</strong>” 识别成 “列<strong>ID</strong>”。</p>
+<p>做完了这些识别以后，就要做“语法分析”。根据词法分析的结果，语法分析器会根据语法规则，判断你输入的这个 <strong>SQL</strong> 语句是否满足 <strong>MySQL</strong> 语法。</p>
+<p>如果我们的语句不对，就会收到 “<strong>You have an error in your SQL syntax</strong>” 的错误提醒，比如下面这个语句 <strong>select</strong> 少打了开头的字母 “<strong>s</strong>“。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; elect * from t where ID&#x3D;1;</span><br><span class="line"></span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;elect * from t where ID&#x3D;1&#39; at line 1</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>经过了分析器，<strong>MySQL</strong> 就知道我们要做什么了。在开始执行之前，还要先经过优化器的处理。</p>
+<p>优化器是在表里面有多个索引的时候，决定使用哪个索引；或者在一个语句有多表关联（<strong>join</strong>）的时候，决定各个表的连接顺序。比如我们执行下面这样的语句，这个语句是执行两个表的 <strong>join</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from t1 join t2 using(ID) where t1.c&#x3D;10 and t2.d&#x3D;20;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>既可以先从表 <strong>t1</strong> 里面取出 <strong>c=10</strong> 的记录的 <strong>ID</strong> 值，再根据 <strong>ID</strong> 值关联到表 <strong>t2</strong>，再判断 <strong>t2</strong> 里面 <strong>d</strong> 的值是否等于 <strong>20</strong>。</li>
+<li>也可以先从表 <strong>t2</strong> 里面取出 <strong>d=20</strong> 的记录的 <strong>ID</strong> 值，再根据 <strong>ID</strong> 值关联到 <strong>t1</strong>，再判断 <strong>t1</strong> 里面 <strong>c</strong> 的值是否等于 <strong>10</strong>。</li>
+</ul>
+<p>这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是决定选择哪一种方案。</p>
+<h3 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h3><p><strong>MySQL</strong> 通过分析器知道了你要做什么，通过优化器知道了该怎么做，于是就进入了执行器阶段，开始执行语句。</p>
+<p>开始执行的时候，要先判断一下你对这个表 <strong>T</strong> 有没有执行查询的权限，如果没有，就会返回没有权限的错误，如下所示（权限验证不仅仅在执行器这部分会做，在分析器之后，也就是知道了该语句要“干什么”之后，也会做一次权限验证，叫做 <strong>precheck</strong>。而 <strong>precheck</strong> 是无法对运行时涉及到的表进行权限验证的，比如使用了触发器的情况。因此在执行器这里也要做一次执行时的权限验证）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from T where ID&#x3D;10;ERROR 1142 (42000): SELECT command denied to user &#39;b&#39;@&#39;localhost&#39; for table &#39;T&#39;</span><br></pre></td></tr></table></figure>
+
+<p>如果有权限，就打开表继续执行。打开表的时候，执行器就会根据表的引擎定义，去使用这个引擎提供的接口。</p>
+<p>比如我们这个例子中的表 <strong>T</strong> 中，<strong>ID</strong> 字段没有索引，那么执行器的执行流程是这样的：</p>
+<ol>
+<li>调用 InnoDB 引擎接口取这个表的第一行，判断 <strong>ID</strong> 的值是不是 <strong>10</strong>，如果不是则跳过，如果是则将这行存在结果集中；</li>
+<li>调用引擎接口取 “下一行”，重复相同的判断逻辑，知道取到这个表的最后一行。</li>
+<li>执行器将上述遍历过程中所有满足条件的行组成的记录集作为结果集返回给客户端。</li>
+</ol>
+<p>至此，这个语句就执行完成了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/11/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/11/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/" class="post-title-link" itemprop="url">梯度下降法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-11 11:25:21" itemprop="dateCreated datePublished" datetime="2021-05-11T11:25:21+08:00">2021-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-12 10:38:55" itemprop="dateModified" datetime="2021-05-12T10:38:55+08:00">2021-05-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是梯度下降法"><a href="#什么是梯度下降法" class="headerlink" title="什么是梯度下降法"></a>什么是梯度下降法</h3><ul>
+<li>不是一个机器学习算法</li>
+<li>是一种基于搜索的最优化方法</li>
+<li>作用：最小化一个损失函数</li>
+<li>梯度上升法：最大化一个效用函数</li>
+</ul>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210511113440687.png" alt="image-20210511113440687"></p>
+<p>$$-\eta\frac{dj}{d\Theta}$$</p>
+<ul>
+<li>$$\eta$$ 称为学习率（learning rate）</li>
+<li>$$\eta$$ 的取值影响获得最优解的速度</li>
+<li>$$\eta$$ 取值不合适，甚至得不到最优解</li>
+<li>$$\eta$$ 是梯度下降法的一个超参数</li>
+</ul>
+<p>$$\eta$$ 会影响我们获得最优解的速度。</p>
+<p>如果 $$\eta$$ 太小，减慢收敛学习速度</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210512101656065.png" alt="image-20210512101656065"></p>
+<p>如果  $$\eta$$ 太大，甚至导致不收敛</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210512101741775.png" alt="image-20210512101741775"></p>
+<p>还有一个问题，并不是每一个函数都有唯一的极值点</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210512101925300.png" alt="image-20210512101925300"></p>
+<p>解决方案：</p>
+<ul>
+<li>多次运行，随机化初始点</li>
+<li>梯度下降法的初始点也是一个超参数</li>
+</ul>
+<h3 id="梯度下降法模拟"><a href="#梯度下降法模拟" class="headerlink" title="梯度下降法模拟"></a>梯度下降法模拟</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plot_x = np.linspace(-<span class="number">1</span>, <span class="number">6</span>, <span class="number">141</span>)</span><br><span class="line">plot_y = (plot_x-<span class="number">2.5</span>)**<span class="number">2</span>-<span class="number">1</span></span><br><span class="line">plt.plot(plot_x, plot_y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210512102828911.png" alt="image-20210512102828911"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dJ</span>(<span class="params">theta</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>*(theta-<span class="number">2.5</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">J</span>(<span class="params">theta</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (theta-<span class="number">2.5</span>)**<span class="number">2</span>-<span class="number">1</span></span><br><span class="line">eta = <span class="number">0.1</span></span><br><span class="line">epsilon = <span class="number">1e-8</span></span><br><span class="line">theta = <span class="number">0.0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    gradient = dJ(theta)</span><br><span class="line">    last_theta = theta</span><br><span class="line">    theta = theta - eta * gradient</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(J(theta) - J(last_theta)) &lt; epsilon):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(theta)</span><br><span class="line">print(J(theta))</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/10/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +405,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-10 12:00:22 / 修改时间：21:55:05" itemprop="dateCreated datePublished" datetime="2021-05-10T12:00:22+08:00">2021-05-10</time>
+              <time title="创建时间：2021-05-10 12:00:22" itemprop="dateCreated datePublished" datetime="2021-05-10T12:00:22+08:00">2021-05-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-18 14:49:53" itemprop="dateModified" datetime="2021-05-18T14:49:53+08:00">2021-05-18</time>
+              </span>
 
           
 
@@ -253,7 +487,8 @@
 
 
 
-
+<h3 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210511095745236.png" alt="image-20210511095745236"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearRegression</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;初始化Linear Regression模型&quot;&quot;&quot;</span></span><br><span class="line">    	self.coef_ = <span class="literal">None</span></span><br><span class="line">        self.interception_ = <span class="literal">None</span></span><br><span class="line">        self._theta = <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit_normal</span>(<span class="params">self, X_train, y_train</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;根据训练数据集X_train, y_train训练Linear Regression模型&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> X_train.shape[<span class="number">0</span>] == y_train.shape[<span class="number">0</span>], \</span><br><span class="line">        	<span class="string">&quot;the size of X_train must be equal to the size of y_train&quot;</span></span><br><span class="line">        </span><br><span class="line">        X_b = np.hstack([np.one((<span class="built_in">len</span>(X_train), <span class="number">1</span>)), X_train])</span><br><span class="line">        self._theta = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train);</span><br><span class="line">        self.interception_ = self._theta[<span class="number">0</span>]</span><br><span class="line">        self.coef_ = self._theta[<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">self, X_predict</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;给定待预测数据集X_predict, 返回表示X_predict的结果向量&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> self.intercept_ <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self.coef_ <span class="keyword">is</span> Not <span class="literal">None</span>, \</span><br><span class="line">        	<span class="string">&quot;must fit before predict&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> X_predict.shape[<span class="number">1</span>] == <span class="built_in">len</span>(self.coef_), \</span><br><span class="line">        	<span class="string">&quot;the feature number of X_predict must be equal to X_train&quot;</span></span><br><span class="line">    	</span><br><span class="line">        X_b = np.hstack([np.ones((<span class="built_in">len</span>(X_predict), <span class="number">1</span>)), X_predict])</span><br><span class="line">        <span class="keyword">return</span> X_b.dot(self._theta)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span>(<span class="params">self, X_test, y_test</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;根据测试数据集 X_test 和 y_test 确定当前模型的准确度&quot;&quot;&quot;</span></span><br><span class="line">        y_predict = self.predict(X_test)</span><br><span class="line">        <span class="keyword">return</span> r2_score(y_test, y_predict)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;LinearRegression()&quot;</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -1122,177 +1357,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">集合和映射</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-22 21:14:25" itemprop="dateCreated datePublished" datetime="2021-03-22T21:14:25+08:00">2021-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-23 10:29:39" itemprop="dateModified" datetime="2021-03-23T10:29:39+08:00">2021-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="集合（Set）"><a href="#集合（Set）" class="headerlink" title="集合（Set）"></a>集合（Set）</h2><p>集合是承载元素的一个容器，集合有一个重要的特点就是<strong>每个元素只能存在一次</strong>。</p>
-<p>很多时候，我们需要这样一种数据结构，它能够帮助我们非常快速地进行<strong>去重</strong>操作</p>
-<p>典型应用：</p>
-<ul>
-<li>客户统计</li>
-<li>词汇量统计</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/" class="post-title-link" itemprop="url">二分搜索树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-19 10:49:05" itemprop="dateCreated datePublished" datetime="2021-03-19T10:49:05+08:00">2021-03-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-22 20:59:09" itemprop="dateModified" datetime="2021-03-22T20:59:09+08:00">2021-03-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="二分搜索树的性质"><a href="#二分搜索树的性质" class="headerlink" title="二分搜索树的性质"></a>二分搜索树的性质</h2><ul>
-<li><p>二分搜索树是二叉树</p>
-</li>
-<li><p>二分搜索树的每个节点的值：</p>
-<ul>
-<li>大于其左子树的所有节点的值</li>
-<li>小于其右子树的所有节点的值</li>
-</ul>
-</li>
-<li><p>每一棵子树也是二分搜索树</p>
-</li>
-</ul>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210322205713772.png" alt="image-20210322205713772"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1364,7 +1428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
