@@ -20,17 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="持续学习者">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Taiichi&#39;s blog">
-<meta property="og:url" content="http://example.com/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+  <meta name="description" content="基本概念位运算： 用于 整数类型（int, char, long 等）变量中的某一位（bit），或者若干位进行操作。比如：  判断某一位是否为1 只改变其中某一位，而保持其他位都不变。  C&#x2F;C++语言提供了六种位运算符来进行位运算操作： &amp; 按位与（双目） |  按位或（双目） ^  按位异或（双目） ~  按位非（取反）（单目） &lt;&lt; 左移（双目） &gt;&gt; 右移（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算">
+<meta property="og:url" content="http://example.com/2021/07/03/%E4%BD%8D%E8%BF%90%E7%AE%97/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="持续学习者">
+<meta property="og:description" content="基本概念位运算： 用于 整数类型（int, char, long 等）变量中的某一位（bit），或者若干位进行操作。比如：  判断某一位是否为1 只改变其中某一位，而保持其他位都不变。  C&#x2F;C++语言提供了六种位运算符来进行位运算操作： &amp; 按位与（双目） |  按位或（双目） ^  按位异或（双目） ~  按位非（取反）（单目） &lt;&lt; 左移（双目） &gt;&gt; 右移（">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-03T03:59:20.000Z">
+<meta property="article:modified_time" content="2021-07-03T12:33:26.989Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/tags/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+<link rel="canonical" href="http://example.com/2021/07/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
 
 
 <script id="page-configurations">
@@ -38,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 算法与数据结构 | Taiichi's blog</title>
+  <title>位运算 | Taiichi's blog</title>
   
 
 
@@ -148,51 +150,127 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">算法与数据结构
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/03/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          位运算
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-03 11:59:20 / 修改时间：20:33:26" itemprop="dateCreated datePublished" datetime="2021-07-03T11:59:20+08:00">2021-07-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>位运算：</p>
+<p>用于 整数类型（int, char, long 等）变量中的<font color="red">某一位</font>（bit），或者<font color="red">若干位</font>进行操作。比如：</p>
+<ol>
+<li>判断某一位是否为1</li>
+<li>只改变其中某一位，而保持其他位都不变。</li>
+</ol>
+<p>C/C++语言提供了六种位运算符来进行位运算操作：</p>
+<p>&amp; 按位与（双目）</p>
+<p>|  按位或（双目）</p>
+<p>^  按位异或（双目）</p>
+<p>~  按位非（取反）（单目）</p>
+<p>&lt;&lt; 左移（双目）</p>
+<p>&gt;&gt; 右移（双目）</p>
+<h3 id="按位与-“-amp-”"><a href="#按位与-“-amp-”" class="headerlink" title="按位与 “&amp;”"></a>按位与 “&amp;”</h3><p>通常用来将某变量中的<font color="red">某些位清0且同时保留其他位不变</font>。</p>
+<p>也可以用来<font color="red">获取某变量中的某一位</font>。</p>
+<p>例如，如果需要将 int 型变量 n 的低8位全置成0，而其余位不变，则可以执行：</p>
+<p><font color="red">n = n &amp; 0xffffff00;</font></p>
+<p>也可以写成：</p>
+<p><font color="red">n &amp;= 0xffffff00;</font></p>
+<p>如果 n 是 short 类型的，则只需执行：</p>
+<p><font color="red">n &amp;= 0xff00;</font></p>
+<p>如何判断一个 int 型变量 n 的第 7 位（从右往左，从0开始数）是否是1？</p>
+<p><font color="red">只需看表达式 “n &amp; 0x80” 的值是否等于0x80即可。</font></p>
+<p>0x80：1000 0000</p>
+<h3 id="按位或-“-”"><a href="#按位或-“-”" class="headerlink" title="按位或 “|”"></a>按位或 “|”</h3><p>按位或运算通常用来将某变量中的某些位置1且保留其他位不变。</p>
+<p>例如，如果需要将 int 型变量 n 的低 8 位全置成1，而其余位保持不变，则可以执行：</p>
+<p><font color="red">n |= 0xff;</font></p>
+<p>0xff: 1111 1111</p>
+<h3 id="按位异或-“-”"><a href="#按位异或-“-”" class="headerlink" title="按位异或 “^”"></a>按位异或 “^”</h3><p>按位异或运算通常用来<font color="red">将某变量中的某些位取反，且保留其他位不变。</font></p>
+<p>例如，如果需要将 int 型变量 n 的低8位取反，而其余位不变，则可以执行：</p>
+<p>0 ^= 0xff;</p>
+<p>另外异或运算还能实现不通过临时变量，就能交换两个变量的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a &#x3D; 5, b &#x3D; 7;</span><br><span class="line">a &#x3D; a ^ b;</span><br><span class="line">b &#x3D; b ^ a;</span><br><span class="line">a &#x3D; a ^ b;</span><br></pre></td></tr></table></figure>
+
+<p>即可实现a, b 值交换。穷举法可证。</p>
+<h3 id="左移运算符“-lt-lt-”"><a href="#左移运算符“-lt-lt-”" class="headerlink" title="左移运算符“&lt;&lt;”"></a>左移运算符“&lt;&lt;”</h3><p>表达式：</p>
+<p>a &lt;&lt; b</p>
+<p>的值是：将 a 各二进位全部左移b位后得到的值。左移时，高位丢弃，低位补0。a 的值不因运算而改变。</p>
+<p>实际上，左移1位，就等于是乘以2，左移n位，就等于是乘以2<sup>n</sup>。而左移操作比乘法操作快得多。</p>
+<h3 id="右移运算符“-gt-gt-”"><a href="#右移运算符“-gt-gt-”" class="headerlink" title="右移运算符“&gt;&gt;”"></a>右移运算符“&gt;&gt;”</h3><p>表达式：</p>
+<p>a &gt;&gt; b</p>
+<p>的值是：将 a 各二进位全部右移b位后得到的值。右移时，移出最右边的位就被丢弃。a 的值不因运算而改变。</p>
+<p>对于有符号数，如 long, int, short, char 类型变量，在右移时，符号位（即最高位）将一起移动，并且大多数C/C++编译器规定，<font color="red">如果原符号位为1，则右移时高位就补充1</font>，原符号位为0，则右移时高位就补充0。</p>
+<p>实际上，左移1位，就等于是乘以2，左移n位，就等于是乘以2<sup>n</sup>。而左移操作比  乘法操作快得多。</p>
+<p>实际上，<font color="red">右移n位，就相当于左操作数除以2<sup>n</sup></font>，并且将结果往小里取整。</p>
+<p>-25 &gt;&gt; 4 = -2</p>
+<p>-2 &gt;&gt; 4 = -1</p>
+<p>18 &gt;&gt; 4 = 1</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-19T10:49:05+08:00"
-              content="2021-03-19">
-          03-19
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/" itemprop="url">
-            <span itemprop="name">二分搜索树</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/02/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" rel="prev" title="函数指针">
+      <i class="fa fa-chevron-left"></i> 函数指针
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/03/%E5%BC%95%E7%94%A8%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%BA%94%E7%94%A8/" rel="next" title="引用的概念和应用">
+      引用的概念和应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -245,6 +323,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E4%B8%8E-%E2%80%9C-amp-%E2%80%9D"><span class="nav-number">1.1.</span> <span class="nav-text">按位与 “&amp;”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E6%88%96-%E2%80%9C-%E2%80%9D"><span class="nav-number">1.2.</span> <span class="nav-text">按位或 “|”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E5%BC%82%E6%88%96-%E2%80%9C-%E2%80%9D"><span class="nav-number">1.3.</span> <span class="nav-text">按位异或 “^”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E2%80%9C-lt-lt-%E2%80%9D"><span class="nav-number">1.4.</span> <span class="nav-text">左移运算符“&lt;&lt;”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E2%80%9C-gt-gt-%E2%80%9D"><span class="nav-number">1.5.</span> <span class="nav-text">右移运算符“&gt;&gt;”</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
