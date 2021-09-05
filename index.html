@@ -154,6 +154,196 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/16/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AF%AD%E5%8F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/16/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%94%E7%AB%A0%E8%AF%AD%E5%8F%A5/" class="post-title-link" itemprop="url">primer读书笔记——第五章语句</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-16 20:46:32" itemprop="dateCreated datePublished" datetime="2021-07-16T20:46:32+08:00">2021-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-05 11:24:22" itemprop="dateModified" datetime="2021-09-05T11:24:22+08:00">2021-09-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h2><h3 id="简单语句"><a href="#简单语句" class="headerlink" title="简单语句"></a>简单语句</h3><p>如果在程序的某个地方，语法上需要一条语句但是逻辑上不需要，则应该使用空语句（null statement）。空语句中只含有一个单独的分号 <code>;</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例如，我们想读取输入流的内容直到遇到一个特定的值为止，除此之外什么都不做</span></span><br><span class="line"><span class="comment">// 重复读入数据直到到达文件末尾或某次输入的值等于 sought</span></span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; s &amp;&amp; s != sought)</span><br><span class="line">    ;	<span class="comment">// 空语句</span></span><br></pre></td></tr></table></figure>
+
+<p>使用空语句时应该加上注释，从而令读这段代码的人知道该语句是有意省略的。</p>
+<p>多余的空语句并非总是无害的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 出现了糟糕的情况：额外的分号，循环体是那条空语句</span></span><br><span class="line"><span class="keyword">while</span> (iter != svec.end());	<span class="comment">// while 循环体是那条空语句</span></span><br><span class="line">	++iter;		<span class="comment">// 递增运算不属于循环的一部分</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>复合语句（compound statement）是指用花括号括起来的（可能为空）语句和声明的序列。复合语句也被称为块（block）。一个块就是一个作用域。在块中引入的名字只能在块内部以及嵌套在块中的子块里访问。通常，名字在有限的区域内可见，该区域从名字定义处开始，到名字所在（最内层）块的结尾处为止。</p>
+<p>语句块不以分号作为结束。</p>
+<p>空块的作用等价于空语句。</p>
+<h3 id="语句作用域"><a href="#语句作用域" class="headerlink" title="语句作用域"></a>语句作用域</h3><p>可以在 <code>if</code>、 <code>switch</code>、 <code>while</code> 和 <code>for</code> 语句的控制结构内定义变量，这些变量只在对应语句的内部可见，一旦语句结束，变量也就超出了其作用范围。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="keyword">int</span> i = get_num())	<span class="comment">// 每次迭代时创建并初始化 i</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">i = <span class="number">0</span>; <span class="comment">// 错误：在循环外部无法访问 i</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><h4 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h4><p><code>if</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition)</span><br><span class="line">	statement</span><br></pre></td></tr></table></figure>
+
+<p><code>if else</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition)</span><br><span class="line">	statement</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">	statement2</span><br></pre></td></tr></table></figure>
+
+<p>其中 <em>condition</em> 是判断条件，可以是一个表达式或者初始化了的变量声明。<em>condition</em> 必须用圆括号括起来。</p>
+<ul>
+<li>如果 <em>condition</em> 为真，则执行 <em>statement</em>。执行完成后，程序继续执行 <code>if</code> 语句后面的其他语句。</li>
+<li>如果 <em>condition</em> 为假，跳过 <em>statement</em>。对于简单 <code>if</code> 语句来说，程序直接执行 <code>if</code> 语句后面的其他语句；对于 <code>if-else</code> 语句来说，程序先执行 <em>statement2</em>，再执行 <code>if</code> 语句后面的其他语句。</li>
+</ul>
+<p><code>if</code> 语句可以嵌套，其中 <code>else</code> 与离它最近的尚未匹配的 <code>if</code> 相匹配。</p>
+<h3 id="switch-语句"><a href="#switch-语句" class="headerlink" title="switch 语句"></a>switch 语句</h3><p>switch 语句的形式：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210728104027353.png" alt="image-20210728104027353"></p>
+<p><code>switch</code> 语句先对括号里的表达式求值，值转换成整数类型后再与每个 <code>case</code> 标签（case label）的值进行比较。如果表达式的值和某个 <code>case</code> 标签匹配，程序从该标签之后的第一条语句开始执行，直到到达 <code>switch</code> 的结尾或者遇到 <code>break</code> 语句为止。<code>case</code> 标签必须是整型常量表达式。</p>
+<p>如果某个 <code>case</code> 标签匹配成功，将从该标签开始往后顺序执行所有 <code>case</code> 分支，除非程序显式地中断了这一过程，否则直到 <code>switch</code> 的结尾处才会停下来，通常情况下每个 <code>case</code> 分支后都有 <code>break</code> 语句。如果确实不应该出现 <code>break</code> 语句，最好写一段注释说明程序的逻辑。</p>
+<p>尽管 <code>switch</code> 语句没有强制要求在最后一个 <code>case</code> 标签后写上 <code>break</code>，但为了安全起见，最好添加 <code>break</code>。这样即使以后增加了新的 <code>case</code> 分支，也不用再在前面补充 <code>break</code> 语句了。</p>
+<p><code>switch</code> 语句中可以添加一个 <code>default</code> 标签（default label），如果没有任何一个 <code>case</code> 标签能匹配上 <code>switch</code> 表达式的值，程序将执行 <code>default</code> 标签后的语句。</p>
+<p>即使不准备在 <code>default</code> 标签下做任何动作，程序中也应该定义一个 <code>default</code> 标签，其目的在于告诉他人我们已经考虑到了默认情况，只是目前不需要实际操作。</p>
+<p>不允许跨过变量的初始化语句直接跳转到该变量作用域内的另一个位置。如果需要为 <code>switch</code> 的某个 <code>case</code> 分支定义并初始化一个变量，则应该把变量定义在块内。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="literal">true</span>:</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 正确：声明语句位于语句块内部</span></span><br><span class="line">		<span class="built_in">string</span> file_name = get_file_name();</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="迭代语句"><a href="#迭代语句" class="headerlink" title="迭代语句"></a>迭代语句</h3><p>迭代语句通常称为循环，它重复执行操作直到满足某个条件才停止。<code>while</code> 和 <code>for</code> 语句在执行循环体之前检查条件，<code>do-while</code> 语句先执行循环体再检查条件。</p>
+<h4 id="while-语句"><a href="#while-语句" class="headerlink" title="while 语句"></a>while 语句</h4><p><code>while</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">	statement</span><br></pre></td></tr></table></figure>
+
+<p>只要 <em>condition</em> 的求值结果为 <code>true</code>，就一直执行 <em>statement</em> （通常是一个块）。<em>condition</em> 不能为空，如果 <em>condition</em> 第一次求值就是 <code>false</code>，<em>statement</em> 一次都不会执行。</p>
+<p>定义在 <code>while</code> 条件部分或者循环体内的变量每次迭代都经历从创建到销毁的过程。</p>
+<p>在不确定迭代次数，或者想在循环结束后访问循环控制变量时，使用 <code>while</code> 比较合适。</p>
+<h4 id="传统的-for-语句"><a href="#传统的-for-语句" class="headerlink" title="传统的 for 语句"></a>传统的 for 语句</h4><p><code>for</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (initializer; condition; expression)</span><br><span class="line">	statement</span><br></pre></td></tr></table></figure>
+
+<p>一般情况下，<em>initializer</em> 负责初始化一个值，这个值会随着循环的改变而改变。<em>condition</em> 作为循环控制的条件，只要 <em>condition</em> 的求值结果为 <code>true</code>，就执行一次 <em>statement</em>。执行后再由 <em>expression</em> 负责修改 <em>initializer</em> 初始化的变量，这个变量就是 <em>condition</em> 检查的对象。如果 <em>condition</em> 第一次求值就是 <code>false</code>，<em>statement</em> 一次都不会执行。<em>initializer</em> 中也可以定义多个对象，但是只能有一条声明语句，因此所有变量的基础类型必须相同。</p>
+<p><code>for</code> 语句头中定义的对象只在 <code>for</code> 循环体内可见。</p>
+<h4 id="范围-for-语句（Range-for-Statement）"><a href="#范围-for-语句（Range-for-Statement）" class="headerlink" title="范围 for 语句（Range for Statement）"></a>范围 for 语句（Range for Statement）</h4><p>范围 <code>for</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (declaration : expression)</span><br><span class="line">	statement</span><br></pre></td></tr></table></figure>
+
+<p><code>expression</code> 表示的必须是一个序列，比如用花括号括起来的初始值列表、数组或者 <code>vector</code> 或 <code>string</code> 等类型的对象，这些类型的共同特点是拥有能返回迭代器的 <code>begin</code> 和 <code>end</code> 成员。</p>
+<p><code>declaration</code> 定义一个变量，序列中的每个元素都应该能转换成该变量的类型（可以使用 <code>auto</code>）。如果需要对序列中的元素执行写操作，循环变量必须声明成引用类型。每次迭代都会重新定义循环控制变量，并将其初始化为序列中的下一个值，之后才会执行 <em>statement</em>。</p>
+<h4 id="do-while-语句"><a href="#do-while-语句" class="headerlink" title="do-while 语句"></a>do-while 语句</h4><p><code>do-while</code> 语句的形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">	statement</span><br><span class="line"><span class="keyword">while</span> (condition);</span><br></pre></td></tr></table></figure>
+
+<p>计算 <em>condition</em> 的值之前会先执行一次 <em>statement</em>，<em>condition</em> 不能为空。如果 <em>condition</em> 的值为 <code>false</code>，循环终止，否则重复执行 <em>statement</em>。</p>
+<p>因为 <code>do-while</code> 语句先执行语句或块，再判断条件，所以不允许在条件部分定义变量。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	mumble(foo);</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="keyword">int</span> foo = get_foo()); <span class="comment">// 错误： 将变量声明放在了 do 的条件部分</span></span><br></pre></td></tr></table></figure>
+
+<p>如果允许在条件部分定义变量，则变量的使用出现在定义之前，这显然是不合常理的！</p>
+<h3 id="跳转语句"><a href="#跳转语句" class="headerlink" title="跳转语句"></a>跳转语句</h3><p>跳转语句中断当前的执行过程。C++ 语言提供了 4 种跳转语句：break、continue、goto 和 return。</p>
+<h4 id="break-语句"><a href="#break-语句" class="headerlink" title="break 语句"></a>break 语句</h4><p><code>break</code> 语句只能出现在迭代语句或者 <code>switch</code> 语句的内部，负责终止离它最近的 <code>while</code>、<code>do-while</code>、<code>for</code> 或者 <code>switch</code> 语句，并且从这些语句之后的第一条语句开始继续执行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> buf;</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; buf &amp;&amp; !buf.empty()) &#123;</span><br><span class="line">	<span class="keyword">switch</span>(buf[<span class="number">0</span>])&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">			<span class="comment">// 处理到第一个空白为止</span></span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> it = buf.begin()+<span class="number">1</span> ; it != buf.end() ; ++it) &#123;</span><br><span class="line">				<span class="keyword">if</span>(*it == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">					<span class="keyword">break</span>;  <span class="comment">// #1，离开 for 循环</span></span><br><span class="line">				<span class="comment">// ...</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// break #1 将控制权转移到这里</span></span><br><span class="line">			<span class="comment">// 剩余的 &#x27;-&#x27; 处理</span></span><br><span class="line">			<span class="keyword">break</span>; <span class="comment">// #2，离开 switch 语句</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">				<span class="comment">// ...</span></span><br><span class="line">	&#125;	<span class="comment">// 结束 switch</span></span><br><span class="line">	<span class="comment">// 结束 switch： break #2 将控制权转移到这里</span></span><br><span class="line">&#125; 结束 <span class="keyword">while</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="continue-语句"><a href="#continue-语句" class="headerlink" title="continue 语句"></a>continue 语句</h4><p><code>continue</code> 语句只能出现在迭代语句的内部，负责终止离它最近的循环的当前一次迭代并立即开始下一次迭代。和 <code>break</code> 语句不同的是，只有当 <code>switch</code> 语句嵌套在迭代语句内部时，才能在 <code>switch</code> 中使用 <code>continue</code>。</p>
+<p><code>continue</code> 语句中断当前迭代后，具体操作视迭代语句类型而定：</p>
+<ul>
+<li>对于 <code>while</code> 和 <code>do-while</code> 语句来说，继续判断条件的值。</li>
+<li>对于传统的 <code>for</code> 语句来说，继续执行 <code>for</code> 语句头中的第三部分，之后判断条件的值。</li>
+<li>对于范围 <code>for</code> 语句来说，是用序列的下一个元素初始化循环变量。</li>
+</ul>
+<h4 id="goto-语句"><a href="#goto-语句" class="headerlink" title="goto 语句"></a>goto 语句</h4><p>goto 语句的语法形式是</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">goto</span> label;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<em>label</em> 是用于标识一条语句的标识符。<strong>带标签语句</strong>是一种特殊的语句，在它之前有一个标示符以及一个冒号：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">end: <span class="keyword">return</span>; <span class="comment">// 带标签语句，可以作为 goto 的目标</span></span><br></pre></td></tr></table></figure>
+
+<p>标签标示符独立于变量或其他标示符的名字而不互相干扰。</p>
+<p><code>goto</code> 语句使程序无条件跳转到标签为 <em>label</em> 的语句处执行，但两者必须位于同一个函数内，同时 <code>goto</code> 语句也不能将程序的控制权从变量的作用域之外转移到作用域之内。</p>
+<p>建议不要在程序中使用 <code>goto</code> 语句，它使得程序既难理解又难修改。</p>
+<h3 id="try-语句块和异常处理"><a href="#try-语句块和异常处理" class="headerlink" title="try 语句块和异常处理"></a>try 语句块和异常处理</h3><p>异常（exception）是指程序运行时的反常行为，这些行为超出了函数正常功能的范围。当程序的某一部分检测到一个它无法处理的问题时，需要使用异常处理（exception handling）。</p>
+<p>异常处理机制包括 <code>throw</code> 表达式（throw expression）、<code>try</code> 语句块（try block）和异常类（exception class）。</p>
+<ul>
+<li>异常检测部分使用 <code>throw</code> 表达式表示它遇到了无法处理的问题（<code>throw</code> 引发了异常）。</li>
+<li>异常处理部分使用 <code>try</code> 语句块处理异常。<code>try</code> 语句块以关键字 <code>try</code> 开始，并以一个或多个 <code>catch</code> 子句（catch clause）结束。<code>try</code> 语句块中代码抛出的异常通常会被某个 <code>catch</code> 子句处理，<code>catch</code> 子句也被称作异常处理代码（exception handler）。</li>
+<li>异常类用于在 <code>throw</code> 表达式和相关的 <code>catch</code> 子句之间传递异常的具体信息。</li>
+</ul>
+<h4 id="throw-表达式"><a href="#throw-表达式" class="headerlink" title="throw 表达式"></a>throw 表达式</h4><p><code>throw</code> 表达式包含关键字 <code>throw</code> 和紧随其后的一个表达式，其中表达式的类型就是抛出的异常类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先检查两条数据是否是关于同一种书籍的</span></span><br><span class="line"><span class="keyword">if</span> (item.isbn() != item2.isbn())</span><br><span class="line">	<span class="keyword">throw</span> runtime_error(<span class="string">&quot;Data must refer to same ISBN&quot;</span>);</span><br><span class="line"><span class="comment">// 如果程序执行到了这里，表示两个 ISBN 是相同的</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="try-语句块（The-try-Block）"><a href="#try-语句块（The-try-Block）" class="headerlink" title="try 语句块（The try Block）"></a>try 语句块（The try Block）</h4><p><code>try</code> 语句块的通用形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	program-statements</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (exception-declaration)</span><br><span class="line">&#123;</span><br><span class="line">	handler-statements</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (exception-declaration)</span><br><span class="line">&#123;</span><br><span class="line">	handler-statements</span><br><span class="line">&#125; <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p><code>try</code> 语句块中的 <em>program-statements</em> 组成程序的正常逻辑，其内部声明的变量在块外无法访问，即使在 <code>catch</code> 子句中也不行。<code>catch</code> 子句包含关键字 <code>catch</code> 、括号内一个对象的声明（异常声明，exception declaration）和一个块。当选中了某个 <code>catch</code> 子句处理异常后，执行与之对应的块。<code>catch</code> 一旦完成，程序会跳过剩余的所有 <code>catch</code> 子句，继续执行后面的语句。</p>
+<p>如果最终没找到与异常相匹配的 <code>catch</code> 子句，程序会执行名为 <code>terminate</code> 的标准库函数。该函数的行为与系统有关，一般情况下，执行该函数将导致程序非正常退出。类似的，如果一段程序没有 <code>try</code> 语句块且发生了异常，系统也会调用 <code>terminate</code> 函数并终止当前程序的执行。</p>
+<h4 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h4><ul>
+<li>头文件 <em>exception</em> 定义了最通用的异常类 <code>exception</code>。它只报告异常的发生，不提供任何额外信息。</li>
+<li>头文件 <em>stdexcept</em> 定义了几种常用的异常类。</li>
+</ul>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210905111656855.png" alt="image-20210905111656855"></p>
+<ul>
+<li>头文件 <em>new</em> 定义了 <code>bad_alloc</code> 异常类。</li>
+<li>头文件 <em>type_info</em> 定义了 <code>bad_cast</code> 异常类。</li>
+</ul>
+<p>标准库异常类的继承体系：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210905111914355.png" alt="image-20210905111914355"></p>
+<p>只能以默认初始化的方式初始化 <code>exception</code>、<code>bad_alloc</code> 和 <code>bad_cast</code> 对象，不允许为这些对象提供初始值。其他异常类的对象在初始化时必须提供一个 <code>string</code> 或一个 C 风格字符串，通常表示异常信息。<code>what</code> 成员函数可以返回该字符串的 <code>string</code> 副本。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%9B%9B%E7%AB%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2255,121 +2445,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/01/Trie%E5%AD%97%E5%85%B8%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/01/Trie%E5%AD%97%E5%85%B8%E6%A0%91/" class="post-title-link" itemprop="url">Trie字典树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-01 11:02:02" itemprop="dateCreated datePublished" datetime="2021-04-01T11:02:02+08:00">2021-04-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-05 10:49:36" itemprop="dateModified" datetime="2021-04-05T10:49:36+08:00">2021-04-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="什么是-Trie-树"><a href="#什么是-Trie-树" class="headerlink" title="什么是 Trie 树"></a>什么是 Trie 树</h2><p>是一种专门处理字符串匹配的数据结构，用来解决在一组字符串集合中快速查找某个字符串的问题。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210401114234276.png" alt="image-20210401114234276"></p>
-<h3 id="Trie-中节点的定义"><a href="#Trie-中节点的定义" class="headerlink" title="Trie 中节点的定义"></a>Trie 中节点的定义</h3><p>在上图所示的 Trie 中，每个节点有 26 个（英文字母有 26 个）指向下个节点的指针。</p>
-<p>所以在 Trie 中，节点大概是这样子的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	Node next[<span class="number">26</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>但是考虑不同的语言，不同的情景，有可能 26 个指针是富余的，也可能是不够的。比如当前这棵 Trie 没有考虑大小写的问题，如果要考虑大小写的话，就要有 52 个指针。 </p>
-<p>所以要设计一个灵活的 Trie ，通常我们不会固定每个节点的指针数量。我们让每个节点有<strong>若干</strong>指向下个节点的指针。</p>
-<p>实现这种动态的思想，相应地，就可以使用 Map 来实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	Map&lt;<span class="keyword">char</span>, Node&gt; next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实际上，next 就是 char 与 Node 之间的一个映射。</p>
-<p>还有一个问题，举例，我们要找单词 cat，我们在根节点就知道了下一个节点要到 c 节点，所以更准确来讲，我们要将字母标在边上，我们来到这个字母之前就知道这个字母是什么了。所以我们在节点不存储 char </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Node &#123;</span><br><span class="line">	Map&lt;char, Node&gt; next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210403165033056.png" alt="image-20210403165033056"></p>
-<p>另外一个问题，英语单词世界中，很多单词可能是另外一个单词的前缀。如 pan 和 panda。此时我们要同时存储 pan 和 panda，所以我们还需要一个标识，标识此节点是否是一个单词的结尾</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	<span class="keyword">boolean</span> isWord;</span><br><span class="line">	Map&lt;<span class="keyword">char</span>, Node&gt; next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210403172450665.png" alt="image-20210403172450665"></p>
-<h2 id="Trie-字典树基础"><a href="#Trie-字典树基础" class="headerlink" title="Trie 字典树基础"></a>Trie 字典树基础</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.TreeMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">        <span class="keyword">public</span> TreeMap&lt;Character, Node&gt; next;</span><br><span class="line">    	</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">boolean</span> isWord)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.isWord = isWord;</span><br><span class="line">            next = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>(<span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span></span>&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获得 Trie 中存储的单词数量</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 向 Trie 中添加一个新的单词 word</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; word.length() ; i++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">            <span class="keyword">if</span>(cur.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">                cur.next.put(c, <span class="keyword">new</span> Node());</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!cur.isWord)&#123;</span><br><span class="line">        	cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">        	size ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Trie-字典树的查询"><a href="#Trie-字典树的查询" class="headerlink" title="Trie 字典树的查询"></a>Trie 字典树的查询</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询单词 word 是否在 Trie 中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    Node cur = root;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; word.length() ; i ++)&#123;</span><br><span class="line">        <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">        <span class="keyword">if</span>(cur.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        cur = cur.next.get(c);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cur.isWord;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Trie-字典树的前缀查询"><a href="#Trie-字典树的前缀查询" class="headerlink" title="Trie 字典树的前缀查询"></a>Trie 字典树的前缀查询</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPrefix</span><span class="params">(String prefix)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	Node cur = root;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; prefix.length() ; i ++)&#123;</span><br><span class="line">        <span class="keyword">char</span> c = prefix.charAt(i);</span><br><span class="line">        <span class="keyword">if</span>(cur.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        cur = cur.next.get(c);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="LeetCode-211-添加与搜索单词"><a href="#LeetCode-211-添加与搜索单词" class="headerlink" title="LeetCode 211.添加与搜索单词"></a>LeetCode 211.添加与搜索单词</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.TreeMap;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WordDictionary</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">        <span class="keyword">public</span> TreeMap&lt;Character, Node&gt; next;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">boolean</span> isWord)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.isWord = isWord;</span><br><span class="line">            next = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123; <span class="keyword">this</span>(<span class="keyword">false</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addWord</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; word.length() ; i ++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">            <span class="keyword">if</span>(cur.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">                cur.next.put(c, <span class="keyword">new</span> Node());</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line">        cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WordDictionary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> match(root, word, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">match</span><span class="params">(Node node, String word, <span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(index == word.length())</span><br><span class="line">            <span class="keyword">return</span> node.isWord;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = word.charAt(index);</span><br><span class="line">        <span class="keyword">if</span>(c != <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(node.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">return</span> match(node.next.get(c), word, index + <span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">char</span> nextChar: node.next.keySet())</span><br><span class="line">                <span class="keyword">if</span>(match(node.next.get(nextChar), word, index + <span class="number">1</span>))</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="LeetCode-677-键值映射"><a href="#LeetCode-677-键值映射" class="headerlink" title="LeetCode 677.键值映射"></a>LeetCode 677.键值映射</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MapSum</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> value;</span><br><span class="line">        <span class="keyword">public</span> TreeMap&lt;Character, Node&gt; next;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            next = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123; <span class="keyword">this</span>(<span class="number">0</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapSum</span><span class="params">()</span></span>&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String key, <span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; word.length() ; i ++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">            <span class="keyword">if</span>(cur.next.get(c) == <span class="keyword">null</span>)</span><br><span class="line">                cur.next.put(c, <span class="keyword">new</span> Node());</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line">        cur.value = val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(String prefix)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2441,7 +2516,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
