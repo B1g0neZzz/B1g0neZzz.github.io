@@ -154,6 +154,277 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/" class="post-title-link" itemprop="url">primer读书笔记——第八章IO库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-09 20:02:29 / 修改时间：21:25:02" itemprop="dateCreated datePublished" datetime="2021-09-09T20:02:29+08:00">2021-09-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="IO-库"><a href="#IO-库" class="headerlink" title="IO 库"></a>IO 库</h1><p>部分IO库措施：</p>
+<ul>
+<li><code>istream</code>：输入流类型，提供输入操作。</li>
+<li><code>ostream</code>：输出流类型，提供输出操作。</li>
+<li><code>cin</code>：<code>istream</code> 对象，从标准输入读取数据。</li>
+<li><code>cout</code>：<code>ostream</code> 对象，向标准输出写入数据。</li>
+<li><code>cerr</code>：<code>ostream</code> 对象，通常用于输出程序错误信息，写入标准错误。</li>
+<li><code>&gt;&gt;</code> 运算符：用来从一个 <code>istream</code> 对象读取输入数据。</li>
+<li><code>&lt;&lt;</code> 运算符：用来向一个 <code>ostream</code> 对象写入输出数据。</li>
+<li><code>getline</code> 函数：从一个给定的 <code>istream</code> 读取一行数据，存入一个给定的 <code>string</code> 对象中。</li>
+</ul>
+<h2 id="IO-类"><a href="#IO-类" class="headerlink" title="IO 类"></a>IO 类</h2><p>头文件 <em>iostream</em> 定义了用于读写流的基本类型，<em>fstream</em> 定义了读写命名文件的类型，<em>sstream</em> 定义了读写内存中 <code>string</code> 对象的类型。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909201510973.png" alt="image-20210909201510973"></p>
+<p>宽字符版本的 IO 类型和函数的名字以 <code>w</code> 开始，如 <code>wcin</code>、<code>wcout</code> 和 <code>wcerr</code> 分别对应 <code>cin</code>、<code>cout</code> 和 <code>cerr</code>。它们对其对应的普通 <code>char</code> 版本都定义在同一个头文件中，如头文件 <code>fstream</code> 定义了 <code>ifstream</code> 和 <code>wifstream</code> 类型。</p>
+<p>可以将派生类的对象当作其基类的对象使用。</p>
+<h3 id="IO-对象无拷贝或赋值"><a href="#IO-对象无拷贝或赋值" class="headerlink" title="IO 对象无拷贝或赋值"></a>IO 对象无拷贝或赋值</h3><p>不能拷贝或对 IO 对象赋值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ofstream out1, out2;</span><br><span class="line">out1 = out2;		<span class="comment">// 错误：不能对流对象赋值</span></span><br><span class="line"><span class="function">ofstream <span class="title">print</span><span class="params">(ofstream)</span></span>;	<span class="comment">// 错误：不能初始化 ofstream 参数</span></span><br><span class="line">out2 = print(out2);		<span class="comment">// 错误：不能拷贝流对象</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 IO 对象不能拷贝，因此不能将函数形参或返回类型定义为流类型。进行 IO 操作的函数通常以引用方式传递和返回流。读写一个 IO 对象会改变其状态，因此传递和返回的引用不能是 <code>const</code> 的。</p>
+<h3 id="条件状态"><a href="#条件状态" class="headerlink" title="条件状态"></a>条件状态</h3><p>IO 库条件状态：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909202736438.png" alt="image-20210909202736438"></p>
+<p><code>badbit</code> 表示系统级错误，如不可恢复的读写错误。通常情况下，一旦 <code>badbit</code> 被置位，流就无法继续使用了。在发生可恢复错误后，<code>failbit</code> 会被置位，如期望读取数值却读出一个字符。如果到达文件结束位置，<code>eofbit</code> 和 <code>failbit</code> 都会被置位。如果流未发生错误，则 <code>goodbit</code> 的值为 0。如果 <code>badbit</code> 、<code>failbit</code> 和 <code>eofbit</code> 任何一个被置位，检测流状态的条件都会失败。</p>
+<p><code>good</code> 函数在所有错误均未置位时返回 <code>true</code>。而 <code>bad</code>、<code>fail</code> 和 <code>eof</code> 函数在对应错误位置被置位时返回 <code>true</code>。此外，在 <code>badbit</code> 被置位时，<code>fail</code> 函数也会返回 <code>true</code>。因此应该使用 <code>good</code> 或 <code>fail</code> 函数确定流的总体状态，<code>eof</code> 和 <code>bad</code> 只能检测特定错误。</p>
+<p>流对象的 <code>rdstate</code> 成员返回一个 <code>iostate</code> 值，表示流的当前状态。<code>setstate</code> 成员用于将特定条件置位（叠加原始流状态）。<code>clear</code> 成员的无参版本清除所有错误标志；含参版本接受一个 <code>iostate</code> 值，用于设置流的新状态（覆盖原始流状态）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记住 cin 的当前状态</span></span><br><span class="line"><span class="keyword">auto</span> old_state = <span class="built_in">cin</span>.rdstate();		<span class="comment">// 记住 cin 的当前状态</span></span><br><span class="line"><span class="built_in">cin</span>.clear();		<span class="comment">// 使 cin 有效</span></span><br><span class="line">process_input(<span class="built_in">cin</span>);	<span class="comment">// 使用cin</span></span><br><span class="line"><span class="built_in">cin</span>.setstate(old_state);	<span class="comment">// 将 cin 置为原有状态</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="管理输出缓冲"><a href="#管理输出缓冲" class="headerlink" title="管理输出缓冲"></a>管理输出缓冲</h3><p>每个输出流都管理一个缓冲区，用于保存程序读写的数据。导致缓冲刷新（即数据真正写入输出设备或文件）的原因有很多。</p>
+<ul>
+<li>程序正常结束，作为 main 函数的 return 操作的一部分，缓冲刷新被执行。</li>
+<li>缓冲区满时，需要刷新缓冲，而后新的数据才能继续写入缓冲区。</li>
+<li>使用操纵符（如 <code>endl</code>）显式刷新缓冲区。</li>
+<li>在每个输出操作之后，可以用 <code>unitbuf</code> 操纵符设置流的内部状态，从而清空缓冲区。默认情况下，对 <code>cerr</code> 是设置 <code>unitbuf</code> 的，因此写到 <code>cerr</code> 的内容都是立即刷新的。</li>
+<li>一个输出流可以被关联到另一个流。这种情况下，当读写被关联的流时，关联到的流的缓冲区会被刷新。默认情况下，<code>cin</code> 和 <code>cerr</code> 都关联到 <code>cout</code>，因此，读 <code>cin</code> 或写 <code>cerr</code> 都会刷新 <code>cout</code> 的缓冲区。</li>
+</ul>
+<p><code>flush</code> 操纵符刷新缓冲区，但不输出任何额外字符。<code>ends</code> 向缓冲区插入一个空字符，然后刷新缓冲区。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 输出 hi 和一个换行，然后刷新缓冲区</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; flush;	<span class="comment">// 输出 hi ，然后刷新缓冲区，不附加任何额外字符</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; ends;	<span class="comment">// 输出 hi 和一个空字符，然后刷新缓冲区</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想在每次输出操作后都刷新缓冲区，可以使用 <code>unitbuf</code> 操纵符。它令流在接下来的每次写操作后都进行一次 <code>flush</code> 操作。而 <code>nounitbuf</code> 操纵符则重置流，使其恢复使用正常的缓冲区刷新机制。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; unitbuf;	<span class="comment">// 所有输出操作后都会立即刷新缓冲区</span></span><br><span class="line"><span class="comment">// 任何输出都立即刷新，无缓冲</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; nounitbuf;	<span class="comment">// 回到正常的缓冲方式</span></span><br></pre></td></tr></table></figure>
+
+<p>如果程序异常终止，输出缓冲区不会被刷新。</p>
+<p>当一个输入流被关联到一个输出流时，任何试图从输入流读取数据的操作都会先刷新关联的输出流。标准库将 <code>cout</code> 和 <code>cin</code> 关联在一起，因此下面的语句会导致 <code>cout</code> 的缓冲区被刷新：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span> &gt;&gt; ival;</span><br></pre></td></tr></table></figure>
+
+<p>交互式系统通常应该关联输入流和输出流。这意味着包括用户提示信息在内的所有输出，都会在读操作之前被打印出来。</p>
+<p>使用 <code>tie</code> 函数可以关联两个流。它有两个重载版本：无参版本返回指向输出流的指针。如果本对象已关联到一个输出流，则返回的就是指向这个流的指针，否则返回空指针。<code>tie</code> 的第二个版本接受一个指向 <code>ostream</code> 的指针，将本对象关联到此 <code>ostream</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span>.tie(&amp;<span class="built_in">cout</span>);		<span class="comment">// 仅仅是用来展示：标准库将 cin 和 cout 关联在一起</span></span><br><span class="line"><span class="comment">// old_tie 指向当前关联到 cin 的流</span></span><br><span class="line">ostream *old_tie = <span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);	<span class="comment">// cin 不再与其他流关联</span></span><br><span class="line"><span class="comment">// 将 cin 与 cerr 关联； 这不是一个好主意，因为 cin 应该关联到 cout</span></span><br><span class="line"><span class="built_in">cin</span>.tie(&amp;<span class="built_in">cerr</span>);		<span class="comment">// 读取 cin 会刷新 cerr 而不是 cout</span></span><br><span class="line"><span class="built_in">cin</span>.tie(old_tie);	<span class="comment">// 重建 cin 和 cout 间的正常关联</span></span><br></pre></td></tr></table></figure>
+
+<p>每个流同时最多关联一个流，但多个流可以同时关联同一个 <code>ostream</code>。向 <code>tie</code> 传递空指针可以解开流的关联。</p>
+<h2 id="文件输入输出"><a href="#文件输入输出" class="headerlink" title="文件输入输出"></a>文件输入输出</h2><p>头文件 <em>fstream</em> 定义三个类型来支持文件 IO</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">动态规划</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-09 12:00:12 / 修改时间：19:59:39" itemprop="dateCreated datePublished" datetime="2021-09-09T12:00:12+08:00">2021-09-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>F(0) = 1, F(1) = 1, F(n) = F(n - 1) + F(n - 2)</p>
+<p>如果用递归方式来求解，则如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="分析目前的斐波那契数列为什么这么慢"><a href="#分析目前的斐波那契数列为什么这么慢" class="headerlink" title="分析目前的斐波那契数列为什么这么慢"></a>分析目前的斐波那契数列为什么这么慢</h3><p>如果我们要计算斐波那契数列的第五个数字。</p>
+<p> <img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909122119051.png" alt="image-20210909122119051"></p>
+<p>在这颗递归树中，我们进行了多次的重复计算。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; memo;</span><br><span class="line"><span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 记忆化搜索</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	num ++;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">    <span class="keyword">if</span> ( memo[n] == <span class="number">-1</span>)</span><br><span class="line">        memo[n] = fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> memo[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    num = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">40</span>;</span><br><span class="line">    memo = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n+<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> res = fib(n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者自下而上地解决问题</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">	</span><br><span class="line">	memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i ++)</span><br><span class="line">		memo[i] = memo[i<span class="number">-1</span>] + memo[i<span class="number">-2</span>];</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">return</span> memo[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>维基百科对于动态规划的定义：将原问题拆解成若干子问题，同时保存子问题的答案，使得每个子问题只求解一次，最终获得原问题的答案。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909154102612.png" alt="image-20210909154102612"></p>
+<h3 id="第一个动态规划问题"><a href="#第一个动态规划问题" class="headerlink" title="第一个动态规划问题"></a>第一个动态规划问题</h3><p><strong>LeetCode70.爬楼梯</strong></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909154440550.png" alt="image-20210909154440550"></p>
+<p>如果我们想要爬上 <em>n</em> 阶台阶，因为每次可能爬上一阶台阶也可能爬上两阶台阶，所以有两种可能：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909160218216.png" alt="image-20210909160218216"></p>
+<p>把两种可能相加即可。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909160333201.png" alt="image-20210909160333201"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; memo;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">calcWays</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>( n == <span class="number">1</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>( n == <span class="number">2</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>( memo[n] == <span class="number">-1</span>)</span><br><span class="line">            memo[n] = calcWays(n<span class="number">-1</span>) + calcWays(n<span class="number">-2</span>);</span><br><span class="line">		<span class="keyword">return</span> memo[n];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        memo = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n+<span class="number">1</span>,<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">return</span> calcWays(n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动态规划解法</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">memo</span><span class="params">(n+<span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        </span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n ; i ++)</span><br><span class="line">            memo[i] = memo[i - <span class="number">1</span>] + memo[i<span class="number">-2</span>];</span><br><span class="line">       	<span class="keyword">return</span> memo[n];</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="三角形最小路径和"><a href="#三角形最小路径和" class="headerlink" title="三角形最小路径和"></a>三角形最小路径和</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909180117809.png" alt="image-20210909180117809"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909180125935.png" alt="image-20210909180125935"></p>
+<p><strong>方法一：动态规划</strong></p>
+<p><strong>思路与算法</strong></p>
+<p>我们用 <code>f[i][j]</code> 表示从三角形顶部走到位置 (<em>i</em>, <em>j</em>) 的最小路径和。这里的位置 (<em>i</em>, <em>j</em>) 指的是三角形中第 <em>i</em> 行第 <em>j</em> 列（均从 0 开始编号）的位置。</p>
+<p>由于每一步只能移动到下一行 <strong>相邻的节点</strong> 上，因此要想走到位置 (<em>i</em>, <em>j</em>)，上一步就只能在位置 （<em>i</em> - 1, <em>j</em> - 1）或者位置（<em>i</em> - 1, <em>j</em>）。我们在这两个位置中选择一个路径和较小的来进行转移，状态方程为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][j] &#x3D; min(f[i-1][j-1], f[i-1][j]) + c[i][j]</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>c[i][j]</code> 表示位置 (<em>i</em>, <em>j</em>) 对应的元素值。</p>
+<p>注意第 <em>i</em> 行有 <em>i</em> + 1 个元素，它们对应的 <em>j</em> 的范围为 [0, i]。当 <em>j = 0</em> 或 <em>j</em> = <em>i</em> 时，上述状态转移方程中有一些项是没有意义的。例如当 <em>j</em> = 0 时，<code>f[i - 1][j - 1]</code> 没有意义，因此状态转移方程为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][0] &#x3D; f[i - 1][0] + c[i][0]</span><br></pre></td></tr></table></figure>
+
+<p>即当我们在第 <em>i</em> 行的最左侧时，我们只能从第 <em>i</em> - 1 行的最左侧移动过来。当 <code>j = i</code> 时，<code>f[i - 1][j]</code> 没有意义，因此状态转移方程为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][i] &#x3D; f[i - 1][i - 1] + c[i][i]</span><br></pre></td></tr></table></figure>
+
+<p>即当我们在第 <em>i</em> 行的最右侧时，我们只能从第 <em>i</em> - 1 行的最右侧移动过来。</p>
+<p>最终的答案即为 <code>f[n - 1][0]</code> 到 <code>f[n - 1][n - 1]</code> 中的最小值，其中 <em>n</em> 是三角形的行数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = triangle.size();</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">		f[<span class="number">0</span>][<span class="number">0</span>] = triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			f[i][<span class="number">0</span>] = f[i - <span class="number">1</span>][<span class="number">0</span>] + triangle[i][<span class="number">0</span>];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; ++j) &#123;</span><br><span class="line">				f[i][j] = min(f[i - <span class="number">1</span>][j - <span class="number">1</span>], f[i - <span class="number">1</span>][j]) + triangle[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">			f[i][i] = f[i - <span class="number">1</span>][i - <span class="number">1</span>] + triangle[i][i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> *min_element(f[n - <span class="number">1</span>].begin(), f[n - <span class="number">1</span>].end());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：动态规划 + 空间优化</strong></p>
+<p><strong>思路与算法</strong></p>
+<p>我们回顾方法一中的状态转移方程：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909182042912.png" alt="image-20210909182042912"></p>
+<p>可以发现，<code>f[i][j]</code> 只与 <code>f[i-1][..]</code> 有关，而与 <code>f[i - 2][..]</code> 及之前的状态无关，因此我们不必存储这些无关的状态。具体地，我们使用两个长度为 n 的一维数组进行转移，将 i 根据奇偶性映射到其中一个一维数组，那么 i - 1就映射到了另一个一维数组。这样我们使用这两个一维数组，交替地进行状态转移。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = triangle.size();</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; f(<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n));</span><br><span class="line">		f[<span class="number">0</span>][<span class="number">0</span>] = triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			<span class="keyword">int</span> curr = i % <span class="number">2</span>;</span><br><span class="line">			<span class="keyword">int</span> prev = <span class="number">1</span> - curr;</span><br><span class="line">			f[curr][<span class="number">0</span>] = f[prev][<span class="number">0</span>] + triangle[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; ++j) &#123;</span><br><span class="line">                f[curr][j] = min(f[prev][j - <span class="number">1</span>], f[prev][j]) + triangle[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            f[curr][i] = f[prev][i - <span class="number">1</span>] + triangle[i][i];</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">return</span> *min_element(f[(n - <span class="number">1</span>) % <span class="number">2</span>].begin(), f[(n - <span class="number">1</span>) % <span class="number">2</span>].end());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>上述方法的空间复杂度为 *O(n)*，使用 2n 的空间存储状态。我们还可以继续优化吗？</p>
+<p>答案是可以的。我们从 <em>i</em> 到 0 递减地枚举 <em>j</em>，这样我们只需要一个长度为 <em>n</em> 的一维数组 <em>f</em>，就可以完成状态转移。</p>
+<p>（为什么只有在递减地枚举 j 时，才能省去一个一维数组？当我们在计算位置 (i, j) 时，f[j + 1] 到 f[i] 已经是第 i 行的值，而 f[0] 到 f[j] 仍然是第 i-1 行的值。此时我们直接通过）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[j]&#x3D;min(f[j−1],f[j])+c[i][j]</span><br></pre></td></tr></table></figure>
+
+<p>（进行转移，恰好就是在 (i-1, j-1)和 (i-1, j)中进行选择。但如果我们递增地枚举 j，那么在计算位置 (i, j)时，f[0] 到 f[j-1]已经是第 i行的值。如果我们仍然使用上述状态转移方程，那么是在 (i, j-1) 和 (i-1, j) 中进行选择，就产生了错误。）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = triangle.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">f</span><span class="params">(n)</span></span>;</span><br><span class="line">        f[<span class="number">0</span>] = triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            f[i] = f[i - <span class="number">1</span>] + triangle[i][i];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt; <span class="number">0</span>; --j) &#123;</span><br><span class="line">                f[j] = min(f[j - <span class="number">1</span>], f[j]) + triangle[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            f[<span class="number">0</span>] += triangle[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *min_element(f.begin(), f.end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="最小路径和"><a href="#最小路径和" class="headerlink" title="最小路径和"></a>最小路径和</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909195736676.png" alt="image-20210909195736676"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909195752873.png" alt="image-20210909195752873"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909195801264.png" alt="image-20210909195801264"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (grid.size() == <span class="number">0</span> || grid[<span class="number">0</span>].size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> rows = grid.size(), columns = grid[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">auto</span> dp = <span class="built_in">vector</span> &lt; <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; &gt; (rows, <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; (columns));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; columns; j++) &#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j - <span class="number">1</span>] + grid[<span class="number">0</span>][j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; columns; j++) &#123;</span><br><span class="line">                dp[i][j] = min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]) + grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[rows - <span class="number">1</span>][columns - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +448,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-08 21:34:14 / 修改时间：21:51:07" itemprop="dateCreated datePublished" datetime="2021-09-08T21:34:14+08:00">2021-09-08</time>
+              <time title="创建时间：2021-09-08 21:34:14" itemprop="dateCreated datePublished" datetime="2021-09-08T21:34:14+08:00">2021-09-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-09 11:58:56" itemprop="dateModified" datetime="2021-09-09T11:58:56+08:00">2021-09-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -202,7 +479,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210908213513589.png" alt="image-20210908213513589"></p>
+          <h2 id="饼干分配"><a href="#饼干分配" class="headerlink" title="饼干分配"></a>饼干分配</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210908213513589.png" alt="image-20210908213513589"></p>
 <ul>
 <li>如 g = [1, 2, 3]，s = [1, 1]，结果为 1</li>
 <li>如 g = [1, 2]，s = [1, 2, 3]，结果为 2</li>
@@ -210,16 +487,40 @@
 <p>我们可以尝试将最大的饼干给最贪心的小朋友，这样做的好处是：如果我们最大的饼干可以满足最贪心的小朋友，我们留给下一个次贪心的小朋友的饼干，也是当前看来最大的饼干。从另外一方面，如果当前最大的饼干都不能满足最贪心的小朋友，也就是说所有的饼干都不能满足这个小朋友。</p>
 <p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210908214049043.png" alt="image-20210908214049043"></p>
 <p>我们要实现这样一个算法，必须将饼干这个数组和小朋友这个数组进行一下排序。其实，贪心算法永远涉及到我们每一次要取最大值或者最小值这样的操作，所以贪心算法和排序操作是分不开的。对于这一点，如果题目中没有提到数组是有序的，我们就必须进行一次排序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">	int findContentChildren(vector&lt;int&gt;&amp; g, vector&lt;int&gt;&amp; s) &#123;</span><br><span class="line">		</span><br><span class="line">		sort(g.begin(), g.end(), greater&lt;int&gt;());</span><br><span class="line">		sort(s.begin(), s.end(), greater&lt;int&gt;());</span><br><span class="line">		</span><br><span class="line">		int si &#x3D; 0, gi &#x3D; 0;</span><br><span class="line">		int res &#x3D; 0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">findContentChildren</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; g, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; s)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		sort(g.begin(), g.end(), greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">		sort(s.begin(), s.end(), greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> si = <span class="number">0</span>, gi = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>( gi &lt; g.size() &amp;&amp; si &lt; s.size() )&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>( s[si] &gt;= g[gi] )&#123;</span><br><span class="line">                res ++;</span><br><span class="line">                si ++;</span><br><span class="line">                gi ++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                gi ++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="判断子序列"><a href="#判断子序列" class="headerlink" title="判断子序列"></a>判断子序列</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909105251040.png" alt="image-20210909105251040"></p>
+<p>方法一：双指针</p>
+<p><strong>思路及算法</strong></p>
+<p>本题询问的是，<em>s</em> 是否是 <em>t</em> 的子序列，因此只要能找到任意一种 <em>s</em> 在 <em>t</em> 中出现的方式，即可认为 <em>s</em> 是 <em>t</em> 的子序列。</p>
+<p>而当我们从前往后匹配，可以发现每次贪心地匹配靠前的字符是最优决策。</p>
+<p>（假定当前需要匹配字符 c，而字符 c 在 t 中的位置 x<sub>1</sub> 和 x<sub>2</sub> 出现（x<sub>1</sub> &lt; x<sub>2</sub>），那么贪心取x<sub>1</sub> 是最优解，因为 x<sub>2</sub> 后面能取到的字符，x<sub>1</sub> 也都能取到，并且通过 x<sub>1</sub> 与 x<sub>2</sub> 之间的可选字符，更有希望能匹配成功。）</p>
+<p>这样，我们初始化两个指针 <em>i</em> 和 <em>j</em>，分别指向 <em>s</em> 和 <em>t</em> 的初始位置。每次贪心地匹配，匹配成功则 <em>i</em> 和 <em>j</em> 同时右移，匹配 <em>s</em> 的下一个位置，匹配失败则 <em>j</em> 右移， <em>i</em> 不变，尝试用 <em>t</em> 的下一个字符匹配 <em>s</em>。</p>
+<p>最终如果 <em>i</em> 移动到 <em>s</em> 的末尾，就说明 <em>s</em> 是 <em>t</em> 的子序列。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isSubsequence</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = s.length, m = t.length();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; n &amp;&amp; j &lt; m) &#123;</span><br><span class="line">			<span class="keyword">if</span> ( s[i] == t[j] ) &#123;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			j++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> i==n;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<p>方法二：动态规划</p>
+<p><strong>思路及算法</strong></p>
+<p>考虑前面的双指针的做法，我们注意到我们有大量的时间用于在 <em>t</em> 中找到下一个匹配字符。</p>
+<p>这样我们可以预处理出对于 <em>t</em> 的每一个位置，从该位置开始往后每一个字符第一次出现的位置。</p>
+<p>我们可以使用动态规划的方法实现预处理，令 <code>f[i][j]</code> 表示字符串 <em>t</em> 从位置 <em>i</em> 开始往后字符 <em>j</em> 第一次出现的位置。在进行状态转移时，如果 <em>t</em> 中的位置 <em>i</em> 的字符就是 <em>j</em>，那么 <code>f[i][j] = i</code> ，否则 <em>j</em> 出现在位置 <code>i + 1</code> 开始往后，即 <code>f[i][j] = f[i + 1][j]</code>，因此我们要倒过来进行动态规划，从后往前枚举 <em>i</em>。</p>
+<p>这样我们可以写出状态转移方程：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909112920995.png" alt="image-20210909112920995"></p>
+<p>假定下标从 0 开始，那么 <code>f[i][j]</code> 中有 0≤ i ≤ m - 1，对于边界状态 <code>f[m-1][..]</code>，我们置 <code>f[m][..]</code> 为 m，让 <code>f[m - 1][..]</code> 正常进行转义。这样如果 <code>f[i][j]=m</code>，则表示从位置 <em>i</em> 开始往后不存在字符 <em>j</em>。</p>
+<p>这样，我们可以利用 <em>f</em> 数组，每次 <em>O(1)</em> 地跳转到下一个位置，直到位置变为 <em>m</em> 或 <em>s</em> 中的每一个字符都匹配成功。</p>
+<p>（同时我们注意到，该解法对 <em>t</em> 的处理与 <em>s</em> 无关，且预处理完成后，可以利用预处理数组的信息，线性地算出任意一个字符串 <em>s</em> 是否为 <em>t</em> 的子串。这样我们就可以解决后续挑战了）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isSubsequence</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = s.size(), m = t.size();</span><br><span class="line">		</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;f(m + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">26</span>, <span class="number">0</span>));</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">			f[m][i] = m;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (t[i] == j + <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">					f[i][j] = i;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					f[i][j] = f[i + <span class="number">1</span>][j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> add = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (f[add][s[i] - <span class="string">&#x27;a&#x27;</span>] == m) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			add = f[add][s[i] - <span class="string">&#x27;a&#x27;</span>] + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="贪心算法与动态规划的关系"><a href="#贪心算法与动态规划的关系" class="headerlink" title="贪心算法与动态规划的关系"></a>贪心算法与动态规划的关系</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210909114317845.png" alt="image-20210909114317845"></p>
+<p>也可以把问题改为：给定一组区间，问最多保留多少个区间，可以让这些区间之间互相不重叠。</p>
+<p>暴力解法：找出所有子区间的组合，之后判断它不重叠。O( (2<sup>n</sup> * n ) )</p>
+<p>先要排序，方便判断不重叠。</p>
 
       
     </div>
@@ -811,170 +1112,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/" class="post-title-link" itemprop="url">primer阅读笔记——第一章</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-05 08:20:21" itemprop="dateCreated datePublished" datetime="2021-07-05T08:20:21+08:00">2021-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:28:24" itemprop="dateModified" datetime="2021-09-05T11:28:24+08:00">2021-09-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="编写一个简单的C-程序"><a href="#编写一个简单的C-程序" class="headerlink" title="编写一个简单的C++程序"></a>编写一个简单的C++程序</h2><p>每个 C++ 程序都包含一个或多个函数（function），其中一个必须命名为 <strong>main</strong>。操作系统通过调用 main 来运行 C++ 程序。下面是一个非常简单的 main 函数，它什么也不敢，只是返回给操作系统一个值：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个函数的定义包含四部分：返回类型（return type）、函数名（function name）、一个括号包围的形参列表（parameter list，允许为空）以及函数体（function body）。</p>
-<p>main 函数的返回类型必须为 int，即整数类型。int 类型是一种<strong>内置类型</strong>（built-in type），即语言自身定义的类型。</p>
-<p>函数定义的最后一部分是函数体，它是一个以左花括号（curly brace）开始，以右花括号结束的语句块（block of statements）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在大多数系统中，main 的返回值被用来指示状态。返回 0 表明成功，非 0 的返回值的含义由系统定义，通常用来指出错误类型。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/" class="post-title-link" itemprop="url">MySQL学习——一条SQL查询和更新语句是如何执行的？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-31 15:48:54" itemprop="dateCreated datePublished" datetime="2021-05-31T15:48:54+08:00">2021-05-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:29:14" itemprop="dateModified" datetime="2021-09-05T11:29:14+08:00">2021-09-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一条SQL查询语句是如何执行的？"><a href="#一条SQL查询语句是如何执行的？" class="headerlink" title="一条SQL查询语句是如何执行的？"></a>一条SQL查询语句是如何执行的？</h1><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210601090053511.png" alt="image-20210601090053511"></p>
-<p>大体来说，<strong>MySQL</strong> 可以分为 <strong>Server</strong> 层和存储引擎层两部分。</p>
-<p><strong>Server</strong> 层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 <strong>MySQL</strong> 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
-<p>而存储引擎层负责数据的存储和提取。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1046,7 +1183,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
