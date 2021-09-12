@@ -29,8 +29,22 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912181500898.png">
 <meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912183057251.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912202202890.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203319534.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203327945.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203334876.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204154695.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204210963.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204658127.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205123621.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205131106.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205139168.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205144002.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205431794.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205441152.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205448461.png">
 <meta property="article:published_time" content="2021-09-12T09:48:15.000Z">
-<meta property="article:modified_time" content="2021-09-12T11:38:20.547Z">
+<meta property="article:modified_time" content="2021-09-12T12:57:33.291Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912181500898.png">
@@ -184,7 +198,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-09-12 17:48:15 / 修改时间：19:38:20" itemprop="dateCreated datePublished" datetime="2021-09-12T17:48:15+08:00">2021-09-12</time>
+              <time title="创建时间：2021-09-12 17:48:15 / 修改时间：20:57:33" itemprop="dateCreated datePublished" datetime="2021-09-12T17:48:15+08:00">2021-09-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,16 +250,57 @@
 
 
 
+<h3 id="LeetCode-100-相同的树"><a href="#LeetCode-100-相同的树" class="headerlink" title="LeetCode 100. 相同的树"></a>LeetCode 100. 相同的树</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912202202890.png" alt="image-20210912202202890"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(TreeNode *p, TreeNode *q)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!p &amp;&amp; !q)	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">if</span> (!p || !q)	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">return</span> p-&gt;val == q-&gt;val &amp;&amp; check(p-&gt;left, q-&gt;right) &amp;&amp; check(p-&gt;right, q-&gt;left);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> check(root, root);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
+<h3 id="Leetcode-222-完全二叉树的节点个数"><a href="#Leetcode-222-完全二叉树的节点个数" class="headerlink" title="Leetcode 222.完全二叉树的节点个数"></a>Leetcode 222.完全二叉树的节点个数</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203319534.png" alt="image-20210912203319534"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203327945.png" alt="image-20210912203327945"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912203334876.png" alt="image-20210912203334876"></p>
+<ol>
+<li><p>遍历所有节点</p>
+<p>深度优先遍历树的所有节点，不过没有使用到完全二叉树的性质。</p>
+<ul>
+<li>时间复杂度为 O(n)，空间复杂度为 O(1)【不考虑递归调用栈】</li>
+<li>当然也可以使用广度优先遍历</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">countNodes</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> countNodes(root-&gt;left) + countNodes(root-&gt;right) + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>根据完全二叉树的性质简化遍历次数</p>
+<p><strong>这是一棵完全二叉树</strong>：除最后一层外，其余层全部铺满；且最后一层向左停靠</p>
+<ul>
+<li>如果根节点的左子树深度等于右子树深度，则说明<strong>左子树为满二叉树</strong></li>
+</ul>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204154695.png" alt="image-20210912204154695"></p>
+<ul>
+<li>如果根节点的左子树深度大于右子树深度，则说明<strong>右子树为满二叉树</strong></li>
+</ul>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204210963.png" alt="image-20210912204210963"></p>
+<ul>
+<li>如果知道子树是满二叉树，那么就可以轻松得到该子树的节点数目 <code>(1&lt;&lt;depth) - 1; // depth 为子树的深度</code>；为了加快幂的运算速度，可以使用移位操作符</li>
+<li>接着我们只需要接着对另一子树递归即可</li>
+<li>时间复杂度为O(logn * logn)，空间复杂度为 O(1)【不考虑递归调用栈】</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 统计树的深度</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">countLevels</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> levels = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (root) &#123;</span><br><span class="line">			root = root-&gt;left;</span><br><span class="line">			levels += <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> levels;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">countNodes</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">		<span class="number">2.</span> 利用完全二叉树性质简化遍历次数</span><br><span class="line">		<span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left_levels = countLevels(root-&gt;left);</span><br><span class="line">        <span class="keyword">int</span> right_levels = countLevels(root-&gt;right);</span><br><span class="line">        <span class="comment">// 左子树深度等于右子树深度, 则左子树是满二叉树</span></span><br><span class="line">        <span class="keyword">if</span>(left_levels == right_levels)&#123;</span><br><span class="line">            <span class="keyword">return</span> countNodes(root-&gt;right) + (<span class="number">1</span>&lt;&lt;left_levels);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> countNodes(root-&gt;left) + (<span class="number">1</span>&lt;&lt;right_levels);</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>二分查找</p>
+<p>根据完全二叉树的性质，我们可以清楚的知道：总节点数 = 倒数第二层以上的节点数 + 最后一层的节点数</p>
+<ul>
+<li><p>除最后一层外，这棵树为满二叉树，节点数为：2^depth_prev - 1，depth_prev为倒数第二层树的深度</p>
+</li>
+<li><p>最后一层的节点数的范围是 [1, 2^depth_prev]；并且依次靠左排列<br>所以现在的问题就转换为判断最后一层节点数</p>
+<p>先不说怎么判断一个节点是否存在，假设这个方法为is_exist()，我们先了解一下二分法如何使用：最后一层节点情况： 1代表非空节点，0代表空节点</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912204658127.png" alt="image-20210912204658127"></p>
+<h3 id="LeetCode110-Balanced-Binary-Tree"><a href="#LeetCode110-Balanced-Binary-Tree" class="headerlink" title="LeetCode110. Balanced Binary Tree"></a>LeetCode110. Balanced Binary Tree</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205123621.png" alt="image-20210912205123621"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205131106.png" alt="image-20210912205131106"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205139168.png" alt="image-20210912205139168"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205144002.png" alt="image-20210912205144002"></p>
+<h2 id="注意递归的终止条件"><a href="#注意递归的终止条件" class="headerlink" title="注意递归的终止条件"></a>注意递归的终止条件</h2><h3 id="LeetCode-112-Path-Sum"><a href="#LeetCode-112-Path-Sum" class="headerlink" title="LeetCode 112.Path Sum"></a>LeetCode 112.Path Sum</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205431794.png" alt="image-20210912205431794"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205441152.png" alt="image-20210912205441152"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912205448461.png" alt="image-20210912205448461"></p>
 
     </div>
 
@@ -323,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">二叉树和递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-104-Maximum-Depth-of-Binary-Tree"><span class="nav-number">1.1.1.</span> <span class="nav-text">Leetcode 104. Maximum Depth of Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-226-Invert-Binary-Tree"><span class="nav-number">1.1.2.</span> <span class="nav-text">Leetcode 226.Invert Binary Tree</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">二叉树和递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-104-Maximum-Depth-of-Binary-Tree"><span class="nav-number">1.1.1.</span> <span class="nav-text">Leetcode 104. Maximum Depth of Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-226-Invert-Binary-Tree"><span class="nav-number">1.1.2.</span> <span class="nav-text">Leetcode 226.Invert Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LeetCode-100-%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A0%91"><span class="nav-number">1.1.3.</span> <span class="nav-text">LeetCode 100. 相同的树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-222-%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0"><span class="nav-number">1.1.4.</span> <span class="nav-text">Leetcode 222.完全二叉树的节点个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LeetCode110-Balanced-Binary-Tree"><span class="nav-number">1.1.5.</span> <span class="nav-text">LeetCode110. Balanced Binary Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E9%80%92%E5%BD%92%E7%9A%84%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">注意递归的终止条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LeetCode-112-Path-Sum"><span class="nav-number">1.2.1.</span> <span class="nav-text">LeetCode 112.Path Sum</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
