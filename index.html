@@ -154,6 +154,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/" class="post-title-link" itemprop="url">二叉树和递归</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-12 17:48:15 / 修改时间：19:38:20" itemprop="dateCreated datePublished" datetime="2021-09-12T17:48:15+08:00">2021-09-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二叉树和递归"><a href="#二叉树和递归" class="headerlink" title="二叉树和递归"></a>二叉树和递归</h1><h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>每个递归应该包含两个部分。</p>
+<p>第一部分是递归终止条件。</p>
+<p>第二部分是递归过程。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912181500898.png" alt="image-20210912181500898"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +255,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-10 19:33:52 / 修改时间：20:39:42" itemprop="dateCreated datePublished" datetime="2021-09-10T19:33:52+08:00">2021-09-10</time>
+              <time title="创建时间：2021-09-10 19:33:52" itemprop="dateCreated datePublished" datetime="2021-09-10T19:33:52+08:00">2021-09-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-12 18:27:29" itemprop="dateModified" datetime="2021-09-12T18:27:29+08:00">2021-09-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -208,40 +292,14 @@
 
 <p>迭代器参数令算法不依赖与特定容器，但依赖于元素类型操作。</p>
 <p>泛型算法本身不会执行容器操作，它们只会运行于迭代器之上，执行迭代器操作。算法可能改变容器中元素的值，或者在容器内移动元素，但不会改变底层容器的大小（当算法操作插入迭代器时，迭代器可以向容器中添加元素，但算法自身不会进行这种操作）。</p>
-<h2 id="初识泛型算法"><a href="#初识泛型算法" class="headerlink" title="初识泛型算法"></a>初识泛型算法</h2><h3 id="只读算法"><a href="#只读算法" class="headerlink" title="只读算法"></a>只读算法</h3><p><code>accumulate</code> 函数（定义在头文件 <em>numeric</em> 中）用于计算一个序列的和。它接受三个参数，前两个参数指定需要求和的元素范围，第三个参数是和的初值（决定加法运算类型和返回值类型）。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对 vec 中的元素求和，和的初值是 0</span></span><br><span class="line"><span class="keyword">int</span> sum = accumulate(vec.cbegin(), vec.cend(), <span class="number">0</span>);</span><br><span class="line"><span class="built_in">string</span> sum = accumulate(v.cbegin(), v.cend(), <span class="built_in">string</span>(<span class="string">&quot;&quot;</span>));</span><br><span class="line"><span class="comment">// 错误：const char* 上没有定义 + 运算符</span></span><br><span class="line"><span class="built_in">string</span> sum = accumulate(v.cbegin(), v.cend(), <span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>建议在只读算法中使用 <code>cbegin</code> 和 <code>cend</code> 函数。</p>
-<p><code>equal</code> 函数用于确定两个序列是否保存相同的值。它接受三个迭代器参数，前两个参数指定第一个序列范围，第三个参数指定第二个序列的首元素。<code>equal</code> 函数假定第二个序列至少与第一个序列一样长。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// roster2 中的元素数目应该至少与 roster1 一样多</span></span><br><span class="line">equal(roster1.cbegin(), roster1.cend(), roster2.cbegin());</span><br></pre></td></tr></table></figure>
-
-<p>那些只接受一个单一迭代器来表示第二个序列的算法，都假定第二个序列至少与第一个序列一样长。</p>
-<h3 id="写容器元素的算法"><a href="#写容器元素的算法" class="headerlink" title="写容器元素的算法"></a>写容器元素的算法</h3><p><code>fill</code> 函数接受两个迭代器参数表示序列范围，还接受一个值作为第三个参数，它将给定值赋予范围内的每个元素。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将每个元素重置为 0</span></span><br><span class="line">fill(vec.begin(), vec.end(), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-
-<p><code>fill_n</code> 函数接受单个迭代器参数、一个计数值和一个值，它将给定值赋予迭代器指向位置开始的指定个元素。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将所有元素重置为0</span></span><br><span class="line">fill_n(vec.begin(), vec.size(), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-
-<p>向目的位置迭代器写入数据的算法都假定目的位置足够大，能容纳要写入的元素。</p>
-<p>插入迭代器是一种向容器内添加元素的迭代器。通过插入迭代器赋值时，一个与赋值号右侧值相等的元素会被添加到容器中。</p>
-<p><code>back_inserter</code> 函数（定义在头文件 <em>iterator</em> 中）接受一个指向容器的引用，返回与该容器绑定的插入迭代器。通过此迭代器赋值时，赋值运算符会调用 <code>push_back</code> 将一个具有给定值的元素添加到容器中。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;	<span class="comment">// 空向量</span></span><br><span class="line"><span class="keyword">auto</span> it = back_inserter(vec);	<span class="comment">// 通过它赋值会将元素添加到 vec 中</span></span><br><span class="line">*it = <span class="number">42</span>;	<span class="comment">// vec 中现在有一个元素，值为 42</span></span><br><span class="line"><span class="comment">// 正确：back_inserter 创建一个插入迭代器，可用来向 vec 添加元素</span></span><br><span class="line">fill_n(back_inserter(vec), <span class="number">10</span>, <span class="number">0</span>);	<span class="comment">// 添加 10 个元素到 vec</span></span><br></pre></td></tr></table></figure>
-
-<p><code>copy</code> 函数接受三个迭代器参数，前两个参数指定输入序列，第三个参数指定目的序列的起始位置。它将输入序列中的元素拷贝到目的序列中，返回目的位置序列器（递增后）的值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a1[] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> a2[<span class="keyword">sizeof</span>(a1) / <span class="keyword">sizeof</span>(*a1)];	<span class="comment">// a2 与 a1 大小一样</span></span><br><span class="line"><span class="comment">// ret 指向拷贝到 a2 的尾元素之后的位置</span></span><br><span class="line"><span class="keyword">auto</span> ret = copy(begin(a1), end(a1), a2);	<span class="comment">// 把 a1 的内容拷贝给 a2</span></span><br></pre></td></tr></table></figure>
-
-<p><code>replace</code> 函数接受四个参数，前两个迭代器参数指定输入序列，后两个参数指定要搜索的值和替换值。它将序列中所有等于第一个值的元素都替换为第二个值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将所有值为 0 的元素改为 42</span></span><br><span class="line">replace(ilst.begin(), ilst.end(), <span class="number">0</span>, <span class="number">42</span>);</span><br></pre></td></tr></table></figure>
-
-<p>相对于 <code>replace</code>，<code>replace_copy</code> 函数可以保留原序列不变。它接受第三个迭代器参数，指定调整后序列的保存位置。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 back_inserter 按需要增长目标序列</span></span><br><span class="line">replace_copy(ilst.cbegin(), ilst.cend(), back_inserter(ivec), <span class="number">0</span>, <span class="number">42</span>);</span><br><span class="line"><span class="comment">// 此调用后，ilst 并未改变，ivec 包含 ilst 的一份拷贝，不过原来在 ilst 中值为 0 的</span></span><br><span class="line"><span class="comment">// 元素在 ivec 中都变为 42</span></span><br></pre></td></tr></table></figure>
-
-<p>很多算法都提供“copy”版本，这些版本不会将新元素放回输入序列，而是创建一个新序列保存结果。</p>
-<h3 id="重排容器元素的算法"><a href="#重排容器元素的算法" class="headerlink" title="重排容器元素的算法"></a>重排容器元素的算法</h3><p><code>sort</code> 函数接受两个迭代器参数，指定排序范围。它利用元素类型的 <code>&lt;</code> 运算符重新排列元素。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">elimDumps</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;words)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 按字典序排序 words，以便查找重复单词</span></span><br><span class="line">	sort(words.begin(), words.end());</span><br><span class="line">	<span class="comment">// unique 重排输入范围，使得每个单词只出现一次</span></span><br><span class="line">	<span class="comment">// 排列在范围的前部，返回指向不重复区域之后一个位置的迭代器</span></span><br><span class="line">	<span class="keyword">auto</span> end_unique = unique(words.begin(), word.end());</span><br><span class="line">	<span class="comment">// 使用向量操作 erase 删除重复单词</span></span><br><span class="line">	word.erase(end_unique, word.end());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>unique</code> 函数重排输入序列，消除相邻的重复项，返回指向不重复值范围末尾的迭代器。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1241,10 +1299,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-09 12:00:12 / 修改时间：21:26:17" itemprop="dateCreated datePublished" datetime="2021-09-09T12:00:12+08:00">2021-09-09</time>
+              <time title="创建时间：2021-09-09 12:00:12" itemprop="dateCreated datePublished" datetime="2021-09-09T12:00:12+08:00">2021-09-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-12 17:47:39" itemprop="dateModified" datetime="2021-09-12T17:47:39+08:00">2021-09-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1706,87 +1770,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%9B%9B%E7%AB%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%9B%9B%E7%AB%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">primer阅读笔记——第四章表达式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-13 08:43:18" itemprop="dateCreated datePublished" datetime="2021-07-13T08:43:18+08:00">2021-07-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:28:54" itemprop="dateModified" datetime="2021-09-05T11:28:54+08:00">2021-09-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>表达式由一个或多个运算对象组成，对表达式求值将得到一个结果。字面值和变量是最简单的表达式，其结果就是字面值和变量的值。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%9B%9B%E7%AB%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1858,7 +1841,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
