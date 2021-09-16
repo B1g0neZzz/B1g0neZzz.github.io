@@ -28,7 +28,7 @@
 <meta property="og:description" content="动态内存程序用堆（heap）来存储动态分配（dynamically allocate）的对象。动态对象的生存期由程序控制。 动态内存与智能指针C++ 中的动态内存管理通过一对运算符完成：new 在动态内存中为对象分配空间并返回指向该对象的指针，可以选择对对象进行初始化；delete 接受一个动态对象的指针，销毁该对象并释放与之关联的内存。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-13T04:35:01.000Z">
-<meta property="article:modified_time" content="2021-09-15T04:06:51.256Z">
+<meta property="article:modified_time" content="2021-09-15T13:07:41.532Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-15 12:06:51" itemprop="dateModified" datetime="2021-09-15T12:06:51+08:00">2021-09-15</time>
+                <time title="修改时间：2021-09-15 21:07:41" itemprop="dateModified" datetime="2021-09-15T21:07:41+08:00">2021-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -429,18 +429,182 @@
 </tbody></table>
 <p><code>release</code> 函数返回 <code>unique_ptr</code> 当前保存的指针并将其置为空。</p>
 <p><code>reset</code> 函数成员接受一个可选的指针参数，重新设置 <code>unique_ptr</code> 保存的指针。如果 <code>unique_ptr</code> 不为空，则它原来指向的对象会被释放。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将所有权从 p1（指向 string Stegosaurus）转移给 p2</span></span><br><span class="line"><span class="built_in">unique_ptr</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将所有权从 p1（指向 string Stegosaurus）转移给 p2</span></span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p2</span><span class="params">(p1.release())</span></span>;	<span class="comment">// release 将 p1 置为空</span></span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p3</span><span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">&quot;Trex&quot;</span>))</span></span>;</span><br><span class="line"><span class="comment">// 将所有权从 p3 转移给 p2</span></span><br><span class="line">p2.reset(p3.release());	<span class="comment">// reset 释放了 p2 原来指向的内存</span></span><br></pre></td></tr></table></figure>
+
+<p>调用 <code>release</code> 会切断 <code>unique_ptr</code> 和它原来管理的对象之间的联系。<code>release</code> 返回的指针通常被用来初始化另一个智能指针或给智能指针赋值。如果没有用另一个智能指针保存 <code>release</code> 返回的指针，程序就要负责资源的释放。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p2.release();	<span class="comment">// 错误：p2 不会释放内存，而且我们丢失了指针</span></span><br><span class="line"><span class="keyword">auto</span> p = p2.release();	<span class="comment">// 正确，但我们必须记得 delete(p)</span></span><br></pre></td></tr></table></figure>
+
+<p>不能拷贝 <code>unique_ptr</code> 的规则有一个例外：可以拷贝或赋值一个即将被销毁的 <code>unique_ptr</code>（移动构造、移动赋值）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">clone</span><span class="params">(<span class="keyword">int</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ret</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(p))</span></span>;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>老版本的标准库包含了一个名为 <code>auto_ptr</code> 的类。</p>
+<p>类似 <code>shared_ptr</code> ，默认情况下 <code>unique_ptr</code> 用 <code>delete</code> 释放其指向的对象。 <code>unique_ptr</code> 的删除器同样可以重载，但 <code>unique_ptr</code> 管理删除器的方式与 <code>shared_ptr</code> 不同。定义 <code>unique_ptr</code> 时必须在尖括号中提供删除器类型。创建或 <code>reset</code> 这种 <code>unique_ptr</code> 类型的对象时，必须提供一个指定类型的可调用对象（删除器）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// p 指向一个类型为 objT 的对象，并使用一个类型为 delT 的对象释放 objT 对象</span></span><br><span class="line"><span class="comment">// 它会调用一个名为 fcn 的 delT 类型对象</span></span><br><span class="line">unique_ptr&lt;objT, delT&gt; p (new objT, fcn);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(destination &amp;d <span class="comment">/* 其他需要的参数 */</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    connection c = connect(&amp;d);	<span class="comment">// 打开连接</span></span><br><span class="line">    <span class="comment">// 当 p 被销毁时，连接将会关闭</span></span><br><span class="line">    unique_ptr&lt;connection, decltype(end_connection)*&gt; p(&amp;c, end_connection);</span><br><span class="line">    <span class="comment">// 使用连接</span></span><br><span class="line">    <span class="comment">// 当 f 退出时（即使是由于异常而退出），connection 会被正确使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p><code>weak_ptr</code> 是一种不控制所指向对象生存期的智能指针，它指向一个由 <code>shared_ptr</code> 管理的对象。将 <code>weak_ptr</code> 绑定到 <code>shared_ptr</code> 不会改变 <code>shared_ptr</code> 的引用计数。如果 <code>shared_ptr</code> 被销毁，即使有 <code>weak_ptr</code> 指向对象，对象仍然有可能被释放。</p>
+<p><code>weak_ptr</code> 操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>weak_ptr&lt;T&gt; w</code></td>
+<td>空<code>weak_ptr</code>可以指向类型为<code>T</code>的对象</td>
+</tr>
+<tr>
+<td><code>weak_ptr&lt;T&gt; w(sp)</code></td>
+<td>与<code>shared_ptr</code>指向相同对象的<code>weak_ptr</code>。<code>T</code>必须能转换为<code>sp</code>指向的类型。</td>
+</tr>
+<tr>
+<td><code>w = p</code></td>
+<td><code>p</code>可以是<code>shared_ptr</code>或一个<code>weak_ptr</code>。赋值后<code>w</code>和<code>p</code>共享对象。</td>
+</tr>
+<tr>
+<td><code>w.reset()</code></td>
+<td>将<code>w</code>置为空。</td>
+</tr>
+<tr>
+<td><code>w.use_count()</code></td>
+<td>与<code>w</code>共享对象的<code>shared_ptr</code>的数量。</td>
+</tr>
+<tr>
+<td><code>w.expired()</code></td>
+<td>若<code>w.use_count()</code>为0，返回<code>true</code>，否则返回<code>false</code></td>
+</tr>
+<tr>
+<td><code>w.lock()</code></td>
+<td>如果<code>expired</code>为<code>true</code>，则返回一个空<code>shared_ptr</code>；否则返回一个指向<code>w</code>的对象的<code>shared_ptr</code>。</td>
+</tr>
+</tbody></table>
+<p>创建一个 <code>weak_ptr</code> 时，需要使用 <code>shared_ptr</code> 来初始化它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> p = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">42</span>);</span><br><span class="line"><span class="function">weak_ptr&lt;<span class="keyword">int</span>&gt; <span class="title">wp</span><span class="params">(p)</span></span>;	<span class="comment">// wp 弱共享 p；p 的引用计数未改变</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>weak_ptr</code> 访问对象时，必须先调用 <code>lock</code> 函数。该函数检查 <code>weak_ptr</code> 指向的对象是否仍然存在。如果存在，则返回指向共享对象的 <code>shared_ptr</code> ，否则返回空指针。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; np = wp.lock() )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 如果 np 不为空则条件成立</span></span><br><span class="line">	<span class="comment">// 在 if 中，np 与 p 共享对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h2><p>使用 <code>allocator</code> 类可以将内存分配和初始化过程分离。这通常会提供更好的性能和更灵活的内存管理能力。</p>
+<h3 id="new-和数组"><a href="#new-和数组" class="headerlink" title="new 和数组"></a>new 和数组</h3><p>使用 <code>new</code> 分配对象数组时需要在类型名之后跟一对方括号，在其中指明要分配的对象数量（必须是整型，但不必是常量）。<code>new</code> 返回指向第一个对象的指针（元素类型）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用 get_size 确定分配多少个 int</span></span><br><span class="line"><span class="keyword">int</span> *pia = <span class="keyword">new</span> <span class="keyword">int</span>[get_size()];	<span class="comment">// pia 指向第一个 int</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 <code>new</code> 分配的内存并不是数组类型，因此不能对动态数组调用 <code>begin</code> 和 <code>end</code>，也不能用范围 <code>for</code> 语句处理其中的元素。</p>
+<p>默认情况下，<code>new</code> 分配的对象是默认初始化的。可以对数组中的元素进行值初始化，方法是在大小后面跟一对空括号 <code>()</code>。在新标准中，还可以提供一个元素初始化器的花括号列表。如果初始化器数量大于元素数量，则 <code>new</code> 表达式失败，不会分配任何内存，并抛出 <code>bad_array_new_length</code> 异常。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *pia = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];		<span class="comment">// 10 个未初始化的 int</span></span><br><span class="line"><span class="keyword">int</span> *pia2 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>]();	<span class="comment">// 10 个值初始化为 0 的 int</span></span><br><span class="line"><span class="built_in">string</span> *psa = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>];	<span class="comment">// 10 个空 string</span></span><br><span class="line"><span class="built_in">string</span> *psa2 = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>]();	<span class="comment">// 10 个空 string</span></span><br><span class="line"><span class="comment">// 10 个 int 分别用列表中对应的初始化器初始化</span></span><br><span class="line"><span class="keyword">int</span> *pia3 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>]&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="comment">// 10 个 string，前 4 个用给定的初始化器初始化，剩余的进行值初始化</span></span><br><span class="line"><span class="built_in">string</span> *psa3 = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>]&#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;an&quot;</span>, <span class="string">&quot;the&quot;</span>, <span class="built_in">string</span>(<span class="number">3</span>, <span class="string">&#x27;x&#x27;</span>)&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>虽然可以使用空括号对 <code>new</code> 分配的数组元素进行值初始化，但不能在括号中指定初始化器。这意味着不能用 <code>auto</code> 分配数组。</p>
+<p>动态分配一个空数组是合法的，此时 <code>new</code> 会返回一个合法的非空指针。对于零长度的数组来说，该指针类似尾后指针，不能解引用。</p>
+<p>使用 <code>delete[]</code> 释放动态数组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> p;	<span class="comment">// p 必须指向一个动态分配的对象或为空</span></span><br><span class="line"><span class="keyword">delete</span> [] pa;	<span class="comment">//pa 必须指向一个动态分配的数组或为空</span></span><br></pre></td></tr></table></figure>
+
+<p>如果在 <code>delete</code> 数组指针时忘记添加方括号，或者在 <code>delete</code> 单一对象时使用了方括号，编译器很可能不会给出任何警告，程序可能会在执行过程中行为异常。</p>
+<p><code>unique_ptr</code> 可以直接管理动态数组，定义时需要在对象类型后添加一对空方括号 <code>[]</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// up 指向一个包含 10 个未初始化 int 的数组</span></span><br><span class="line">unique_ptr&lt;int[]&gt; up(new int[10]);</span><br><span class="line">up.release();	<span class="comment">// 自动使用 delete[] 销毁其指针</span></span><br></pre></td></tr></table></figure>
 
 
 
+<p>指向数组的 <code>unique_ptr</code>：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>unique_ptr&lt;T[]&gt; u</code></td>
+<td><code>u</code>可以指向一个动态分配的数组，整数元素类型为<code>T</code></td>
+</tr>
+<tr>
+<td><code>unique_ptr&lt;T[]&gt; u(p)</code></td>
+<td><code>u</code>指向内置指针<code>p</code>所指向的动态分配的数组。<code>p</code>必须能转换为类型<code>T*</code>。</td>
+</tr>
+<tr>
+<td><code>u[i]</code></td>
+<td>返回<code>u</code>拥有的数组中位置<code>i</code>处的对象。<code>u</code>必须指向一个数组。</td>
+</tr>
+</tbody></table>
+<p>与 <code>unique_ptr</code> 不同，<code>shared_ptr</code> 不直接支持动态数组管理。如果想用 <code>shared_ptr</code> 管理动态数组，必须提供自定义的删除器。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了使用 shared_ptr，必须提供一个删除器</span></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">sp</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>], [](<span class="keyword">int</span> *p) &#123; <span class="keyword">delete</span>[] p; &#125; )</span></span>;</span><br><span class="line">sp.reset();		<span class="comment">// 使用我们提供的 lambda 释放数组，它使用 delete[]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>shared_ptr</code> 未定义下标运算符，智能指针类型也不支持指针算术运算。因此如果想访问 <code>shared_ptr</code> 管理的数组元素，必须先用 <code>get</code> 获取内置指针，再用内置指针进行访问。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// shared_ptr 未定义下标运算符，并且不支持指针的算术运算</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i != <span class="number">10</span>; ++i )</span><br><span class="line">	*(sp.get() + i) = i;	<span class="comment">// 使用 get 获取一个内置指针</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h3 id="allocator-类"><a href="#allocator-类" class="headerlink" title="allocator 类"></a>allocator 类</h3><p><code>allocator</code> 类是一个模板，定义时必须指定其可以分配的对象类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">allocator&lt;<span class="built_in">string</span>&gt; alloc;	<span class="comment">// 可以分配 string 的 allocator 对象</span></span><br><span class="line"><span class="keyword">auto</span> <span class="keyword">const</span> p = alloc.allocate(n);	<span class="comment">// 分配 n 个未初始化的 string</span></span><br></pre></td></tr></table></figure>
+
+<p>标准库 <code>allocator</code> 类及其算法：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>allocator&lt;T&gt; a</code></td>
+<td>定义了一个名为<code>a</code>的<code>allocator</code>对象，它可以为类型为<code>T</code>的对象分配内存</td>
+</tr>
+<tr>
+<td><code>a.allocate(n)</code></td>
+<td>分配一段原始的、未构造的内存，保存<code>n</code>个类型为<code>T</code>的对象。</td>
+</tr>
+<tr>
+<td><code>a.deallocate(p, n)</code></td>
+<td>释放从<code>T*</code>指针<code>p</code>中地址开始的内存，这块内存保存了<code>n</code>个类型为<code>T</code>的对象；<code>p</code>必须是一个先前由<code>allocate</code>返回的指针。且<code>n</code>必须是<code>p</code>创建时所要求的大小。在调用<code>deallocate</code>之前，用户必须对每个在这块内存中创建的对象调用<code>destroy</code>。</td>
+</tr>
+<tr>
+<td><code>a.construct(p, args)</code></td>
+<td><code>p</code>必须是一个类型是<code>T*</code>的指针，指向一块原始内存；<code>args</code>被传递给类型为<code>T</code>的构造函数，用来在<code>p</code>指向的内存中构造一个对象。</td>
+</tr>
+<tr>
+<td><code>a.destroy(p)</code></td>
+<td><code>p</code>为<code>T*</code>类型的指针，此算法对<code>p</code>指向的对象执行析构函数。</td>
+</tr>
+</tbody></table>
+<p><code>allocator</code> 分配的内存是未构造的，程序需要在此内存中构造对象。新标准库的 <code>construct</code> 函数接受一个指针和零或多个额外参数，在给定位置构造一个元素。额外参数用来初始化构造的对象，必须与对象类型相匹配。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> q = p;		<span class="comment">// q 指向最后构造的元素之后的位置</span></span><br><span class="line">alloc.construct(q++);	<span class="comment">// *q 为空字符串</span></span><br><span class="line">alloc.construct(q++, <span class="number">10</span>, <span class="string">&#x27;c&#x27;</span>);	<span class="comment">// *q 为 cccccccccc</span></span><br><span class="line">alloc.construct(q++, <span class="string">&quot;hi&quot;</span>);		<span class="comment">// *q 为 hi!</span></span><br></pre></td></tr></table></figure>
+
+<p>直接使用 <code>allocator</code> 返回的未构造内存是错误行为，其结果是未定义的。 </p>
+<p>对象使用完后，必须对每个构造的元素调用 <code>destroy</code> 进行销毁。<code>destroy</code> 函数接受一个指针，对指向的对象进行析构函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (q != p)</span><br><span class="line">	alloc.destroy(--q);	<span class="comment">// 释放我们真正构造的 string</span></span><br></pre></td></tr></table></figure>
+
+<p><code>deallocate</code> 函数用于释放 <code>allocator</code> 分配的内存空间。传递给 <code>deallocate</code> 的指针不能为空，它必须指向由 <code>allocator</code> 分配的内存。而且传递给 <code>deallocate</code> 的大小参数必须与调用 <code>allocator</code> 分配内存时提供的大小参数相一致。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alloc.deallocate(p, n);</span><br></pre></td></tr></table></figure>
+
+<p><code>allocator</code> 伴随算法：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>uninitialized_copy(b, e, b2)</code></td>
+<td>从迭代器<code>b</code>和<code>e</code>给定的输入范围中拷贝元素到迭代器<code>b2</code>指定的未构造的原始内存中。<code>b2</code>指向的内存必须足够大，能够容纳输入序列中元素的拷贝。</td>
+</tr>
+<tr>
+<td><code>uninitialized_copy_n(b, n, b2)</code></td>
+<td>从迭代器<code>b</code>指向的元素开始，拷贝<code>n</code>个元素到<code>b2</code>开始的内存中。</td>
+</tr>
+<tr>
+<td><code>uninitialized_fill(b, e, t)</code></td>
+<td>在迭代器<code>b</code>和<code>e</code>执行的原始内存范围中创建对象，对象的值均为<code>t</code>的拷贝。</td>
+</tr>
+<tr>
+<td><code>uninitialized_fill_n(b, n, t)</code></td>
+<td>从迭代器<code>b</code>指向的内存地址开始创建<code>n</code>个对象。<code>b</code>必须指向足够大的未构造的原始内存，能够容纳给定数量的对象。</td>
+</tr>
+</tbody></table>
+<p>传递给 <code>uninitialized_copy</code> 的目的位置迭代器必须指向未构造的内存，它直接在给定位置构造元素。返回（递增后的）目的位置迭代器。</p>
 
     </div>
 
@@ -521,7 +685,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">动态内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E4%B8%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.1.</span> <span class="nav-text">动态内存与智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-ptr-%E7%B1%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">shared_ptr 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%AE%A1%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">1.1.2.</span> <span class="nav-text">直接管理内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-ptr-%E5%92%8C-new-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">shared_ptr 和 new 结合使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="nav-number">1.1.4.</span> <span class="nav-text">智能指针和异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-ptr"><span class="nav-number">1.1.5.</span> <span class="nav-text">unique_ptr</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">动态内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E4%B8%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.1.</span> <span class="nav-text">动态内存与智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-ptr-%E7%B1%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">shared_ptr 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%AE%A1%E7%90%86%E5%86%85%E5%AD%98"><span class="nav-number">1.1.2.</span> <span class="nav-text">直接管理内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-ptr-%E5%92%8C-new-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">shared_ptr 和 new 结合使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="nav-number">1.1.4.</span> <span class="nav-text">智能指针和异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-ptr"><span class="nav-number">1.1.5.</span> <span class="nav-text">unique_ptr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weak-ptr"><span class="nav-number">1.1.6.</span> <span class="nav-text">weak_ptr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">1.2.</span> <span class="nav-text">动态数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-%E5%92%8C%E6%95%B0%E7%BB%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">new 和数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allocator-%E7%B1%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">allocator 类</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -537,14 +701,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

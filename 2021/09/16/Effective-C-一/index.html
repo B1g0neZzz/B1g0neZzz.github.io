@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="让自己习惯 C++条款 01：视 C++ 为一个语言联邦如何理解 C++ 语言？将 C++ 视为一个由相关语言组成的联邦而非单一语言。 C++ 主要的次语言：  C Object-oriented C++ Template C++ STL  例如对内置（也就是 C-like）类型而言 pass-by-value 通常比 pass-by-reference 高效，但当从 C part of C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective C++(一)">
+<meta property="og:url" content="http://example.com/2021/09/16/Effective-C-%E4%B8%80/index.html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="让自己习惯 C++条款 01：视 C++ 为一个语言联邦如何理解 C++ 语言？将 C++ 视为一个由相关语言组成的联邦而非单一语言。 C++ 主要的次语言：  C Object-oriented C++ Template C++ STL  例如对内置（也就是 C-like）类型而言 pass-by-value 通常比 pass-by-reference 高效，但当从 C part of C++">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-16T03:00:53.000Z">
+<meta property="article:modified_time" content="2021-09-16T04:28:14.448Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/16/Effective-C-%E4%B8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Effective C++(一) | Taiichi's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Effective-C-%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Effective C++(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-16 11:00:53 / 修改时间：12:28:14" itemprop="dateCreated datePublished" datetime="2021-09-16T11:00:53+08:00">2021-09-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Effective-C/" itemprop="url" rel="index"><span itemprop="name">Effective C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="让自己习惯-C"><a href="#让自己习惯-C" class="headerlink" title="让自己习惯 C++"></a>让自己习惯 C++</h1><h2 id="条款-01：视-C-为一个语言联邦"><a href="#条款-01：视-C-为一个语言联邦" class="headerlink" title="条款 01：视 C++ 为一个语言联邦"></a>条款 01：视 C++ 为一个语言联邦</h2><h3 id="如何理解-C-语言？"><a href="#如何理解-C-语言？" class="headerlink" title="如何理解 C++ 语言？"></a>如何理解 C++ 语言？</h3><p>将 C++ 视为一个由相关语言组成的联邦而非单一语言。</p>
+<p>C++ 主要的次语言：</p>
+<ul>
+<li>C</li>
+<li>Object-oriented C++</li>
+<li>Template C++</li>
+<li>STL</li>
+</ul>
+<p>例如对内置（也就是 <strong>C-like</strong>）类型而言 <strong>pass-by-value</strong> 通常比 <strong>pass-by-reference</strong> 高效，但当从 <strong>C part of C++</strong> 移往 <strong>Object-Oriented C++<strong>，由于用户自定义（user-defined）构造函数和析构函数的存在，</strong>pass-by-reference-to-const</strong> 往往更好。运用 <strong>Template C++</strong> 时尤其如此，因此彼时甚至不知道处理的对象的类型。然而一旦跨入 <strong>STL</strong>，迭代器和函数对象都是在 <strong>C</strong> 指针之上塑造出来的，所以对 <strong>STL</strong> 的迭代器和函数对象而言，旧式的 <strong>C pass-by-value</strong> 守则再次适用。</p>
+<p><strong>C++ 高效编程守则视状况而变化，取决于适用 C++ 的哪一部分。</strong></p>
+<span id="more"></span>
+
+
+
+<h2 id="条款-02：尽量以-const-enum-inline-替换-define"><a href="#条款-02：尽量以-const-enum-inline-替换-define" class="headerlink" title="条款 02：尽量以 const, enum, inline 替换 #define"></a>条款 02：尽量以 const, enum, inline 替换 #define</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ASPECT_RATIO 1.653</span></span><br></pre></td></tr></table></figure>
+
+<p>记号名称 <code>ASPECT_RATIO</code> 也许从未被编译器看见；也许在编译器开始处理源码之前它就被预处理器移走了。于是记号名称 <code>ASPECT_RATIO</code> 有可能没进入记号表（symbol table）内。运用此常量但获得一个编译错误信息时，错误信息也许会提到 <code>1.653</code> 而不是 <code>ASPECT_RATIO</code> 。如果 <code>ASPECT_RATIO</code> 被定义在一个非自己所写的头文件内，追踪问题将会毫无头绪。</p>
+<h3 id="或者说，尽量多用编译器，少用预处理器"><a href="#或者说，尽量多用编译器，少用预处理器" class="headerlink" title="或者说，尽量多用编译器，少用预处理器"></a>或者说，尽量多用编译器，少用预处理器</h3><p>解决之道是 <strong>以一个常量替换上述的宏（#define）</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> AspectRatio = <span class="number">1.653</span>;</span><br></pre></td></tr></table></figure>
+
+<p>作为一个语言常量，<code>AspectRatio</code> 肯定会被编译器看到，当然就会进入记号表内。</p>
+<h3 id="以常量替换-define，常量指针和类的常数需要另加考虑。"><a href="#以常量替换-define，常量指针和类的常数需要另加考虑。" class="headerlink" title="以常量替换 #define，常量指针和类的常数需要另加考虑。"></a>以常量替换 <code>#define</code>，常量指针和类的常数需要另加考虑。</h3><ul>
+<li><strong>定义常量指针</strong>，将指针和它指向的数据都定义为 <code>const</code>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> authorName = <span class="string">&quot;Scott Meyers&quot;</span>;</span><br><span class="line"><span class="comment">// 在 C++ 中可以更方便地使用 std::string 这样基于 char* 类型的推广</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">authorName</span><span class="params">(<span class="string">&quot;Scott Meyers&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>class</strong> 专属常量。声明为类的私有静态成员，这样既保证变量只能被这个类的对象接触到，又不会生成多个拷贝。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GamePlayer</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> NumTurns = <span class="number">5</span>;		<span class="comment">// 常量声明式</span></span><br><span class="line">	<span class="keyword">int</span> scores[NumTurns];		<span class="comment">// 使用该常量</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>，因为此处是类的成员声明范围内，所以上面只是变量的声明和初始化，而并非定义，因此如果想获取变量的地址，需要在别处另加定义。这个定义不能有任何赋值语句，因为在类内已经规定为 <code>const</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> GamePlayer::numPlayer;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="枚举技巧"><a href="#枚举技巧" class="headerlink" title="枚举技巧"></a>枚举技巧</h3><p>试想当你在一个类内声明某变量，但你的编译器不允许在声明时赋值初始化，同时接下来的某个语句却需要用到这个变量的具体数值，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> noPlayer;</span><br><span class="line"><span class="keyword">int</span> scores[noPlayer];</span><br></pre></td></tr></table></figure>
+
+<p>此时编译器便会报错，需要在编译期间 <code>noPlayer</code> 有具体数值，这个时候就需要使用如下技巧：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span>noPlayer = <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> scores[noPlayer];</span><br></pre></td></tr></table></figure>
+
+<p>这样编译器就能顺利通过，因为 <code>enum</code> 可以被当成 <code>int</code> 类型来使用。</p>
+<p>但注意 <code>enum</code> 类型在内存中没有实体，无法取得 <code>enum</code> 类型的地址，因此这个方法更相当于取一个本地的 <code>#define</code> 数值。</p>
+<h3 id="对于-define-的宏函数，尽量使用-inline-修饰的函数来代替-define"><a href="#对于-define-的宏函数，尽量使用-inline-修饰的函数来代替-define" class="headerlink" title="对于 #define 的宏函数，尽量使用 inline 修饰的函数来代替 #define"></a>对于 <code>#define</code> 的宏函数，尽量使用 <code>inline</code> 修饰的函数来代替 <code>#define</code></h3><p><code>inline</code> 关键字用来建议编译器把某频繁调用的函数当做内联函数，即在每次函数调用时，直接把函数代码放在函数调用语句的地址，减少堆栈浪费。</p>
+<p>如果为了减少堆栈资源的使用，把某个频繁调用的函数规定为宏，例如用 <em>a</em> 和 <em>b</em> 的最大值来调用某函数 <em>f</em>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CALL_MAX(a, b) f( (a) &gt; (b) ? (a) : (b))</span></span><br></pre></td></tr></table></figure>
+
+<p>但这样的做法其实相当不好，因为第一需要把所有实参加上小括号，这样的代码相当不雅观，而且也会导致未知的结果：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">0</span>;</span><br><span class="line">CALL_MAX(++a, b);	<span class="comment">// a 增加了两次</span></span><br><span class="line">CALL_MAX(++a, b + <span class="number">10</span>);	<span class="comment">// a 增加了一次</span></span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">callMax</span><span class="params">(<span class="keyword">const</span> T&amp; a, <span class="keyword">const</span> T&amp; b)</span></span>&#123;</span><br><span class="line">	f(a&gt;b ? a : b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结：</strong></p>
+<ul>
+<li>对于单纯常量，最好以 <code>const</code> 对象或 <code>enums</code> 替换 <code>#defines</code>。</li>
+<li>对于形似函数的宏（macros），最好改用 <code>inline</code> 函数替换 <code>#defines</code>。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" rel="prev" title="primer阅读笔记——第十三章拷贝控制">
+      <i class="fa fa-chevron-left"></i> primer阅读笔记——第十三章拷贝控制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A9%E8%87%AA%E5%B7%B1%E4%B9%A0%E6%83%AF-C"><span class="nav-number">1.</span> <span class="nav-text">让自己习惯 C++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-01%EF%BC%9A%E8%A7%86-C-%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%AF%AD%E8%A8%80%E8%81%94%E9%82%A6"><span class="nav-number">1.1.</span> <span class="nav-text">条款 01：视 C++ 为一个语言联邦</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-C-%E8%AF%AD%E8%A8%80%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">如何理解 C++ 语言？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-02%EF%BC%9A%E5%B0%BD%E9%87%8F%E4%BB%A5-const-enum-inline-%E6%9B%BF%E6%8D%A2-define"><span class="nav-number">1.2.</span> <span class="nav-text">条款 02：尽量以 const, enum, inline 替换 #define</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%96%E8%80%85%E8%AF%B4%EF%BC%8C%E5%B0%BD%E9%87%8F%E5%A4%9A%E7%94%A8%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%8C%E5%B0%91%E7%94%A8%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">或者说，尽量多用编译器，少用预处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%B8%B8%E9%87%8F%E6%9B%BF%E6%8D%A2-define%EF%BC%8C%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E7%B1%BB%E7%9A%84%E5%B8%B8%E6%95%B0%E9%9C%80%E8%A6%81%E5%8F%A6%E5%8A%A0%E8%80%83%E8%99%91%E3%80%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">以常量替换 #define，常量指针和类的常数需要另加考虑。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">枚举技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E-define-%E7%9A%84%E5%AE%8F%E5%87%BD%E6%95%B0%EF%BC%8C%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-inline-%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9D%A5%E4%BB%A3%E6%9B%BF-define"><span class="nav-number">1.2.4.</span> <span class="nav-text">对于 #define 的宏函数，尽量使用 inline 修饰的函数来代替 #define</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
