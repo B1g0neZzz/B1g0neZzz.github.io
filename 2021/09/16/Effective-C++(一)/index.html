@@ -23,16 +23,16 @@
   <meta name="description" content="让自己习惯 C++条款 01：视 C++ 为一个语言联邦如何理解 C++ 语言？将 C++ 视为一个由相关语言组成的联邦而非单一语言。 C++ 主要的次语言：  C Object-oriented C++ Template C++ STL  例如对内置（也就是 C-like）类型而言 pass-by-value 通常比 pass-by-reference 高效，但当从 C part of C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Effective C++(一)">
-<meta property="og:url" content="http://example.com/2021/09/16/Effective-C-%E4%B8%80/index.html">
+<meta property="og:url" content="http://example.com/2021/09/16/Effective-C++(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
 <meta property="og:description" content="让自己习惯 C++条款 01：视 C++ 为一个语言联邦如何理解 C++ 语言？将 C++ 视为一个由相关语言组成的联邦而非单一语言。 C++ 主要的次语言：  C Object-oriented C++ Template C++ STL  例如对内置（也就是 C-like）类型而言 pass-by-value 通常比 pass-by-reference 高效，但当从 C part of C++">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-09-16T03:00:53.000Z">
-<meta property="article:modified_time" content="2021-09-17T12:32:34.042Z">
+<meta property="article:modified_time" content="2021-09-18T04:15:29.562Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/09/16/Effective-C-%E4%B8%80/">
+<link rel="canonical" href="http://example.com/2021/09/16/Effective-C++(%E4%B8%80)/">
 
 
 <script id="page-configurations">
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Effective-C-%E4%B8%80/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Effective-C++(%E4%B8%80)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-17 20:32:34" itemprop="dateModified" datetime="2021-09-17T20:32:34+08:00">2021-09-17</time>
+                <time title="修改时间：2021-09-18 12:15:29" itemprop="dateModified" datetime="2021-09-18T12:15:29+08:00">2021-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -314,7 +314,94 @@
 
 
 
-<h3 id="成员函数的常量性"><a href="#成员函数的常量性" class="headerlink" title="成员函数的常量性"></a>成员函数的常量性</h3>
+<h3 id="成员函数的常量性"><a href="#成员函数的常量性" class="headerlink" title="成员函数的常量性"></a>成员函数的常量性</h3><p>C++ 标准对成员函数“常量性”的规定是数据常量性（bitwise constness），即不允许常量对象的成员数据被修改。C++ 编译器对此的检测也十分简单粗暴，只检查该成员函数有没有给成员数据的赋值操作。</p>
+<p>但如下情形，即使修改了某个数据，也可以通过编译器的检测：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> Text <span class="title">ct</span><span class="params">(<span class="string">&quot;Hello&quot;</span>)</span></span>;		<span class="comment">// 构造某常量对象</span></span><br><span class="line"><span class="keyword">char</span>* pc = &amp;ct[<span class="number">0</span>];			<span class="comment">// 取其指针</span></span><br><span class="line">*pc = <span class="string">&#x27;K&#x27;</span>;					<span class="comment">// 通过指针修改常量对象，编译不会报错，结果为“Kello”</span></span><br></pre></td></tr></table></figure>
+
+<p>数据常量性还有另一个局限性，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Text</span> &#123;</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="built_in">std</span>::<span class="keyword">size_t</span> <span class="title">length</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">char</span>* pText;</span><br><span class="line">		<span class="built_in">std</span>::<span class="keyword">size_t</span> length;</span><br><span class="line">		<span class="keyword">bool</span> lengthValid;</span><br><span class="line">....</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="keyword">size_t</span> <span class="title">Text::length</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!lengthValid)&#123;					<span class="comment">// 做某些错误检测</span></span><br><span class="line">		length = <span class="built_in">std</span>::<span class="built_in">strlen</span>(pText);</span><br><span class="line">		lengthValid = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> length;		<span class="comment">// 这行才是代码核心</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，<code>length()</code> 函数要做某些错误检测，因此可能会修改成员数据。即使真正的功能核心只是返回字符长度，编译器依然认为你可能会修改某些成员数据而报错。</p>
+<p>因此，更好的方法是<strong>逻辑常量性</strong>（Logical constness），即允许某些数据被修改，只要这些改动不会反映在外，例如，以上问题可以用 <code>mutable</code> 关键字来解决：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mutable</span> <span class="built_in">std</span>::<span class="keyword">size_t</span> length;</span><br><span class="line"><span class="keyword">mutable</span> <span class="keyword">bool</span> lengthValid;</span><br></pre></td></tr></table></figure>
+
+<p>这样成员函数 <code>length()</code> 就可以顺利通过编译。</p>
+<p><strong>此外注意</strong>，除 <code>mutable</code> 之外，静态成员（static）也可以被 <code>const</code> 成员函数修改。</p>
+<h3 id="在定义常量与非常量成员函数时，避免代码重复"><a href="#在定义常量与非常量成员函数时，避免代码重复" class="headerlink" title="在定义常量与非常量成员函数时，避免代码重复"></a>在定义常量与非常量成员函数时，避免代码重复</h3><p>可能我们会有所困惑，既然两个版本的成员函数都要有，为什么又要避免重复？</p>
+<p>其实在这里指的是函数的实现要避免重复。试想某函数既要检查边界范围，又要记录读取历史，还要检查数据完整性，这样的代码复制一遍，既不显得美观，又增加了代码维护的难度和编译时间。因此，我们可以使用非常量的函数来调用常量函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[](<span class="built_in">std</span>::<span class="keyword">size_t</span> pos) <span class="keyword">const</span>&#123;....&#125;</span><br><span class="line"><span class="keyword">char</span>&amp; <span class="keyword">operator</span>[](<span class="built_in">std</span>::<span class="keyword">size_t</span> pos)&#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>&amp;&gt;(		<span class="comment">// const_cast 去掉 const 关键字，并转换为 char&amp;</span></span><br><span class="line">    		<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> Text&amp;&gt;(*<span class="keyword">this</span>)[position]; <span class="comment">// 给当前变量加上 const 关键字，才可以调用 const 操作符</span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了避免无限递归调用当前非常量的操作符，我们需要将 <code>(*this)</code> 转换为 <code>const Text&amp;</code> 类型才能保证安全调用 <code>const</code> 的操作符，最后去掉 <code>const</code> 关键字再将其返回，巧妙避免了代码的大段复制。</p>
+<p>但注意，如果使用相反的方法，用 <code>const</code> 函数来调用 <code>non-const</code> 函数，就可能会有未知结果，因为这样相当于 <code>non-const</code> 函数接触到了 <code>const</code> 对象的数据，就可能导致常量数据被改变。</p>
+<p><strong>总结：</strong></p>
+<ul>
+<li>指针，迭代器，引用，本地变量，全局变量，成员函数，返回值都可以使用 <code>const</code> 来实现数据只读的目的，<code>const</code> 是 C++ 一个非常强大的特性。</li>
+<li>除此之外，它还能帮助加快调试过程。</li>
+<li>即使编译器使用数据常量性的标准，我们编程的时候应该采用逻辑常量性，对相关不可避免更改的成员数据加上 <code>mutable</code> 关键字来修饰。</li>
+<li>当有大段复制代码出现在 <code>const</code> 和 <code>non-const</code> 的成员函数中，可以使用 <code>non-const</code> 来调用 <code>const</code> 函数来避免复制。</li>
+</ul>
+<h2 id="条款04：确定对象被使用前已先被初始化"><a href="#条款04：确定对象被使用前已先被初始化" class="headerlink" title="条款04：确定对象被使用前已先被初始化"></a>条款04：确定对象被使用前已先被初始化</h2><p>C++ 并不能保证每个对象在定义时都被自动初始化。就像书中第一条提到的一样，C++ 包含多种子语言，例如定义一个 C 风格的整形数组（int[]）时，其中就可能包含非零初始化的元素，而在定义标准库（STL）中的容器时，例如一个整型向量（<code>std::vector&lt;int&gt;</code>），其强大的函数库可以保证所有元素都被零初始化。</p>
+<h3 id="自有类型（built-in-type）的初始化"><a href="#自有类型（built-in-type）的初始化" class="headerlink" title="自有类型（built-in type）的初始化"></a>自有类型（built-in type）的初始化</h3><p>C++ 的自有类型继承于 C，因此不能保证此类型的变量在定义时被初始化。使用未初始化的数据可能会导致程序不正常运作，因此在定义变量的时候，需要对其进行初始化，例如将如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">double</span> d</span><br></pre></td></tr></table></figure>
+
+<p>改为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cin</span>&gt;&gt;d;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="类的初始化"><a href="#类的初始化" class="headerlink" title="类的初始化"></a>类的初始化</h3><p>对于用户自定义的类，我们需要构造函数（constructor）来完成此类的初始化，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span> &#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">int</span> x;</span><br><span class="line">		<span class="keyword">double</span> y;</span><br><span class="line">		<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">double</span>&gt;&amp; num;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Coordinate(<span class="keyword">const</span> <span class="keyword">int</span>&amp; _x, <span class="keyword">const</span> <span class="keyword">int</span>&amp; _y, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">double</span>&gt;&amp; _num);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下构造函数为成员 x, y, num 赋值来完成对象的初始化</span></span><br><span class="line">Coordinate::Coordinate(<span class="keyword">const</span> <span class="keyword">int</span>&amp; _x, <span class="keyword">const</span> <span class="keyword">int</span>&amp; _y, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">double</span>&gt;&amp; _num) &#123;</span><br><span class="line">	x = _x;</span><br><span class="line">	y = _y;</span><br><span class="line">	num = _num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可能这是一个易于记忆的方法，但并不是最好的方法，因为此构造函数并没有真正完成“初始化”，只不过做了“赋值”的操作。而 C++ 规定，在进入构造函数<strong>之前</strong>，如果用户没有规定初始化过程，C++将自动调用各成员对应类型的默认构造函数。</p>
+<p>这样一来，此构造函数就相当于先调用了 C++ 的默认构造函数，又做了一次赋值操作覆盖掉了先前的结果，造成了浪费。</p>
+<p>解决方法：使用初始化列表（initialization list），C++ 就不必额外调用默认构造函数了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Coordinate:Coordinate(<span class="keyword">const</span> <span class="keyword">int</span>&amp; _x, <span class="keyword">const</span> <span class="keyword">int</span>&amp; _y, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">double</span>&gt;&amp; _num):x(_x), y(_y), num(_num) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外，构造函数是可以被重载（overload）的，对于这个我们自己定义的类，还需要一个没有参数输入的默认构造函数，因此我们可以定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Coordinate::Coordinate():x(<span class="number">0</span>), y(<span class="number">0</span>), num() &#123;&#125;</span><br><span class="line"><span class="comment">// num() 调用了 std::list&lt;double&gt; 类型的默认构造函数</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="某些初始化是语法必要的"><a href="#某些初始化是语法必要的" class="headerlink" title="某些初始化是语法必要的"></a>某些初始化是语法必要的</h3><p>例如在定义引用（reference）和常量（const）时，不将其初始化会导致编译器报错。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a;	<span class="comment">// 报错，需要初始化！</span></span><br><span class="line"><span class="keyword">int</span>&amp; b;			<span class="comment">// 报错，需要初始化！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在对其进行初始化：</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a = <span class="number">3</span>;	<span class="comment">// 编译通过</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> c = <span class="number">3</span>;	</span><br><span class="line"><span class="keyword">int</span>&amp; b = c;		<span class="comment">// 编译通过</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据初始化的顺序"><a href="#数据初始化的顺序" class="headerlink" title="数据初始化的顺序"></a>数据初始化的顺序</h3><p>在继承关系中，基类（base class）总是先被初始化。</p>
+<p>在同一类中，成员数据的初始化顺序与其声明顺序是一致的，而不是初始化列表的顺序。因此，为了代码一致性，要保证初始化列表的顺序与成员数据声明的顺序是一样的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myClass</span> &#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">		<span class="keyword">int</span> b;</span><br><span class="line">		<span class="keyword">int</span> c;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		myClass(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b, <span class="keyword">int</span> _c);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，即使初始化列表是 c-&gt;b-&gt;a 的顺序，真正的初始化顺序还是按照 a-&gt;b-&gt;c</span></span><br><span class="line">myClass:myClass(<span class="keyword">int</span> _a, <span class="keyword">int</span> _b, <span class="keyword">int</span> _c): c(_c), a(_a), b(_b) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="初始化非本地静态对象"><a href="#初始化非本地静态对象" class="headerlink" title="初始化非本地静态对象"></a>初始化非本地静态对象</h3><p>现在还有一种特殊情况，尤其是在大型项目中比较普遍：在两个编译单元中，分别包含至少一个非本地静态对象，当这些对象发生互动时，它们的初始化顺序是不确定的，所以直接使用这些变量，就会给程序的运行带来风险。</p>
+<p>先简要解释一下概念，</p>
+<p><strong>编译单元</strong>（translation unit）：可以让编译器生成代码的基本单元，一般一个源代码文件就是一个编译单元。</p>
+<p><strong>非本地静态对象</strong>（non-local static object）：静态对象可以是在全局范围定义的变量，在命名空间范围定义的变量，函数范围内定义为 <code>static</code> 的变量，类的范围内定义为 <code>static</code> 的变量，而除了函数中的静态对象是本地的，其他都是非本地的。</p>
+<p>此外注意，静态对象存在于程序的开始到结束，所以它不是基于堆（heap）或者栈（stack）的。初始化的静态对象存在于 .data 中，未初始化的则存在于 .bss 中。</p>
+<p>回到问题，现有以下服务器代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span>&#123;</span>...&#125;;</span><br><span class="line"><span class="keyword">extern</span> Server server;		<span class="comment">// 在全局范围声明外部对象 server，供外部使用</span></span><br></pre></td></tr></table></figure>
+
+<p>又有某客户端：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Client</span>&#123;</span>...&#125;;</span><br><span class="line">Client::Client(...)&#123;</span><br><span class="line">	number = server.number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Client client;		<span class="comment">// 在全局范围定义 client 对象，自动调用了 Client 类的构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>以上问题在于，定义对象 client 自动调用了 Client 类的构造函数，此时需要读取对象 server 的数据，但全局变量的不可控性让我们不能保证对象 server 在此时被读取时是初始化的。试想如果还有对象 client1, client2 等等不同的用户读写，我们不能保证当前 server 的数据是我们想要的。</p>
+<p><strong>解决方法：</strong>将全局变量变为本地静态变量</p>
+<p>使用一个函数，只用来定义一个本地静态变量并返回它的引用。因为 C++ 规定在本地范围（函数范围）内定义某静态对象时，当此函数被调用，该静态变量一定会被初始化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span>&#123;</span>...&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Server&amp; <span class="title">server</span><span class="params">()</span></span>&#123;		<span class="comment">// 将直接的声明改为一个函数</span></span><br><span class="line">	<span class="keyword">static</span> Server server;</span><br><span class="line">	<span class="keyword">return</span> server;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Client</span>&#123;</span>...&#125;;</span><br><span class="line"></span><br><span class="line">Client::client()&#123;		<span class="comment">// 客户端构造函数通过函数访问服务器数据</span></span><br><span class="line">	number = server().number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Client&amp; <span class="title">client</span><span class="params">()</span></span>&#123;		<span class="comment">// 同样将客户端的声明改为一个函数</span></span><br><span class="line">	<span class="keyword">static</span> Client client;</span><br><span class="line">	<span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结：</strong></p>
+<ul>
+<li>对于自由类型，要保证在定义时手动初始化</li>
+<li>在定义构造函数时，要用初始化列表，避免使用在函数体内的赋值初始化。在使用初始化列表时，为了保证代码一致性，初始化列表中变量的顺序要与其声明顺序相同</li>
+<li>当不同的编译单元产生互动时，要将其中非本地的静态变量变为本地的静态变量才能保证安全的读写</li>
+</ul>
+
     </div>
 
     
@@ -332,7 +419,10 @@
     <a href="/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" rel="prev" title="primer阅读笔记——第十三章拷贝控制">
       <i class="fa fa-chevron-left"></i> primer阅读笔记——第十三章拷贝控制
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/18/Effective-C++(%E4%BA%8C)/" rel="next" title="Effective C++(二)">
+      Effective C++(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -391,7 +481,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A9%E8%87%AA%E5%B7%B1%E4%B9%A0%E6%83%AF-C"><span class="nav-number">1.</span> <span class="nav-text">让自己习惯 C++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-01%EF%BC%9A%E8%A7%86-C-%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%AF%AD%E8%A8%80%E8%81%94%E9%82%A6"><span class="nav-number">1.1.</span> <span class="nav-text">条款 01：视 C++ 为一个语言联邦</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-C-%E8%AF%AD%E8%A8%80%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">如何理解 C++ 语言？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-02%EF%BC%9A%E5%B0%BD%E9%87%8F%E4%BB%A5-const-enum-inline-%E6%9B%BF%E6%8D%A2-define"><span class="nav-number">1.2.</span> <span class="nav-text">条款 02：尽量以 const, enum, inline 替换 #define</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%96%E8%80%85%E8%AF%B4%EF%BC%8C%E5%B0%BD%E9%87%8F%E5%A4%9A%E7%94%A8%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%8C%E5%B0%91%E7%94%A8%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">或者说，尽量多用编译器，少用预处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%B8%B8%E9%87%8F%E6%9B%BF%E6%8D%A2-define%EF%BC%8C%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E7%B1%BB%E7%9A%84%E5%B8%B8%E6%95%B0%E9%9C%80%E8%A6%81%E5%8F%A6%E5%8A%A0%E8%80%83%E8%99%91%E3%80%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">以常量替换 #define，常量指针和类的常数需要另加考虑。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">枚举技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E-define-%E7%9A%84%E5%AE%8F%E5%87%BD%E6%95%B0%EF%BC%8C%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-inline-%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9D%A5%E4%BB%A3%E6%9B%BF-define"><span class="nav-number">1.2.4.</span> <span class="nav-text">对于 #define 的宏函数，尽量使用 inline 修饰的函数来代替 #define</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE03%EF%BC%9A%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8-const"><span class="nav-number">1.3.</span> <span class="nav-text">条款03：尽可能使用 const</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E-const"><span class="nav-number">1.3.1.</span> <span class="nav-text">指针与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E-const"><span class="nav-number">1.3.2.</span> <span class="nav-text">迭代器与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-const-%E5%8F%AF%E4%BB%A5%E5%B8%AE%E5%8A%A9%E8%B0%83%E8%AF%95"><span class="nav-number">1.3.3.</span> <span class="nav-text">尽量使用 const 可以帮助调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E4%B8%8E-const"><span class="nav-number">1.3.4.</span> <span class="nav-text">类的成员与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E5%B8%B8%E9%87%8F%E6%80%A7"><span class="nav-number">1.3.5.</span> <span class="nav-text">成员函数的常量性</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A9%E8%87%AA%E5%B7%B1%E4%B9%A0%E6%83%AF-C"><span class="nav-number">1.</span> <span class="nav-text">让自己习惯 C++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-01%EF%BC%9A%E8%A7%86-C-%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%AF%AD%E8%A8%80%E8%81%94%E9%82%A6"><span class="nav-number">1.1.</span> <span class="nav-text">条款 01：视 C++ 为一个语言联邦</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-C-%E8%AF%AD%E8%A8%80%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">如何理解 C++ 语言？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-02%EF%BC%9A%E5%B0%BD%E9%87%8F%E4%BB%A5-const-enum-inline-%E6%9B%BF%E6%8D%A2-define"><span class="nav-number">1.2.</span> <span class="nav-text">条款 02：尽量以 const, enum, inline 替换 #define</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%96%E8%80%85%E8%AF%B4%EF%BC%8C%E5%B0%BD%E9%87%8F%E5%A4%9A%E7%94%A8%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%8C%E5%B0%91%E7%94%A8%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">或者说，尽量多用编译器，少用预处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%B8%B8%E9%87%8F%E6%9B%BF%E6%8D%A2-define%EF%BC%8C%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88%E5%92%8C%E7%B1%BB%E7%9A%84%E5%B8%B8%E6%95%B0%E9%9C%80%E8%A6%81%E5%8F%A6%E5%8A%A0%E8%80%83%E8%99%91%E3%80%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">以常量替换 #define，常量指针和类的常数需要另加考虑。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">枚举技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E-define-%E7%9A%84%E5%AE%8F%E5%87%BD%E6%95%B0%EF%BC%8C%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-inline-%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9D%A5%E4%BB%A3%E6%9B%BF-define"><span class="nav-number">1.2.4.</span> <span class="nav-text">对于 #define 的宏函数，尽量使用 inline 修饰的函数来代替 #define</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE03%EF%BC%9A%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8-const"><span class="nav-number">1.3.</span> <span class="nav-text">条款03：尽可能使用 const</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E-const"><span class="nav-number">1.3.1.</span> <span class="nav-text">指针与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E-const"><span class="nav-number">1.3.2.</span> <span class="nav-text">迭代器与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BD%E9%87%8F%E4%BD%BF%E7%94%A8-const-%E5%8F%AF%E4%BB%A5%E5%B8%AE%E5%8A%A9%E8%B0%83%E8%AF%95"><span class="nav-number">1.3.3.</span> <span class="nav-text">尽量使用 const 可以帮助调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E4%B8%8E-const"><span class="nav-number">1.3.4.</span> <span class="nav-text">类的成员与 const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E5%B8%B8%E9%87%8F%E6%80%A7"><span class="nav-number">1.3.5.</span> <span class="nav-text">成员函数的常量性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F%E4%B8%8E%E9%9D%9E%E5%B8%B8%E9%87%8F%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%97%B6%EF%BC%8C%E9%81%BF%E5%85%8D%E4%BB%A3%E7%A0%81%E9%87%8D%E5%A4%8D"><span class="nav-number">1.3.6.</span> <span class="nav-text">在定义常量与非常量成员函数时，避免代码重复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE04%EF%BC%9A%E7%A1%AE%E5%AE%9A%E5%AF%B9%E8%B1%A1%E8%A2%AB%E4%BD%BF%E7%94%A8%E5%89%8D%E5%B7%B2%E5%85%88%E8%A2%AB%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.4.</span> <span class="nav-text">条款04：确定对象被使用前已先被初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%9C%89%E7%B1%BB%E5%9E%8B%EF%BC%88built-in-type%EF%BC%89%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.4.1.</span> <span class="nav-text">自有类型（built-in type）的初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.4.2.</span> <span class="nav-text">类的初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%90%E4%BA%9B%E5%88%9D%E5%A7%8B%E5%8C%96%E6%98%AF%E8%AF%AD%E6%B3%95%E5%BF%85%E8%A6%81%E7%9A%84"><span class="nav-number">1.4.3.</span> <span class="nav-text">某些初始化是语法必要的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.4.4.</span> <span class="nav-text">数据初始化的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%9D%9E%E6%9C%AC%E5%9C%B0%E9%9D%99%E6%80%81%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.4.5.</span> <span class="nav-text">初始化非本地静态对象</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -407,7 +497,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

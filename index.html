@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Effective-C-%E4%B8%80/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/Effective-C++(%E4%BA%8C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -168,7 +168,89 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/16/Effective-C-%E4%B8%80/" class="post-title-link" itemprop="url">Effective C++(一)</a>
+            <a href="/2021/09/18/Effective-C++(%E4%BA%8C)/" class="post-title-link" itemprop="url">Effective C++(二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-18 12:17:20 / 修改时间：20:18:59" itemprop="dateCreated datePublished" datetime="2021-09-18T12:17:20+08:00">2021-09-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Effective-C/" itemprop="url" rel="index"><span itemprop="name">Effective C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="构造-析构-赋值运算"><a href="#构造-析构-赋值运算" class="headerlink" title="构造 / 析构 / 赋值运算"></a>构造 / 析构 / 赋值运算</h1><h2 id="条款05：了解-C-默默编写并调用哪些函数"><a href="#条款05：了解-C-默默编写并调用哪些函数" class="headerlink" title="条款05：了解 C++ 默默编写并调用哪些函数"></a>条款05：了解 C++ 默默编写并调用哪些函数</h2><h3 id="C-会为类生成默认的关键函数"><a href="#C-会为类生成默认的关键函数" class="headerlink" title="C++ 会为类生成默认的关键函数"></a>C++ 会为类生成默认的关键函数</h3><p>如果在 C++ 的类中不声明任何成员，C++ 会自动为你生成默认的构造函数（constructor），拷贝赋值运算符（copy assignment constructor，即 ‘=’ ），拷贝构造函数（copy constructor）以及析构函数（destructor）。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span> &#123;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假定以下功能都会被调用，此定义等价于：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span> &#123;</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Empty()&#123;...&#125;		<span class="comment">// 构造函数</span></span><br><span class="line">		Empty()&#123;<span class="keyword">const</span> Empty&amp; empty&#125;&#123;.....&#125;		<span class="comment">// 拷贝构造函数</span></span><br><span class="line">		~Empty()&#123;....&#125;		<span class="comment">// 析构函数</span></span><br><span class="line">		Empty&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Empty&amp; empty)&#123;....&#125;	<span class="comment">// 拷贝赋值运算符</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>但是这些函数只有在被需要调用的时候才会生成，因此这 4 种功能不是保证都存在的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/18/Effective-C++(%E4%BA%8C)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Effective-C++(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/16/Effective-C++(%E4%B8%80)/" class="post-title-link" itemprop="url">Effective C++(一)</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +267,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-17 20:32:34" itemprop="dateModified" datetime="2021-09-17T20:32:34+08:00">2021-09-17</time>
+                <time title="修改时间：2021-09-18 12:15:29" itemprop="dateModified" datetime="2021-09-18T12:15:29+08:00">2021-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,7 +306,7 @@
 <p><strong>C++ 高效编程守则视状况而变化，取决于适用 C++ 的哪一部分。</strong></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/09/16/Effective-C-%E4%B8%80/#more" rel="contents">
+              <a class="btn" href="/2021/09/16/Effective-C++(%E4%B8%80)/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -279,7 +361,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-16 10:49:49" itemprop="dateModified" datetime="2021-09-16T10:49:49+08:00">2021-09-16</time>
+                <time title="修改时间：2021-09-18 10:12:54" itemprop="dateModified" datetime="2021-09-18T10:12:54+08:00">2021-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -312,65 +394,14 @@
 </ul>
 <p>这些操作统称为拷贝控制操作。</p>
 <p>在定义任何类时，拷贝控制操作都是必要部分。</p>
-<h2 id="拷贝、赋值与销毁"><a href="#拷贝、赋值与销毁" class="headerlink" title="拷贝、赋值与销毁"></a>拷贝、赋值与销毁</h2><h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><p>如果一个构造函数的第一个参数是自身类类型的引用（几乎总是 <code>const</code> 引用），且任何额外参数都有默认值，则此构造函数是拷贝构造函数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Foo();	<span class="comment">// 默认构造函数</span></span><br><span class="line">	Foo(<span class="keyword">const</span> Foo&amp;);	<span class="comment">// 拷贝构造函数</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>由于拷贝构造函数在一些情况下会被隐式使用，因此通常不会声明为 <code>explicit</code> 的。</p>
-<p>如果类未定义自己的拷贝构造函数，编译器会为类合成一个。一般情况下，合成拷贝构造函数会将其参数的非 <code>static</code> 成员逐个拷贝到正在创建的对象中。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 其他成员和构造函数的定义，如前</span></span><br><span class="line">	<span class="comment">// 与合成的拷贝构造函数等价的拷贝构造函数的声明</span></span><br><span class="line">	Sales_data(<span class="keyword">const</span> Sales_data&amp;);</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</span><br><span class="line">	<span class="keyword">int</span> units_sold = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">double</span> revenue = <span class="number">0.0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 与 Sales_data 的合成的拷贝构造函数等价</span></span><br><span class="line">Sales_data::Sales_data(<span class="keyword">const</span> Sales_data &amp;orig):</span><br><span class="line">	bookNo(orig.bookNo),	<span class="comment">// 使用 string 的拷贝构造函数</span></span><br><span class="line">	units_sold(orig.units_sold),	<span class="comment">// 拷贝 orig.units_sold</span></span><br><span class="line">	revenue(orig.revenue)	<span class="comment">// 拷贝 orig.revenue</span></span><br><span class="line">	&#123; &#125;	<span class="comment">// 空函数体</span></span><br></pre></td></tr></table></figure>
-
-<p>使用直接初始化时，实际上是要求编译器按照函数匹配规则来选择与实参最匹配的构造函数。使用拷贝初始化时，是要求编译器将右侧运算对象拷贝到正在创建的对象中，如果需要的话还要进行类型转换。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">dos</span><span class="params">(<span class="number">10</span>, <span class="string">&#x27;.&#x27;</span>)</span></span>;	<span class="comment">// 直接初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(dots)</span></span>;		<span class="comment">// 直接初始化</span></span><br><span class="line"><span class="built_in">string</span> s2 = dots;	<span class="comment">// 拷贝初始化</span></span><br><span class="line"><span class="built_in">string</span> null_book = <span class="string">&quot;9-999-99999-9&quot;</span>;		<span class="comment">// 拷贝初始化</span></span><br><span class="line"><span class="built_in">string</span> nines = <span class="built_in">string</span>(<span class="number">100</span>, <span class="string">&#x27;9&#x27;</span>);	<span class="comment">// 拷贝初始化</span></span><br></pre></td></tr></table></figure>
-
-<p>拷贝初始化通常使用拷贝构造函数来完成。但如果一个类拥有移动构造函数，则拷贝初始化有时会使用移动构造函数而非拷贝构造函数来完成。</p>
-<p>发生拷贝初始化的情况：</p>
-<ul>
-<li>用 <code>=</code> 定义变量。</li>
-<li>将对象作为实参传递给非引用类型的形参。</li>
-<li>从返回类型为非引用类型的函数返回对象。</li>
-<li>用花括号列表初始化数组中的元素或聚合类中的成员。</li>
-</ul>
-<p>当传递一个实参或者从函数返回一个值时，不能隐式使用 <code>explicit</code> 构造函数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>)</span></span>;		<span class="comment">// 正确：直接初始化</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = <span class="number">10</span>;	<span class="comment">// 错误：接受大小参数的构造函数是 explicit 的</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;)</span></span>;	<span class="comment">// f 的参数进行拷贝初始化</span></span><br><span class="line">f(<span class="number">10</span>);					<span class="comment">// 错误：不能用一个 explicit 的构造函数拷贝一个实参</span></span><br><span class="line">f(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>));		<span class="comment">// 正确：从一个 int 直接构造一个临时 vector</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="拷贝赋值运算符"><a href="#拷贝赋值运算符" class="headerlink" title="拷贝赋值运算符"></a>拷贝赋值运算符</h3><p>重载运算符的参数表示运算符的运算对象。</p>
-<p>如果一个运算符是成员函数，则其左侧运算对象会绑定到隐式的 <code>this</code> 参数上。</p>
-<p>赋值运算符通常应该返回一个指向其左侧运算对象的引用。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Foo&amp; <span class="keyword">operator</span> = (<span class="keyword">const</span> Foo&amp;);	<span class="comment">// 赋值运算符</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>标准库通常要求保存在容器中的类型要具有赋值运算符，且其返回值是左侧运算对象的引用。</p>
-<p>如果类未定义自己的拷贝赋值运算符，编译器会为类合成一个。一般情况下，合成拷贝赋值运算符会将其右侧运算对象的非 <code>static</code> 成员逐个赋值给左侧运算对象的对应成员，之后返回左侧运算对象的引用。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 等价于合成拷贝赋值运算符</span></span><br><span class="line">Sales_data&amp;</span><br><span class="line">Sales_data::<span class="keyword">operator</span> = (<span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	bookNo = rhs.bookNo;	<span class="comment">// 调用 string::operator=</span></span><br><span class="line">	units_sold = rhs.units_sold;	<span class="comment">// 使用内置的 int 赋值</span></span><br><span class="line">	revenue = rhs.revenue;	<span class="comment">// 使用内置的 double 赋值</span></span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;	<span class="comment">// 返回一个此对象的引用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3><p>析构函数负责释放对象使用的资源，并销毁对象的非 <code>static</code> 数据成员。</p>
-<p>析构函数的名字由波浪号 <code>~</code> 接类名构成，它没有返回值，也不接受参数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	~Foo();	<span class="comment">// 析构函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于析构函数不接受参数，所以它不能被重载。</p>
-<p>如果类未定义自己的析构函数，编译器会为类合成一个。合成析构函数的函数体为空。</p>
-<p>析构函数首先执行函数体，然后再销毁数据成员。在整个对象销毁过程中，析构函数体是作为成员销毁步骤之外的另一部分而进行的。成员按照初始化顺序的逆序销毁。</p>
-<p>隐式销毁一个内置指针类型的成员不会 <code>delete</code> 它所指向的对象。</p>
-<p>无论何时一个对象被销毁，都会自动调用其析构函数。</p>
-<p>当指向一个对象的引用或指针离开作用域时，该对象的析构函数不会执行。</p>
-<h3 id="三-五法则"><a href="#三-五法则" class="headerlink" title="三 / 五法则"></a>三 / 五法则</h3><p>需要析构函数的类一般也需要拷贝和赋值操作。</p>
-<p>需要拷贝操作的类一般也需要赋值操作，反之亦然。</p>
-<h3 id="使用-default"><a href="#使用-default" class="headerlink" title="使用=default"></a>使用=default</h3><ul>
-<li>可以通过将拷贝控制成员定义为 <code>=default</code> 来显式地要求编译器生成合成版本。</li>
-<li>合成的函数将隐式地声明为内联的。</li>
-</ul>
-<h3 id="阻止拷贝"><a href="#阻止拷贝" class="headerlink" title="阻止拷贝"></a>阻止拷贝</h3><ul>
-<li>大多数类应该定义默认构造函数、拷贝构造函数和拷贝赋值运算符，无论是隐式地还是显示地。</li>
-<li>定义删除的函数：<code>=delete</code>。</li>
-<li>虽然声明了它们，但是不能以任何方式使用它们。</li>
-<li>析构函数不能是删除的成员。</li>
-<li>如果一个类有数据成员不能默认构造、拷贝、复制或者销毁，则对应的成员函数将被定义为删除的。</li>
-<li>老版本使用 <code>private</code> 声明来阻止拷贝。</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1009,89 +1040,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">动态规划</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-09 12:00:12" itemprop="dateCreated datePublished" datetime="2021-09-09T12:00:12+08:00">2021-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-12 17:47:39" itemprop="dateModified" datetime="2021-09-12T17:47:39+08:00">2021-09-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>F(0) = 1, F(1) = 1, F(n) = F(n - 1) + F(n - 2)</p>
-<p>如果用递归方式来求解，则如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1163,7 +1111,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
