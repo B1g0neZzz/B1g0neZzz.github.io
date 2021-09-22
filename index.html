@@ -154,6 +154,245 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/19/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/19/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">primer阅读笔记——第十四章重载运算与类型转换</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-19 20:12:14 / 修改时间：21:47:48" itemprop="dateCreated datePublished" datetime="2021-09-19T20:12:14+08:00">2021-09-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="重载运算与类型转换"><a href="#重载运算与类型转换" class="headerlink" title="重载运算与类型转换"></a>重载运算与类型转换</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>重载的运算符是具有特殊名字的函数，它们的名字由关键字 <code>operator</code> 和其后要定义的运算符号组成。</p>
+<p>重载运算符函数的参数数量和该运算符作用的运算对象数量一样多。对于二元运算符来说，左侧运算对象传递给第一个参数，右侧运算对象传递给第二个参数。除了重载的函数调用运算符 <code>operator()</code> 之外，其他重载运算符不能含有默认实参。</p>
+<p>如果一个运算符函数是类的成员函数，则它的第一个运算对象会绑定到隐式的 <code>this</code> 指针上。因此成员运算符函数的显式参数数量比运算对象的数量少一个。</p>
+<p>当运算符作用于内置类型的运算对象时，无法改变该运算符的含义。</p>
+<p>只能重载大多数已有的运算符，无权声明新的运算符号。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可以被重载</td>
+<td>不可以被重载</td>
+</tr>
+<tr>
+<td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>^</code></td>
+<td><code>::</code>, <code>.*</code>, <code>.</code>, <code>? :</code>,</td>
+</tr>
+<tr>
+<td><code>&amp;</code>, `</td>
+<td><code>, </code>~`, <code>!</code>, <code>,</code>, <code>=</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>++</code>, <code>--</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>==</code>, <code>!=</code>, <code>&amp;&amp;</code>, `</td>
+<td></td>
+</tr>
+<tr>
+<td><code>+=</code>, <code>-=</code>, <code>/=</code>, <code>%=</code>, <code>^=</code>, <code>&amp;=</code></td>
+<td></td>
+</tr>
+<tr>
+<td>|=, <code>*=</code>, <code>&lt;&lt;=</code>, <code>&gt;&gt;=</code>, <code>[]</code>, <code>()</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>-&gt;</code>, <code>-&gt;*</code>, <code>new</code>, <code>new[]</code>, <code>delete</code>, <code>delete[]</code></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>重载运算符的优先级和结合律与对应的内置运算符一致。</p>
+<p>可以像调用普通函数一样直接调用运算符函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个非成员运算符函数的等价调用</span></span><br><span class="line">data1 + data2;		<span class="comment">// 普通的表达式</span></span><br><span class="line"><span class="keyword">operator</span>+(data1, data2);	<span class="comment">// 等价的函数调用</span></span><br><span class="line">data1 += data2;		<span class="comment">// 基于“调用”的表达式</span></span><br><span class="line">data1.<span class="keyword">operator</span>+=(data2);	<span class="comment">// 对成员运算符函数的等价调用</span></span><br></pre></td></tr></table></figure>
+
+<p>通常情况下，不应该重载逗号<code>,</code>、取地址<code>&amp;</code>、逻辑与<code>&amp;&amp;</code>和逻辑或<code>||</code>运算符。</p>
+<p>建议只有当操作的含义对于用户来说清晰明了时才使用重载运算符，重载运算符的返回类型也应该与其内置版本的返回类型兼容。</p>
+<p>如果类中含有算术运算符或位运算符，则最好也提供对应的复合赋值运算符。</p>
+<p>把运算符定义为成员函数时，它的左侧运算对象必须是运算符所属类型的对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">&quot;world&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> t = s + <span class="string">&quot;!&quot;</span>;		<span class="comment">// 正确：我们能把一个 const char* 加到一个 string 对象中</span></span><br><span class="line"><span class="built_in">string</span> u = <span class="string">&quot;hi&quot;</span> + s;	<span class="comment">// 如果 + 是 string 的成员，则产生错误</span></span><br></pre></td></tr></table></figure>
+
+<p>如何选择将运算符定义为成员函数还是普通函数：</p>
+<ul>
+<li>赋值<code>=</code>、下标<code>[]</code>、调用<code>()</code>和成员访问箭头<code>-&gt;</code>运算符必须是成员函数。</li>
+<li>复合赋值运算符一般是成员函数，但并非必须。</li>
+<li>改变对象状态或者与给定类型密切相关的运算符，如递增、递减、解引用运算符，通常是成员函数。</li>
+<li>具有对称性的运算符可能转换任意一端的运算对象，如算术、相等性、关系和位运算符，通常是普通函数。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98%E6%9C%80%E5%B8%B8%E8%A7%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/18/%E6%95%B0%E7%BB%84%E9%97%AE%E9%A2%98%E6%9C%80%E5%B8%B8%E8%A7%81/" class="post-title-link" itemprop="url">数组问题最常见</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-18 20:26:05" itemprop="dateCreated datePublished" datetime="2021-09-18T20:26:05+08:00">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-20 12:25:44" itemprop="dateModified" datetime="2021-09-20T12:25:44+08:00">2021-09-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="数组问题最常见"><a href="#数组问题最常见" class="headerlink" title="数组问题最常见"></a>数组问题最常见</h1><h2 id="简单的数组问题"><a href="#简单的数组问题" class="headerlink" title="简单的数组问题"></a>简单的数组问题</h2><h2 id="LeetCode-208-Move-Zeros"><a href="#LeetCode-208-Move-Zeros" class="headerlink" title="LeetCode  208 Move Zeros"></a>LeetCode  208 Move Zeros</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210919105601348.png" alt="image-20210919105601348"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> k = <span class="number">0</span>;	<span class="comment">// nums中，[0...k) 的元素均为非 0 元素</span></span><br><span class="line">			</span><br><span class="line">        <span class="comment">// 遍历到第 i 个元素后，保证 [0...i] 中所有非0元素</span></span><br><span class="line">        <span class="comment">// 都按照顺序排列在[0...k)中</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size() ; i ++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i])&#123;</span><br><span class="line">                <span class="keyword">if</span>( i != k)</span><br><span class="line">                	swap(nums, i, k);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    k++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="LeetCode-80-删除有序数组中的重复项"><a href="#LeetCode-80-删除有序数组中的重复项" class="headerlink" title="LeetCode 80. 删除有序数组中的重复项"></a>LeetCode 80. 删除有序数组中的重复项</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210919131259871.png" alt="image-20210919131259871"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210919131309267.png" alt="image-20210919131309267"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">	int word(vector&lt;int&gt;&amp; nums, int k) &#123;</span><br><span class="line">		int len &#x3D; 0;</span><br><span class="line">		for(auto num : nums)</span><br><span class="line">			if(len &lt; k || nums[len-k] !&#x3D; num)</span><br><span class="line">				nums[len++] &#x3D; num;</span><br><span class="line">		return len;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">		return work(nums, 2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="基础算法思路的应用"><a href="#基础算法思路的应用" class="headerlink" title="基础算法思路的应用"></a>基础算法思路的应用</h2><h3 id="LeetCode-75-Sort-Colors"><a href="#LeetCode-75-Sort-Colors" class="headerlink" title="LeetCode 75.Sort Colors"></a>LeetCode 75.Sort Colors</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210919132531000.png" alt="image-20210919132531000"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210919132543731.png" alt=" "></p>
+<p>思路：</p>
+<p>可以扫描一遍数组，分别统计出0,1,2这三个元素各有多少个</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> count[<span class="number">3</span>] = &#123;<span class="number">0</span>&#125;;	</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++) &#123;</span><br><span class="line">			assert( nums[i] &gt;= <span class="number">0</span> &amp;&amp; nums[i] &lt;= <span class="number">2</span> );</span><br><span class="line">			count[nums[i]] ++;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">0</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">1</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">2</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">2</span>;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/Effective-C++(%E4%BA%8C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +416,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-18 12:17:20 / 修改时间：20:18:59" itemprop="dateCreated datePublished" datetime="2021-09-18T12:17:20+08:00">2021-09-18</time>
+              <time title="创建时间：2021-09-18 12:17:20" itemprop="dateCreated datePublished" datetime="2021-09-18T12:17:20+08:00">2021-09-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-19 20:03:54" itemprop="dateModified" datetime="2021-09-19T20:03:54+08:00">2021-09-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -836,210 +1081,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">primer阅读笔记——第九章顺序容器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-10 12:05:47" itemprop="dateCreated datePublished" datetime="2021-09-10T12:05:47+08:00">2021-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-15 12:07:25" itemprop="dateModified" datetime="2021-09-15T12:07:25+08:00">2021-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h1><h2 id="顺序容器概述"><a href="#顺序容器概述" class="headerlink" title="顺序容器概述"></a>顺序容器概述</h2><p>顺序容器类型：</p>
-<table>
-<thead>
-<tr>
-<th align="center">顺序容器类型</th>
-<th align="center">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code>vector</code></td>
-<td align="center">可变大小数组。支持快速随机访问。在尾部之外的位置插入或删除元素可能很慢</td>
-</tr>
-<tr>
-<td align="center"><code>deque</code></td>
-<td align="center">双端队列。支持快速随机访问。在头尾位置插入/删除速度很快</td>
-</tr>
-<tr>
-<td align="center"><code>list</code></td>
-<td align="center">双向链表。只支持单项顺序访问。在链表任何位置进行插入/删除操作都很快</td>
-</tr>
-<tr>
-<td align="center"><code>forward_list</code></td>
-<td align="center">单向列表。只支持单向顺序访问。在链表任何位置进行插入/删除操作速度都很快</td>
-</tr>
-<tr>
-<td align="center"><code>array</code></td>
-<td align="center">固定大小数组。支持快速随机访问。不能添加或删除元素</td>
-</tr>
-<tr>
-<td align="center"><code>string</code></td>
-<td align="center">与 <code>vector</code> 相似的容器，但专门用于保存字符。随机访问快。在尾部插入/删除速度快</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/" class="post-title-link" itemprop="url">primer读书笔记——第八章IO库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-09 20:02:29" itemprop="dateCreated datePublished" datetime="2021-09-09T20:02:29+08:00">2021-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-10 12:05:23" itemprop="dateModified" datetime="2021-09-10T12:05:23+08:00">2021-09-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="IO-库"><a href="#IO-库" class="headerlink" title="IO 库"></a>IO 库</h1><p>部分IO库措施：</p>
-<ul>
-<li><code>istream</code>：输入流类型，提供输入操作。</li>
-<li><code>ostream</code>：输出流类型，提供输出操作。</li>
-<li><code>cin</code>：<code>istream</code> 对象，从标准输入读取数据。</li>
-<li><code>cout</code>：<code>ostream</code> 对象，向标准输出写入数据。</li>
-<li><code>cerr</code>：<code>ostream</code> 对象，通常用于输出程序错误信息，写入标准错误。</li>
-<li><code>&gt;&gt;</code> 运算符：用来从一个 <code>istream</code> 对象读取输入数据。</li>
-<li><code>&lt;&lt;</code> 运算符：用来向一个 <code>ostream</code> 对象写入输出数据。</li>
-<li><code>getline</code> 函数：从一个给定的 <code>istream</code> 读取一行数据，存入一个给定的 <code>string</code> 对象中。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1111,14 +1152,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
