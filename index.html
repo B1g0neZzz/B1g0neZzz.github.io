@@ -154,6 +154,63 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/22/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">归并排序</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-22 17:25:03" itemprop="dateCreated datePublished" datetime="2021-09-22T17:25:03+08:00">2021-09-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/19/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,10 +234,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-19 20:12:14 / 修改时间：21:47:48" itemprop="dateCreated datePublished" datetime="2021-09-19T20:12:14+08:00">2021-09-19</time>
+              <time title="创建时间：2021-09-19 20:12:14" itemprop="dateCreated datePublished" datetime="2021-09-19T20:12:14+08:00">2021-09-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-23 18:51:21" itemprop="dateModified" datetime="2021-09-23T18:51:21+08:00">2021-09-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -264,7 +327,82 @@
 <li>改变对象状态或者与给定类型密切相关的运算符，如递增、递减、解引用运算符，通常是成员函数。</li>
 <li>具有对称性的运算符可能转换任意一端的运算对象，如算术、相等性、关系和位运算符，通常是普通函数。</li>
 </ul>
+<h2 id="输入和输出运算符"><a href="#输入和输出运算符" class="headerlink" title="输入和输出运算符"></a>输入和输出运算符</h2><h3 id="重载输出运算符-lt-lt"><a href="#重载输出运算符-lt-lt" class="headerlink" title="重载输出运算符 &lt;&lt;"></a>重载输出运算符 &lt;&lt;</h3><p>通常情况下，输出运算符的第一个形参是 <code>ostream</code> 类型的普通引用，第二个形参是要打印类型的常量引用，返回值是它的 <code>ostream</code> 形参。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ostream &amp;<span class="keyword">operator</span>&lt;&lt;(ostream &amp;os, <span class="keyword">const</span> Sales_data &amp;item)</span><br><span class="line">&#123;</span><br><span class="line">	os &lt;&lt; item.isbn() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.units_sold &lt;&lt; <span class="string">&quot; &quot;</span></span><br><span class="line">		&lt;&lt; item.revenue &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.avg_price();</span><br><span class="line">	<span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>输出运算符应该尽量减少格式化操作。</p>
+<p>输入输出运算符必须是非成员函数。而由于 IO 操作通常需要读写类的非公有数据，所以输入输出运算符一般被声明为友元。</p>
+<h3 id="重载输入运算符-gt-gt"><a href="#重载输入运算符-gt-gt" class="headerlink" title="重载输入运算符 &gt;&gt;"></a>重载输入运算符 &gt;&gt;</h3><p>通常情况下，输入运算符的第一个形参是要读取的流的普通引用，第二个形参是要读入的目的对象的普通引用，返回值是它的第一个形参。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">istream &amp;<span class="keyword">operator</span>&gt;&gt;(istream &amp;is, Sales_data &amp;item)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">double</span> price;	<span class="comment">// 不需要初始化，因为我们将先读入数据到 price，之后才使用它</span></span><br><span class="line">    is &gt;&gt; item.bookNo &gt;&gt; item.units_sold &gt;&gt; price;</span><br><span class="line">    <span class="keyword">if</span> (is)		<span class="comment">// 检查输入是否成功</span></span><br><span class="line">        item.revenue = item.units_sold * price;</span><br><span class="line">   	<span class="keyword">else</span></span><br><span class="line">        item = Sales_data();	<span class="comment">// 输入失败：对象被赋予默认的状态</span></span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入运算符必须处理输入失败的情况，而输出运算符不需要。</p>
+<p>以下情况可能导致读取操作失败：</p>
+<ul>
+<li>读取了错误类型的数据。</li>
+<li>读取操作到达文件末尾。</li>
+<li>遇到输入流的其他错误。</li>
+</ul>
+<p>当读取操作发生错误时，输入操作符应该负责从错误状态中恢复。</p>
+<p>如果输入的数据不符合规定的格式，即使从技术上看 IO 操作是成功的，输入运算符也应该设置流的条件状态以标示出失败信息。通常情况下，输入运算符只设置 <code>failbit</code> 状态。<code>eofbit</code>、<code>badbit</code> 等错误最好由 IO 标准库自己标示。</p>
+<h2 id="算术和关系运算符"><a href="#算术和关系运算符" class="headerlink" title="算术和关系运算符"></a>算术和关系运算符</h2><p>通常情况下，算术和关系运算符应该定义为非成员函数，以便两侧的运算对象进行转换。其次，由于这些运算符一般不会改变运算对象的状态，所以形参都是常量引用。</p>
+<p>算术运算符通常会计算它的两个运算对象并得到一个新值，这个值通常存储在一个局部变量内，操作完成后返回该局部变量的副本作为结果（返回类型建议设置为原对象的 <code>const</code> 类型）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设两个对象指向同一本书</span></span><br><span class="line">Sales_data <span class="keyword">operator</span>+(<span class="keyword">const</span> Sales_data &amp;lhs, <span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	Sales_data sum = lhs;	<span class="comment">// 把 lhs 的数据成员拷贝给 sum</span></span><br><span class="line">	sum += rhs;		<span class="comment">// 将 rhs 加到 sum 中</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果类定义了算术运算符，则通常也会定义对应的复合赋值运算符，此时最有效的方式是使用复合赋值来实现算术运算符。</p>
+<h3 id="相等运算符"><a href="#相等运算符" class="headerlink" title="相等运算符"></a>相等运算符</h3><p>相等设计符设计准则：</p>
+<ul>
+<li>如果类在逻辑上有相等性的含义，则应该定义 <code>operator==</code> 而非一个普通的命名函数。这样做便于使用标准库容器和算法，也更容易记忆。</li>
+<li>通常情况下，<code>operator==</code> 应该具有传递性。</li>
+<li>如果类定义了 <code>operator==</code>，则也应该定义 <code>operator!=</code>。</li>
+<li><code>operator==</code> 和 <code>operator!=</code> 中的一个应该把具体工作委托给另一个。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Sales_data &amp;lhs, <span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lhs.isbn() == rhs.isbn() &amp;&amp;</span><br><span class="line">		lhs.units_sold == rhs.units_sold &amp;&amp;</span><br><span class="line">		lhs.revenue == rhs.revenue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Sales_data &amp;lhs, <span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> !(lhs == hrs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><p>定义了相等运算符的类通常也会定义关系运算符。因为关联容器和一些算法要用于小于运算符，所以定义 <code>operator&lt;</code> 会比较实用。</p>
+<p>关系运算符设计准则：</p>
+<ul>
+<li>定义顺序关系，令其与关联容器中对关键字的要求保持一致。</li>
+<li>如果类定义了 <code>operator==</code>，则关系运算符的定义应该与 <code>operator==</code> 保持一致。特别是，如果两个对象是不相等的，那么其中一个对象应该小于另一个对象。</li>
+<li>只有存在唯一一种逻辑可靠的小于关系时，才应该考虑为类定义 <code>operator&lt;</code>。</li>
+</ul>
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>赋值运算符必须定义为成员函数，复合赋值运算符通常也是如此。这两类运算符都应该返回其左侧运算对象的引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">StrVec &amp;StrVec::<span class="keyword">operator</span>=(<span class="built_in">initializer_list</span>&lt;<span class="built_in">string</span>&gt; il)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// alloc_n_copy 分配内存空间并从给定范围内拷贝元素</span></span><br><span class="line">	<span class="keyword">auto</span> data = alloc_n_copy(il.begin(), il.end());</span><br><span class="line">	<span class="built_in">free</span>();		<span class="comment">// 销毁对象中的元素并释放内存空间</span></span><br><span class="line">	elements = data.first;	<span class="comment">// 更新数据成员使其指向新空间</span></span><br><span class="line">    first_free = cap = data.second;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 作为成员的二元运算符：左侧运算对象绑定到隐式的 this 指针</span></span><br><span class="line"><span class="comment">// 假定两个对象表示的是同一本书</span></span><br><span class="line">Sales_data&amp; Sales_data::<span class="keyword">operator</span>+=(<span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">    units_sold += rhs.units_sold;</span><br><span class="line">    revenue += rhs.revenue;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="下标运算符"><a href="#下标运算符" class="headerlink" title="下标运算符"></a>下标运算符</h2><p>下标运算符必须定义为成员函数。</p>
+<p>类通常会定义两个版本的下标运算符：一个返回普通引用，另一个是类的常量成员并返回常量引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrVec</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span>&amp; <span class="keyword">operator</span>[](<span class="built_in">std</span>::<span class="keyword">size_t</span> n)</span><br><span class="line">	&#123; <span class="keyword">return</span> elements[n]; &#125;</span><br><span class="line">	<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; <span class="keyword">operator</span>[](<span class="built_in">std</span>::<span class="keyword">size_t</span> n) <span class="keyword">const</span></span><br><span class="line">	&#123; <span class="keyword">return</span> elements[n]; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span> *elemens;	<span class="comment">// 指向数组首元素的指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="递增和递减运算符"><a href="#递增和递减运算符" class="headerlink" title="递增和递减运算符"></a>递增和递减运算符</h2><p>定义递增和递减运算符的类应该同时定义前置和后置版本，这些运算符通常定义为成员函数。</p>
+<p>为了与内置操作保持一致，前置递增或递减运算符应该返回运算后对象的引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前置版本：返回递增 / 递减对象的引用</span></span><br><span class="line">StrBlobPtr&amp; StrBlobPtr::<span class="keyword">operator</span>++()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 如果 curr 已经指向了容器的尾后位置，则无法递增它</span></span><br><span class="line">	check(curr, <span class="string">&quot;increment past end of StrBlobPtr&quot;</span>);</span><br><span class="line">	++curr;		<span class="comment">// 将 curr 在当前状态下向前移动一个元素</span></span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后置递增或递减运算符接受一个额外的（不被使用）<code>int</code> 类型形参，该形参的唯一作用就是区分运算符的前置和后置版本。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrBlobPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 递增和递减运算符</span></span><br><span class="line">	StrBlobPtr&amp; <span class="keyword">operator</span>++();	<span class="comment">// 前置运算符</span></span><br><span class="line">	StrBlobPtr&amp; <span class="keyword">operator</span>--();</span><br><span class="line">	StrBlobPtr <span class="keyword">operator</span>++(<span class="keyword">int</span>);	<span class="comment">// 后置运算符</span></span><br><span class="line">	StrBlobPtr <span class="keyword">operator</span>--(<span class="keyword">int</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>为了与内置版本保持一致，后置运算符应该返回对象的原值（递增或递减之前的值），返回的形式是一个值而非引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StrBlobPtr StrBlobPtr::<span class="keyword">operator</span>++(<span class="keyword">int</span>)</span><br><span class="line">&#123;</span><br><span class="line">	StrBlobPtr ret = *<span class="keyword">this</span>;		<span class="comment">// 记录当前的值</span></span><br><span class="line">	++*<span class="keyword">this</span>;		<span class="comment">// 向前移动一个元素，前置++需要检查递增的有效性</span></span><br><span class="line">	<span class="keyword">return</span> ret;		<span class="comment">// 返回之前记录的状态</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果想通过函数调用的方式使用后置递增或递减运算符，则必须为它的整型参数传递一个值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StrBlobPtr <span class="title">p</span><span class="params">(a1)</span></span>;	<span class="comment">// p 指向 a1 中的 vector</span></span><br><span class="line">p.<span class="keyword">operator</span>++(<span class="number">0</span>);	<span class="comment">// 调用后置版本的 operator++</span></span><br><span class="line">p.<span class="keyword">operator</span>++();		<span class="comment">// 调用前置版本的 operator++</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="成员访问运算符"><a href="#成员访问运算符" class="headerlink" title="成员访问运算符"></a>成员访问运算符</h2><p>箭头运算符必须定义为成员函数，解引用运算符通常也是如此。</p>
+<p>重载的箭头运算符必须返回类的指针或者自定义了箭头运算符的类的对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrBlobPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span>&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> (*p)[curr];		<span class="comment">// (*p) 是对象所指的 vector</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span>* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span></span><br><span class="line">	&#123;	<span class="comment">// 将实际工作委托给解引用运算符</span></span><br><span class="line">		<span class="keyword">return</span> &amp; <span class="keyword">this</span>-&gt;<span class="keyword">operator</span>*();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于形如 <code>point-&gt;mem</code> 的表达式来说，<em>point</em> 必须是指向类对象的指针或者是重载了一个 <code>operator-&gt;</code> 的类的对象。<em>point</em> 类型不同，<code>point-&gt;mem</code> 的含义也不同。</p>
+<ul>
+<li>如果 <em>point</em> 是指针，则调用内置箭头运算符，表达式等价于 <code>(*point).mem</code>。</li>
+<li>如果 <em>point</em> 是重载了 <code>operator-&gt;</code> 的类的对象，则使用 <code>point.operator-&gt;()</code> 的结果来获取 <em>mem</em>，表达式等价于 <code>(point.operator-&gt;())-&gt;mem</code>。其中，如果该结果是一个指针，则执行内置操作，否则重复调用当前操作。</li>
+</ul>
+<h2 id="函数调用运算符"><a href="#函数调用运算符" class="headerlink" title="函数调用运算符"></a>函数调用运算符</h2>
       
     </div>
 
@@ -314,7 +452,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-20 12:25:44" itemprop="dateModified" datetime="2021-09-20T12:25:44+08:00">2021-09-20</time>
+                <time title="修改时间：2021-09-23 19:38:22" itemprop="dateModified" datetime="2021-09-23T19:38:22+08:00">2021-09-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,6 +491,28 @@
 <p>思路：</p>
 <p>可以扫描一遍数组，分别统计出0,1,2这三个元素各有多少个</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> count[<span class="number">3</span>] = &#123;<span class="number">0</span>&#125;;	</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++) &#123;</span><br><span class="line">			assert( nums[i] &gt;= <span class="number">0</span> &amp;&amp; nums[i] &lt;= <span class="number">2</span> );</span><br><span class="line">			count[nums[i]] ++;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">0</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">1</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; count[<span class="number">2</span>] ; i ++ )</span><br><span class="line">			nums[index++] = <span class="number">2</span>;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="LeetCode-88-Merge-Sorted-Array"><a href="#LeetCode-88-Merge-Sorted-Array" class="headerlink" title="LeetCode 88.Merge Sorted Array"></a>LeetCode 88.Merge Sorted Array</h3><h3 id="LeetCode-215-Kth-Largest-Element-in-an-array"><a href="#LeetCode-215-Kth-Largest-Element-in-an-array" class="headerlink" title="LeetCode 215.Kth Largest Element in an array"></a>LeetCode 215.Kth Largest Element in an array</h3><h2 id="对撞指针"><a href="#对撞指针" class="headerlink" title="对撞指针"></a>对撞指针</h2><h3 id="LeetCode-167-Two-Sum"><a href="#LeetCode-167-Two-Sum" class="headerlink" title="LeetCode 167.Two Sum"></a>LeetCode 167.Two Sum</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210923190919307.png" alt="image-20210923190919307"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210923190933474.png" alt="image-20210923190933474"></p>
+<p>方法一：二分搜索法</p>
+<p>因为原数组是有序的，所以可以使用二分搜索法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; numbers.size() ; ++ i) &#123;</span><br><span class="line">            <span class="keyword">int</span> low = i + <span class="number">1</span>, high = numbers.size() - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">                <span class="keyword">int</span> mid = (high - low) / <span class="number">2</span> + low;</span><br><span class="line">                <span class="keyword">if</span> ( numbers[mid] == target - numbers[i] )&#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;i + <span class="number">1</span>, mid + <span class="number">1</span>&#125;;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (numbers[mid] &gt; target - numbers[i] ) &#123;</span><br><span class="line">                    high = mid - <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    low =  mid + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：双指针法</p>
+<p>令 i = 0, j = length - 1。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210923193518433.png" alt="image-20210923193518433"></p>
+<p>如果 <code>nums[i] + nums[j] == target</code> ，直接返回 <code>[i, j]</code>。</p>
+<p>如果 <code>nums[i] + nums[j] &lt; target</code>，<code>i++</code>。</p>
+<p>如果 <code>nums[i] + nums[j] &gt; target</code>，<code>j--</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> low = <span class="number">0</span>, high = numbers.size() - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (low &lt; high ) &#123;</span><br><span class="line">			<span class="keyword">int</span> sum = numbers[low] + numbers[high];</span><br><span class="line">			<span class="keyword">if</span> ( sum == target ) &#123;</span><br><span class="line">				<span class="keyword">return</span> &#123;low + <span class="number">1</span>, high + <span class="number">1</span>&#125;;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> ( sum &lt; target ) &#123;</span><br><span class="line">				++low;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				-- high;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
 
@@ -995,96 +1155,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">primer阅读笔记——第十章泛型算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-10 19:33:52" itemprop="dateCreated datePublished" datetime="2021-09-10T19:33:52+08:00">2021-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-12 18:27:29" itemprop="dateModified" datetime="2021-09-12T18:27:29+08:00">2021-09-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="泛型算法"><a href="#泛型算法" class="headerlink" title="泛型算法"></a>泛型算法</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>大多数算法都定义在头文件 <em>algorithm</em> 中。标准库还在头文件 <em>numeric</em> 中定义了一组数值泛型算法。</p>
-<p><code>find</code> 函数将范围中的每个元素与给定值进行比较，返回指向第一个等于给定值的元素的迭代器。如果无匹配元素，则返回其第二个参数来表示搜索失败。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> val = <span class="number">42</span>;	<span class="comment">// 我们将查找的值</span></span><br><span class="line"><span class="comment">// 如果在 vec 中找到想要的元素，则返回结果指向它，否则返回结果为 vec.cend()</span></span><br><span class="line"><span class="keyword">auto</span> result = find(vec.cbegin(), vec.cend(), val);</span><br><span class="line"><span class="comment">// 报告结果</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;The value &quot;</span> &lt;&lt; val</span><br><span class="line">	&lt;&lt; (result == vec.cend()</span><br><span class="line">			? <span class="string">&quot; is not present&quot;</span> : <span class="string">&quot; is present&quot;</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-<p>迭代器参数令算法不依赖与特定容器，但依赖于元素类型操作。</p>
-<p>泛型算法本身不会执行容器操作，它们只会运行于迭代器之上，执行迭代器操作。算法可能改变容器中元素的值，或者在容器内移动元素，但不会改变底层容器的大小（当算法操作插入迭代器时，迭代器可以向容器中添加元素，但算法自身不会进行这种操作）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1152,7 +1226,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
