@@ -154,6 +154,462 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/29/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/29/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">primer阅读笔记——第十五章面向对象程序设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-29 17:00:45" itemprop="dateCreated datePublished" datetime="2021-09-29T17:00:45+08:00">2021-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-30 09:55:00" itemprop="dateModified" datetime="2021-09-30T09:55:00+08:00">2021-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="面向对象程序设计"><a href="#面向对象程序设计" class="headerlink" title="面向对象程序设计"></a>面向对象程序设计</h1><h2 id="OOP：概述"><a href="#OOP：概述" class="headerlink" title="OOP：概述"></a>OOP：概述</h2><p>面向对象程序设计（object-oriented programming）的核心思想是数据抽象（封装）、继承和动态绑定（多态）。</p>
+<p>通过继承联系在一起的类构成一种层次关系。通常在层次关系的根部有一个基类（base class），其他类则直接或间接地从基类继承而来，这些继承得到的类叫做派生类。基类负责定义在层次关系中所有类共同拥有的成员，而每个派生类定义各自特有的成员。</p>
+<p>对于某些函数，基类希望它的派生类各自定义适合自身的版本，此时基类应该将这些函数声明为虚函数。方法是在函数名称前添加 <code>virtual</code> 关键字。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quote</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> n)</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>派生类必须通过类派生列表明确指出它是从哪个或哪些基类继承而来的。类派生列表的形式首先是一个冒号，后面紧跟以逗号分隔的基类列表，其中每个基类前面可以添加访问说明符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bulk_quote</span> :</span> <span class="keyword">public</span> Quote</span><br><span class="line">&#123;	<span class="comment">// Bulk_quote 继承了 Quote</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span>)</span> <span class="keyword">const</span> <span class="keyword">override</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>派生类必须在其内部对所有重新定义的虚函数进行声明。</p>
+<p>使用基类的引用或指针调用一个虚函数时将发生动态绑定，也叫运行时绑定。函数的运行版本将由实参决定。</p>
+<h2 id="定义基类和派生类"><a href="#定义基类和派生类" class="headerlink" title="定义基类和派生类"></a>定义基类和派生类</h2><h3 id="定义基类"><a href="#定义基类" class="headerlink" title="定义基类"></a>定义基类</h3><p>基类通常都应该定义一个虚析构函数，即使该函数不执行任何实际操作也是如此。</p>
+<p>除构造函数之外的任何非静态函数都能定义为虚函数。<code>virtual</code> 关键字只能出现在类内部的声明语句之前而不能用于类外部的函数定义。如果基类把一个函数声明为虚函数，则该函数在派生类中隐式地也是虚函数。</p>
+<p>成员函数如果没有被声明为虚函数，则其解析过程发生在编译阶段而非运行阶段。</p>
+<p>派生类能访问基类的共有成员，不能访问私有成员。如果基类希望定义外部代码无法访问，但是派生类对象可以访问的成员，可以使用 <code>protected</code> 访问运算符进行说明。</p>
+<h3 id="定义派生类"><a href="#定义派生类" class="headerlink" title="定义派生类"></a>定义派生类</h3><p>类派生列表中的访问说明符用于控制派生类从基类继承而来的成员是否对派生类的用户可见。</p>
+<p>如果派生类没有覆盖其基类的某个虚函数，则该虚函数的行为类似于其他的普通函数，派生类会直接继承其在基类中的版本。</p>
+<p>C++ 标准并没有明确规定派生类的对象在内存中如何分布，一个对象中继承自基类的部分和派生类自定义的部分不一定是连续存储的。</p>
+<p>因为在派生类对象中含有与其基类对应的组成部分，所以能把派生类的对象当作基类对象来使用，也能将基类的指针或引用绑定到派生类对象中的基类部分上。这种转换通常称为派生类到基类的类型转换，编译器会隐式执行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Quote item;		<span class="comment">// 基类对象</span></span><br><span class="line">Bulk_quote bulk;	<span class="comment">// 派生类对象</span></span><br><span class="line">Quote *p = &amp;item;	<span class="comment">// p 指向 Quote 对象</span></span><br><span class="line">p = &amp;bulk;	<span class="comment">// p 指向 bulk 的 Quote 部分</span></span><br><span class="line">Quote &amp;r = bulk;	<span class="comment">// r 绑定到 bulk 的 Quote 部分</span></span><br></pre></td></tr></table></figure>
+
+<p>每个类控制它自己的成员初始化过程，派生类必须使用基类的构造函数来初始化它的基类部分。派生类的构造函数通过构造函数初始化列表来将实参传递给基类构造函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bulk_quote(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; book, <span class="keyword">double</span> p, <span class="built_in">std</span>::<span class="keyword">size_t</span> qty, <span class="keyword">double</span> disc) : Quote(book, p), min_qty(qty), discount(disc) &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>除非特别指出，否则派生类对象的基类部分会像数据成员一样执行默认初始化。</p>
+<p>派生类初始化时首先初始化基类部分，然后按照声明的顺序依次初始化派生类成员。</p>
+<p>派生类可以访问基类的公有成员和受保护成员。</p>
+<p>如果基类定义了一个静态成员，则在整个继承体系中只存在该成员的唯一定义。如果某静态成员是可访问的，则既能通过基类也能通过派生类使用它。</p>
+<p>已经完整定义的类才能被用作基类。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span> <span class="comment">/* ... */</span> &#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span>:</span> <span class="keyword">public</span> Base &#123; <span class="comment">/* ... */</span> &#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D2</span>:</span> <span class="keyword">public</span> D1 &#123; <span class="comment">/* ... */</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p> <em>Base</em> 是 <em>D1</em> 的直接基类，是 <em>D2</em> 的间接基类。最终的派生类将包含它直接基类的子对象以及每个间接基类的子对象。</p>
+<p>C++ 11中，在类名后面添加 <code>final</code> 关键字可以禁止其他类继承它。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoDerived</span> <span class="keyword">final</span> &#123;</span> <span class="comment">/* */</span> &#125;;	<span class="comment">// NoDerived 不能作为基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span> <span class="comment">/* */</span> &#125;;</span><br><span class="line"><span class="comment">// Last 是 final 的；我们不能继承 Last</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Last</span> <span class="keyword">final</span> :</span> Base &#123; <span class="comment">/* */</span> &#125;;	<span class="comment">// Last 不能作为基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bad</span> :</span> NoDerived &#123; <span class="comment">/* */</span> &#125;;	<span class="comment">// 错误：NoDerived 是 final 的</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bad2</span> :</span> Last &#123; <span class="comment">/* */</span> &#125;;	<span class="comment">// 错误：Last 是 final 的</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="类型转换与继承"><a href="#类型转换与继承" class="headerlink" title="类型转换与继承"></a>类型转换与继承</h3><p>和内置指针一样，智能指针类也支持派生类到基类的类型转换，所以可以将一个派生类对象的指针存储在一个基类的智能指针内。</p>
+<p>表达式的静态类型在编译时总是已知的，它是变量声明时的类型或表达式生成的类型；动态类型则是变量或表达式表示的内存中对象的类型，只有运行时才可知。</p>
+<p>如果表达式既不是引用也不是指针，则它的动态类型永远与静态类型一致。</p>
+<p>不存在从基类到派生类的隐式类型转换，即使一个基类指针或引用绑定在一个派生类对象上也不行，因为编译器只能通过检查指针或引用的静态类型来判断转换是否合法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Quote base;</span><br><span class="line">Bulk_quote* bulkP = &amp;base;	<span class="comment">// 错误：不能将基类转换成派生类</span></span><br><span class="line">Bulk_quote&amp; bulkRef = base;	<span class="comment">// 错误：不能将基类转换成派生类</span></span><br></pre></td></tr></table></figure>
+
+<p>如果在基类中含有一个或多个虚函数，可以使用 <code>dynamic_cast</code> 运算符，用于将基类的指针或引用安全地转换成派生类的指针或引用，该转换的安全检查将在运行期间执行。</p>
+<p>如果已知某个基类到派生类的转换是安全的，可以使用 <code>static_cast</code> 强制覆盖掉编译器的检查工作。</p>
+<p>派生类到基类的自动类型转换只对指针或引用有效，在派生类类型和基类类型之间不存在这种转换。</p>
+<p>派生类到基类的转换允许我们给基类的拷贝/移动操作传递一个派生类的对象，这些操作是基类定义的，只会处理基类自己的成员，派生类的部分被切掉了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Bulk_quote bulk;	<span class="comment">// 派生类对象</span></span><br><span class="line"><span class="function">Quote <span class="title">item</span><span class="params">(bulk)</span></span>;	<span class="comment">// 使用 Quote::Quote(const Quote&amp;) 构造函数</span></span><br><span class="line">item = bulk;		<span class="comment">// 调用 Quote::operator=(const Quote&amp;)</span></span><br></pre></td></tr></table></figure>
+
+<p>用一个派生类对象为一个基类对象初始化或赋值时，只有该对象中的基类部分会被拷贝、移动或赋值，它的派生类部分会被忽略掉。</p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p>当且仅当通过指针或引用调用虚函数时，才会在运行过程解析该调用，也只有在这种情况下对象的动态类型有可能与静态类型不同。</p>
+<p>在派生类中覆盖某个虚函数时，可以再次使用 <code>virtual</code> 关键字说明函数性质，但这并非强制要求。因为一旦某个函数被声明为虚函数，则在所有派生类中它都是虚函数。</p>
+<p>在派生类中覆盖某个虚函数时，该函数在基类中的形参必须与派生类中的形参严格匹配。</p>
+<p>派生类可以定义一个与基类中的虚函数名字相同但形参列表不同的函数，但编译器会认为该函数与基类中原有的函数是相互独立的，此时派生类的函数并没有覆盖掉基类中的版本。</p>
+<p>C++11 允许派生类使用 <code>override</code> 关键字显式地注明虚函数。如果 <code>override</code> 标记了某个函数，但该函数并没有覆盖已存在的虚函数，编译器将报告错误。<code>override</code> 位于函数参数列表之后。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span>)</span> <span class="keyword">const</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f3</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">D1</span> :</span> B</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span>)</span> <span class="keyword">const</span> <span class="keyword">override</span></span>;	<span class="comment">// 正确：f1 与基类中的 f1 匹配</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span>)</span> <span class="keyword">override</span></span>;		<span class="comment">// 错误：B 没有形如 f2(int) 的函数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f3</span><span class="params">()</span> <span class="keyword">override</span></span>;		<span class="comment">// 错误：f3 不是虚函数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f4</span><span class="params">()</span> <span class="keyword">override</span></span>;		<span class="comment">// 错误：B 没有名为 f4 的函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>与禁止类继承类似，函数也可以通过添加 <code>final</code> 关键字来禁止覆盖操作。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">D2</span> :</span> B</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 从 B 继承 f2() 和 f3()，覆盖 f1(int)</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span>)</span> <span class="keyword">const</span> <span class="keyword">final</span></span>;	<span class="comment">// 不允许后续的其他类覆盖 f1(int)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>final</code> 和 <code>override</code> 关键字出现在形参列表（包括任何 <code>const</code> 或引用修饰符）以及尾置返回类型之后。</p>
+<p>虚函数也可以有默认实参，每次函数调用的默认实参值由本次调用的静态类型决定。如果通过基类的指针或引用调用函数，则使用基类中定义的默认实参，即使实际运行的是派生类中的版本也是如此。</p>
+<p>如果虚函数使用默认实参，则基类和派生类中定义的默认实参最好一致。</p>
+<p>如果一个派生类虚函数需要调用它的基类版本，但没有使用作用域运算符，则在运行时该调用会被解析为对派生类版本自身的调用，从而导致无限递归。</p>
+<h2 id="抽象基类"><a href="#抽象基类" class="headerlink" title="抽象基类"></a>抽象基类</h2><p>在类内部虚函数声明语句的分号前添加 <code>=0</code> 可以将一个虚函数声明为纯虚函数。一个纯虚函数无须定义。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">net_price</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span>)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以为纯虚函数提供定义，但函数体必须定义在类的外部。</p>
+<p>含有（或未经覆盖直接继承）纯虚函数的类是抽象基类。抽象基类负责定义接口，而后续的其他类可以覆盖该接口。</p>
+<p>不能创建抽象基类的对象。</p>
+<p>派生类构造函数只初始化它的直接基类。</p>
+<p>重构（refactoring）负责重新设计类的体系以便将操作或数据从一个类移动到另一个类中。</p>
+<h2 id="访问控制与继承"><a href="#访问控制与继承" class="headerlink" title="访问控制与继承"></a>访问控制与继承</h2><p>一个类可以使用 <code>protected</code> 关键字来声明外部代码无法访问，但是派生类对象可以访问的成员。</p>
+<p>派生类的成员或友元只能通过派生类对象来访问基类的 <code>protected</code> 成员。派生类对于一个基类对象中的 <code>protected</code> 成员没有任何访问权限。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="keyword">int</span> prot_mem;	<span class="comment">// protected 成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sneaky</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">clobber</span><span class="params">(Sneaky&amp;)</span></span>;	<span class="comment">// 能访问 Sneaky::prot_mem</span></span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">clobber</span><span class="params">(Base&amp;)</span></span>;		<span class="comment">// 不能访问 Base::prot_mem</span></span><br><span class="line">	<span class="keyword">int</span> j;		<span class="comment">// j 默认是 private</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确：clobber 能访问 Sneaky 对象的 private 和 protected 成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clobber</span><span class="params">(Sneaky &amp;s)</span> </span>&#123; s.j = s.prot_mem = <span class="number">0</span>; &#125;</span><br><span class="line"><span class="comment">// 错误：clobber 不能访问 Base 的 protected 成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clobber</span><span class="params">(Base &amp;b)</span> </span>&#123; b.prot_mem = <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/29/%E5%9C%A8%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%A9%BF%E9%92%88%E5%BC%95%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/29/%E5%9C%A8%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%A9%BF%E9%92%88%E5%BC%95%E7%BA%BF/" class="post-title-link" itemprop="url">在链表中穿针引线</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-29 11:06:15 / 修改时间：16:53:10" itemprop="dateCreated datePublished" datetime="2021-09-29T11:06:15+08:00">2021-09-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="LeetCode-206-Reverse-Linked-List"><a href="#LeetCode-206-Reverse-Linked-List" class="headerlink" title="LeetCode 206.Reverse Linked List"></a>LeetCode 206.Reverse Linked List</h3><p>前一个节点为 <em>pre</em>，当前考察的节点是 <em>cur</em>，下一个结点为 <em>next</em>。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929112322724.png" alt="image-20210929112322724"></p>
+<p>首先把 <em>cur</em> 指针改变为指向 <em>pre</em> ，之后更新 <em>pre</em>, <em>cur</em>, <em>next</em>。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929112533927.png" alt="image-20210929112533927"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">       </span><br><span class="line">        </span><br><span class="line">        ListNode* pre = <span class="literal">NULL</span>;</span><br><span class="line">        ListNode* cur = head;</span><br><span class="line">        <span class="keyword">while</span>( cur != <span class="literal">NULL</span> )&#123;</span><br><span class="line">        	ListNode* next = cur-&gt;next;</span><br><span class="line">            </span><br><span class="line">            cur-&gt;next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverseLinkedList</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 也可以使用递归反转一个链表</span></span><br><span class="line">        ListNode *pre = <span class="literal">nullptr</span>;</span><br><span class="line">        ListNode *cur = head;</span><br><span class="line">        <span class="keyword">while</span> (cur != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            ListNode *next = cur-&gt;next;</span><br><span class="line">            cur-&gt;next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode *<span class="title">reverseBetween</span><span class="params">(ListNode *head, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 因为头节点有可能发生变化，使用虚拟头节点可以避免复杂的分类讨论</span></span><br><span class="line">        ListNode *dummyNode = <span class="keyword">new</span> ListNode(<span class="number">-1</span>);</span><br><span class="line">        dummyNode-&gt;next = head;</span><br><span class="line">        </span><br><span class="line">        ListNode *pre = dummyNode;</span><br><span class="line">        <span class="comment">// 第一步，</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/%E6%9F%A5%E6%89%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/25/%E6%9F%A5%E6%89%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">查找表相关的问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-25 10:16:54" itemprop="dateCreated datePublished" datetime="2021-09-25T10:16:54+08:00">2021-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-29 11:05:41" itemprop="dateModified" datetime="2021-09-29T11:05:41+08:00">2021-09-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="LeetCode-349-Intersection-of-Two-Arrays"><a href="#LeetCode-349-Intersection-of-Two-Arrays" class="headerlink" title="LeetCode 349.Intersection of Two Arrays"></a>LeetCode 349.Intersection of Two Arrays</h2><p> <img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925102321224.png" alt="image-20210925102321224"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925102332354.png" alt="image-20210925102332354"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">intersection</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; <span class="title">record</span><span class="params">( nums1.begin(), nums1.end() )</span></span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; resultSet;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; num2.size() ; i ++ )</span><br><span class="line">            <span class="keyword">if</span>( record.find(nums2[i]) != record.end() )</span><br><span class="line">                resultSet.insert( nums2[i] );</span><br><span class="line">        </span><br><span class="line">         <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(result.begin(), result.end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-350-Intersection-of-Two-Arrays"><a href="#LeetCode-350-Intersection-of-Two-Arrays" class="headerlink" title="LeetCode 350. Intersection of Two Arrays"></a>LeetCode 350. Intersection of Two Arrays</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925103523748.png" alt="image-20210925103523748"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925103534115.png" alt="image-20210925103534115"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">intersect</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; record;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums1.size() ; i ++)</span><br><span class="line">            record[nums1[i]] ++;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; resultVector;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums2.size() ; i ++ )</span><br><span class="line">            <span class="keyword">if</span>( record[nums2[i]] &gt; <span class="number">0</span> ) &#123;</span><br><span class="line">                resultVector.push_back( nums2[i] );</span><br><span class="line">                record[nums2[i]] --;</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> resultVector;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-202-快乐数"><a href="#LeetCode-202-快乐数" class="headerlink" title="LeetCode 202. 快乐数"></a>LeetCode 202. 快乐数</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925120115502.png" alt="image-20210925120115502"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925120121774.png" alt="image-20210925120121774"></p>
+<ul>
+<li>方法一：用哈希集合检测循环</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 取数值各个位上的单数之和</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (n) &#123;</span><br><span class="line">			sum += (n % <span class="number">10</span>) * (n % <span class="number">10</span>);</span><br><span class="line">			n /= <span class="number">10</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">set</span>;</span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">			<span class="keyword">int</span> sum = getSum(n);</span><br><span class="line">			<span class="keyword">if</span> (sum == <span class="number">1</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// 如果这个 sum 曾经出现过，说明已经陷入了无限循环，立刻 return false</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">set</span>.find(sum) != <span class="built_in">set</span>.end()) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="built_in">set</span>.insert(sum);</span><br><span class="line">			&#125;</span><br><span class="line">			n = sum;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>方法二：快慢指针</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">bitSquareSum</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> bit = n % <span class="number">10</span>;</span><br><span class="line">			sum += bit * bit;</span><br><span class="line">			n = n/<span class="number">10</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> sum;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> slow = n, fast = n;</span><br><span class="line">		<span class="keyword">do</span>&#123;</span><br><span class="line">			slow = bitSquareSum(slow);</span><br><span class="line">			fast = bitSquareSum(fast);</span><br><span class="line">			fast = bitSquareSum(fast);</span><br><span class="line">		&#125;<span class="keyword">while</span> (slow != fast);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> slow == <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="LeetCode-290-单词规律"><a href="#LeetCode-290-单词规律" class="headerlink" title="LeetCode 290. 单词规律"></a>LeetCode 290. 单词规律</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925122555149.png" alt="image-20210925122555149"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210925122600449.png" alt="image-20210925122600449"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">wordPattern</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">char</span>&gt; str2ch;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="built_in">string</span>&gt; ch2str;</span><br><span class="line">		<span class="keyword">int</span> m = str.length();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> ( <span class="keyword">auto</span> ch : pattern ) &#123;</span><br><span class="line">			<span class="keyword">if</span> ( i &gt;= m) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">int</span> j = i;</span><br><span class="line">			<span class="keyword">while</span> (j &lt; m &amp;&amp; str[j] != <span class="string">&#x27; &#x27;</span>) j++;</span><br><span class="line">			<span class="keyword">const</span> <span class="built_in">string</span> &amp;tmp = str.substr(i, j - i);</span><br><span class="line">			<span class="keyword">if</span> (str2ch.count(tmp) &amp;&amp; str2ch[tmp] != ch) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (ch2str.count(ch) &amp;&amp; ch2str[ch] != tmp) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			str2ch[tmp] = ch;</span><br><span class="line">			ch2str[ch] = tmp;</span><br><span class="line">			i = j + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> i &gt;= m;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">wordPattern</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(s)</span></span>;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; strs;</span><br><span class="line">		<span class="built_in">string</span> str;</span><br><span class="line">		<span class="keyword">while</span> ( ss &gt;&gt; str ) &#123;</span><br><span class="line">			strs.push_back(str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="built_in">string</span>&gt; char2Str;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">char</span>&gt; str2Char;</span><br><span class="line">		<span class="keyword">if</span> ( pattern.size() != strs.size() ) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> N = pattern.size();</span><br><span class="line">		<span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; N ; i ++ ) &#123;</span><br><span class="line">			<span class="keyword">if</span>(char2Str.count(pattern[i]) &amp;&amp; char2Str[pattern[i]] != strs[i])</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> ( str2Char.count(strs[i]) &amp;&amp; str2Char[strs[i]] != pattern[i] ) </span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			</span><br><span class="line">			char2Str[pattern[i]] = strs[i];</span><br><span class="line">			str2Char[strs[i]] = pattern[i];</span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-451-根据字符出现频率排序"><a href="#LeetCode-451-根据字符出现频率排序" class="headerlink" title="LeetCode 451. 根据字符出现频率排序"></a>LeetCode 451. 根据字符出现频率排序</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926104517057.png" alt="image-20210926104517057"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926104527631.png" alt="image-20210926104527631"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">frequencySort</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c : s)</span><br><span class="line">		&#123;</span><br><span class="line">			++mp[c];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt;&gt; v(mp.begin(), mp.end());</span><br><span class="line">		sort(v.begin(), v.end(), [](<span class="built_in">pair</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; a, <span class="built_in">pair</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; b)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> a.second &gt; b.second;</span><br><span class="line">		&#125;</span><br><span class="line">	);</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">auto</span> it : v )</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> ( <span class="keyword">int</span> i = it.second ; i &gt; <span class="number">0</span> ; -- i )</span><br><span class="line">			&#123;</span><br><span class="line">				ans += it.first;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-1-Two-Sum"><a href="#LeetCode-1-Two-Sum" class="headerlink" title="LeetCode 1. Two Sum"></a>LeetCode 1. Two Sum</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926112041046.png" alt="image-20210926112041046"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926112050791.png" alt="image-20210926112050791"></p>
+<p>如果使用 <code>map</code>，不能直接设置 <code>record[nums[i]] = i</code>，因为可能数组中两个数相同。</p>
+<p>在遍历数组时，遍历到数组元素 v 时，此时可以查找 v 前面的所有元素，只将 v 前面的所有元素放入查找表中。这样，如果之前放入查找表中有与 v 相等的元素，也还没有覆盖。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926112808824.png" alt="image-20210926112808824"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; record;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++)&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> complement = target - nums[i];</span><br><span class="line">            <span class="keyword">if</span>( record.find( complement ) != record.end() )&#123;</span><br><span class="line">                <span class="keyword">int</span> res[<span class="number">2</span>] = &#123;i, record[complement]&#125;;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(res, res+<span class="number">2</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            record[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-15-3Sum"><a href="#LeetCode-15-3Sum" class="headerlink" title="LeetCode 15. 3Sum"></a>LeetCode 15. 3Sum</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926114224737.png" alt="image-20210926114224737"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210926114234286.png" alt="image-20210926114234286"></p>
+<ul>
+<li>哈希法</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>	&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; threeSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; counter;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++)</span><br><span class="line">            counter[nums[i]] ++;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(counter[<span class="number">0</span>] &gt;= <span class="number">3</span>)</span><br><span class="line">            res.push_back(&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 去除重复值</span></span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator iter = unique(nums.begin(), nums.end());</span><br><span class="line">        nums.erase(iter, nums.end());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.size() ; j ++) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(nums[i] * <span class="number">2</span> + nums[j] == <span class="number">0</span> &amp;&amp; counter[nums[i]] &gt;= <span class="number">2</span>)</span><br><span class="line">                    res.push_back(&#123;nums[i], nums[i], nums[j]&#125;);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(nums[i] + nums[j] * <span class="number">2</span> == <span class="number">0</span> &amp;&amp; counter[nums[j]] &gt;= <span class="number">2</span>)</span><br><span class="line">                    res.push_back(&#123;nums[i], nums[j], nums[j]&#125;);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">int</span> c = <span class="number">0</span> - nums[i] - nums[j];</span><br><span class="line">                <span class="keyword">if</span>(c &gt; nums[j] &amp;&amp; counter[c] != <span class="number">0</span>)</span><br><span class="line">                    res.push_back(&#123;nums[i], nums[j], c&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>排序+双指针法</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; threeSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(nums.size() &lt; <span class="number">3</span>)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line"></span><br><span class="line">        sort( nums.begin(), nums.end() );</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( nums[i] &gt; <span class="number">0</span> )</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>] )</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> target = -nums[i], left = i + <span class="number">1</span>, right = nums.size() - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>( left &lt; right ) &#123;</span><br><span class="line">                <span class="keyword">int</span> sum = nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span>(sum &lt; target) &#123;</span><br><span class="line">                    left ++;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>( sum &gt; target ) &#123;</span><br><span class="line">                    right --;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    res.push_back(&#123;nums[i], nums[left], nums[right] &#125;);</span><br><span class="line">                    left++;</span><br><span class="line">                    right--;</span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left<span class="number">-1</span>]) left++;</span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right+<span class="number">1</span>]) right--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-454-4Sum"><a href="#LeetCode-454-4Sum" class="headerlink" title="LeetCode 454. 4Sum"></a>LeetCode 454. 4Sum</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210928102104625.png" alt="image-20210928102104625"></p>
+<p>将 C+D 的每一种可能放入查找表：O(n^2)。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fourSumCount</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums3, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums4)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; record;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; C.size() ; i ++ )</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; D.size() ; j ++ )</span><br><span class="line">                record[ C[i] + D[j] ] ++;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; A.size() ; i ++ )</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; B.size() ; j ++ )</span><br><span class="line">                <span class="keyword">if</span>( record.find( <span class="number">0</span> - A[i] - B[j] ) != record.end() )</span><br><span class="line">                    res += record[<span class="number">0</span> - A[i] - B[j]];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-49-字母异位词分组"><a href="#LeetCode-49-字母异位词分组" class="headerlink" title="LeetCode 49. 字母异位词分组"></a>LeetCode 49. 字母异位词分组</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210928104217125.png" alt="image-20210928104217125"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210928104226883.png" alt="image-20210928104226883"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; sig;	<span class="comment">// 巧用 map 对单词进行归类存储</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; strs.size() ; i ++) &#123;</span><br><span class="line">            <span class="built_in">string</span> s = str[i];</span><br><span class="line">            sort(s.begin(), s.end());</span><br><span class="line">            sig[s].push_back(strs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> x:sig)&#123;	<span class="comment">// 注意这里 unordered_map的遍历方式</span></span><br><span class="line">            result.push_back(x.second);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LeetCode-447-回旋镖的数量"><a href="#LeetCode-447-回旋镖的数量" class="headerlink" title="LeetCode 447. 回旋镖的数量"></a>LeetCode 447. 回旋镖的数量</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210928112254087.png" alt="image-20210928112254087"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210928112300730.png" alt="image-20210928112300730"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numberOfBoomerangs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>( points.size() &lt; <span class="number">3</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; points.size() ; i ++ )&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; record;</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; points.size() ; j ++ )</span><br><span class="line">                <span class="keyword">if</span>( j != i )</span><br><span class="line">                    record[ dis(points[i], points[j]) ] ++;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span>( <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;::iterator iter = record.begin() ; iter != record.end() ; iter++ )</span><br><span class="line">                <span class="keyword">if</span>( iter-&gt;second &gt;= <span class="number">2</span> )</span><br><span class="line">                    res += (iter-&gt;second)*(iter-&gt;second<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dis</span><span class="params">( <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;pa, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;pb )</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (pa[<span class="number">0</span>] - pb[<span class="number">0</span>]) * (pa[<span class="number">0</span>] - pb[<span class="number">0</span>]) +</span><br><span class="line">            	(pa[<span class="number">1</span>] - pb[<span class="number">1</span>]) * (pa[<span class="number">1</span>] - pb[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="滑动窗口-查找表"><a href="#滑动窗口-查找表" class="headerlink" title="滑动窗口 + 查找表"></a>滑动窗口 + 查找表</h2><h3 id="LeetCode-219-Contains-Duplicate"><a href="#LeetCode-219-Contains-Duplicate" class="headerlink" title="LeetCode 219. Contains Duplicate"></a>LeetCode 219. Contains Duplicate</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929101446924.png" alt="image-20210929101446924"></p>
+<p>假设数组中存在 <em>i</em> 和 <em>j</em>，使得 <code>nums[i] = nums[j]</code>，并且 <em>i</em> 和 <em>j</em> 的差的 <strong>绝对值</strong> 至多为 <em>k</em>。那么 <em>i</em> 和 <em>j</em> 一定在一个区间里，左边界为 <em>l</em>，右边界为 <em>l+k</em>，如下图。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929102306686.png" alt="image-20210929102306686"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">containsNearbyDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; record;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++ ) &#123;</span><br><span class="line">		</span><br><span class="line">			<span class="keyword">if</span>( record.find(nums[i]) != record.end() )</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">				</span><br><span class="line">			record.insert( nums[i] );</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 保持 record 中最多有 k 个元素</span></span><br><span class="line">			<span class="keyword">if</span>( record.size() == k + <span class="number">1</span> )</span><br><span class="line">				record.erase( nums[i-k] );</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="LeetCode-220-Contains-Duplicate"><a href="#LeetCode-220-Contains-Duplicate" class="headerlink" title="LeetCode 220. Contains Duplicate"></a>LeetCode 220. Contains Duplicate</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">containsNearbyAlmostDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k, <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; record;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.size() ; i ++ ) &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>( record.lower_bound(nums[i] - t) != record.end() &amp;&amp;</span><br><span class="line">            		*record.lower_bound(nums[i] - t) &lt;= nums[i] + t)</span><br><span class="line">            		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            		</span><br><span class="line">            record.insert( nums[i] );</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 保持 record 中最多有 k 个元素</span></span><br><span class="line">            <span class="keyword">if</span>( record.size() == k + <span class="number">1</span> )</span><br><span class="line">            	record.erase( num[i-k] );</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -242,7 +698,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-23 18:51:21" itemprop="dateModified" datetime="2021-09-23T18:51:21+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-24 19:44:11" itemprop="dateModified" datetime="2021-09-24T19:44:11+08:00">2021-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -402,7 +858,174 @@
 <li>如果 <em>point</em> 是指针，则调用内置箭头运算符，表达式等价于 <code>(*point).mem</code>。</li>
 <li>如果 <em>point</em> 是重载了 <code>operator-&gt;</code> 的类的对象，则使用 <code>point.operator-&gt;()</code> 的结果来获取 <em>mem</em>，表达式等价于 <code>(point.operator-&gt;())-&gt;mem</code>。其中，如果该结果是一个指针，则执行内置操作，否则重复调用当前操作。</li>
 </ul>
-<h2 id="函数调用运算符"><a href="#函数调用运算符" class="headerlink" title="函数调用运算符"></a>函数调用运算符</h2>
+<h2 id="函数调用运算符"><a href="#函数调用运算符" class="headerlink" title="函数调用运算符"></a>函数调用运算符</h2><p>函数调用运算符必须定义为成员函数。一个类可以定义多个不同版本的调用运算符，相互之间必须在参数数量或类型上有所区别。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrintString</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	PrintString(ostream &amp;o = <span class="built_in">cout</span>, <span class="keyword">char</span> c = <span class="string">&#x27; &#x27;</span>):</span><br><span class="line">		os(o), sep(c) &#123; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> <span class="keyword">const</span> </span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        os &lt;&lt; s &lt;&lt; sep; </span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	ostream &amp;os;	<span class="comment">// 用于写入的目的流</span></span><br><span class="line">	<span class="keyword">char</span> sep;		<span class="comment">// 用于将不同输出隔开的字符</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">PrintString printer;	<span class="comment">// 使用默认值，打印到 cout</span></span><br><span class="line">printer(s);		<span class="comment">// 在 cout 中打印 s，后面跟一个空格</span></span><br></pre></td></tr></table></figure>
+
+<p>如果类定义了调用运算符，则该类的对象被称作函数对象（function object），函数对象常常作为泛型算法的实参。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for_each(vs.begin(), vs.end(), PrintString(<span class="built_in">cerr</span>, <span class="string">&#x27;\n&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="lambda-是函数对象"><a href="#lambda-是函数对象" class="headerlink" title="lambda 是函数对象"></a>lambda 是函数对象</h3><p>编写一个 <code>lambda</code> 后，编译器会将该表达式转换成一个未命名类的未命名对象，类中含有一个重载的函数调用运算符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据单词的长度对其进行排序，对于长度相同的单词按照顺序排序</span></span><br><span class="line">stable_sort(words.begin(), words.end(),</span><br><span class="line">			[](<span class="keyword">const</span> <span class="built_in">string</span> &amp;a, <span class="keyword">const</span> <span class="built_in">string</span> &amp;b)</span><br><span class="line">				&#123; <span class="keyword">return</span> a.size() &lt; b.size(); &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其行为类似于下面这个类的一个未命名对象</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShorterString</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>lambda</code> 默认不能改变它捕获的变量。因此在默认情况下，由 <code>lambda</code> 产生的类中的函数调用运算符是一个 <code>const</code> 成员函数。如果 <code>lambda</code> 被声明为可变的，则调用运算符就不再是 <code>const</code> 函数了。</p>
+<p><code>lambda</code> 通过引用捕获变量时，由程序负责确保 <code>lambda</code> 执行时该引用所绑定的对象确实存在。因此编译器可以直接使用该引用而无须在 <code>lambda</code> 产生的类中将其存储为数据成员。相反，通过值捕获的变量被拷贝到 <code>lambda</code> 中，此时 <code>lambda</code> 产生的类必须为每个值捕获的变量建立对应的数据成员，并创建构造函数，用捕获变量的值来初始化数据成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得第一个指向满足条件元素的迭代器，该元素满足 size() is &gt;= sz</span></span><br><span class="line"><span class="keyword">auto</span> wc = find_if(words.begin(), words.end(),</span><br><span class="line">			[sz](<span class="keyword">const</span> <span class="built_in">string</span> &amp;a) &#123; <span class="keyword">return</span> a.size() &gt;= sz; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该 lambda 表达式产生的类将形如：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SizeComp</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    SizeComp(<span class="keyword">size_t</span> n): sz(n) &#123; &#125;	<span class="comment">// 该形参对应捕获的变量</span></span><br><span class="line">    <span class="comment">// 该调用运算符的返回类型、形参和函数体都与 lambda 一致</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.size() &gt;= sz;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">size_t</span> sz;	<span class="comment">// 该数据成员对应通过值捕获的变量</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>lambda</code> 产生的类不包含默认构造函数、赋值运算符和默认析构函数，它是否包含默认拷贝/移动构造函数则通常要视捕获的变量类型而定。</p>
+<h3 id="标准库定义的函数对象"><a href="#标准库定义的函数对象" class="headerlink" title="标准库定义的函数对象"></a>标准库定义的函数对象</h3><p>标准库在头文件 <em>functional</em> 中定义了一组表示算术运算符、关系运算符和逻辑运算符的类，每个类分别定义了一个执行命名操作的调用运算符。这些类都被定义为模板的形式，可以为其指定具体的应用类型（即调用运算符的形参类型）。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术</td>
+<td>关系</td>
+<td>逻辑</td>
+</tr>
+<tr>
+<td><code>plus&lt;Type&gt;</code></td>
+<td><code>equal_to&lt;Type&gt;</code></td>
+<td><code>logical_and&lt;Type&gt;</code></td>
+</tr>
+<tr>
+<td><code>minus&lt;Type&gt;</code></td>
+<td><code>not_equal_to&lt;Type&gt;</code></td>
+<td><code>logical_or&lt;Type&gt;</code></td>
+</tr>
+<tr>
+<td><code>multiplies&lt;Type&gt;</code></td>
+<td><code>greater&lt;Type&gt;</code></td>
+<td><code>logical_not&lt;Type&gt;</code></td>
+</tr>
+<tr>
+<td><code>divides&lt;Type&gt;</code></td>
+<td><code>greater_equal&lt;Type&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>modulus&lt;Type&gt;</code></td>
+<td><code>less&lt;Type&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>negate&lt;Type&gt;</code></td>
+<td><code>less_equal&lt;Type&gt;</code></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>关系运算符的函数对象类通常被用来替换算法中的默认运算符，这些类对于指针同样适用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span> *&gt; nameTable;		<span class="comment">// 指针的 vector</span></span><br><span class="line"><span class="comment">// 错误：nameTable 中的指针彼此之间没有关系，所以 &lt; 将产生未定义的行为</span></span><br><span class="line">sort(nameTable.begin(), nameTable.end(),</span><br><span class="line">	[](<span class="built_in">string</span> *a, <span class="built_in">string</span> *b) &#123; <span class="keyword">return</span> a &lt; b; &#125;);</span><br><span class="line"><span class="comment">// 正确：标准库规定指针的 less 是定义良好的</span></span><br><span class="line">sort(nameTable.begin(), nameTable.end(), less&lt;<span class="built_in">string</span>*&gt;() );</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="可调用对象与-function"><a href="#可调用对象与-function" class="headerlink" title="可调用对象与 function"></a>可调用对象与 function</h3><p>调用形式指明了调用返回的类型以及传递给调用的实参类型。不同的可调用对象可能具有相同的调用形式。</p>
+<p>标准库 <code>function</code> 类型是一个模板，定义在头文件 <em>functional</em> 中，用来表示对象的调用形式。</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>function&lt;T&gt; f;</code></td>
+<td><code>f</code>是一个用来存储可调用对象的空<code>function</code>，这些可调用对象的调用形式应该与类型<code>T</code>相同。</td>
+</tr>
+<tr>
+<td><code>function&lt;T&gt; f(nullptr);</code></td>
+<td>显式地构造一个空<code>function</code></td>
+</tr>
+<tr>
+<td><code>function&lt;T&gt; f(obj)</code></td>
+<td>在<code>f</code>中存储可调用对象<code>obj</code>的副本</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>将<code>f</code>作为条件：当<code>f</code>含有一个可调用对象时为真；否则为假。</td>
+</tr>
+<tr>
+<td>定义为<code>function&lt;T&gt;</code>的成员的类型</td>
+<td></td>
+</tr>
+<tr>
+<td><code>result_type</code></td>
+<td>该<code>function</code>类型的可调用对象返回的类型</td>
+</tr>
+<tr>
+<td><code>argument_type</code></td>
+<td>当<code>T</code>有一个或两个实参时定义的类型。如果<code>T</code>只有一个实参，则<code>argument_type</code></td>
+</tr>
+<tr>
+<td><code>first_argument_type</code></td>
+<td>第一个实参的类型</td>
+</tr>
+<tr>
+<td><code>second_argument_type</code></td>
+<td>第二个实参的类型</td>
+</tr>
+</tbody></table>
+<p>创建一个具体的 <code>function</code> 类型时必须提供其所表示的对象的调用形式。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123; <span class="keyword">return</span> i + j; &#125;</span><br><span class="line"><span class="comment">// 函数对象类</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">div</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> denominator, <span class="keyword">int</span> divisor)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> denominator / divisor;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt; f1 = add;	<span class="comment">// 函数指针</span></span><br><span class="line">function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt; f2 = div();	<span class="comment">// 函数对象类的对象</span></span><br><span class="line">function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt; f3 = [](<span class="keyword">int</span> i, <span class="keyword">int</span> j) &#123; <span class="keyword">return</span> i * j; &#125;; <span class="comment">// lambda</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; f1(<span class="number">4</span>, <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 打印 6</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; f2(<span class="number">4</span>, <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 打印 2</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; f3(<span class="number">4</span>, <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 打印 8</span></span><br></pre></td></tr></table></figure>
+
+<p>不能直接将重载函数的名字存入 <code>function</code> 类型的对象中，这样做会产生二义性错误。消除二义性的方法是使用 <code>lambda</code> 或者存储函数指针而非函数名字。</p>
+<p>C++11 新标准库中的 <code>function</code> 类与旧版本中的 <code>unary_function</code> 和 <code>binary_function</code> 没有关系，后两个类已经被 <code>bind</code> 函数代替。</p>
+<h2 id="重载、类型转换与运算符"><a href="#重载、类型转换与运算符" class="headerlink" title="重载、类型转换与运算符"></a>重载、类型转换与运算符</h2><p>转换构造函数和类型转换运算符共同定义了类类型转换。</p>
+<h3 id="类型转换运算符"><a href="#类型转换运算符" class="headerlink" title="类型转换运算符"></a>类型转换运算符</h3><p>类型转换运算符是类的一种特殊成员函数，负责将一个类类型的值转换成其他类型。它不能声明返回类型，形参列表也必须为空，一般形式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">operator</span> <span class="title">type</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>类型转换运算符可以面向除了 <code>void</code> 以外的任意类型（该类型要能作为函数的返回类型）进行定义。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmallInt</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	SmallInt(<span class="keyword">int</span> i = <span class="number">0</span>): val(i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; <span class="number">0</span> || i &gt; <span class="number">255</span>)</span><br><span class="line">			<span class="keyword">throw</span> <span class="built_in">std</span>::out_of_range(<span class="string">&quot;Bad SmallInt value&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> val; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="keyword">size_t</span> val;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>隐式的用户定义类型转换可以置于一个标准（内置）类型转换之前或之后，并与其一起使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内置类型转换将 double 实参转换成 int</span></span><br><span class="line">SmallInt si = <span class="number">3.14</span>;		<span class="comment">// 调用 SmallInt(int) 构造函数</span></span><br><span class="line"><span class="comment">// SmallInt 的类型转换运算符将 si 转换成 int</span></span><br><span class="line">si + <span class="number">3.14</span>;		<span class="comment">// 内置类型转换将所得的 int 继续转换成 double</span></span><br></pre></td></tr></table></figure>
+
+<p>应该避免过度使用类型转换函数。如果在类类型和转换类型之间不存在明显的映射关系，则这样的类型转换可能具有误导性。</p>
+<p>C++11 引入了显式的类型转换运算符。和显式构造函数一样，编译器通常不会将显式类型转换运算符用于隐式类型转换。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmallInt</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 编译器不会自动执行这一类型转换</span></span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> val; &#125;</span><br><span class="line">	<span class="comment">// 其他成员与之前的版本一致</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">SmallInt si = <span class="number">3</span>;	<span class="comment">// 正确：SmallInt 的构造函数不是显式的</span></span><br><span class="line">si + <span class="number">3</span>;		<span class="comment">// 错误：此处需要隐式的类型转换，但类的运算符是显式的</span></span><br><span class="line"><span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(si) + <span class="number">3</span>;	<span class="comment">// 正确：显式地请求类型转换</span></span><br></pre></td></tr></table></figure>
+
+<p>如果表达式被用作条件，则编译器会隐式地执行显式类型转换。</p>
+<ul>
+<li><code>if</code>、<code>while</code>、<code>do-while</code> 语句的条件部分。</li>
+<li><code>for</code> 语句头的条件表达式。</li>
+<li>条件运算符 <code>?:</code> 的条件表达式。</li>
+<li>逻辑非运算符 <code>!</code>、逻辑或运算符 <code>||</code>、逻辑与运算符 <code>&amp;&amp;</code> 的运算对象。</li>
+</ul>
+<p>类类型向 <code>bool</code> 的类型转换通常用在条件部分，因此 <code>operator bool</code> 一般被定义为<code>explicit</code>的。</p>
+<h3 id="避免有二义性的类型转换"><a href="#避免有二义性的类型转换" class="headerlink" title="避免有二义性的类型转换"></a>避免有二义性的类型转换</h3><p>在两种情况下可能产生多重转换路径：</p>
+<ul>
+<li>A 类定义了一个接受 <em>B</em> 类对象的转换构造函数，同时 <em>B</em> 类定义了一个转换目标是 <em>A</em> 类的类型转换运算符。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最好不要在两个类之间构建相同的类型转换</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A() = <span class="keyword">default</span>;</span><br><span class="line">	A(<span class="keyword">const</span> B&amp;);	<span class="comment">// 把一个 B 转换为 A</span></span><br><span class="line">	<span class="comment">// 其他数据成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">A</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 也是把一个 B 转换成 A</span></span><br><span class="line">	<span class="comment">// 其他数据成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">A <span class="title">f</span><span class="params">(<span class="keyword">const</span> A&amp;)</span></span>;</span><br><span class="line">B b;</span><br><span class="line">A a = f(b);		<span class="comment">// 二义性错误：含义是 f(B::operator A())</span></span><br><span class="line">				<span class="comment">// 还是 f(A::A(const B&amp;))?</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>类定义了多个类型转换规则，而这些转换涉及的类型本身可以通过其他类型转换联系在一起。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A(<span class="keyword">int</span> = <span class="number">0</span>);		<span class="comment">//最好不要创建两个转换源都是算术类型的类型转换</span></span><br><span class="line">	A(<span class="keyword">double</span>);		<span class="comment">// 算术类型的转换</span></span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 最好不要创建两个转换对象都是算术类型的类型转换</span></span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">double</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 算术类型的转换</span></span><br><span class="line">	<span class="comment">// 其他成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">long</span> <span class="keyword">double</span>)</span></span>;</span><br><span class="line">A a;</span><br><span class="line">f2(a);	<span class="comment">// 二义性错误：含义是 f(A::operator int())</span></span><br><span class="line">		<span class="comment">// 还是 f(A::operator double()) ?</span></span><br><span class="line"><span class="keyword">long</span> lg;</span><br><span class="line"><span class="function">A <span class="title">a2</span><span class="params">(lg)</span></span>;	<span class="comment">// 二义性错误：含义是 A::A(int) 还是 A::A(double) ？</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过显式调用类型转换运算符或转换构造函数解决二义性问题，但不能使用强制类型转换，因为强制类型转换本身也存在二义性。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A a1 = f(b.<span class="keyword">operator</span> A());	<span class="comment">// 正确：使用 B 的类型转换运算符</span></span><br><span class="line">A a2 = f(A(b));		<span class="comment">// 正确：使用 A 的构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>通常情况下，不要为类定义相同的类型转换，也不要在类中定义两个及两个以上转换源或转换目标都是算术类型的转换。</p>
+<p>使用两个用户定义的类型转换时，如果转换前后存在标准类型转换，则由标准类型转换决定最佳匹配。</p>
+<p>如果在调用重载函数时需要使用构造函数或者强制类型转换来改变实参的类型，通常意味着程序设计存在不足。</p>
+<p>调用重载函数时，如果需要额外的标准类型转换，则该转换只有在所有可行函数都请求同一个用户定义类型转换时才有用。如果所需的用户定义类型转换不止一个，即使其中一个调用能精准匹配而另一个调用需要额外的标准类型转换，也会产生二义性错误。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	C(<span class="keyword">int</span>);</span><br><span class="line">	<span class="comment">// 其他成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	E(<span class="keyword">double</span>);</span><br><span class="line">	<span class="comment">// 其他成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">manip2</span><span class="params">(<span class="keyword">const</span> C&amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">manip2</span><span class="params">(<span class="keyword">const</span> E&amp;)</span></span>;</span><br><span class="line"><span class="comment">// 二义性错误：两个不同的用户定义的类型转换都能用在此处</span></span><br><span class="line">manip2(<span class="number">10</span>);		<span class="comment">// 含义是 manip2(C(10)) 还是 manip2(E(double(10)))</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="函数匹配与重载运算符"><a href="#函数匹配与重载运算符" class="headerlink" title="函数匹配与重载运算符"></a>函数匹配与重载运算符</h3><p>表达式中运算符的候选函数集既包括成员函数，也包括非成员函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SamllInt</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> SmallInt <span class="keyword">operator</span>+(<span class="keyword">const</span> SmallInt&amp;, <span class="keyword">const</span> SmallInt&amp;);</span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	SmallInt(<span class="keyword">int</span> = <span class="number">0</span>);	<span class="comment">// 转换源为 int 的类型转换</span></span><br><span class="line">	<span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> val; &#125;	<span class="comment">// 转换目标为 int 的类型转换</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="keyword">size_t</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">SmallInt s1, s2;</span><br><span class="line">SmallInt s3 = s1 + s2;	<span class="comment">// 使用重载的 operator+</span></span><br><span class="line"><span class="keyword">int</span> i = s3 + <span class="number">0</span>;		<span class="comment">// 二义性错误</span></span><br></pre></td></tr></table></figure>
+
+<p>如果类既定义了转换目标是算术类型的类型转换，也定义了重载的运算符，则会遇到重载运算符与内置运算符的二义性问题。</p>
+
       
     </div>
 
@@ -452,7 +1075,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-23 19:38:22" itemprop="dateModified" datetime="2021-09-23T19:38:22+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-24 16:04:36" itemprop="dateModified" datetime="2021-09-24T16:04:36+08:00">2021-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -512,29 +1135,64 @@
 
 
 
+<h3 id="LeetCode-125-Valid-Palindrome"><a href="#LeetCode-125-Valid-Palindrome" class="headerlink" title="LeetCode 125.Valid Palindrome"></a>LeetCode 125.Valid Palindrome</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924093556274.png" alt="image-20210924093556274"></p>
+<p><strong>方法一：筛选 + 判断</strong></p>
+<p>最简单的方法是对字符串 <code>s</code> 进行一次遍历，并将其中的字母和数字字符进行保留，放在另一个字符串 <code>sgood</code> 中。这样我们只需要判断 <code>sgood</code> 是否是一个普通的回文串即可。</p>
+<p>判断的方法有两种。第一种是使用语言中的字符串翻转 API 得到 <code>sgood</code> 的逆序字符串 <code>sgood_rev</code>，只要这两个字符串相同，那么 <code>sgood</code> 就是回文串。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">string</span> sgood;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch: s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isalnum</span>(ch)) &#123;</span><br><span class="line">                sgood += <span class="built_in">tolower</span>(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="built_in">string</span> <span class="title">sgood_rev</span><span class="params">(sgood.rbegin(), sgood.rend())</span></span>;</span><br><span class="line">        <span class="keyword">return</span> sood == sgood_rev;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p> 第二种是使用双指针。初始时，左右指针分别指向 <code>sgood</code> 的两侧，随后我们不断地将这两个指针相向移动，每次移动一步，并判断这两个指针指向的字符是否相同。当这两个指针相遇时，就说明 <code>sgood</code> 是回文串。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="built_in">string</span> sgood;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> ch: s) &#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">isalnum</span>(ch)) &#123;</span><br><span class="line">				sgood += <span class="built_in">tolower</span>(ch);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> n = sgood.size();</span><br><span class="line">		<span class="keyword">int</span> left = <span class="number">0</span>, right = n - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">			<span class="keyword">if</span> (sgood[left] != sgood[right]) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			++left;</span><br><span class="line">			--right;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<p><strong>方法二：在原字符串上直接判断</strong></p>
+<p>我们可以对方法一中第二种判断回文串的方法进行优化，就可以得到只使用 <em>O(1)</em> 空间的算法。</p>
+<p>我们直接在原字符串 <em>s</em> 上使用双指针。在移动任意一个指针时，需要不断地向另一指针的方向移动，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = s.size();</span><br><span class="line">		<span class="keyword">int</span> left = <span class="number">0</span>, right = n - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">			<span class="keyword">while</span> (left &lt; right &amp;&amp; !<span class="built_in">isalnum</span>(s[left])) &#123;</span><br><span class="line">				++left;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span> (left &lt; right &amp;&amp; !<span class="built_in">isalnum</span>(s[right])) &#123;</span><br><span class="line">				--right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (left &lt; right) &#123;</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">tolower</span>(s[left]) != <span class="built_in">tolower</span>(s[right]))&#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				++left;</span><br><span class="line">				--right;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="LeetCode-345-Reverse-Vowels-of-a-String"><a href="#LeetCode-345-Reverse-Vowels-of-a-String" class="headerlink" title="LeetCode 345. Reverse Vowels of a String"></a>LeetCode 345. Reverse Vowels of a String</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924101315810.png" alt="image-20210924101315810"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">reverseVowels</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> isVowel = [vowels= <span class="string">&quot;aeiouAEIOU&quot;</span>s](<span class="keyword">char</span> ch) &#123;</span><br><span class="line">			<span class="keyword">return</span> vowels.find(ch) != <span class="built_in">string</span>::npos;</span><br><span class="line">		&#125;;</span><br><span class="line">		<span class="keyword">int</span> n = s.size();</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>, j = n - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">			<span class="keyword">while</span> (i &lt; n &amp;&amp; !isVowel(s[i])) &#123;</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; !isVowel(s[j])) &#123;</span><br><span class="line">                --j;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; j) &#123;</span><br><span class="line">                swap(s[i], s[j]);</span><br><span class="line">                ++i;</span><br><span class="line">                --j;</span><br><span class="line">            &#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="LeetCode-11-Container-With-Most-Water"><a href="#LeetCode-11-Container-With-Most-Water" class="headerlink" title="LeetCode 11.Container With Most Water"></a>LeetCode 11.Container With Most Water</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924103918804.png" alt="image-20210924103918804"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924103925846.png" alt="image-20210924103925846"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924103933201.png" alt="image-20210924103933201"></p>
+<p>面积取决于短板。</p>
+<ul>
+<li>因此即使长板向内遇到更长的板，矩阵的面积也不会改变；遇到更短的板时，面积会变小。</li>
+<li>因此想要面积变大，只能让短板向内移动（因为移动方向固定了），当然也有可能让面积变得更小，但只有这样才存在让面积变大的可能性。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> l = <span class="number">0</span>, r = height.size() - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> ( l &lt; r ) &#123;</span><br><span class="line">			<span class="keyword">int</span> area = min(height[l], height[r]) * (r - l);</span><br><span class="line">			ans = max(ans, area);</span><br><span class="line">			<span class="keyword">if</span> (height[l] &lt;= height[r]) &#123;</span><br><span class="line">				++l;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				-- r;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924105618601.png" alt="image-20210924105618601"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924105626324.png" alt="image-20210924105626324"></p>
+<p>假如我们找到了 <code>nums[i, j]</code> 连续子数组，假设目前的 <code>sum</code> 还达不到 <code>target</code>，则 <code>j+1</code> 向后多看一位数据，如下图。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924111541215.png" alt="image-20210924111541215"></p>
+<p>以此类推，直到某一时刻，看到某一数组 <code>sum &gt; s</code>，可以把长度记录下来，此时可以从 <code>i</code> 这一端缩小子数组。缩小到某一时刻，可能 <code>sum &lt; s</code>，又可以继续 <code>j++</code>。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924111804220.png" alt="image-20210924111804220"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">minSubArrayLen</span><span class="params">(<span class="keyword">int</span> s, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">int</span> l = <span class="number">0</span>, r = - <span class="number">1</span>;	<span class="comment">// nums[l...r] 为我们的滑动窗口</span></span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> res = nums.size() + <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>( l &lt; nums.size() )&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>( r+<span class="number">1</span> &lt; nums.size() &amp;&amp; sum &lt; s )&#123;</span><br><span class="line">                r ++;</span><br><span class="line">                sum += nums[r];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                sum -= nums[l];</span><br><span class="line">                l ++;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>( sum &gt;= s)</span><br><span class="line">                res = min( res, r-l+<span class="number">1</span> );</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( res == nums.size() + <span class="number">1</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      	<span class="keyword">return</span> res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="LeetCode-3-Longest-Substring-Without-Repeating-Characters"><a href="#LeetCode-3-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="LeetCode 3.Longest Substring Without Repeating Characters"></a>LeetCode 3.Longest Substring Without Repeating Characters</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924114200974.png" alt="image-20210924114200974"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924114210978.png" alt="image-20210924114210978"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> freq[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = <span class="number">-1</span>;	<span class="comment">// 滑动窗口为 s[l...r]</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>( l &lt; s.size() )&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>( r + <span class="number">1</span> &lt; s.size() &amp;&amp; freq[s[r+<span class="number">1</span>]] == <span class="number">0</span> ) &#123;</span><br><span class="line">                r ++;</span><br><span class="line">                freq[s[r]] ++;</span><br><span class="line">        	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                freq[s[l]] --;</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            res = max( res, r-l + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h3 id="LeetCode-438-Find-All-Anagrams-in-a-String"><a href="#LeetCode-438-Find-All-Anagrams-in-a-String" class="headerlink" title="LeetCode 438. Find All Anagrams in a String"></a>LeetCode 438. Find All Anagrams in a String</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924123148779.png" alt="image-20210924123148779"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210924123157203.png" alt="image-20210924123157203"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">findAnagrams</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = s.size(), m = p.size();</span><br><span class="line">		<span class="keyword">if</span>( m &gt; n ) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans, cnt_s(<span class="number">26</span>), cnt_p(<span class="number">26</span>);</span><br><span class="line">		<span class="keyword">int</span> i;</span><br><span class="line">		<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; m ; i ++)&#123;</span><br><span class="line">			cnt_p[p[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">			cnt_s[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(cnt_p==cnt_s)</span><br><span class="line">			ans.push_back(<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">for</span>(; i &lt; n; i++)&#123;</span><br><span class="line">			cnt_s[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">			cnt_s[s[i-m]-<span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">			<span class="keyword">if</span>(cnt_p==cnt_s)</span><br><span class="line">				ans.push_back(i-m+<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
+<h3 id="LeetCode-76-最小覆盖子串"><a href="#LeetCode-76-最小覆盖子串" class="headerlink" title="LeetCode 76. 最小覆盖子串"></a>LeetCode 76. 最小覆盖子串</h3>
       
     </div>
 
@@ -766,7 +1424,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-18 10:12:54" itemprop="dateModified" datetime="2021-09-18T10:12:54+08:00">2021-09-18</time>
+                <time title="修改时间：2021-09-28 19:17:24" itemprop="dateModified" datetime="2021-09-28T19:17:24+08:00">2021-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -903,258 +1561,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">primer读书笔记——第十二章动态内存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-13 12:35:01" itemprop="dateCreated datePublished" datetime="2021-09-13T12:35:01+08:00">2021-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-15 21:07:41" itemprop="dateModified" datetime="2021-09-15T21:07:41+08:00">2021-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h1><p>程序用堆（heap）来存储动态分配（dynamically allocate）的对象。动态对象的生存期由程序控制。</p>
-<h2 id="动态内存与智能指针"><a href="#动态内存与智能指针" class="headerlink" title="动态内存与智能指针"></a>动态内存与智能指针</h2><p>C++ 中的动态内存管理通过一对运算符完成：<code>new</code> 在动态内存中为对象分配空间并返回指向该对象的指针，可以选择对对象进行初始化；<code>delete</code> 接受一个动态对象的指针，销毁该对象并释放与之关联的内存。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">primer阅读笔记——第十一章关联容器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-13 09:54:32 / 修改时间：12:34:35" itemprop="dateCreated datePublished" datetime="2021-09-13T09:54:32+08:00">2021-09-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h1><p>关联容器支持高效的关键字查找和访问操作。2 个主要的关联容器类型是 <code>map</code> 和 <code>set</code>。</p>
-<ul>
-<li><code>map</code> 中的元素是一些键值对（key-value）：关键字起索引作用，值表示与索引相关联的数据。</li>
-<li><code>set</code> 中每个元素只包含一个关键字，支持高效的关键字查询操作：检查一个给定关键字是否在 <code>set</code> 中。</li>
-</ul>
-<p>标准库提供了 8 个关联容器，它们之间的不同体现在三个方面：</p>
-<ul>
-<li>是 <code>map</code> 还是 <code>set</code> 类型。</li>
-<li>是否允许保存重复的关键字。</li>
-<li>是否按顺序保存元素。</li>
-</ul>
-<p>允许重复保存关键字的容器名字都包含单词 <code>multi</code>；无序保存元素的容器名字都以单词 <code>unordered</code> 开头。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/" class="post-title-link" itemprop="url">二叉树和递归</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-12 17:48:15" itemprop="dateCreated datePublished" datetime="2021-09-12T17:48:15+08:00">2021-09-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-15 11:42:09" itemprop="dateModified" datetime="2021-09-15T11:42:09+08:00">2021-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="二叉树和递归"><a href="#二叉树和递归" class="headerlink" title="二叉树和递归"></a>二叉树和递归</h1><h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>每个递归应该包含两个部分。</p>
-<p>第一部分是递归终止条件。</p>
-<p>第二部分是递归过程。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912181500898.png" alt="image-20210912181500898"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1226,7 +1632,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
