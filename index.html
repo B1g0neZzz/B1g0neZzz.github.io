@@ -154,6 +154,212 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/10/%E9%AB%98%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/10/%E9%AB%98%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">高级排序算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-10 15:47:46 / 修改时间：16:32:29" itemprop="dateCreated datePublished" datetime="2021-10-10T15:47:46+08:00">2021-10-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="O-n-log-n-的排序算法"><a href="#O-n-log-n-的排序算法" class="headerlink" title="O(n*log n) 的排序算法"></a>O(n*log n) 的排序算法</h1><h2 id="归并排序-Merge-Sort"><a href="#归并排序-Merge-Sort" class="headerlink" title="归并排序 Merge Sort"></a>归并排序 Merge Sort</h2><h3 id="归并排序的思想"><a href="#归并排序的思想" class="headerlink" title="归并排序的思想"></a>归并排序的思想</h3><p>如下图的数组进行归并排序。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155203248.png" alt="image-20211010155203248"></p>
+<p>首先，将这个数组分成一半，然后想办法分别将左边和右边的数组排序。之后再将两者归并起来。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155237419.png" alt="image-20211010155237419"></p>
+<p>在将左边的数组和右边的数组排序时，再分别分成两份。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155546744.png" alt="image-20211010155546744"></p>
+<p>当分到一定细度时，每一部分只有一个元素，此时不需要排序，只需要归并即可。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155715124.png" alt="image-20211010155715124"></p>
+<p>归并到上一个层级后，进一步归并。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155746245.png" alt="image-20211010155746245"></p>
+<p>直至最后。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155800815.png" alt="image-20211010155800815"></p>
+<h3 id="归并过程"><a href="#归并过程" class="headerlink" title="归并过程"></a>归并过程</h3><p>使用三个索引，如下图，蓝色的箭头代表归并的过程中需要追踪的位置，两个红色的箭头分别指向已经排好序的数组中，当前我们要考虑的元素。</p>
+<p>首先来看 1 和 2 ，谁应该先放在数组中。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010160736793.png" alt="image-20211010160736793"></p>
+<p>1 比 2 小，所以先把 1 放在最终的数组中。蓝色箭头和红色箭头分别指向下一个元素。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010160942663.png" alt="image-20211010160942663"></p>
+<h3 id="归并排序法的实现"><a href="#归并排序法的实现" class="headerlink" title="归并排序法的实现"></a>归并排序法的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __merge(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> mid, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> aux[r-l+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l ; i &lt;= r ; i ++)</span><br><span class="line">        aux[i-l] = arr[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i = l, j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> k = l ; k &lt;= r ; k ++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( i &gt; mid )&#123;</span><br><span class="line">            arr[k] = aux[j-l];</span><br><span class="line">            j ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( j &gt; r )&#123;</span><br><span class="line">            arr[k] = aux[i-l];</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>( aux[i-l] &lt; aux[j-l] )&#123;</span><br><span class="line">            arr[k] = arr[i-l];</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            arr[k] = aux[j-l];</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归使用归并排序，对arr[l...r]的范围进行排序</span></span><br><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>( l &gt;= r )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">    __mergeSort(arr, l, mid);</span><br><span class="line">    __mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">    __merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    __mergeSort( arr , <span class="number">0</span> , n - <span class="number">1</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="归并排序法的优化"><a href="#归并排序法的优化" class="headerlink" title="归并排序法的优化"></a>归并排序法的优化</h3><ul>
+<li>优化一</li>
+</ul>
+<p>如果在数组近乎有序时，归并排序法会比插入排序法慢很多。</p>
+<p>这是因为，我们将两个部分进行递归地归并排序后，不管它们之间的顺序如何，都进行了 <em>merge</em> 操作。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( l&gt;= r )</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">	__mergeSort(arr, l, mid);</span><br><span class="line">	__mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">	<span class="keyword">if</span>( arr[mid] &gt; arr[mid+<span class="number">1</span>] )</span><br><span class="line">		__merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>优化二</li>
+</ul>
+<p>在数组元素个数较少时，使用插入排序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line"><span class="comment">//	if(l &gt;= r)</span></span><br><span class="line"><span class="comment">//		return;</span></span><br><span class="line">	<span class="keyword">if</span>( r - l &lt;= <span class="number">15</span> )&#123;</span><br><span class="line">		insertionSort(arr, l, r);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">	__mergeSort(arr, l, mid);</span><br><span class="line">	__mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">	<span class="keyword">if</span>( arr[mid] &gt; arr[mid+<span class="number">1</span>] )</span><br><span class="line">		__merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/10/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/10/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">基础排序算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-10 10:16:46 / 修改时间：15:48:40" itemprop="dateCreated datePublished" datetime="2021-10-10T10:16:46+08:00">2021-10-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="基础排序算法"><a href="#基础排序算法" class="headerlink" title="基础排序算法"></a>基础排序算法</h1><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>举例，要对如下图的数组进行选择排序。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010102430755.png" alt="image-20211010102430755"></p>
+<p>首先，在整个数组的范围内找出最小的元素，假设是从小到大的排序。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010102629889.png" alt="image-20211010102629889"></p>
+<p>然后与第一名的位置进行交换。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010102658386.png" alt="image-20211010102658386"></p>
+<p>这样，<em>1</em> 这个元素就是最后排序的位置了，之后再从剩下的元素中找出最小的元素。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/10/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -185,7 +391,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-09 11:20:54" itemprop="dateModified" datetime="2021-10-09T11:20:54+08:00">2021-10-09</time>
+                <time title="修改时间：2021-10-10 10:13:34" itemprop="dateModified" datetime="2021-10-10T10:13:34+08:00">2021-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -755,63 +961,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/22/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">归并排序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-22 17:25:03" itemprop="dateCreated datePublished" datetime="2021-09-22T17:25:03+08:00">2021-09-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/19/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1352,94 +1501,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/Effective-C++(%E4%BA%8C)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/Effective-C++(%E4%BA%8C)/" class="post-title-link" itemprop="url">Effective C++(二)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-18 12:17:20" itemprop="dateCreated datePublished" datetime="2021-09-18T12:17:20+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-19 20:03:54" itemprop="dateModified" datetime="2021-09-19T20:03:54+08:00">2021-09-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Effective-C/" itemprop="url" rel="index"><span itemprop="name">Effective C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="构造-析构-赋值运算"><a href="#构造-析构-赋值运算" class="headerlink" title="构造 / 析构 / 赋值运算"></a>构造 / 析构 / 赋值运算</h1><h2 id="条款05：了解-C-默默编写并调用哪些函数"><a href="#条款05：了解-C-默默编写并调用哪些函数" class="headerlink" title="条款05：了解 C++ 默默编写并调用哪些函数"></a>条款05：了解 C++ 默默编写并调用哪些函数</h2><h3 id="C-会为类生成默认的关键函数"><a href="#C-会为类生成默认的关键函数" class="headerlink" title="C++ 会为类生成默认的关键函数"></a>C++ 会为类生成默认的关键函数</h3><p>如果在 C++ 的类中不声明任何成员，C++ 会自动为你生成默认的构造函数（constructor），拷贝赋值运算符（copy assignment constructor，即 ‘=’ ），拷贝构造函数（copy constructor）以及析构函数（destructor）。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span> &#123;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假定以下功能都会被调用，此定义等价于：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Empty</span> &#123;</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		Empty()&#123;...&#125;		<span class="comment">// 构造函数</span></span><br><span class="line">		Empty()&#123;<span class="keyword">const</span> Empty&amp; empty&#125;&#123;.....&#125;		<span class="comment">// 拷贝构造函数</span></span><br><span class="line">		~Empty()&#123;....&#125;		<span class="comment">// 析构函数</span></span><br><span class="line">		Empty&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Empty&amp; empty)&#123;....&#125;	<span class="comment">// 拷贝赋值运算符</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>但是这些函数只有在被需要调用的时候才会生成，因此这 4 种功能不是保证都存在的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/18/Effective-C++(%E4%BA%8C)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1511,7 +1572,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1522,7 +1583,7 @@
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
