@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-10 15:47:46 / 修改时间：16:32:29" itemprop="dateCreated datePublished" datetime="2021-10-10T15:47:46+08:00">2021-10-10</time>
+              <time title="创建时间：2021-10-10 15:47:46 / 修改时间：22:35:17" itemprop="dateCreated datePublished" datetime="2021-10-10T15:47:46+08:00">2021-10-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,60 +207,14 @@
 <p>首先，将这个数组分成一半，然后想办法分别将左边和右边的数组排序。之后再将两者归并起来。</p>
 <p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155237419.png" alt="image-20211010155237419"></p>
 <p>在将左边的数组和右边的数组排序时，再分别分成两份。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155546744.png" alt="image-20211010155546744"></p>
-<p>当分到一定细度时，每一部分只有一个元素，此时不需要排序，只需要归并即可。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155715124.png" alt="image-20211010155715124"></p>
-<p>归并到上一个层级后，进一步归并。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155746245.png" alt="image-20211010155746245"></p>
-<p>直至最后。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010155800815.png" alt="image-20211010155800815"></p>
-<h3 id="归并过程"><a href="#归并过程" class="headerlink" title="归并过程"></a>归并过程</h3><p>使用三个索引，如下图，蓝色的箭头代表归并的过程中需要追踪的位置，两个红色的箭头分别指向已经排好序的数组中，当前我们要考虑的元素。</p>
-<p>首先来看 1 和 2 ，谁应该先放在数组中。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010160736793.png" alt="image-20211010160736793"></p>
-<p>1 比 2 小，所以先把 1 放在最终的数组中。蓝色箭头和红色箭头分别指向下一个元素。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211010160942663.png" alt="image-20211010160942663"></p>
-<h3 id="归并排序法的实现"><a href="#归并排序法的实现" class="headerlink" title="归并排序法的实现"></a>归并排序法的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __merge(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> mid, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> aux[r-l+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l ; i &lt;= r ; i ++)</span><br><span class="line">        aux[i-l] = arr[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i = l, j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> k = l ; k &lt;= r ; k ++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( i &gt; mid )&#123;</span><br><span class="line">            arr[k] = aux[j-l];</span><br><span class="line">            j ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( j &gt; r )&#123;</span><br><span class="line">            arr[k] = aux[i-l];</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>( aux[i-l] &lt; aux[j-l] )&#123;</span><br><span class="line">            arr[k] = arr[i-l];</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            arr[k] = aux[j-l];</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归使用归并排序，对arr[l...r]的范围进行排序</span></span><br><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>( l &gt;= r )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">    __mergeSort(arr, l, mid);</span><br><span class="line">    __mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">    __merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    __mergeSort( arr , <span class="number">0</span> , n - <span class="number">1</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="归并排序法的优化"><a href="#归并排序法的优化" class="headerlink" title="归并排序法的优化"></a>归并排序法的优化</h3><ul>
-<li>优化一</li>
-</ul>
-<p>如果在数组近乎有序时，归并排序法会比插入排序法慢很多。</p>
-<p>这是因为，我们将两个部分进行递归地归并排序后，不管它们之间的顺序如何，都进行了 <em>merge</em> 操作。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( l&gt;= r )</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">	__mergeSort(arr, l, mid);</span><br><span class="line">	__mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">	<span class="keyword">if</span>( arr[mid] &gt; arr[mid+<span class="number">1</span>] )</span><br><span class="line">		__merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>优化二</li>
-</ul>
-<p>在数组元素个数较少时，使用插入排序</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __mergeSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line"><span class="comment">//	if(l &gt;= r)</span></span><br><span class="line"><span class="comment">//		return;</span></span><br><span class="line">	<span class="keyword">if</span>( r - l &lt;= <span class="number">15</span> )&#123;</span><br><span class="line">		insertionSort(arr, l, r);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">	__mergeSort(arr, l, mid);</span><br><span class="line">	__mergeSort(arr, mid + <span class="number">1</span>, r);</span><br><span class="line">	<span class="keyword">if</span>( arr[mid] &gt; arr[mid+<span class="number">1</span>] )</span><br><span class="line">		__merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/10/%E9%AB%98%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
