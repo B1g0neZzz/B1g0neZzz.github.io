@@ -28,7 +28,7 @@
 <meta property="og:description" content="资源管理条款13：以对象管理资源我们在学习编程时，经常能听到“资源”这个词。资源可能是一个很宽泛的概念，但总体来讲，资源时我们可以用来使用，并且使用之后要返还给系统的东西。在 C++ 中，资源多数是指动态分配的内存。如果你只用 new 来分配内存却不在使用完后 delete 掉，将会导致内存泄露。 其他资源比如文件描述符（file descriptor），Mutex 锁，GUI 中的字体（font">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-12T12:03:24.000Z">
-<meta property="article:modified_time" content="2021-10-13T10:34:15.308Z">
+<meta property="article:modified_time" content="2021-10-13T11:36:21.863Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 18:34:15" itemprop="dateModified" datetime="2021-10-13T18:34:15+08:00">2021-10-13</time>
+                <time title="修改时间：2021-10-13 19:36:21" itemprop="dateModified" datetime="2021-10-13T19:36:21+08:00">2021-10-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,6 +290,48 @@
 <li><strong>转义所有权：</strong></li>
 </ul>
 <p>有时候我们想要只有一个对象来持有这个资源，因此进行拷贝的时候，资源的所有权就要从本体转移到拷贝上，本体不再持有资源，这也就是 <code>auto_ptr</code> 的原理。</p>
+<h2 id="条款-15：在资源管理类中提供对原始资源的访问"><a href="#条款-15：在资源管理类中提供对原始资源的访问" class="headerlink" title="条款 15：在资源管理类中提供对原始资源的访问"></a>条款 15：在资源管理类中提供对原始资源的访问</h2><p>到现在我们一直在一个完美的世界里，资源管理类会帮你完成对资源的所有操作，自己不用关心资源管理类里面的原始资源，但现实是残酷的，有时我们依然需要直接接触资源管理类所封装的原始资源。</p>
+<p>我们继续第13章的投资管理的例子，我们在为不同类型的投资写函数库：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Investment&gt; <span class="title">pInv</span><span class="params">(createInvestment())</span></span>;	<span class="comment">// 某个 Investment 的智能指针对象</span></span><br></pre></td></tr></table></figure>
+
+<p>现有函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">daysHeld</span><span class="params">(<span class="keyword">const</span> Investment* pi)</span></span>;		<span class="comment">// 返回某个 Investment 对象的持有时间</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你直接把智能指针对象传入上面的函数中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> days = daysHeld(pInv);</span><br></pre></td></tr></table></figure>
+
+<p>这样编译器会报错，因为函数需要裸指针类型的参数，而你传入的是智能指针类型。你需要做的也很简单，把智能指针转换为裸指针，使用<strong>隐式转换</strong>或者<strong>显式转换</strong>。</p>
+<p><code>shared_ptr</code> 和 <code>auto_ptr</code> 都有一个成员函数 <code>get()</code>，用来执行显式转换，返回智能指针对象所包含的裸指针：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> days = daysHeld(pInv.get());</span><br></pre></td></tr></table></figure>
+
+<p><code>shared_ptr</code> 和 <code>auto_ptr</code> 也重载了指针的解引用运算符，即 <code>-&gt;</code> 和 <code>*</code>，这意味着我们可以通过它们来实现隐式转换：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Investment</span>&#123;</span>		<span class="comment">// 定义了 Investment 继承层次的基类</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isTaxFree</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Investment* <span class="title">createInvestment</span><span class="params">()</span></span>;		<span class="comment">// 用来返回指向 Investment 对象的指针</span></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Investment&gt; <span class="title">pi1</span><span class="params">(createInvestment())</span></span>;	<span class="comment">// 使用 shared_ptr 管理资源</span></span><br><span class="line"><span class="keyword">bool</span> taxable1 = !(pi1-&gt;isTaxFree());	<span class="comment">// 使用 -&gt; 操作符接触资源</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">auto_ptr</span>&lt;Investment&gt; <span class="title">pi2</span><span class="params">(createInvestment())</span></span>;	<span class="comment">// 使用 auto_ptr 来管理资源</span></span><br><span class="line"><span class="keyword">bool</span> taxable2 = !((*pi2).isTaxFree());	<span class="comment">// 使用 * 操作符接触资源</span></span><br></pre></td></tr></table></figure>
+
+<p>有时我们需要把 RAII 资源管理对象所封装的原始资源拿出来，我们可以定义一个转换函数，将资源管理类隐式或显式转换为原始资源。例如要实现对 C API 中的字体类型（font）的资源管理：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FontHandle <span class="title">getFont</span><span class="params">()</span></span>;	<span class="comment">// C API 定义的分配字体函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">releaseFont</span><span class="params">(FontHandle fh)</span></span>;	<span class="comment">// C API 定义的释放字体函数</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们定义自己的 RAII 资源管理类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Font</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Font</span><span class="params">(FontHandle fh)</span>:	<span class="comment">// C 只能使用值传递</span></span></span><br><span class="line"><span class="function">    <span class="title">f</span><span class="params">(fh)</span> </span>&#123;&#125; <span class="comment">// 构造时获取资源</span></span><br><span class="line">    ~Font() &#123;releaseFont(f);&#125;	<span class="comment">// 析构时释放资源</span></span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    FontHandle f;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果我们要使用某些 C API 只能使用 <code>FontHandle</code> 类型，我们就需要把 Font 类型<strong>显式转换</strong>为 FontHandle 类型，因此我们定义一个显式转换的函数 <code>get()</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Font</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	...</span><br><span class="line">	<span class="function">FontHandle <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> f;&#125;	<span class="comment">// 显式转换函数</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样显式转换的缺点就是每次使用都要调用 <code>get()</code> 函数，比较麻烦：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">changeFontSize</span><span class="params">(FontHandle f, <span class="keyword">int</span> newSize)</span></span>;	<span class="comment">// 改变字体大小的 C API</span></span><br><span class="line"><span class="function">Font <span class="title">f</span><span class="params">(getFont())</span></span>;</span><br><span class="line"><span class="keyword">int</span> newFontSize;</span><br><span class="line">...</span><br><span class="line">changeFontSize(f.get(), newFontSize);	<span class="comment">// 需要使用 get() 来显式转换</span></span><br></pre></td></tr></table></figure>
+
+<p>另一个缺点就是，我们既然写了 RAII 资源管理类，为什么还要每次只使用它的原始资源，这不是跟我们希望避免资源泄露的初衷背道而驰吗？我们下面来看看<strong>隐式转换</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Font</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">FontHandle</span><span class="params">()</span> <span class="keyword">const</span>  <span class="comment">// 隐式转换函数</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> f;&#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样调用 API 就会简单很多：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Font <span class="title">f</span><span class="params">(getFont())</span></span>;</span><br><span class="line"><span class="keyword">int</span> newFontSize;</span><br><span class="line">...</span><br><span class="line">changeFontSize(f, newFontSize);		<span class="comment">// 隐式转换</span></span><br></pre></td></tr></table></figure>
+
+<p>但是隐式转换也有缺点，某些类型错误就不会被编译器探测到了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Font <span class="title">f1</span><span class="params">(getFont())</span></span>;</span><br><span class="line">...</span><br><span class="line">FontHandle f2 = f1;</span><br></pre></td></tr></table></figure>
+
+<p>我们希望把一个 Font 对象拷贝进另一个 Font 对象，但比如某个人的辣鸡 IDE 把打进去的 Font 变成了 FontHandle，这样就把我们的资源管理对象变成了原始资源对象，编译器也不会报错。</p>
+<p>结果就是，程序有一个 FontHandle 对象被 f1 封装和管理，但这个 FontHandle 通过上面的操作被拷贝进了 f2，这样 f1 和 f2 同时控制着一个 FontHandle。如果 f1 被释放，这个 FontHandle 也将被释放，就会导致 f2 的字体被破坏。</p>
+<p>至于具体使用隐式转换还是显示转换还是要根据不同的需要来决定，要保证代码的正确性，显式转换的 <code>get()</code> 函数可能是更好的选择，如果想要代码自然易懂，隐式转换可能更好，两者各有优缺点。</p>
+<p>可能你会问，提取 RAII 资源管理类的原始资源会不会破坏资源管理类的封装？是的，但是资源管理类不是用来封装某些东西的，而是用来<strong>保证某些必要的操作被执行</strong>，例如释放资源，当然如果需要，封装也可以称为在这之上的另一种功能。资源管理类的典范，会把用户不需要的功能隐藏起来，给用户需要的东西留下简单易用的出入口，例如 <code>shared_ptr</code>，把引用计数的机制完全封装起来，但用户会时不时需要使用裸指针，因此它提供了能直接返回裸指针的函数。</p>
 
     </div>
 
@@ -370,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE13%EF%BC%9A%E4%BB%A5%E5%AF%B9%E8%B1%A1%E7%AE%A1%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">条款13：以对象管理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-14%EF%BC%9A%E5%B0%8F%E5%BF%83%E8%80%83%E8%99%91%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B1%BB%E7%9A%84%E6%8B%B7%E8%B4%9D%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.</span> <span class="nav-text">条款 14：小心考虑资源管理类的拷贝行为</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE13%EF%BC%9A%E4%BB%A5%E5%AF%B9%E8%B1%A1%E7%AE%A1%E7%90%86%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">条款13：以对象管理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-14%EF%BC%9A%E5%B0%8F%E5%BF%83%E8%80%83%E8%99%91%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B1%BB%E7%9A%84%E6%8B%B7%E8%B4%9D%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.</span> <span class="nav-text">条款 14：小心考虑资源管理类的拷贝行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-15%EF%BC%9A%E5%9C%A8%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%B1%BB%E4%B8%AD%E6%8F%90%E4%BE%9B%E5%AF%B9%E5%8E%9F%E5%A7%8B%E8%B5%84%E6%BA%90%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.</span> <span class="nav-text">条款 15：在资源管理类中提供对原始资源的访问</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
