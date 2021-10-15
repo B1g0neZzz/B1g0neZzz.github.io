@@ -154,6 +154,221 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/14/Effective-C++(%E5%9B%9B)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/14/Effective-C++(%E5%9B%9B)/" class="post-title-link" itemprop="url">Effective-C++(四)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-14 21:01:19" itemprop="dateCreated datePublished" datetime="2021-10-14T21:01:19+08:00">2021-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-15 10:52:09" itemprop="dateModified" datetime="2021-10-15T10:52:09+08:00">2021-10-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Effective-C/" itemprop="url" rel="index"><span itemprop="name">Effective C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="设计与声明"><a href="#设计与声明" class="headerlink" title="设计与声明"></a>设计与声明</h1><h2 id="条款-18：让接口容易被正确使用，不易被误用"><a href="#条款-18：让接口容易被正确使用，不易被误用" class="headerlink" title="条款 18：让接口容易被正确使用，不易被误用"></a>条款 18：让接口容易被正确使用，不易被误用</h2><p>现在我们来到软件设计的话题中。软件设计就是让软件做你想做的事，软件设计一定需要<strong>接口</strong>（interface）设计，最后用 C++ 实现。我们今天讨论的可能是其中最重要的一条守则，把你的接口设计得容易用对，不容易用错。讨论完这一条，会引出更多关于软件设计的话题，比如效率（efficiency），封装（encapsulation），可维护性（maintainability）和一些惯例（convention）。</p>
+<p>所谓接口就是你提供给用户使用你代码的途径。C++ 到处都充满了接口的概念，比如函数接口，类接口，模板接口。理想条件下，如果我们用错了接口，编译器会报错，而如果编译器没有报错，那么我们用的接口就是对的。</p>
+<p>要把接口设计得好用对，难用错，就需要考虑用户可能犯的各种错误。假设你在设计一个表示日期的类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Date(<span class="keyword">int</span> month, <span class="keyword">int</span> day, <span class="keyword">int</span> year);		<span class="comment">// 美式标准</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>至少第一眼看起来是没问题的，但用户可能会出现这样的错误：</p>
+<ul>
+<li>有个英国人输入了错误的格式：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(<span class="number">30</span>, <span class="number">3</span>, <span class="number">1995</span>)</span></span>;	<span class="comment">// 规定输入美式标准的月，日，年</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>有个美国人打错了字，输入了非法日期：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(<span class="number">3</span>, <span class="number">40</span>, <span class="number">1995</span>)</span></span>;	<span class="comment">// 把 3 打成了 4</span></span><br></pre></td></tr></table></figure>
+
+<p>对于这样的问题，我们可以定义新的类型，使用简单的包装类（wrapper class），让编译器对错误的类型报错：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3 个包装类</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Day</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Day</span><span class="params">(<span class="keyword">int</span> d)</span>:<span class="title">val</span><span class="params">(d)</span></span>&#123;&#125;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Month</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Month</span><span class="params">(<span class="keyword">int</span> m)</span>:<span class="title">val</span><span class="params">(m)</span></span>&#123;&#125;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Year</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Year</span><span class="params">(<span class="keyword">int</span> y)</span>:<span class="title">val</span><span class="params">(y)</span></span>&#123;&#125;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在开始使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Date(<span class="keyword">const</span> Month&amp; m, <span class="keyword">const</span> Day&amp; d, <span class="keyword">const</span> Year&amp; y);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(<span class="number">30</span>, <span class="number">3</span>, <span class="number">1995</span>)</span></span>;	<span class="comment">// int 类型不正确报错</span></span><br><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(Day(<span class="number">30</span>), Month(<span class="number">3</span>), Year(<span class="number">1995</span>))</span></span>;	<span class="comment">// 格式错误报错</span></span><br><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(Month(<span class="number">3</span>), Day(<span class="number">30</span>), Year(<span class="number">1995</span>))</span></span>;	<span class="comment">// 正确</span></span><br></pre></td></tr></table></figure>
+
+<p>我们保证了格式的正确，下一步就是要对取值做出规范，例如月份只能有 1 到 12。使用 enum 可以满足功能上的要求，但 enum 不是类型安全的（type safe），因为第二章展示过 enum 可以被用来当作 int 类型使用。我们需要定义包含所有月份的集合：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Month</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Month <span class="title">Jan</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> Month(<span class="number">1</span>);&#125;	<span class="comment">// 见下文为什么使用函数，不使用对象</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> Month <span class="title">Feb</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> Month(<span class="number">2</span>);&#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Month <span class="title">Dec</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> Month(<span class="number">12</span>);&#125;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Month</span><span class="params">(<span class="keyword">int</span> m)</span></span>;	<span class="comment">// explicit 禁止参数隐式转换，private 禁止用户生成自定义的月份</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Date <span class="title">d</span><span class="params">(Month::Mar(), Day(<span class="number">30</span>), Year(<span class="number">1995</span>))</span></span>;	<span class="comment">// 正确</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方法虽然略显繁琐，但保证了数据的正确性，并且在提升网页脚本安全性的实践中，这是一种常用的防止恶意用户注入代码的思路。</p>
+<hr>
+<p>第二点是要把接口设计得一致。C++STL 容器接口相比其他语言可以说是达到了高度一致性，因此这些接口也相比更加易用，例如每一个 STL 容器类都有一个成员函数 <code>size()</code> 来返回容器当前包含的对象数量。</p>
+<p>不像 Java，对于数组要使用 <em>length</em> 属性，对于字符串要使用 <em>length</em> 方法，对于 List 要使用 <em>size</em> 方法，总之各种各样的接口。可能有些开发者会认为，使用了 IDE ，这些不一致性就显得不那么重要，但不一致的接口依然会带来心理上的困惑感，因为明显你需要记住更多东西，这是 IDE 不能弥补的。</p>
+<p>这里的一致也有另外一层意思，是行为上的一致性，就是要把功能做得与原始类型或是其他标准类型的逻辑一致。第 3 章展示了 * 运算符用 const 修饰返回值来避免打错字带来的无意义赋值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a * b = c)  <span class="comment">// 应该是 a * b == c</span></span><br></pre></td></tr></table></figure>
+
+<p>这样的错误难以察觉，我们当然希望这样的错误在编译时就被指正。要做到这样的一致性，我们只需要跟着原始类型的逻辑走，例如不允许给右值赋值，来防止可能造成的一系列误用。原作者的话就是：</p>
+<blockquote>
+<p>“When in doubt, do as the ints do.”</p>
+</blockquote>
+<hr>
+<p>第三点就是，任何要求用户记住东西的接口都更容易造成误用，因为用户也不是电脑，只要是人类就会忘掉东西，例如动态分配了一个资源，要求用户以某种特定的方式释放资源。第13章引入了一个工厂函数（factory function）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Investment* <span class="title">createInvestment</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>为了防止资源泄露，这个动态分配的资源必须在使用完后删除，但要求用户这样做可能会产生两种情景：</p>
+<ul>
+<li>用户忘记了删除</li>
+<li>多次删除同一个指针</li>
+</ul>
+<p>第13章的解决方法是使用智能指针自动管理资源，但如果用户忘记把这个函数的返回值封装在智能指针内呢？所以我们最好让这个函数直接返回一个智能指针对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Investment&gt; <span class="title">createInvestment</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>实际上，返回一个智能指针还解决了一系列用户端资源泄露的问题，第14章讲到，如果默认的删除器不好用，我们可以给 <code>shared_ptr</code> 绑定一个自定义的删除器（deleter）来自动实现我们想要的析构功能。不仅仅是内存资源，通过绑定删除器，我们还可以管理更多种类的资源，例如同样是 14 章里的 Mutex 锁。</p>
+<p>假如我们规定，如果用户从这个工厂函数得到了一个 <code>Investment*</code> 对象，在释放时要用另一个 <code>getRidOfInvestment()</code> 函数来释放资源，而不是单独使用 <code>delete</code>，这就可能会导致用户忘记而使用了错误的释放机制。要防止这种错误，我们把 <code>getRidOfInvestment()</code> 绑定到 <code>shared_ptr</code> 的删除器，这样 <code>shared_ptr</code> 就会在使用完成后自动帮用户调用释放函数。</p>
+<p>绑定删除器还有另一大好处，就是避免了<strong>DLL交叉问题</strong>（cross-DLL problem）。这个问题是当一个对象从一个 DLL 中生成，在另一个 DLL 中释放时，在许多平台上就会导致运行时的问题，因为不同 DLL 的 new 和 delete 可能会被链接到不同代码。<code>shared_ptr</code> 的删除器则是固定绑定在创建它的 DLL 中，这就例如，我们有 Stock 类继承自 Investment：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Investment&gt; <span class="title">createInvestment</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Investment&gt;(<span class="keyword">new</span> Stock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工厂函数返回的 Stock 类型智能指针就能在各个 DLL 中传递，智能指针会在构造时就固定好当引用计数为零时调用哪一个 DLL 的删除器，因此不必担心 DLL 交叉问题。</p>
+<h2 id="条款-19：设计-class-犹如设计-type"><a href="#条款-19：设计-class-犹如设计-type" class="headerlink" title="条款 19：设计 class 犹如设计 type"></a>条款 19：设计 class 犹如设计 type</h2><p>在 C++ 和其他面向对象的语言中，定义一个类就定义了一个新的类型。重载函数和操作符，内存的分配与释放，对象的构造与析构，全部掌握在你的手上。所以在设计类的时候，要像语言的设计者设计原始类型一样小心。</p>
+<p>好的类型拥有自然的语法，直观的语义和高效率的实现。如何高效地设计一个类呢？以下的问题在几乎所有的类型设计中都会遇到，以及考虑这些问题会如何影响到你的设计：</p>
+<ul>
+<li><strong>新类型的对象要如何创建和销毁？</strong></li>
+</ul>
+<blockquote>
+<p>“How should objects of your new type be created and destroyed?”</p>
+</blockquote>
+<p>这决定了要如何写构造函数和析构函数，包括要使用什么内存分配和释放函数，即 <code>new</code> 还是 <code>new[]</code>，<code>delete</code> 还是 <code>delete[]</code>。</p>
+<ul>
+<li>对象初始化要如何区别于赋值？</li>
+</ul>
+<blockquote>
+<p>“How should object initialisation differ from object assignment?”</p>
+</blockquote>
+<p>这决定了你如何写，如何区别构造函数和赋值运算符，以及不要把初始化与赋值混淆，因为它们的语义不同，构造函数适用于未创建的对象，赋值适用于已创建的对象，这也是为什么我们要在构造函数中使用初始化列表而不使用赋值的原因，见第 4 章和第 12 章。</p>
+<ul>
+<li>新类型的对象传值有什么意义？</li>
+</ul>
+<blockquote>
+<p>“What dos it mean for objects of your new type to be passed by value?”</p>
+</blockquote>
+<p>要记住拷贝构造函数决定了你的类型是如何被传值的，因为传值会生成本地的拷贝。</p>
+<ul>
+<li>新类型的合法数值有什么限制？</li>
+</ul>
+<blockquote>
+<p>“What are the restrictions on legal values of your new type?”</p>
+</blockquote>
+<p>通常情况下，并不是成员的任何数值组合都是合法的。要让数据成员合法，我们需要根据合法的组合，在成员函数中对数值进行检测，尤其是构造函数，赋值运算符和 setter。这也会影响到使用它的函数会抛出什么异常。</p>
+<ul>
+<li>新类型属于某个继承层次吗？</li>
+</ul>
+<blockquote>
+<p>“Dos your new type fit into an inheritance graph?”</p>
+</blockquote>
+<p>如果你的新类型继承自某个已有的类，你的设计将被这些父类影响到，尤其是父类的某些函数是不是虚函数。如果你的新类型要作为一个父类，你将要决定把哪些函数声明为虚函数，尤其要注意析构函数，见第七章。</p>
+<ul>
+<li>新类型允许什么样的转换？</li>
+</ul>
+<blockquote>
+<p>“What kind of type conversions are allowed for your new type?”</p>
+</blockquote>
+<p>新类型的对象将会在程序的海洋中与其它各种各样的类型并用，这时你就要决定是否允许类型的转换。如果你希望把 T1 隐式转换为 T2，你可以在 T1 中定义一个转换函数，例如 operator T2，或者在 T2 中定义一个兼容 T1 的不加 explicit 修饰的构造函数。</p>
+<p>如果希望使用显式转换，你要定义执行显示转换的函数，详见第 15 章。</p>
+<ul>
+<li>什么运算符和函数对于你的新类型是有意义的？</li>
+</ul>
+<blockquote>
+<p>“What operators and functions make sense for the new type?”</p>
+</blockquote>
+<p>这决定了你要声明哪些函数，包括成员函数，非成员函数，友元函数等。</p>
+<ul>
+<li>你要禁止哪些标准函数？</li>
+</ul>
+<blockquote>
+<p>“What standard functions should be disallowed?”</p>
+</blockquote>
+<p>如果不希望使用编译器会自动生成的标准函数，把它们声明为私有，见第 6 章。</p>
+<ul>
+<li>谁可以接触到成员？</li>
+</ul>
+<blockquote>
+<p>“Who should have access to the members of your new type?”</p>
+</blockquote>
+<p>这影响到哪些成员是公有的，哪些是保护的，哪些是私有的。这也能帮你决定哪些类和函数是友元的，以及要不要使用嵌套类（nested class）。</p>
+<ul>
+<li>新类型的“隐藏接口”是什么？</li>
+</ul>
+<blockquote>
+<p>“What is the ‘undeclared interface’ of your new type?”</p>
+</blockquote>
+<p>新类型对于性能，异常安全性，资源管理（例如锁和内存）有什么保障？哪些问题是自动解决不需要用户操心的？要实现这些保障，自然会对这个类的实现产生限制，例如要使用智能指针而不要使用裸指针。</p>
+<ul>
+<li>新类型有多通用？</li>
+</ul>
+<blockquote>
+<p>“How general is your new type?”</p>
+</blockquote>
+<p>如果想让你的新类型通用于许多类型，定义一个类模板（class template），而不是单个新类型。</p>
+<ul>
+<li>新类型真的是你需要的吗？</li>
+</ul>
+<blockquote>
+<p>“Is a new type what you really want?”</p>
+</blockquote>
+<p>如果你想定义一个子类只是为了给基类增加某些新功能，定义一些非成员的函数或者函数模板更加划算。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/%E5%A0%86%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -329,7 +544,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 19:36:21" itemprop="dateModified" datetime="2021-10-13T19:36:21+08:00">2021-10-13</time>
+                <time title="修改时间：2021-10-14 21:00:04" itemprop="dateModified" datetime="2021-10-14T21:00:04+08:00">2021-10-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,7 +630,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-14 18:36:41" itemprop="dateModified" datetime="2021-10-14T18:36:41+08:00">2021-10-14</time>
+                <time title="修改时间：2021-10-15 16:26:37" itemprop="dateModified" datetime="2021-10-15T16:26:37+08:00">2021-10-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -480,11 +695,36 @@
 
 
 
+<h2 id="19：正则表达式匹配"><a href="#19：正则表达式匹配" class="headerlink" title="19：正则表达式匹配"></a>19：正则表达式匹配</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211015105653744.png" alt="image-20211015105653744"></p>
+<p>每次从字符串里拿出一个字符和模式中的字符去匹配。先来分析如何匹配一个字符。</p>
+<ul>
+<li>如果模式中的字符 ch 是 ‘.’，那么它可以匹配字符串的任意字符。如果模式中的字符串 ch 不是 ‘.’，而且字符串中的字符也是 ch，那么它们互相匹配。当字符串中的字符和模式中的字符相匹配时，接着匹配后面的字符。</li>
+<li>相对而言，当模式中的第二个字符不是 ‘*’ 时，问题要简单很多。如果字符串中的第一个字符和模式中的第一个字符相匹配，那么在字符串和模式上都向后移动一个字符，然后匹配剩余的字符串和模式。如果字符串中的第一个字符和模式中的第一个字符不相匹配，则直接返回 false。</li>
+<li>当模式中的第二个字符是 ‘*‘ 时，问题要复杂一些，因为可能有多种不同的匹配方式。一种选择是在模式上向后移动两个字符。这相当于 ‘*‘ 和它前面的字符被忽略了，因为 ‘*‘ 可以匹配字符串中的 0 个字符。如果模式中的第一个字符和字符串中的第一个字符相匹配，则在字符串上向后移动一个字符，而在模式上有两种选择：可以在模式上向后移动两个字符，也可以保持模式不变。 </li>
+</ul>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> helper(s, p, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">helper</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(j==p.length())</span><br><span class="line">            <span class="keyword">return</span> i==s.length();</span><br><span class="line">        <span class="keyword">bool</span> first_match = (i&lt;s.length() &amp;&amp; (s[i]==p[j] || p[j]==<span class="string">&#x27;.&#x27;</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(j+<span class="number">1</span>&lt;p.length() &amp;&amp; p[j+<span class="number">1</span>]==<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> (helper(s, p, i, j+<span class="number">2</span>) || (first_match &amp;&amp; helper(s,p,i+<span class="number">1</span>,j) ));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> (first_match &amp;&amp; helper(s,p,i+<span class="number">1</span>,j+<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们实际上是在多次重新计算相同子问题的解决方案。因此，为了避免，我们可以使用所有值为 -1 的值来初始化 dp 矩阵。现在如果 <code>dp[i][j] &gt;= 0</code> ，那么这意味着已经被计算了，所以我们可以只在此处返回结果，因此，它节省了时间，我们不需要再次重新计算。请注意，我们将结果保存在倒数第二行的 <code>dp[i][j]</code> 中，并且该结果始终为 0 或 1.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(s.length()+<span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(p.length(), <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">return</span> helper(s, p, <span class="number">0</span>, <span class="number">0</span>, dp);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">helper</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p, <span class="keyword">int</span> i, <span class="keyword">int</span> j,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;dp)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(j==p.length())</span><br><span class="line">            <span class="keyword">return</span> i==s.length();</span><br><span class="line">        <span class="keyword">if</span>(dp[i][j]&gt;=<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> dp[i][j];</span><br><span class="line">        <span class="keyword">bool</span> first_match=(i&lt;s.length() &amp;&amp; (s[i]==p[j] || p[j]==<span class="string">&#x27;.&#x27;</span> ));</span><br><span class="line">        <span class="keyword">bool</span> ans=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(j+<span class="number">1</span>&lt;p.length() &amp;&amp; p[j+<span class="number">1</span>]==<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans= (helper(s,p,i,j+<span class="number">2</span>,dp)|| (first_match &amp;&amp; helper(s,p,i+<span class="number">1</span>,j,dp) ));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            ans= (first_match &amp;&amp; helper(s,p,i+<span class="number">1</span>,j+<span class="number">1</span>,dp));</span><br><span class="line">        &#125;</span><br><span class="line">        dp[i][j]=ans;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自下而上的解决方案</p>
+<p>我们只能从自上而下的方法中推导出自下而上的解决方案。我们将制作长度为 (s.length()+1)* (p.length()+1) 的矩阵。dp[s.length()][p.length()]=1 因为两者都在那时结束。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(s.length()+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(p.length()+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">        dp[s.length()][p.length()]=<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=s.length();i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=p.length()<span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">bool</span> first_match=(i&lt;s.length() &amp;&amp; (p[j]==s[i]|| p[j]==<span class="string">&#x27;.&#x27;</span>));</span><br><span class="line">                    <span class="keyword">if</span>(j+<span class="number">1</span>&lt;p.length() &amp;&amp; p[j+<span class="number">1</span>]==<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        dp[i][j]=dp[i][j+<span class="number">2</span>] || (first_match &amp;&amp; dp[i+<span class="number">1</span>][j]);</span><br><span class="line">                    &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j]=first_match &amp;&amp; dp[i+<span class="number">1</span>][j+<span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="20：表示数值的字符串"><a href="#20：表示数值的字符串" class="headerlink" title="20：表示数值的字符串"></a>20：表示数值的字符串</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211015115223427.png" alt="image-20211015115223427"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">// 整数的格式可以用 [+|-]B 表示，其中 B 为无符号整数</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">scanInteger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> s, <span class="keyword">int</span>&amp; index)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">if</span>(s[index] == <span class="string">&#x27;+&#x27;</span> || s[index] == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">			++index;</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">return</span> scanUnsignedInteger(s, index);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">scanUnsignedInteger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> s, <span class="keyword">int</span>&amp; index)</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> befor = index;</span><br><span class="line">		<span class="keyword">while</span>(index != s.size() &amp;&amp; s[index] &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; s[index] &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">			index ++;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> index &gt; befor;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 数字的格式可以用A[.[B]][e|EC]或者.B[e|EC]表示，</span></span><br><span class="line">    <span class="comment">// 其中A和C都是整数（可以有正负号，也可以没有），而B是一个无符号整数</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//字符串开始有空格，可以返回true</span></span><br><span class="line">        <span class="keyword">while</span>(s[index] == <span class="string">&#x27; &#x27;</span>)  <span class="comment">//书中代码没有该项测试</span></span><br><span class="line">            ++index;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">bool</span> numeric = scanInteger(s, index);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果出现&#x27;.&#x27;，接下来是数字的小数部分</span></span><br><span class="line">        <span class="keyword">if</span>(s[index] == <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line"></span><br><span class="line">            ++index;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 下面一行代码用||的原因：</span></span><br><span class="line">            <span class="comment">// 1. 小数可以没有整数部分，例如.123等于0.123；</span></span><br><span class="line">            <span class="comment">// 2. 小数点后面可以没有数字，例如233.等于233.0；</span></span><br><span class="line">            <span class="comment">// 3. 当然小数点前面和后面可以有数字，例如233.666</span></span><br><span class="line">            numeric = scanUnsignedInteger(s, index) || numeric;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果出现&#x27;e&#x27;或者&#x27;E&#x27;，接下来跟着的是数字的指数部分</span></span><br><span class="line">        <span class="keyword">if</span>(s[index] == <span class="string">&#x27;e&#x27;</span> || s[index] == <span class="string">&#x27;E&#x27;</span>)&#123;</span><br><span class="line"></span><br><span class="line">            ++index;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 下面一行代码用&amp;&amp;的原因：</span></span><br><span class="line">            <span class="comment">// 1. 当e或E前面没有数字时，整个字符串不能表示数字，例如.e1、e1；</span></span><br><span class="line">            <span class="comment">// 2. 当e或E后面没有整数时，整个字符串不能表示数字，例如12e、12e+5.4</span></span><br><span class="line">            numeric = numeric &amp;&amp; scanInteger(s ,index);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//字符串结尾有空格，可以返回true</span></span><br><span class="line">        <span class="keyword">while</span>(s[index] == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">            ++index;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s.size() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; index;   <span class="comment">//调试用</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> numeric &amp;&amp; index == s.size();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+
+<h2 id="21：调整数组顺序使奇数位于偶数前面"><a href="#21：调整数组顺序使奇数位于偶数前面" class="headerlink" title="21：调整数组顺序使奇数位于偶数前面"></a>21：调整数组顺序使奇数位于偶数前面</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211015154121341.png" alt="image-20211015154121341"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">exchange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = nums.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(i &lt; j &amp;&amp; (nums[j] &amp; <span class="number">1</span>) == <span class="number">1</span>) i ++;</span><br><span class="line">            <span class="keyword">while</span>(i &lt; j &amp;&amp; (nums[j] &amp; <span class="number">1</span>) == <span class="number">0</span>) j --;</span><br><span class="line">            swap(nums[i], nums[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="22：链表中倒数第-k-个节点"><a href="#22：链表中倒数第-k-个节点" class="headerlink" title="22：链表中倒数第 k 个节点"></a>22：链表中倒数第 k 个节点</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211015162436105.png" alt="image-20211015162436105"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">getKthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 双指针</span></span><br><span class="line">        ListNode *fast = head;</span><br><span class="line">        ListNode *slow = head;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">            k --;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(fast != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1023,90 +1263,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/29/%E5%9C%A8%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%A9%BF%E9%92%88%E5%BC%95%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/29/%E5%9C%A8%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%A9%BF%E9%92%88%E5%BC%95%E7%BA%BF/" class="post-title-link" itemprop="url">在链表中穿针引线</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-29 11:06:15" itemprop="dateCreated datePublished" datetime="2021-09-29T11:06:15+08:00">2021-09-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 18:55:54" itemprop="dateModified" datetime="2021-09-30T18:55:54+08:00">2021-09-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="LeetCode-206-Reverse-Linked-List"><a href="#LeetCode-206-Reverse-Linked-List" class="headerlink" title="LeetCode 206.Reverse Linked List"></a>LeetCode 206.Reverse Linked List</h3><p>前一个节点为 <em>pre</em>，当前考察的节点是 <em>cur</em>，下一个结点为 <em>next</em>。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929112322724.png" alt="image-20210929112322724"></p>
-<p>首先把 <em>cur</em> 指针改变为指向 <em>pre</em> ，之后更新 <em>pre</em>, <em>cur</em>, <em>next</em>。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210929112533927.png" alt="image-20210929112533927"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/29/%E5%9C%A8%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%A9%BF%E9%92%88%E5%BC%95%E7%BA%BF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1178,7 +1334,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
