@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-17 17:46:50 / 修改时间：18:12:48" itemprop="dateCreated datePublished" datetime="2021-10-17T17:46:50+08:00">2021-10-17</time>
+              <time title="创建时间：2021-10-17 17:46:50 / 修改时间：18:15:16" itemprop="dateCreated datePublished" datetime="2021-10-17T17:46:50+08:00">2021-10-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,25 +209,14 @@
           <h2 id="条款-26：尽可能延后变量定义式的出现时间"><a href="#条款-26：尽可能延后变量定义式的出现时间" class="headerlink" title="条款 26：尽可能延后变量定义式的出现时间"></a>条款 26：尽可能延后变量定义式的出现时间</h2><p>每当定义一个变量时，就会带来构造和析构的运行成本，因为代码运行到定义时会调用对象的构造函数，当离开作用域时便会调用析构函数。那么我们可能会直接想到，不定义未使用的变量不就可以了吗？但这只是一部分，有时候定义了要使用的变量依然有几率会导致浪费。</p>
 <p>我们看下面的例子，一个用来给足够长的密码进行加密的函数，如果密码不够长则抛出标准 C++ 的 logic_error：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">encryptPassword</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; password)</span></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">    <span class="built_in">string</span> encrypted;	<span class="comment">// 定义太早了</span></span><br><span class="line">    encrypted = password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(password.length() &lt; minPasswordLength)</span><br><span class="line">        <span class="keyword">throw</span> logic_error(<span class="string">&quot;Password too short&quot;</span>);</span><br><span class="line">    ....	<span class="comment">// 加密</span></span><br><span class="line">    <span class="keyword">return</span> encrypted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>字符串对象 encrypted 显然不是我们所讲的“未使用的变量”，因为下面的代码明显要用到它。但如果这个函数抛出了异常，那它就是一个未使用变量了，它所消耗的资源也都浪费了。因此我们需要把它的定义尽量往后推迟，知道我们100%确定要用到：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">encryptPassword</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; password)</span></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(password.length() &lt; minPasswordLength)</span><br><span class="line">        <span class="keyword">throw</span> logic_error(<span class="string">&quot;Password too short&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">string</span> encrypted;	<span class="comment">// 这时我们才确定它会被用到</span></span><br><span class="line">    encrypted = password;</span><br><span class="line">    ...	<span class="comment">// 加密</span></span><br><span class="line">    <span class="keyword">return</span> encrypted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>但其实还可以进一步优化一下。注意上面 encrypted 是默认构造的，因为没有任何参数传进构造函数。第四章讲到默认构造一个对象再进行赋值是比较低效的，我们应该直接使用带有参数的构造函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用：</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">encrypted</span><span class="params">(password)</span></span>;</span><br><span class="line"><span class="comment">// 替换掉：</span></span><br><span class="line"><span class="built_in">string</span> encrypted;</span><br><span class="line">encrypted = password;</span><br></pre></td></tr></table></figure>
-
-<p>要注意这是“推迟定义”的另一个意义。我们不仅仅需要把变量的定义推迟到<strong>100%要用到</strong>的地方，还要把它推迟到<strong>100%有构造参数可用</strong>的时候。这样做既可以避免不必要的构造和析构过程，也能节省默认构造再赋值的成本。而且这样的代码也更可读，因为变量定义在了真正需要它的环境下。</p>
-<hr>
-<p>那么循环呢？如果一个变量只在循环里用到，把它定义在循环外面然后每次在里面赋值好，即代码 A ，还是直接在里面定义呢，即代码 B？</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码 A，在外面定义</span></span><br><span class="line">Widget w;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++)&#123;</span><br><span class="line">    w=...;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代码 B，在里面定义</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++)&#123;</span><br><span class="line">    <span class="function">Widget <span class="title">w</span><span class="params">(...)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么我们就来分析一下 A 和 B 各自的运行成本：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A: 1个构造 + n个赋值 + 1个析构</span><br><span class="line">B: n个构造 + n个析构</span><br></pre></td></tr></table></figure>
-
-<p>现在我们就可以看出来了，对于赋值成本低于（构造+析构）的类，A 是更高效的选择，尤其是当 n 很大的时候。反之如果赋值成本大于（构造+析构），B 则是更好的选择。但是对象在 A 的作用域比在 B 要大，有时是不利于程序的可读性和可维护性的。因此<strong>除非</strong>你知道赋值成本低于（构造+析构），而且这段代码要更注重效率，那么我们应该默认使用 B。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/17/Effective-C++(%E4%BA%94)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
