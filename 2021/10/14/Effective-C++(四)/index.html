@@ -27,10 +27,15 @@
 <meta property="og:site_name" content="Taiichi&#39;s blog">
 <meta property="og:description" content="设计与声明条款 18：让接口容易被正确使用，不易被误用现在我们来到软件设计的话题中。软件设计就是让软件做你想做的事，软件设计一定需要接口（interface）设计，最后用 C++ 实现。我们今天讨论的可能是其中最重要的一条守则，把你的接口设计得容易用对，不容易用错。讨论完这一条，会引出更多关于软件设计的话题，比如效率（efficiency），封装（encapsulation），可维护性（maint">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-5bf6d98ad8451322ad8c034b0021a10b_720w.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-2f7bafd429b3249149630af193a3f012_720w.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-c3c04765835710b6c8c9b7f46587bdd6_720w.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-2a340bd9ec4c12a7d9a4cc471e6c12e6_720w.jpg">
 <meta property="article:published_time" content="2021-10-14T13:01:19.000Z">
-<meta property="article:modified_time" content="2021-10-15T02:52:09.065Z">
+<meta property="article:modified_time" content="2021-10-17T07:29:35.211Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-5bf6d98ad8451322ad8c034b0021a10b_720w.png">
 
 <link rel="canonical" href="http://example.com/2021/10/14/Effective-C++(%E5%9B%9B)/">
 
@@ -187,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-15 10:52:09" itemprop="dateModified" datetime="2021-10-15T10:52:09+08:00">2021-10-15</time>
+                <time title="修改时间：2021-10-17 15:29:35" itemprop="dateModified" datetime="2021-10-17T15:29:35+08:00">2021-10-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,6 +220,8 @@
 
       
         <h1 id="设计与声明"><a href="#设计与声明" class="headerlink" title="设计与声明"></a>设计与声明</h1><h2 id="条款-18：让接口容易被正确使用，不易被误用"><a href="#条款-18：让接口容易被正确使用，不易被误用" class="headerlink" title="条款 18：让接口容易被正确使用，不易被误用"></a>条款 18：让接口容易被正确使用，不易被误用</h2><p>现在我们来到软件设计的话题中。软件设计就是让软件做你想做的事，软件设计一定需要<strong>接口</strong>（interface）设计，最后用 C++ 实现。我们今天讨论的可能是其中最重要的一条守则，把你的接口设计得容易用对，不容易用错。讨论完这一条，会引出更多关于软件设计的话题，比如效率（efficiency），封装（encapsulation），可维护性（maintainability）和一些惯例（convention）。</p>
+<span id="more"></span>
+
 <p>所谓接口就是你提供给用户使用你代码的途径。C++ 到处都充满了接口的概念，比如函数接口，类接口，模板接口。理想条件下，如果我们用错了接口，编译器会报错，而如果编译器没有报错，那么我们用的接口就是对的。</p>
 <p>要把接口设计得好用对，难用错，就需要考虑用户可能犯的各种错误。假设你在设计一个表示日期的类：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Date(<span class="keyword">int</span> month, <span class="keyword">int</span> day, <span class="keyword">int</span> year);		<span class="comment">// 美式标准</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -352,6 +359,214 @@
 <p>“Is a new type what you really want?”</p>
 </blockquote>
 <p>如果你想定义一个子类只是为了给基类增加某些新功能，定义一些非成员的函数或者函数模板更加划算。</p>
+<h2 id="宁以-pass-by-reference-to-const-替换-pass-by-value"><a href="#宁以-pass-by-reference-to-const-替换-pass-by-value" class="headerlink" title="宁以 pass-by-reference-to-const 替换 pass-by-value"></a>宁以 pass-by-reference-to-const 替换 pass-by-value</h2><p>C++ 继承了 C 默认传递方式为值传递的特性，那么对于一个值传递的函数，它的参数是被传进来变量的<strong>拷贝</strong>初始化的。拷贝是由拷贝构造函数生成的，而拷贝多是一个费时的操作，至于为什么我们来看下面的例子。我们定义一个继承层次：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Person();</span><br><span class="line">    <span class="keyword">virtual</span> ~Person();	<span class="comment">// 见第 7 章为什么使用虚函数</span></span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> address;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> :</span> <span class="keyword">public</span> Person&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Student();</span><br><span class="line">    <span class="keyword">virtual</span> ~Student();</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> schoolName;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> schoolAddress;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>现有如下函数使用值传递：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validateStudent</span><span class="params">(Student s)</span></span>;	<span class="comment">// 值传递</span></span><br><span class="line">Student plato;</span><br><span class="line"><span class="keyword">bool</span> platoOK = validateStudent(plato);</span><br></pre></td></tr></table></figure>
+
+<p>来看当我们使用值传递会发生什么：</p>
+<ul>
+<li>Student 类的拷贝构造函数调用，用来初始化参数 s</li>
+<li>本地参数 s 在函数返回时被销毁</li>
+</ul>
+<p>现在我们再往细节分析一下，Student 类含有两个 <code>std::string</code> 对象，它又是继承自 Person 类，又有两个 <code>std::string</code> 对象。这就意味着，Student 对象使用值传递会带来：</p>
+<ul>
+<li>调用一次 Student 类的拷贝构造函数</li>
+<li>调用一次 Person 类的拷贝构造函数</li>
+<li>调用 4 次 std::string 类的拷贝构造函数</li>
+<li>同样过程适用于返回时的析构过程</li>
+</ul>
+<p>一共是 6 次拷贝构造函数，同时也对应了 6 次析构函数，成本果然很大吧！</p>
+<p>我们当然希望函数的本地参数被安全地初始化和销毁，但我们同样希望避免这些不必要的开销，那么答案就是使用<strong>常量引用传递</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validateStudent</span><span class="params">(<span class="keyword">const</span> Student&amp; s)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用引用意味着直接在变量本身上进行读写，从而不用产生拷贝，那么如上繁杂的构造和析构过程也就省略掉了。如果我们不希望对它本身进行修改，就需要加 const 修饰符，让这个参数只读。</p>
+<hr>
+<p>使用常量引用传递也巧妙避免了<strong>对象切割问题</strong>（object slicing problem）。如果有一个函数的参数类型是父类，这时一个子类对象被值传递进这个函数时，参数初始化所调用的拷贝构造函数是父类的，子类所衍生的特性就全部被“切割”掉了，在这个函数里你就只剩下一个父类对象，惊喜不惊喜？我们再举一个例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window</span>&#123;</span>	<span class="comment">// 定义一个图形操作界面的窗口类</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 返回当前窗口名称</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 显示窗口和内容</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowWithScrollBar</span> :</span> <span class="keyword">public</span> window &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>display()</code> 函数是虚函数，这就意味着两个类对于这个函数有不同的实现。如果你要写一个函数，先打印出窗口的名字，然后显示窗口，下面就是错误的写法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printNameAndDisplay</span><span class="params">(Window w)</span></span>&#123;		<span class="comment">// 值传递</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;w.name();</span><br><span class="line">    w.display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样使用值传递就会导致对象被“切割”，所以函数里调用的 <code>display</code> 函数将永远是父类 <code>Window</code> 的 <code>display</code> 函数，不管传递进的是 <code>Window</code> 类还是 <code>WindowWithScrollBar</code> 类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WindowWithScrollBar wwsb;</span><br><span class="line">printNameAndDisplay(wwsb);	<span class="comment">// 调用的永远是 Window::display()</span></span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printNameAndDisplay</span><span class="params">(<span class="keyword">const</span> window&amp; w)</span></span>&#123;	<span class="comment">// 常量引用传递</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; w.name();</span><br><span class="line">    w.display();</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>但引用传递并不是百分之百能替代值传递</p>
+<p>一般来讲，C++ 编译器会把引用作为指针来实现，所以引用传递本质上其实就是指针传递。因此，对于例如 int 的原始类型，直接用值传递还是比引用传递要高效，对于 STL 的迭代器和 STL 函数对象（function object / functor），即提供至少一个 <code>operator()</code> 的实现的某类对象，值传递同样也比引用传递高效。</p>
+<p>见第一章，C++ 由不同的“子语言”组成，每种“子语言”都有自己的高效编程守则，那么在 STL 和传统的 C 中，值传递是传递参数更高效的方法。为了遵循这一惯例，迭代器和函数对象，它们都被设计成值传递更搞笑，也不用我们去担心对象切割问题。</p>
+<hr>
+<p>使用值传递还是引用传递与大小无关</p>
+<p>有些人可能会讲，因为原始类型体积小，所以体积小的对象使用值传递会更高效。这句话并不准确，假如我们定义一个容器类只有一个指针，但这个指针装了许多许多的对象，那么拷贝这个类的对象就意味着也要拷贝它的指针包含的所有对象，成本也是非常高。</p>
+<p>第二，在有些编译器中，原始类型和用户定义类型是被分开处理的。假如你定义一个类，里面只包含有一个 double 数据成员，编译器可能不会把它放在寄存器里，但编译器会把同样大小的单个 double 放进寄存器里，这就会影响速度。如果你不确定编译器到底会怎么做，就使用引用传递，因为引用传递即指针传递，编译器一定会把指针放在寄存器里。</p>
+<p>最后，作为用户定义的类，就算现在它的体积再小，在项目后期也可能被修改，例如增加更多数据成员，那时可能就会后悔当时用了值传递。甚至对于标准类型，例如 <code>std::string</code>，取决于使用不同的实现，对象的体积也是大小不一。</p>
+<p>总体来讲，<em><strong>只有</strong></em> 对于原始类型，STL 迭代器，STL 函数对象来讲，你才可以认为值传递更高效。对于其他的一切，还是要遵循这一章的守则，多用常量引用传递，少用值传递。</p>
+<h2 id="条款21：必须返回对象时，别妄想返回其-reference"><a href="#条款21：必须返回对象时，别妄想返回其-reference" class="headerlink" title="条款21：必须返回对象时，别妄想返回其 reference"></a>条款21：必须返回对象时，别妄想返回其 reference</h2><p>上一章我们见识到了引用传递的高效率，但这不代表要根除值传递。C++ 的引用可以简单地理解为是一个<strong>已存在的</strong>变量的另一个名字，那么我们就可以根据两个名字来操作同一个变量，因此当你看见某处使用了引用，首先要问自己，它的另一个名字叫什么？当这个问题找不到答案的时候，我们就只能使用值传递了。</p>
+<p>接下来我们要用反例来证明为什么随便传递（返回）引用不可取，来看一个例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span>&#123;</span>		<span class="comment">// 表示有理数的类</span></span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    Rational(<span class="keyword">int</span> numerator = <span class="number">0</span>, <span class="keyword">int</span> denominator = <span class="number">1</span>);</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> n, d;	<span class="comment">// 分子与分母</span></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">const</span> Rational <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>operator*</code> 按值返回一个常量，就必定会在调用处生成本地拷贝，那么我们可不可以通过返回一个引用来避免拷贝带来的高成本呢？就像这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> <span class="keyword">const</span> Rational&amp; <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs);</span><br></pre></td></tr></table></figure>
+
+<p>想法很好，可是在应用中是不现实的。既然引用必须指向一个<strong>已存在的</strong>对象，那么我们就必须自己创建一个对象，让我们返回的引用来指向这个对象。创建对象有两种方式，从堆（heap）上创建和从栈（stack）上创建。我们先试试在栈上创建对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Rational&amp; <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs)&#123;</span><br><span class="line">    <span class="function">Rational <span class="title">result</span><span class="params">(lhs.n*rhs.n, lhs.d*rhs.d)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一，返回引用是希望节省拷贝的成本，可是这个函数第一行就生成了拷贝。</p>
+<p>第二，这个引用指向 result，但 result 是这个函数的本地变量，在函数返回时自动销毁，那么这个返回的引用就成了空引用，对其执行操作就会导致程序运行错误，这种错误同样适用于返回指向本地变量的指针。</p>
+<p>这样的代码首先会在编译时发出警告：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-5bf6d98ad8451322ad8c034b0021a10b_720w.png" alt="img"></p>
+<p>最后执行时因为接触了空引用而报错：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-2f7bafd429b3249149630af193a3f012_720w.png" alt="img"></p>
+<p>如果在堆上创建对象呢？</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Rational&amp; <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs)&#123;</span><br><span class="line">    Rational* result = <span class="keyword">new</span> Rational(lhs.n*rhs.n, lhs.d*rhs.d);</span><br><span class="line">    <span class="keyword">return</span> *result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一，还是不可避免要调用一次构造函数</p>
+<p>第二，虽然可以成功编译，结果也是正确的，如下图：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-c3c04765835710b6c8c9b7f46587bdd6_720w.png" alt="img"></p>
+<p>但这样写一定会发生资源泄露，因为没有代码负责删除掉这个指针。就算使用了智能指针或者别的资源管理策略来防止泄露，所获得的数据也是坏数据，因为动态分配的本地对象会在离开函数后<strong>立即</strong>被销毁，甚至还来不及到达调用 <code>operator*</code> 代码的地方。</p>
+<p>如下是使用智能指针实现的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> <span class="keyword">const</span> Rational&amp; <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs)&#123;</span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;Rational&gt; <span class="title">result</span><span class="params">(<span class="keyword">new</span> Rational(lhs.n*rhs.n, lhs.d*rhs.d))</span></span>;</span><br><span class="line">    <span class="keyword">return</span> *result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然成功通过编译，可是执行时输出如下结果，可以看到明显是错误的：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/v2-2a340bd9ec4c12a7d9a4cc471e6c12e6_720w.jpg" alt="img"></p>
+<hr>
+<p>既然不管是堆还是栈上创建对象，每次访问这个函数都要造成一次构造函数调用，而我们的目标是节省这次调用，想一劳永逸，是不是想起来了静态变量?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> Rational&amp; <span class="title">operator</span><span class="params">(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs)</span></span>&#123;</span><br><span class="line">  <span class="keyword">static</span> Rational result;  <span class="comment">//创建一个静态对象</span></span><br><span class="line">  result=.....;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态对象可能会带来多线程安全问题，可除此之外，我们再来看如下一段完全合理的代码:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs);</span><br><span class="line">Rational a,b,c,d;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">if</span>((a*b)==(c*d))&#123;</span><br><span class="line">  .....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如何? if条件语句的每次都会被计算为true，不管abcd取什么值。这是因为该条件语句等价于operator==(operator*(a,b),operator*(c,d))。所以当operator==被执行时，会产生两个对operator<em>的调用，可是operator</em>只能返回指向<em>同一个</em>静态对象的引用，因此两边一定会相等。</p>
+<hr>
+<p>举了这么多反例，真正正确的做法还是要让函数返回对象而非引用，因此我们的运算符定义应该至少等价于如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> Rational <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs, <span class="keyword">const</span> Rational&amp; rhs)&#123;</span><br><span class="line">  <span class="keyword">return</span> Rational(lhs.n * rhs.n, lhs.d * rhs.d);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在传入参数时，我们可以使用引用传递，可是在返回时，除非确定真的要一个引用，就比如在第四章，用来解决不同编译单元的静态对象初始化问题，或者重载输出运算符operator&lt;&lt;，还是要老老实实返回对象，虽然这样当然会产生构造函数和析构函数的额外开销，可是从长期来看，这些开销对于一个程序的稳定运行可以说非常微小，倒不如在别的方面给程序优化一下。</p>
+<p>同时许多C++编译器自带优化功能，生成的机器代码会在保证不影响可观测范围内结果的前提下提升效率，有时使用了优化，这些成本便可以忽略不计了。</p>
+<h2 id="条款-22：将数据成员声明为-private"><a href="#条款-22：将数据成员声明为-private" class="headerlink" title="条款 22：将数据成员声明为 private"></a>条款 22：将数据成员声明为 private</h2><p>开门见山，我们首先来讲为什么数据成员不能是公有的（public），然后会讲为什么一样的论据也适用于 protected 成员。那么为什么我们不能把数据成员声明为公有？</p>
+<ul>
+<li><strong>语句一致性</strong>，见 18 章</li>
+</ul>
+<p>试想如果类的共有接口全部都是函数，用户就不用抓耳挠腮地思考到底要不要给一个成员后面加括号，弄清楚现在使用的到底是成员数据还是成员函数，这样一来如果我们把所有成员数据从共有接口拒之门外，类的接口显然会更加用户友好。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">myObject.someStuff;		<span class="comment">// 成员数据</span></span><br><span class="line">myObject.someStuff();	<span class="comment">// 成员函数</span></span><br><span class="line"><span class="comment">// 到底要用哪个？</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>访问权限的精准控制</strong></li>
+</ul>
+<p>如果数据成员是公有的，任何代码都可以对其进行读写，根本没有权限控制一说。如果我们希望实现各种读写权限的控制，就只能将其声明为私有，并使用成员函数执行不可读写，只读，可读写，甚至是只写的权限，因为唯一接触非公有成员数据的方法就是通过成员函数（友元函数当然也可以，只不过这一章我们先只讨论成员函数，在下一章会讲到友元函数与封装）。</p>
+<p>举一个简单的例子用来看这四种权限的实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AccessLevels</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getReadOnly</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> readOnly; &#125;	<span class="comment">// 读取只读的成员</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setReadWrite</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; readWrite = value; &#125;	<span class="comment">// 写入可读写的成员</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getReadWrite</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> readWrite; &#125;	<span class="comment">// 读取可读写的成员</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setWriteOnly</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; writeOnly = value; &#125;	<span class="comment">// 写入只写的成员</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> noAccess;	<span class="comment">// 这个成员既不能读也不能写</span></span><br><span class="line">    <span class="keyword">int</span> readOnly;	<span class="comment">// 这个成员只读</span></span><br><span class="line">    <span class="keyword">int</span> readWrite;	<span class="comment">// 这个成员可读可写</span></span><br><span class="line">    <span class="keyword">int</span> writeOnly;	<span class="comment">// 这个成员只写</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>可能还不够有说服力？来看大宝贝——<strong>封装</strong>（encapsulation）</li>
+</ul>
+<p>我们再来举一个例子，加入你在给高速公路上的测速设备写一个应用，有一条需求更定要在每辆车经过的时候，计算出车的当前速度，并把这个速度放进一个数据集里，然后用这个数据集计算平均速度，即 <code>averageSpeed</code> 函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpeedDataCollection</span>&#123;</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addValue</span><span class="params">(<span class="keyword">int</span> speed)</span></span>;	<span class="comment">// 要把当前测得的速度放进数据集里</span></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">averageSpeed</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">// 利用数据集计算平均速度</span></span><br><span class="line">...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于这个函数，我们有两种思路去实现：</p>
+<ol>
+<li>在类里增加一个表示移动平均（moving average）的数据成员，然后当 <code>averageSpeed</code> 函数被调用，只用返回这个数据成员就可以了。但这种方法显然会导致 <code>SpeedDataCollection</code> 对象所需的内存增大，因为我们引入了新的移动平均成员，以及为了计算移动平均又需要引入当前所有数据的和以及数据的量。</li>
+<li>在被调用时，现场基于数据集计算这个平均速度。这种方法使用更少内存，只需要定义一个新的 inline 函数，但在被调用时需要现场计算，使用这个方法肯定要慢于第一种方法。</li>
+</ol>
+<p>至于哪个更好，要看具体的环境。在内存较为有限的平台上，例如测速设备的嵌入式系统，而且平均速度不需要太频繁地被计算，例如在车流量较少的路上，第二种方法可能会更好。如果在车流量大的路上，平均速度则需要被频繁并且快速地计算，那么第一种方法可能会更好。</p>
+<p><strong>重点来了</strong>，如果希望把我们的应用做得用户友好，易于扩展和维护，例如可以针对不同的路况使用不同的实现方式，我们只需要把这个平均速度的数据成员封装起来，即将其声明为私有，对用户隐藏起来，需要时通过成员函数接触，不需要时直接使用另一种实现，就可以轻松地根据需求来回切换，最多也就只用重新编译一下。</p>
+<p>如果不封装起来，即声明为共有，如果那时要再改需求，恐怕难度就会非常巨大了，因为我们不知道用户在哪以及如何使用了我们的数据成员，稍微改动便有可能导致整个程序的重写。也就是说共有成员即为<strong>未封装</strong>（unencapsulated）的成员，而未封装也就意味着代码的<strong>不可改动</strong>，尤其是对于经常被使用的类。</p>
+<blockquote>
+<p>“Public means unencapsulated, and practically speaking, unencapsulated means unchangeable.”</p>
+</blockquote>
+<p>除此之外，将数据成员对用户隐藏起来（封装起来）还可以给各种各样的实现提供弹性。比如说可以通过成员函数来保证类不变量（class invariant）的限制条件被满足，因为只有成员函数能接触成员数据，对数据所做的改动也都只能遵循成员函数的规定。<strong>可能你会从 public 接触成员获得一时便利，但这背后牺牲了太多</strong>。</p>
+<hr>
+<p>同样的论据也适用于 protected 的数据成员。前面提到的语法一致性和权限控制显然也成立，那么封装呢？protected 的成员是不是比共有成员有更好的封装呢？答案是<strong>不</strong>。</p>
+<p>作者 Scott Meyers 会在后面提到<strong>某物的封装与因为它的改动而导致可能失效的代码量成反比</strong>。</p>
+<blockquote>
+<p>“Something’s encapsulation is inversely proportional to the amount of code that might be broken if that something changes.”</p>
+</blockquote>
+<p>对于数据成员，它们的封装与因为它们的改动而导致失效的代码量成反比，例如移除了某个数据成员。</p>
+<p>加入我们代码有某些公有的数据成员，在后来的升级中被移除，那么有多少用户代码因此失效了呢：所有使用了这些数据成员的用户代码。但这是一个不可测的数量，可能趋近于无穷大，也可能趋近于零，因此考虑到最坏的情况，公有数据成员是<strong>完全未封装</strong>的。</p>
+<p>假如我们现在有某些保护的数据成员，在后来的升级中也被移除，那么有多少代码也因此失效了呢: 所有使用了它们的子类。但这又是一个不可测的量。因此保护数据成员与公有数据成员是<strong>一样完全未封装</strong>的，因为在两种情况下，改动都有可能造成巨大数量的代码损坏。</p>
+<p>结论就是，一旦我们在类中将某些数据成员声明为保护或公有，并且用户已经开始使用这些数据成员，我们将很难对这些数据成员再做出改动，否则可能就会导致巨大数量的代码被重写，重新测试，重新写文档。因此从封装 的角度出发，数据成员的访问权限只有两个等级，私有(private)，提供完全的封装，和其它所有的，即protected和public，提供几乎零封装。</p>
+<h2 id="条款-23：多用非成员非友元函数"><a href="#条款-23：多用非成员非友元函数" class="headerlink" title="条款 23：多用非成员非友元函数"></a>条款 23：多用非成员非友元函数</h2><p>假如今天你在给浏览器写代码，要用到三个函数，清除下载缓存，清除浏览记录，清除 cookies：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebBrowser</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clearCache</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clearHistory</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeCookies</span><span class="params">()</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>许多时候为了方便起见我们可以用一键清除，一起执行这三个函数，我们可以再写一个成员函数 <code>cleanEverything()</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebBrowser</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">cleanEverything</span><span class="params">()</span></span>;		<span class="comment">// 调用上面的三个函数</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>当然这个函数也可以被写成一个非成员函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cleanBrowser</span><span class="params">(WebBrowser&amp; wb)</span></span>&#123;</span><br><span class="line">    wb.clearCache();</span><br><span class="line">    wb.clearHistory();</span><br><span class="line">    wb.removeCookies();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么我们就有两种选择，哪种更好呢？</p>
+<p>面向对象的思路告诉我们，数据和操作它们的函数需要绑在一起，也就是说写作成员函数更好。</p>
+<p>这是对面向对象不全面的理解，面向对象要讲究的是数据要<strong>尽可能地被封装起来</strong>，而数据和操作它的函数被绑在一起只是一种结果。</p>
+<p>其实非成员函数 <code>cleanBrowser()</code> 是更好的选择，因为它其实比成员函数 <code>cleanEverything()</code> 提供了更好的封装。此外，当相同的功能可以同时被成员函数和非成员函数实现时，选择非成员函数也能给 <code>WebBrowser</code> 类相关的功能提供更大的包装弹性，减少编译依赖，增加类的可扩展性。</p>
+<p>分析：</p>
+<p>先从上一章讲到的<strong>封装</strong>（encapsulation）开始。如果某物是封装的，即对用户是不可见的，它的封装越好，就有越少的东西能直接接触它。有越少的东西能直接接触，我们就有更大的弹性对它做出改动，因为我们的改动直接影响到使用它的代码。因为，越好的封装就意味着越好的可维护性和可扩展性。</p>
+<p>至于我们的 <code>WebBrowser</code> 类，有越少的代码使用它的成员数据，成员数据的封装就越好。我们根据能直接使用成员数据的函数数量作为封装标准，那么<strong>有越多的函数能直接使用成员数据，成员数据的封装就越不好，编译依赖就越多，可扩展性就越差</strong>。</p>
+<p>第 22 章解释了类的数据成员都必须是私有（private）的，因为如果不是私有的话，就会有无限量的函数能直接使用它们，也就基本是零封装。对于私有数据成员，能直接接触它们的函数是：</p>
+<blockquote>
+<p>成员函数 + 友元函数</p>
+</blockquote>
+<p>因此在能实现相同功能的情况下，在成员函数和非成员非友元函数中做出选择，后者当然能带来更好的封装，那么我们的非成员非友元函数 <code>cleanBrowser()</code> 会比成员函数 <code>cleanEverything()</code> 提供更好的封装，是更好的选择。</p>
+<hr>
+<p>到现在要注意两点：</p>
+<ul>
+<li>放在封装的大环境下，我们把<em>成员</em>函数与<em><strong>非成员且非友元</strong></em>函数拿来对比才有意义，而不仅仅是<em>成员</em>函数与<em>非成员</em>函数，因为友元函数与成员函数对私有成员拥有相同的访问权限，那么对封装的影响也是相同的。如果从别的角度出发，例如下一章说明的隐式转换，<em>成员</em>函数与<em>非成员</em>函数的对比则是有意义的。</li>
+<li>以上并不是说这个函数就不能再别的类里。例如我们可以写一个实用类（utility class），然后把 <code>cleanBrowser()</code> 作为它的一个静态成员函数，只要这个函数不在 <code>WebBrowser</code> 类里就不会影响 <code>WebBrowser</code> 类私有成员的封装。</li>
+</ul>
+<hr>
+<p>cleanBrowser()是一个便捷函数(convenience function)，而且既不是成员也不是友元函数，就没有对WebBrowser类成员的特殊访问权限，就不能提供额外的功能。比如即使这个函数不存在，用户也能自己调用它所包含的三个函数来实现一样的功能。</p>
+<p>虽然不能作为成员函数，可是为了方便管理，我们还是希望它能与WebBrowser产生某种联系，这样就可以考虑把cleanBrowser()作为非成员非友元函数放在与WebBrowser类相同的一个名空间下，让结构显得自然:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> WebBrowserStuff&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WebBrowser</span>&#123;</span>...&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">cleanBrowser</span><span class="params">(WebBrowser&amp; wb)</span></span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实这样做比仅仅为了自然更有意义。名空间不像类，必须被一次性完整定义，名空间则可以分布在不同的编译单元中，这样你就可以更逻辑地把不同的功能分布在不同的地方，使用类是做不到这一点的:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于类，以下是非法操作，会报重定义错误</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对于名空间则是合法的，f1与f2属于同一名空间</span></span><br><span class="line"><span class="keyword">namespace</span> SomeSpace&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> SomeSpace&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>像浏览器这样的类可能会有大量类似的便捷函数，比如关于收藏夹，打印，下载等等功能。既然它们都同属为浏览器服务，又想把它们按照功能放在不同的头文件里，最直接的组织方法就是在一个头文件中声明关于收藏夹的便捷函数，然后在另一个头文件中声明关于打印的便捷函数，并把它们纳入同一名空间中:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webbrowser.h 包含浏览器的核心功能</span></span><br><span class="line"><span class="keyword">namespace</span> WebBrowserStuff&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WebBrowser</span>&#123;</span>...&#125;;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//webbrowserbookmarks.h 包含收藏夹相关功能</span></span><br><span class="line"><span class="keyword">namespace</span> WebBrowserStuff&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//webbrowsercookies.h 包含cookies相关功能</span></span><br><span class="line"><span class="keyword">namespace</span> WebBrowserStuff&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//以上头文件的代码全部纳入同一名空间</span></span><br></pre></td></tr></table></figure>
+
+<p>其实C++标准库就是这样组织的。C++标准库有各种各样的头文件<vector>, <memory>等等，每个头文件都给std名空间声明它们自己的函数，而不是使用像&lt;C++StandardLibrary&gt;这样的头文件来包含std名空间所有的东西。如果只需要使用<vector>，我们不需要#include<list>，如果我们不使用<fstream>，就不需要#include<fstream>，这样我们只需要使用整个系统的一小部分，从而减少编译依赖。</p>
+<p>使用这种方法还可以让用户轻松地对其进行扩展，例如要想增加保存图片的功能，直接开一个新的头文件，加一行namespace WebBrowserStuff{..}，把写好的功能放在里面就可以了，其它的头文件甚至动都不需要动，你自己的函数就成了那个名空间里的一员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只需新增webbrowserimages.h</span></span><br><span class="line"><span class="keyword">namespace</span> WebBrowserStuff&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//以上的函数就纳入了我们的名空间</span></span><br></pre></td></tr></table></figure>
+
+<p>这是另一个用类做不到的功能，当然你可以说写一个子类继承父类也可以实现扩展，可是子类依然接触不到父类的私有成员，所以所做的扩展也是有限的，名空间则可以毫无保留地让你接触到所有东西，以及<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65257902">第7章</a>讲到过并不是所有的类都可以拿来当爸爸的Θ◇Θ</p>
+<h2 id="条款-24：若所有参数皆需类型转换，请为此采用-non-member-函数"><a href="#条款-24：若所有参数皆需类型转换，请为此采用-non-member-函数" class="headerlink" title="条款 24：若所有参数皆需类型转换，请为此采用 non-member 函数"></a>条款 24：若所有参数皆需类型转换，请为此采用 non-member 函数</h2><p>虽然在第 15 章讨论过隐式转换总体上会给程序带来隐患，因为如果出现了类型错误，编译器是不会报错的。但当我们在设计跟数字相关的类时，比如用一个类代表有理数，支持 int 的隐式转换时完全合理的。此外 C++ 自己的自有类型也支持多种隐式转换，例如从 int 到 double，那么我们也可以这样写这个有理数类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Rational(<span class="keyword">int</span> numerator = <span class="number">0</span>, <span class="keyword">int</span> denominator = <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 构造函数专门不声明为 explicit 来允许从 int 到 Rational 的隐式转换</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numerator</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">denominator</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>作为一个有理数，我们当然也需要定义各种算术运算符，例如加减乘除，但它们到底要作为成员函数还是非成员函数？可能直觉会告诉我们：迷的话按照面向对象那一套来就行了。既然我们的 <code>operator*</code> 是给 <code>Rational</code> 类用的，那么它就应该是个成员函数！</p>
+<p>不过还记得第 23 章解释的，随意把函数作为成员函数的话，反而会破坏封装，违反面向对象准则吗？先不管这些，我们现在就先看如果 <code>operator*</code> 是一个成员函数会怎么样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">const</span> Rational <span class="keyword">operator</span>*(<span class="keyword">const</span> Rational&amp; lhs) <span class="keyword">const</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
 
@@ -370,7 +585,10 @@
     <a href="/2021/10/12/%E5%A0%86%E6%8E%92%E5%BA%8F/" rel="prev" title="堆排序">
       <i class="fa fa-chevron-left"></i> 堆排序
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/17/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="剑指offer记录（三）">
+      剑指offer记录（三） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -429,7 +647,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">设计与声明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-18%EF%BC%9A%E8%AE%A9%E6%8E%A5%E5%8F%A3%E5%AE%B9%E6%98%93%E8%A2%AB%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%EF%BC%8C%E4%B8%8D%E6%98%93%E8%A2%AB%E8%AF%AF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">条款 18：让接口容易被正确使用，不易被误用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-19%EF%BC%9A%E8%AE%BE%E8%AE%A1-class-%E7%8A%B9%E5%A6%82%E8%AE%BE%E8%AE%A1-type"><span class="nav-number">1.2.</span> <span class="nav-text">条款 19：设计 class 犹如设计 type</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%A3%B0%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">设计与声明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-18%EF%BC%9A%E8%AE%A9%E6%8E%A5%E5%8F%A3%E5%AE%B9%E6%98%93%E8%A2%AB%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%EF%BC%8C%E4%B8%8D%E6%98%93%E8%A2%AB%E8%AF%AF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">条款 18：让接口容易被正确使用，不易被误用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-19%EF%BC%9A%E8%AE%BE%E8%AE%A1-class-%E7%8A%B9%E5%A6%82%E8%AE%BE%E8%AE%A1-type"><span class="nav-number">1.2.</span> <span class="nav-text">条款 19：设计 class 犹如设计 type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%81%E4%BB%A5-pass-by-reference-to-const-%E6%9B%BF%E6%8D%A2-pass-by-value"><span class="nav-number">1.3.</span> <span class="nav-text">宁以 pass-by-reference-to-const 替换 pass-by-value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE21%EF%BC%9A%E5%BF%85%E9%A1%BB%E8%BF%94%E5%9B%9E%E5%AF%B9%E8%B1%A1%E6%97%B6%EF%BC%8C%E5%88%AB%E5%A6%84%E6%83%B3%E8%BF%94%E5%9B%9E%E5%85%B6-reference"><span class="nav-number">1.4.</span> <span class="nav-text">条款21：必须返回对象时，别妄想返回其 reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-22%EF%BC%9A%E5%B0%86%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E5%A3%B0%E6%98%8E%E4%B8%BA-private"><span class="nav-number">1.5.</span> <span class="nav-text">条款 22：将数据成员声明为 private</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-23%EF%BC%9A%E5%A4%9A%E7%94%A8%E9%9D%9E%E6%88%90%E5%91%98%E9%9D%9E%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">条款 23：多用非成员非友元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E6%AC%BE-24%EF%BC%9A%E8%8B%A5%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%86%E9%9C%80%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%EF%BC%8C%E8%AF%B7%E4%B8%BA%E6%AD%A4%E9%87%87%E7%94%A8-non-member-%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">条款 24：若所有参数皆需类型转换，请为此采用 non-member 函数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -445,7 +663,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
