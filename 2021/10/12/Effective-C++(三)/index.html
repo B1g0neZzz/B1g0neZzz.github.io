@@ -28,7 +28,7 @@
 <meta property="og:description" content="资源管理条款13：以对象管理资源我们在学习编程时，经常能听到“资源”这个词。资源可能是一个很宽泛的概念，但总体来讲，资源时我们可以用来使用，并且使用之后要返还给系统的东西。在 C++ 中，资源多数是指动态分配的内存。如果你只用 new 来分配内存却不在使用完后 delete 掉，将会导致内存泄露。 其他资源比如文件描述符（file descriptor），Mutex 锁，GUI 中的字体（font">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-12T12:03:24.000Z">
-<meta property="article:modified_time" content="2021-10-14T13:00:04.593Z">
+<meta property="article:modified_time" content="2021-10-19T10:34:02.392Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-14 21:00:04" itemprop="dateModified" datetime="2021-10-14T21:00:04+08:00">2021-10-14</time>
+                <time title="修改时间：2021-10-19 18:34:02" itemprop="dateModified" datetime="2021-10-19T18:34:02+08:00">2021-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Investment</span>&#123;</span>...&#125;;		<span class="comment">// Investment 继承层级的基类</span></span><br><span class="line"><span class="function">Investment* <span class="title">createInvestment</span><span class="params">()</span></span>;	<span class="comment">// 返回一个动态分配的Investment层级对象指针</span></span><br></pre></td></tr></table></figure>
 
 <p>返回一个指针就说明我们要负责在用毕后及时释放资源：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void f()&#123;</span><br><span class="line">	Investment* pInv &#x3D; createInvestment();	&#x2F;&#x2F; 分配</span><br><span class="line">	...		&#x2F;&#x2F; 使用</span><br><span class="line">	delete pInv;	&#x2F;&#x2F; 释放</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Investment* pInv = createInvestment();	<span class="comment">// 分配</span></span><br><span class="line">	...		<span class="comment">// 使用</span></span><br><span class="line">	<span class="keyword">delete</span> pInv;	<span class="comment">// 释放</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>看起来是可以的，使用完后马上释放掉分配的内存，但这个函数仍然会失效！如果中间部分存在并触发了一个 return 语句，最后的 delete 语句便会被跳过。如果用在循环里，中间存在并触发了 break 或 goto 语句，delete 也不会被执行。同样如果中间的代码抛出了异常，这个指针也不会被删除掉。如果这个动态分配的对象没有被清理掉，不仅仅是它占用的资源泄露，它所占有的<strong>所有资源</strong>也将泄露。</p>
 <p>即使代码写得再小心，避免了以上的种种情况，但当项目被不同的人接手时，别人对某一部分的改动也可能让原来自己苦心制作的手动管理机制失效，导致资源泄露，所以手动管理费时费力，最后效果也不好。</p>
