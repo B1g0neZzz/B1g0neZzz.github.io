@@ -31,8 +31,9 @@
 <meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025105229354.png">
 <meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025112619208.png">
 <meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025114510365.png">
+<meta property="og:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025203319972.png">
 <meta property="article:published_time" content="2021-10-25T02:02:15.000Z">
-<meta property="article:modified_time" content="2021-10-25T03:47:28.914Z">
+<meta property="article:modified_time" content="2021-10-25T12:41:06.306Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025103112969.png">
@@ -186,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-25 10:02:15 / 修改时间：11:47:28" itemprop="dateCreated datePublished" datetime="2021-10-25T10:02:15+08:00">2021-10-25</time>
+              <time title="创建时间：2021-10-25 10:02:15 / 修改时间：20:41:06" itemprop="dateCreated datePublished" datetime="2021-10-25T10:02:15+08:00">2021-10-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,7 +256,40 @@
 <ul>
 <li>归并排序</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mergeSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; tmp, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l &gt;= r) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverseParis</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">tmp</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">return</span> mergeSort(nums, tmp, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>假设我们有两个已排序的序列等待合并，分别是 L = {8, 12, 16, 22, 100} 和 R = {9, 26, 55, 64, 91}。一开始我们用指针 <code>lPtr = 0</code> 指向 <em>L</em> 的首部，<code>rPtr = 0</code> 指向 <em>R</em> 的头部。记已经合并好的部分为 M。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L = [<span class="number">8</span>, <span class="number">12</span>, <span class="number">16</span>, <span class="number">22</span>, <span class="number">100</span>]   R = [<span class="number">9</span>, <span class="number">26</span>, <span class="number">55</span>, <span class="number">64</span>, <span class="number">91</span>]  M = []</span><br><span class="line">     |                          |</span><br><span class="line">   lPtr                       rPtr</span><br></pre></td></tr></table></figure>
+
+<p>我们发现 <code>lPtr</code> 指向的元素小于 <code>rPtr</code> 指向的元素，于是把 <code>lPtr</code> 指向的元素放入 M，并把 <code>lPtr</code> 后移一位。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L = [<span class="number">8</span>, <span class="number">12</span>, <span class="number">16</span>, <span class="number">22</span>, <span class="number">100</span>]   R = [<span class="number">9</span>, <span class="number">26</span>, <span class="number">55</span>, <span class="number">64</span>, <span class="number">91</span>]  M = [<span class="number">8</span>]</span><br><span class="line">        |                       |</span><br><span class="line">      lPtr                     rPtr</span><br></pre></td></tr></table></figure>
+
+<p>接着我们继续合并，把 9 加入 M，此时 lPtr 指向 12，rPtr 指向 26。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L = [<span class="number">8</span>, <span class="number">12</span>, <span class="number">16</span>, <span class="number">22</span>, <span class="number">100</span>]   R = [<span class="number">9</span>, <span class="number">26</span>, <span class="number">55</span>, <span class="number">64</span>, <span class="number">91</span>]  M = [<span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">        |                          |</span><br><span class="line">       lPtr                       rPtr</span><br></pre></td></tr></table></figure>
+
+<p>此时 <code>lPtr</code> 比 <code>rPtr</code> 小，把 <code>lPtr</code> 对应的数加入答案，并考虑它对逆序对总数的贡献为 <code>rPtr</code> 相对 R 首位置的偏移 1</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reversePairs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">tmp</span><span class="params">(nums.size())</span></span>;</span><br><span class="line">        <span class="keyword">return</span> mergeSort(<span class="number">0</span>, nums.size() - <span class="number">1</span>, nums, tmp);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; tmp)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 终止条件</span></span><br><span class="line">        <span class="keyword">if</span> (l &gt;= r)	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 递归划分</span></span><br><span class="line">        <span class="keyword">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> res = mergeSort(l, m, nums, tmp) + mergeSort(m + <span class="number">1</span>, r, nums, tmp);</span><br><span class="line">        <span class="comment">// 合并阶段</span></span><br><span class="line">        <span class="keyword">int</span> i = l, j = m + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = l ; k &lt;= r ; k ++)</span><br><span class="line">            tmp[k] = nums[k];</span><br><span class="line">       	<span class="keyword">for</span>(<span class="keyword">int</span> k = l ; k &lt;= r ; k ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == m + <span class="number">1</span>)</span><br><span class="line">                nums[k] = tmp[j++];</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (j == r + <span class="number">1</span> || tmp[i] &lt;= tmp[j])</span><br><span class="line">                nums[k] = tmp[i++];</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                nums[k] = tmp[j++];</span><br><span class="line">                res += m - i + <span class="number">1</span>;	<span class="comment">// 统计逆序对</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：同归并排序 O(n log n)。</li>
+<li>空间复杂度：同归并排序 O(n)</li>
+</ul>
+<h2 id="52：两个链表的第一个公共节点"><a href="#52：两个链表的第一个公共节点" class="headerlink" title="52：两个链表的第一个公共节点"></a>52：两个链表的第一个公共节点</h2><p>设「第一个公共节点」为 node ，「链表 headA」的节点数量为 a ，「链表 headB」的节点数量为 b ，「两链表的公共尾部」的节点数量为 c ，则有：</p>
+<ul>
+<li>头节点 headA 到 node 前，共有 a - c 个节点；</li>
+<li>头节点 headB 到 node 前，共有 b - c 个节点；</li>
+</ul>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211025203319972.png" alt="image-20211025203319972"></p>
+<p>考虑构建两个节点指针 <code>A</code> , <code>B</code> 分别指向两链表头节点 <code>headA</code> , <code>headB</code> ，做如下操作：</p>
+<ul>
+<li><p>指针 <code>A</code> 先遍历完链表 <code>headA</code> ，再开始遍历链表 <code>headB</code> ，当走到 <code>node</code> 时，共走步数为：</p>
+<p> $$a+(b−c)$$</p>
+</li>
+<li><p>指针 <code>B</code> 先遍历完链表 <code>headB</code> ，再开始遍历链表 <code>headA</code> ，当走到 <code>node</code> 时，共走步数为：</p>
+<p> $$b+(a−c)$$</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">        ListNode *A = headA, *B = headB;</span><br><span class="line">        <span class="keyword">while</span> (A != B) &#123;</span><br><span class="line">            A = A != <span class="literal">nullptr</span> ? A-&gt;next : headB;</span><br><span class="line">            B = B != <span class="literal">nullptr</span> ? B-&gt;next : headA;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> A;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
 
 
 
@@ -297,7 +331,10 @@
     <a href="/2021/10/21/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="prev" title="剑指offer记录（四）">
       <i class="fa fa-chevron-left"></i> 剑指offer记录（四）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/25/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AD%EF%BC%89/" rel="next" title="剑指offer记录（六）">
+      剑指offer记录（六） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -356,7 +393,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#49%EF%BC%9A%E4%B8%91%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">49：丑数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%EF%BC%88%E5%B0%8F%E6%A0%B9%E5%A0%86%EF%BC%89%E8%A7%A3%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">优先队列（小根堆）解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E5%BD%92%E5%B9%B6%EF%BC%88%E5%A4%9A%E6%8C%87%E9%92%88%EF%BC%89%E8%A7%A3%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">多路归并（多指针）解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#50%EF%BC%9A%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">50：第一个只出现一次的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#51%EF%BC%9A%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9"><span class="nav-number">3.</span> <span class="nav-text">51：数组中的逆序对</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#49%EF%BC%9A%E4%B8%91%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">49：丑数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%EF%BC%88%E5%B0%8F%E6%A0%B9%E5%A0%86%EF%BC%89%E8%A7%A3%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">优先队列（小根堆）解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E5%BD%92%E5%B9%B6%EF%BC%88%E5%A4%9A%E6%8C%87%E9%92%88%EF%BC%89%E8%A7%A3%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">多路归并（多指针）解法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#50%EF%BC%9A%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">50：第一个只出现一次的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#51%EF%BC%9A%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9"><span class="nav-number">3.</span> <span class="nav-text">51：数组中的逆序对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#52%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E8%8A%82%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">52：两个链表的第一个公共节点</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -372,7 +409,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
