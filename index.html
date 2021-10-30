@@ -154,6 +154,109 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/30/Linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/30/Linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">Linux高性能服务器编程（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-30 15:15:29 / 修改时间：15:53:21" itemprop="dateCreated datePublished" datetime="2021-10-30T15:15:29+08:00">2021-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">Linux高性能服务器编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第一章-TCP-IP-协议族"><a href="#第一章-TCP-IP-协议族" class="headerlink" title="第一章 TCP/IP 协议族"></a>第一章 TCP/IP 协议族</h1><p>协议族中协议众多，这本书只选取了 IP 和 TCP 协议 - 对网络编程影响最直接</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211030152327268.png" alt="image-20211030152327268"></p>
+<p>同样七层是 OSI 参考模型，简化后得到四层。不同层次之间，通过接口互相交流，这样方便了各层次的修改。</p>
+<p><strong>应用层</strong> 负责处理应用程序的逻辑</p>
+<p><strong>表示层</strong> 定义了数据的格式及加密</p>
+<p><strong>会话层</strong> 它定义了如何开始、控制和结束一个会话，包括对多个双向信息的控制和管理，以便在只完成连续消息的一部分时可以通知应用，从而使表示层看到的数据是连续的</p>
+<p><strong>传输层</strong> 为两台主机的应用提供端到端（end to end）的通信。与网络层使用的下一跳不同，它只关心起始和终止，中转过程交给下层处理。此层存在两大协议 TCP 协议和 UDP 协议</p>
+<p>TCP 协议（Transmission Control Protocol 传输控制协议）</p>
+<ul>
+<li>为应用层提供 <code>可靠的，面向连接，基于流的服务</code></li>
+<li>通过 <code>超时重传</code> 和 <code>数据确认</code> 等确保数据正常送达</li>
+<li>TCP 需要存储一些必要的状态，连接的状态，读写缓冲区，诸多定时器 </li>
+</ul>
+<p>UDP 协议（User Datagram Protocol 用户数据报协议）</p>
+<ul>
+<li>为应用层提供 <code>不可靠的，无连接的，基于数据报的服务</code></li>
+<li>一般需要自己处理 <code>数据确认</code> 和 <code>超时重传</code> 的问题</li>
+<li>通信两者不存储状态，每次发送都需要指定地址信息。 <code>有自己的长度</code></li>
+</ul>
+<p><strong>网络层</strong> 实现了数据包的选路和转发。只要数据包到不了目标地址，就 <code>下一跳</code> （hop by hop），选择最近的。 <em>IP 协议（Internet Protocol）</em> 以及 <em>ICMP 协议（Internet Control Message Protocol）</em> 后者协议是 IP 协议的补充，用来检测网络连接 1. 差错报文，用来回应状态 2. 查询报文（ping 程序就是使用的此报文来判断信息是否送达）</p>
+<p><strong>数据链路层</strong> 实现了网卡接口的网络驱动程序。这里驱动程序方便了厂商的下层修改，只需要向上层提供规定的接口即可。存在两个协议 <em>ARP 协议（Address Resolve Protocol，地址解析协议）</em>。还有 <em>RARP（Reverse ~，逆地址解析协议）</em>。由于网络层使用 IP 地址寻址机器，但是数据链路层使用物理地址（通常为 MAC 地址），之间的转换涉及到ARP协议 <em>ARP 欺骗，可能与这个有关，目前不去学习</em>。</p>
+<p><strong>封装</strong> 上层协议发送到下层协议。通过封装实现，层与层之间传输的时候，加上自己的头部信息。</p>
+<p>被 TCP 封装的数据成为 <code>TCP报文段</code></p>
+<ul>
+<li>内核部分发送成功后删除数据</li>
+</ul>
+<p>被 UDP 封装的数据成为 <code>UDP数据报</code></p>
+<ul>
+<li>发送后即删除</li>
+</ul>
+<p>再经 IP 封装后成为 <code>IP数据报</code>，最后经过数据链路层封装后为 <code>帧</code></p>
+<p>以太网最大数据帧 1518 字节 抛去 14 头部 帧尾 4 校验</p>
+<p>MTU：帧的最大传输单元 一般为 1500 字节</p>
+<p>MSS：TCP 最大的数据载量 1460字节 = 1500 字节 - 20 IP 头 - 20 TCP 头</p>
+<p>还有额外的 40 字节可选部分</p>
+<p><strong>ARP</strong> ARP 协议能实现任意网络层地址到任意物理地址的转换</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/27/Effective-C++(%E4%B8%83)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -354,7 +457,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-30 13:59:37" itemprop="dateModified" datetime="2021-10-30T13:59:37+08:00">2021-10-30</time>
+                <time title="修改时间：2021-10-30 14:42:29" itemprop="dateModified" datetime="2021-10-30T14:42:29+08:00">2021-10-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -613,6 +716,14 @@
 
 
 <h2 id="67：把字符串转换成整数"><a href="#67：把字符串转换成整数" class="headerlink" title="67：把字符串转换成整数"></a>67：把字符串转换成整数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">myAtoi</span><span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 跳过空格</span></span><br><span class="line">        while (str[i] == &#x27;&#x27;) &#123; i ++; &#125;</span><br><span class="line">        <span class="keyword">if</span> (str[i] == <span class="string">&#x27;-&#x27;</span>) &#123; flag = <span class="number">-1</span> &#125;</span><br><span class="line">        <span class="keyword">if</span> (str[i] == <span class="string">&#x27;+&#x27;</span> || str[i] == <span class="string">&#x27;-&#x27;</span>) &#123; i ++; &#125;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; str.size() &amp;&amp; <span class="built_in">isdigit</span>(str[i])) &#123;</span><br><span class="line">            <span class="keyword">int</span> r = str[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (res &gt; INT_MAX / <span class="number">10</span> || (res == INT_MAX / <span class="number">10</span> &amp;&amp; r &gt; <span class="number">7</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> flag &gt; <span class="number">0</span> ? INT_MAX : INT_MIN;</span><br><span class="line">            &#125;</span><br><span class="line">            res = res * <span class="number">10</span> + r;</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> flag &gt; <span class="number">0</span> ? res : -res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="68：二叉搜索树两个节点的最低公共祖先"><a href="#68：二叉搜索树两个节点的最低公共祖先" class="headerlink" title="68：二叉搜索树两个节点的最低公共祖先"></a>68：二叉搜索树两个节点的最低公共祖先</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;val &lt; root-&gt;val &amp;&amp; q-&gt;val &lt; root-&gt;val )</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root-&gt;left, p, q);</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;val &gt; root-&gt;val &amp;&amp; q-&gt;val &gt; root-&gt;val )</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="69：二叉树两个节点的最低公共祖先"><a href="#69：二叉树两个节点的最低公共祖先" class="headerlink" title="69：二叉树两个节点的最低公共祖先"></a>69：二叉树两个节点的最低公共祖先</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span> (root == p || root == q) <span class="keyword">return</span> root;</span><br><span class="line">        </span><br><span class="line">        TreeNode* left = lowestCommonAncestor(root-&gt;left, p, q);</span><br><span class="line">        TreeNode* right = lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(left != <span class="literal">NULL</span> &amp;&amp; right != <span class="literal">NULL</span>) <span class="keyword">return</span> root;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(left == <span class="literal">NULL</span> &amp;&amp; right == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> left != <span class="literal">NULL</span> ? left : right;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1163,92 +1274,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/Effective-C++(%E4%B8%89)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/12/Effective-C++(%E4%B8%89)/" class="post-title-link" itemprop="url">Effective-C++(三)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-12 20:03:24" itemprop="dateCreated datePublished" datetime="2021-10-12T20:03:24+08:00">2021-10-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-19 18:34:02" itemprop="dateModified" datetime="2021-10-19T18:34:02+08:00">2021-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Effective-C/" itemprop="url" rel="index"><span itemprop="name">Effective C++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h1><h2 id="条款13：以对象管理资源"><a href="#条款13：以对象管理资源" class="headerlink" title="条款13：以对象管理资源"></a>条款13：以对象管理资源</h2><p>我们在学习编程时，经常能听到“资源”这个词。资源可能是一个很宽泛的概念，但总体来讲，资源时我们可以用来使用，并且使用之后要返还给系统的东西。在 C++ 中，资源多数是指动态分配的内存。如果你只用 new 来分配内存却不在使用完后 delete 掉，将会导致内存泄露。</p>
-<p>其他资源比如文件描述符（file descriptor），Mutex 锁，GUI 中的字体（font）和画刷（brush），网络接口（socket），但不论资源是什么，我们一定要保证在使用过后要及时释放，否则就会造成资源泄露。当我们的代码变得越来越复杂，比如增加了异常抛出，函数不同的返回路径，手动管理资源将会变得费时费力，因此我们需要用对象来管理资源。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/12/Effective-C++(%E4%B8%89)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1320,14 +1345,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
