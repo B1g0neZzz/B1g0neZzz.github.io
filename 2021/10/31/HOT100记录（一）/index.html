@@ -32,8 +32,11 @@
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031125925912.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031125933692.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031125941519.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205350519.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205402773.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205412283.png">
 <meta property="article:published_time" content="2021-10-31T03:58:40.000Z">
-<meta property="article:modified_time" content="2021-10-31T05:20:01.122Z">
+<meta property="article:modified_time" content="2021-10-31T13:50:06.360Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031121804593.png">
@@ -187,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-31 11:58:40 / 修改时间：13:20:01" itemprop="dateCreated datePublished" datetime="2021-10-31T11:58:40+08:00">2021-10-31</time>
+              <time title="创建时间：2021-10-31 11:58:40 / 修改时间：21:50:06" itemprop="dateCreated datePublished" datetime="2021-10-31T11:58:40+08:00">2021-10-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +246,29 @@
 
 
 
+<h2 id="3-无重复字符的最长子串"><a href="#3-无重复字符的最长子串" class="headerlink" title="3.无重复字符的最长子串"></a>3.无重复字符的最长子串</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205350519.png" alt="image-20211031205350519"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205402773.png" alt="image-20211031205402773"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211031205412283.png" alt="image-20211031205412283"></p>
+<ul>
+<li>滑动窗口</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// s[start, end) 前面包含 后面不包含</span></span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = <span class="number">0</span>, length = <span class="number">0</span>, result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sSize = s.size();</span><br><span class="line">        <span class="keyword">while</span> (end &lt; sSize)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">char</span> tmpChar = s[end];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> index = start; index &lt; end; index ++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (tmpChar == s[index])</span><br><span class="line">                &#123;</span><br><span class="line">                    start = index + <span class="number">1</span>;</span><br><span class="line">                    length = end - start;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            end ++;</span><br><span class="line">            length ++;</span><br><span class="line">            result = max(result, length);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+
+
+
+
+<ul>
+<li>利用 hashmap 优化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = <span class="number">0</span>, length = <span class="number">0</span>, result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sSize = s.size();</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; hash;</span><br><span class="line">        <span class="keyword">while</span> (end &lt; sSize)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">char</span> tmpChar = s[end];</span><br><span class="line">            <span class="comment">// 仅当 s[start, end) 中存在 s[end] 时更新 start</span></span><br><span class="line">            <span class="keyword">if</span> (hash.find(tmpChar) != hash.end() &amp;&amp; hash[tmpChar] &gt;= start)</span><br><span class="line">            &#123;</span><br><span class="line">                start = hash[tmpChar] + <span class="number">1</span>;</span><br><span class="line">                length = end - start;</span><br><span class="line">            &#125;</span><br><span class="line">            hash[tmpChar] = end;</span><br><span class="line">            </span><br><span class="line">            end ++;</span><br><span class="line">            length ++;</span><br><span class="line">            result = max(result, length);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>桶排序</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = <span class="number">0</span>, length = <span class="number">0</span>, result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sSize = s.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vec</span><span class="params">(<span class="number">128</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">while</span> (end &lt; sSize)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">char</span> tmpChar = s[end];</span><br><span class="line">            <span class="keyword">if</span> (vec[<span class="keyword">int</span>(tmpChar)] &gt;= start)</span><br><span class="line">            &#123;</span><br><span class="line">                start = vec[<span class="keyword">int</span>(tmpChar)] + <span class="number">1</span>;</span><br><span class="line">               	length = end - start;</span><br><span class="line">            &#125;</span><br><span class="line">            vec[<span class="keyword">int</span>(tmpChar)] = end;</span><br><span class="line">            </span><br><span class="line">            end ++;</span><br><span class="line">            length ++;</span><br><span class="line">            result = max(result, length);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -273,7 +298,10 @@
     <a href="/2021/10/30/Linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="Linux高性能服务器编程（三）">
       <i class="fa fa-chevron-left"></i> Linux高性能服务器编程（三）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/31/Linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%EF%BC%88%E4%BA%94%EF%BC%89/" rel="next" title="Linux高性能服务器编程（五）">
+      Linux高性能服务器编程（五） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -332,7 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="nav-number">1.</span> <span class="nav-text">1.两数之和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0"><span class="nav-number">2.</span> <span class="nav-text">2.两数相加</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="nav-number">1.</span> <span class="nav-text">1.两数之和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0"><span class="nav-number">2.</span> <span class="nav-text">2.两数相加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="nav-number">3.</span> <span class="nav-text">3.无重复字符的最长子串</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -348,7 +376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
