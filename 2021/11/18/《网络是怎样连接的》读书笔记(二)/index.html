@@ -20,19 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="持续学习者">
+  <meta name="description" content="第二章    用电信号传输 TCP&#x2F;IP 数据 —— 探索协议栈和网卡2.1    创建套接字2.1.1    协议栈的内部结构 2.1.2    Socket 的实体就是通信控制信息在协议栈内部有一块用于存放控制信息的内存空间，这里记录了用于控制通信操作的控制信息，例如通信对象的 IP 地址、端口号、通信操作的进行状态等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《网络是怎样连接的》读书笔记(二)">
-<meta property="og:url" content="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E4%BA%8C/index.html">
+<meta property="og:url" content="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="持续学习者">
+<meta property="og:description" content="第二章    用电信号传输 TCP&#x2F;IP 数据 —— 探索协议栈和网卡2.1    创建套接字2.1.1    协议栈的内部结构 2.1.2    Socket 的实体就是通信控制信息在协议栈内部有一块用于存放控制信息的内存空间，这里记录了用于控制通信操作的控制信息，例如通信对象的 IP 地址、端口号、通信操作的进行状态等。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118194318879.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118195645135.png">
 <meta property="article:published_time" content="2021-11-18T09:54:46.000Z">
-<meta property="article:modified_time" content="2021-11-18T09:54:46.800Z">
+<meta property="article:modified_time" content="2021-11-18T11:57:11.552Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118194318879.png">
 
-<link rel="canonical" href="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E4%BA%8C/">
+<link rel="canonical" href="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/">
 
 
 <script id="page-configurations">
@@ -157,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E4%BA%8C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -179,8 +182,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-18 17:54:46" itemprop="dateCreated datePublished" datetime="2021-11-18T17:54:46+08:00">2021-11-18</time>
+              <time title="创建时间：2021-11-18 17:54:46 / 修改时间：19:57:11" itemprop="dateCreated datePublished" datetime="2021-11-18T17:54:46+08:00">2021-11-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
             </span>
 
           
@@ -194,7 +207,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="第二章-用电信号传输-TCP-IP-数据-——-探索协议栈和网卡"><a href="#第二章-用电信号传输-TCP-IP-数据-——-探索协议栈和网卡" class="headerlink" title="第二章    用电信号传输 TCP/IP 数据 —— 探索协议栈和网卡"></a>第二章    用电信号传输 TCP/IP 数据 —— 探索协议栈和网卡</h1><h2 id="2-1-创建套接字"><a href="#2-1-创建套接字" class="headerlink" title="2.1    创建套接字"></a>2.1    创建套接字</h2><h3 id="2-1-1-协议栈的内部结构"><a href="#2-1-1-协议栈的内部结构" class="headerlink" title="2.1.1    协议栈的内部结构"></a>2.1.1    协议栈的内部结构</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118194318879.png" alt="image-20211118194318879"></p>
+<h3 id="2-1-2-Socket-的实体就是通信控制信息"><a href="#2-1-2-Socket-的实体就是通信控制信息" class="headerlink" title="2.1.2    Socket 的实体就是通信控制信息"></a>2.1.2    Socket 的实体就是通信控制信息</h3><p>在协议栈内部有一块用于存放控制信息的内存空间，这里记录了用于控制通信操作的控制信息，例如通信对象的 <strong>IP</strong> 地址、端口号、通信操作的进行状态等。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118195645135.png" alt="image-20211118195645135"></p>
+
     </div>
 
     
@@ -271,6 +287,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%94%A8%E7%94%B5%E4%BF%A1%E5%8F%B7%E4%BC%A0%E8%BE%93-TCP-IP-%E6%95%B0%E6%8D%AE-%E2%80%94%E2%80%94-%E6%8E%A2%E7%B4%A2%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%92%8C%E7%BD%91%E5%8D%A1"><span class="nav-number">1.</span> <span class="nav-text">第二章    用电信号传输 TCP&#x2F;IP 数据 —— 探索协议栈和网卡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%88%9B%E5%BB%BA%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-number">1.1.</span> <span class="nav-text">2.1    创建套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E5%8D%8F%E8%AE%AE%E6%A0%88%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.1.1    协议栈的内部结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-Socket-%E7%9A%84%E5%AE%9E%E4%BD%93%E5%B0%B1%E6%98%AF%E9%80%9A%E4%BF%A1%E6%8E%A7%E5%88%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.1.2    Socket 的实体就是通信控制信息</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
