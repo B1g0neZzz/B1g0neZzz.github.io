@@ -154,6 +154,136 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/21/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%83%EF%BC%89/" class="post-title-link" itemprop="url">HOT100记录（七）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-21 18:36:55 / 修改时间：21:36:28" itemprop="dateCreated datePublished" datetime="2021-11-21T18:36:55+08:00">2021-11-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283. 移动零"></a>283. 移动零</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121184453013.png" alt="image-20211121184453013"></p>
+<ul>
+<li>双指针</li>
+</ul>
+<p>左指针指向当前已经处理好的序列和尾部，右指针指向待处理序列的头部。</p>
+<p>右指针不断向右移动，每次右指针指向非零数，则将左右指针对应的数交换，同时左指针右移。</p>
+<p>注意到以下性质：</p>
+<ol>
+<li>左指针左边均为非零数；</li>
+<li>右指针左边直到左指针处均为零。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span> <span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size(), left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (right &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[right]) &#123;</span><br><span class="line">                swap(nums[left], nums[right]);</span><br><span class="line">                left ++;</span><br><span class="line">            &#125;</span><br><span class="line">            right ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="287-寻找重复数"><a href="#287-寻找重复数" class="headerlink" title="287. 寻找重复数"></a>287. 寻找重复数</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121194534057.png" alt="image-20211121194534057"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121194543587.png" alt="image-20211121194543587"></p>
+<ul>
+<li>二分查找</li>
+</ul>
+<p>先猜一个数（有效范围 <code>[left..right]</code> 里位于中间的数 <code>mid</code>），然后统计原始数组中 <strong>小于等于</strong> <code>mid</code> 的元素个数 <code>cnt</code>：</p>
+<ul>
+<li> 如果 <code>cnt</code> 严格大于 <code>mid</code>。重复元素就在区间 <code>[left..mid]</code>里；</li>
+<li> 否则，重复元素就在区间 <code>[mid + 1..right]</code> 里</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">1</span>, r = n - <span class="number">1</span>, ans = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++ i) &#123;</span><br><span class="line">                cnt += nums[i] &lt;= mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (cnt &gt; mid) &#123;</span><br><span class="line">                r = mid - <span class="number">1</span>;</span><br><span class="line">                ans = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                l = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>快慢指针</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121202832441.png" alt="image-20211121202832441"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fast = <span class="number">0</span>, slow = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            fast = nums[nums[fast]];</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            <span class="keyword">if</span> (fast == slow)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> finder = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            finder = nums[finder];</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            <span class="keyword">if</span> (slow == finder)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="300-最长递增子序列"><a href="#300-最长递增子序列" class="headerlink" title="300. 最长递增子序列"></a>300. 最长递增子序列</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121210225011.png" alt="image-20211121210225011"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121210230268.png" alt="image-20211121210230268"></p>
+<ul>
+<li><strong>动态规划</strong></li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121211942493.png" alt="image-20211121211942493"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">1</span>) <span class="keyword">return</span> nums.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(nums.size(), <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li><strong>贪心 + 二分查找</strong></li>
+</ul>
+<p>维护一个数组 d，它里面都是递增的，初始化时 <code>nums[0]</code>，对应长度为 <code>len = 1</code></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121212745010.png" alt="image-20211121212745010"></p>
+<p>遍历 <code>nums[i]</code></p>
+<ul>
+<li>因为递增，直接和当前数组里的最大值 <code>d[len]</code> 比较，为了计算简单，<code>d</code> 我们会预留一个空的，这样子就可以和 <code>len</code> 来比较了。<ul>
+<li><code>nums[i] &gt; d[len]</code>：那么直接附加在数组里，<code>len</code> 加 1</li>
+<li><code>nums[i] &lt;= d[len]</code>：使用二分法找到一个可以<code>d</code> 替换的位置 <code>j</code> （即 <code>d[j + 1] &gt; nums[i] &gt;= d[j]</code> 或者 <code>d[j] &gt; nums[i] &gt; d[j-1]</code>）来替换，保证继续递增，但是 <code>len</code> 不变</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> *d = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        d[len] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i ++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 递增则直接放在最后面</span></span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt; d[len])</span><br><span class="line">            &#123;</span><br><span class="line">                d[++len] = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 二分法，找到这个可以更新的位置，但不破坏原来的递增顺序</span></span><br><span class="line">                <span class="keyword">int</span> l = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">int</span> r = len;</span><br><span class="line">                <span class="comment">// pos 定位为比 nums[i] 小的数的位置，如果找不到 pos 就是 0，对应更新的是 pos +1</span></span><br><span class="line">                <span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (l &lt;= r)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span> (d[mid] &lt; nums[i])</span><br><span class="line">                    &#123;</span><br><span class="line">                        pos = mid;</span><br><span class="line">                        l = mid + <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        r = mid - <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                d[pos + <span class="number">1</span>] = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -879,91 +1009,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/03/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/03/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">HOT100记录（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-03 11:08:06" itemprop="dateCreated datePublished" datetime="2021-11-03T11:08:06+08:00">2021-11-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-06 12:33:45" itemprop="dateModified" datetime="2021-11-06T12:33:45+08:00">2021-11-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="22-括号生成"><a href="#22-括号生成" class="headerlink" title="22. 括号生成"></a>22. 括号生成</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211103113426571.png" alt="image-20211103113426571"></p>
-<ul>
-<li>回溯法</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span> open, <span class="keyword">int</span> close, <span class="keyword">int</span> n, <span class="built_in">string</span> current)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (current.length() == n * <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(current);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(open &lt; n) helper(open + <span class="number">1</span>, close, n, current + <span class="string">&quot;(&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(close &lt; open) helper(open, close + <span class="number">1</span>, n, current + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        helper(<span class="number">0</span>, <span class="number">0</span>, n, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/03/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1035,7 +1080,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
