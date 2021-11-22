@@ -35,8 +35,16 @@
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121210230268.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121211942493.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121212745010.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122092359571.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122092407593.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122093106180.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122095014889.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122103640692.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122103655314.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105305902.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105319509.png">
 <meta property="article:published_time" content="2021-11-21T10:36:55.000Z">
-<meta property="article:modified_time" content="2021-11-21T13:46:51.881Z">
+<meta property="article:modified_time" content="2021-11-22T02:54:49.186Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211121184453013.png">
@@ -188,10 +196,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-21 18:36:55 / 修改时间：21:46:51" itemprop="dateCreated datePublished" datetime="2021-11-21T18:36:55+08:00">2021-11-21</time>
+              <time title="创建时间：2021-11-21 18:36:55" itemprop="dateCreated datePublished" datetime="2021-11-21T18:36:55+08:00">2021-11-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-22 10:54:49" itemprop="dateModified" datetime="2021-11-22T10:54:49+08:00">2021-11-22</time>
+              </span>
 
           
 
@@ -262,7 +276,7 @@
 <ul>
 <li>因为递增，直接和当前数组里的最大值 <code>d[len]</code> 比较，为了计算简单，<code>d</code> 我们会预留一个空的，这样子就可以和 <code>len</code> 来比较了。<ul>
 <li><code>nums[i] &gt; d[len]</code>：那么直接附加在数组里，<code>len</code> 加 1</li>
-<li><code>nums[i] &lt;= d[len]</code>：使用二分法找到一个可以<code>d</code> 替换的位置 <code>j</code> （即 <code>d[j + 1] &gt; nums[i] &gt;= d[j]</code> 或者 <code>d[j] &gt; nums[i] &gt; d[j-1]</code>）来替换，保证继续递增，但是 <code>len</code> 不变</li>
+<li><code>nums[i] &lt;= d[len]</code>：使用二分法找到一个可以<code>d</code> 替换的位置 <code>j</code> （即 <code>d[j + 1] &gt; nums[i] &gt;= d[j]</code> 或者 <code>d[j] &gt; nums[i] &gt; d[j-1]</code>）来替换，保证继续递增，但是 <code>len</code> 不变。</li>
 </ul>
 </li>
 </ul>
@@ -270,12 +284,40 @@
 
 
 
+<h2 id="301-删除无效的括号"><a href="#301-删除无效的括号" class="headerlink" title="301. 删除无效的括号"></a>301. 删除无效的括号</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122092359571.png" alt="image-20211122092359571"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122092407593.png" alt="image-20211122092407593"></p>
+<h2 id="309-最佳买卖股票时机含冷冻期"><a href="#309-最佳买卖股票时机含冷冻期" class="headerlink" title="309. 最佳买卖股票时机含冷冻期"></a>309. 最佳买卖股票时机含冷冻期</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122093106180.png" alt="image-20211122093106180"></p>
+<p>状态机模型：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122095014889.png" alt="image-20211122095014889"></p>
+<ul>
+<li><code>dp[i][0]</code> 表示第 <code>i</code> 天结束，处于可以买入的状态的收益的最大值</li>
+<li><code>dp[i][1]</code> 表示第 <code>i</code> 天结束，手中有股票的状态的收益的最大值</li>
+<li><code>dp[i][2]</code> 表示第 <code>i</code> 天结束，处于冷冻期的收益的最大值</li>
+</ul>
+<p>则有如下的状态转移方程：</p>
+<p><code>dp[i][0] = max(dp[i-1][0], dp[i-1][2])</code></p>
+<p><code>dp[i][1] = max(dp[i-1][0] - prices[i], dp[i-1][1])</code></p>
+<p><code>dp[i][2] = dp[i-1][1] + prices[i]</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = prices.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">3</span>, <span class="number">-2e9</span>));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">            dp[i + <span class="number">1</span>][<span class="number">0</span>] = max(dp[i][<span class="number">0</span>], dp[i][<span class="number">2</span>]);</span><br><span class="line">            dp[i + <span class="number">1</span>][<span class="number">1</span>] = max(dp[i][<span class="number">0</span>] - prices[i], dp[i][<span class="number">1</span>]);</span><br><span class="line">            dp[i + <span class="number">1</span>][<span class="number">2</span>] = dp[i][<span class="number">1</span>] + prices[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max(dp[n][<span class="number">0</span>], dp[n][<span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="312-戳气球"><a href="#312-戳气球" class="headerlink" title="312. 戳气球"></a>312. 戳气球</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122103640692.png" alt="image-20211122103640692"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122103655314.png" alt="image-20211122103655314"></p>
+<p>给定四个球分别为 <code>[3, 1, 5, 8]</code>，其实可以看做数组 <code>[1, 3, 1, 5, 8, 1]</code>；</p>
+<p><strong>思路：</strong></p>
+<p>令 <code>dp[start][end]</code> 表示从 <code>start</code> 到 <code>end</code> 之间的气球戳破之后能得到的最大值。</p>
+<p>则**本体就是求解 dp[0][5]**，即戳破 3, 1, 5, 8 四个气球能得到的最大值。</p>
+<p>我们假设最后戳破的是第 i 个气球，则得到的值为：</p>
+<p><code>dp[0][5] = dp[0][i] + dp[i][5] + nums[0]*nums[i]*nums[5]</code></p>
+<p>即求得递推公式：</p>
+<p><code>dp[start][end] = max(dp[start][i] + dp[i][end] + nums[start]*nums[i]*nums[end])</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxCoins</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 可以先将题目中要求的 nums[-1] = 1, nums[n] = 1, 添加到数组</span></span><br><span class="line">        <span class="keyword">int</span> n = nums.size() + <span class="number">2</span>;</span><br><span class="line">        nums.insert(nums.begin, <span class="number">1</span>);</span><br><span class="line">        nums.push_back(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 共有气球 n 个，定义 dp[0][n - 1] 为 (0, n - 1) 区间内能够得到的最大值，</span></span><br><span class="line">        <span class="comment">// 此处 0 和 n - 1 均取不到，第 0 个气球和第 n - 1 个气球都是添加的方便计算</span></span><br><span class="line">        <span class="comment">// dp[0][n - 1] 为最后要求的答案，假设最后戳破的气球为第 i 个，状态转移方程：</span></span><br><span class="line">        <span class="comment">// dp[start][end] = dp[start][i] + dp[i][end] + nums[start] * nums[i] * nums[end] (start &lt; i &lt; end)</span></span><br><span class="line">        </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> start = n - <span class="number">1</span>; start &gt;= <span class="number">0</span>; -- start) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> end = start; end &lt; n; ++ end) &#123;</span><br><span class="line">                <span class="comment">// 对于 (start, end) 区间气球不够一个的就不用戳了</span></span><br><span class="line">                <span class="keyword">if</span> (end - start &lt; <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//  计算最后戳破 (start, end) 区间下标为 i 的气球</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = start + <span class="number">1</span>; i &lt; end; ++ i) &#123;</span><br><span class="line">                    dp[start][end] = max(dp[start][end], dp[start][i] + dp[i][end] + nums[start] * nums[i] * nums[end]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="322-零钱兑换"><a href="#322-零钱兑换" class="headerlink" title="322. 零钱兑换"></a>322. 零钱兑换</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105305902.png" alt="image-20211122105305902"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105319509.png" alt="image-20211122105319509"></p>
 
     </div>
 
@@ -353,7 +395,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#283-%E7%A7%BB%E5%8A%A8%E9%9B%B6"><span class="nav-number">1.</span> <span class="nav-text">283. 移动零</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#287-%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">287. 寻找重复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#300-%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">300. 最长递增子序列</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#283-%E7%A7%BB%E5%8A%A8%E9%9B%B6"><span class="nav-number">1.</span> <span class="nav-text">283. 移动零</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#287-%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">287. 寻找重复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#300-%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">300. 最长递增子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#301-%E5%88%A0%E9%99%A4%E6%97%A0%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7"><span class="nav-number">4.</span> <span class="nav-text">301. 删除无效的括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#309-%E6%9C%80%E4%BD%B3%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E6%97%B6%E6%9C%BA%E5%90%AB%E5%86%B7%E5%86%BB%E6%9C%9F"><span class="nav-number">5.</span> <span class="nav-text">309. 最佳买卖股票时机含冷冻期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#312-%E6%88%B3%E6%B0%94%E7%90%83"><span class="nav-number">6.</span> <span class="nav-text">312. 戳气球</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2"><span class="nav-number">7.</span> <span class="nav-text">322. 零钱兑换</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
