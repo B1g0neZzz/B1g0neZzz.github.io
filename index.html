@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-22 17:49:31 / 修改时间：20:31:07" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
+              <time title="创建时间：2021-11-22 17:49:31 / 修改时间：21:52:19" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,6 +236,19 @@
 <h3 id="5-3-2-使用负载均衡器分配访问"><a href="#5-3-2-使用负载均衡器分配访问" class="headerlink" title="5.3.2    使用负载均衡器分配访问"></a>5.3.2    使用负载均衡器分配访问</h3><p>用负载均衡器的 <strong>IP</strong> 地址代替 <strong>Web</strong> 服务器的实际地址注册到 <strong>DNS</strong> 服务器上。</p>
 <p>假设有一个域名 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com,我们将这个域名对应的/">www.lab.glasscom.com，我们将这个域名对应的</a> <strong>IP</strong> 地址设置为负载均衡器的 <strong>IP</strong> 地址并注册到 <strong>DNS</strong> 服务器上。于是，客户端会认为负载均衡器就是一台 <strong>Web</strong> 服务器，并向其发送请求，然后由负载均衡器来判断将请求转发给哪台 <strong>Web</strong> 服务器。</p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122203100431.png" alt="image-20211122203100431"></p>
+<p>如何判断将请求转发给哪台 <strong>Web</strong> 服务器呢？</p>
+<p>如果操作没有跨多个页面，则可以根据 <strong>Web</strong> 服务器的负载状况来进行判断。负载均衡器可以定期采集 <strong>Web</strong> 服务器的 <strong>CPU</strong>、内存使用率，并根据这些数据判断服务器的负载状况，也可以向 <strong>Web</strong> 服务器发送测试包，根据响应所需的时间来判断负载状况。</p>
+<p>当操作跨多个页面时，则不考虑 <strong>Web</strong> 服务器的负载，而是必须将请求发送到同一台 <strong>Web</strong> 服务器上。</p>
+<h2 id="5-4-使用缓存服务器分担负载"><a href="#5-4-使用缓存服务器分担负载" class="headerlink" title="5.4    使用缓存服务器分担负载"></a>5.4    使用缓存服务器分担负载</h2><h3 id="5-4-1-如何使用缓存服务器"><a href="#5-4-1-如何使用缓存服务器" class="headerlink" title="5.4.1    如何使用缓存服务器"></a>5.4.1    如何使用缓存服务器</h3><p>还可以将整个系统按功能分成不同的服务器，如 <strong>Web</strong> 服务器、数据库服务器。缓存服务器就是一种按功能来分担负载的方法。</p>
+<p>缓存服务器是一台通过代理机制对数据进行缓存的服务器。代理介于 <strong>Web</strong> 服务器和客户端之间，具有对 <strong>Web</strong> 服务器访问进行中转的功能。</p>
+<h3 id="5-4-2-缓存服务器通过更新时间管理内容"><a href="#5-4-2-缓存服务器通过更新时间管理内容" class="headerlink" title="5.4.2    缓存服务器通过更新时间管理内容"></a>5.4.2    缓存服务器通过更新时间管理内容</h3><p>缓存服务器和负载服务器一样，需要代替 <strong>Web</strong> 服务器被注册到 <strong>DNS</strong> 服务器中。然后客户端会向缓存服务器发送 <strong>HTTP</strong> 请求消息。接下来，缓存服务器会检查请求消息的内容，看看请求的数据是否已经保存在缓存中。根据是否存在缓存数据，后面的操作不同。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122204735751.png" alt="image-20211122204735751"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122204753266.png" alt="image-20211122204753266"></p>
+<p>缓存服务器会添加一个 <strong>If-Modified-Since</strong> 头部字段并将请求转发给 <strong>Web</strong> 服务器，询问 <strong>Web</strong> 服务器用户请求的数据是否已经发生变化。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122212849345.png" alt="image-20211122212849345"></p>
+<p>然后，<strong>Web</strong> 服务器会根据 <strong>If-Modified-Since</strong> 的值与服务器上的页面数据的最后更新时间进行比较，如果在指定时间内数据没有变化，就会返回一个像下图一样的表示没有变化的响应消息。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122212834423.png" alt="image-20211122212834423"></p>
+<h3 id="5-4-3-最原始的代理——正向代理"><a href="#5-4-3-最原始的代理——正向代理" class="headerlink" title="5.4.3    最原始的代理——正向代理"></a>5.4.3    最原始的代理——正向代理</h3><p>上面讲的是在 <strong>Web 服务器一端</strong> 部署一个代理</p>
 
       
     </div>
