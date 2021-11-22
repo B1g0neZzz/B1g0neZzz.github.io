@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-22 17:49:31 / 修改时间：17:57:03" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
+              <time title="创建时间：2021-11-22 17:49:31 / 修改时间：20:31:07" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,7 +206,36 @@
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122175333244.png" alt="image-20211122175333244"></p>
 <p>以前这样的服务器部署方式很常见，但现在已经不是主流方式了。这里有几个原因。第一个原因是 <strong>IP</strong> 地址不足。这样的方式需要为公司网络中的所有设备，包括服务器和客户端计算机，都分配各自的公有地址。然而现在公有地址已经不够用了，因此采用这种方式已经不现实了。</p>
 <p>另一个原因是安全问题。这种方式中，从互联网传来的网络包会无节制地进入服务器，这意味着服务器在攻击者看来处于“裸奔”状态。</p>
-<p>因此，现在我们一般采用如下图的方式，即部署防火墙。防火墙的作用类似于海关，它只允许发往</p>
+<p>因此，现在我们一般采用如下图的方式，即部署防火墙。防火墙的作用类似于海关，它只允许发往指定服务器的指定应用程序的网络包通过，从而屏蔽其他不允许通过的包。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122180935809.png" alt="image-20211122180935809"></p>
+<h3 id="5-1-2-将-Web-服务器部署在数据中心"><a href="#5-1-2-将-Web-服务器部署在数据中心" class="headerlink" title="5.1.2    将 Web 服务器部署在数据中心"></a>5.1.2    将 Web 服务器部署在数据中心</h3><p><strong>Web</strong> 服务器不仅可以部署在公司里，也可以像下图一样把服务器放在网络运营商等管理的数据中心里，或者直接租用运营商的服务器。</p>
+<p>数据中心通过高速线路直接连接到互联网的核心部分，因此将服务器部署在这里可以获得很高的访问速度，当服务器访问量很大时这是非常有效的。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122181338641.png" alt="image-20211122181338641"></p>
+<h2 id="5-2-防火墙的结构和原理"><a href="#5-2-防火墙的结构和原理" class="headerlink" title="5.2    防火墙的结构和原理"></a>5.2    防火墙的结构和原理</h2><h3 id="5-2-1-主流的包过滤方式"><a href="#5-2-1-主流的包过滤方式" class="headerlink" title="5.2.1    主流的包过滤方式"></a>5.2.1    主流的包过滤方式</h3><p>防火墙可以分为包过滤、应用层网关、电路层网关等几种方式。现在最为普及的是包过滤方式。</p>
+<h3 id="5-2-2-如何设置包过滤的规则"><a href="#5-2-2-如何设置包过滤的规则" class="headerlink" title="5.2.2    如何设置包过滤的规则"></a>5.2.2    如何设置包过滤的规则</h3><p>假设我们的网络如下图所示，将开放给外网的服务器和公司内网分开部署，<strong>Web</strong> 服务器所在的网络可以从外网直接访问。现在我们希望允许从互联网访问 <strong>Web</strong> 服务器，但禁止 <strong>Web</strong> 服务器访问互联网。如何设置包过滤规则呢？</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122182018813.png" alt="image-20211122182018813"></p>
+<p>可以通过设置接收方 <strong>IP</strong> 地址和发送方 <strong>IP</strong> 地址来限制包通过。举例，允许起点（发送方 <strong>IP</strong> 地址）为任意，终点（接收方 <strong>IP</strong> 地址）为 <strong>Web</strong> 服务器 <strong>IP</strong> 地址的包通过。</p>
+<h3 id="5-2-3-通过端口号限定应用程序"><a href="#5-2-3-通过端口号限定应用程序" class="headerlink" title="5.2.3    通过端口号限定应用程序"></a>5.2.3    通过端口号限定应用程序</h3><p>阻止除了必须服务（也就是本例中的 <strong>Web</strong> 服务）意外的所有应用程序的包。</p>
+<p>当我们要限定某个应用程序时，可以在判断条件中加上 <strong>TCP</strong> 头部或者 <strong>UDP</strong> 头部中的端口号。<strong>Web</strong> 服务器的端口号为 80，因此我们在刚才的接收方 <strong>IP</strong> 地址和发送方 <strong>IP</strong> 地址的基础上再加上 80 端口作为条件就可以了。</p>
+<h3 id="5-2-4-通过控制位判断连接方向"><a href="#5-2-4-通过控制位判断连接方向" class="headerlink" title="5.2.4    通过控制位判断连接方向"></a>5.2.4    通过控制位判断连接方向</h3><p>现在我们已经可以指定某个具体的应用程序了，但是还没有办法阻止 <strong>Web</strong> 服务器访问互联网。</p>
+<p><strong>Web</strong> 使用的 <strong>TCP</strong> 协议是双向收发网络包的，因此如果单纯地阻止从 <strong>Web</strong> 服务器发往互联网的包，则从互联网访问 <strong>Web</strong> 服务器的操作也会受到影响而无法进行。</p>
+<p>光判断包的流向还不够，我们必须要根据访问的方向来进行判断。可以根据 <strong>TCP</strong> 握手中的第一次，<strong>SYN</strong> 为 1，<strong>ACK</strong> 为 0，来过滤到 <strong>TCP</strong> 连接的第一个包，如果这第一个包是 <strong>Web</strong> 服务器发往互联网的，那么我们就阻止它。</p>
+<h3 id="5-2-6-从外部无法访问公司内网"><a href="#5-2-6-从外部无法访问公司内网" class="headerlink" title="5.2.6    从外部无法访问公司内网"></a>5.2.6    从外部无法访问公司内网</h3><p>包过滤方式的防火墙不仅可以允许或者阻止网络包的通过，还具备地址转换功能，因此还需要进行相关的设置。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="5-3-通过将请求平均分配给多台服务器来平衡负载"><a href="#5-3-通过将请求平均分配给多台服务器来平衡负载" class="headerlink" title="5.3    通过将请求平均分配给多台服务器来平衡负载"></a>5.3    通过将请求平均分配给多台服务器来平衡负载</h2><h3 id="5-3-1-性能不足时需要负载均衡"><a href="#5-3-1-性能不足时需要负载均衡" class="headerlink" title="5.3.1    性能不足时需要负载均衡"></a>5.3.1    性能不足时需要负载均衡</h3><p>对于负载的分担有几种方法，最简单的一种方法是采用多台 <strong>Web</strong> 服务器，减少每台服务器的访问量。要采用这样的方法，必须有一个机制将客户端发送的请求分配到每台服务器上。具体的做法有很多种，最简单的一种是通过 <strong>DNS</strong> 服务器来分配。</p>
+<p>当访问服务器时，客户端需要先向 <strong>DNS</strong> 服务器查询服务器的 <strong>IP</strong> 地址，如果在 <strong>DNS</strong> 服务器中填写多个名称相同的记录，则每次查询时 <strong>DNS</strong> 服务器都会按顺序返回不同的 <strong>IP</strong> 地址。举例：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122202237355.png" alt="image-20211122202237355"></p>
+<p>第一次查询：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122202250369.png" alt="image-20211122202250369"></p>
+<p>第二次查询：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122202301605.png" alt="image-20211122202301605"></p>
+<p>第三次查询：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122202312577.png" alt="image-20211122202312577"></p>
+<p>第四次查询时就又回到第一次查询的结果。这种方式称为轮询（round-robin）。</p>
+<p>但这种方式是有缺点的。假如多台 <strong>Web</strong> 服务器中有一台出现了故障，<strong>DNS</strong> 服务器不能确认 <strong>Web</strong> 服务器是否能正常工作。</p>
+<p>此外，通过 <strong>CGI</strong> 等方式动态生成网页的情况下，有些操作是要跨多个页面的，如果这期间访问的服务器发生了变化，这个操作就可能无法继续。</p>
+<h3 id="5-3-2-使用负载均衡器分配访问"><a href="#5-3-2-使用负载均衡器分配访问" class="headerlink" title="5.3.2    使用负载均衡器分配访问"></a>5.3.2    使用负载均衡器分配访问</h3><p>用负载均衡器的 <strong>IP</strong> 地址代替 <strong>Web</strong> 服务器的实际地址注册到 <strong>DNS</strong> 服务器上。</p>
+<p>假设有一个域名 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com,我们将这个域名对应的/">www.lab.glasscom.com，我们将这个域名对应的</a> <strong>IP</strong> 地址设置为负载均衡器的 <strong>IP</strong> 地址并注册到 <strong>DNS</strong> 服务器上。于是，客户端会认为负载均衡器就是一台 <strong>Web</strong> 服务器，并向其发送请求，然后由负载均衡器来判断将请求转发给哪台 <strong>Web</strong> 服务器。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122203100431.png" alt="image-20211122203100431"></p>
 
       
     </div>
