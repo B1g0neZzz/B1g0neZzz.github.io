@@ -177,10 +177,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-22 17:49:31 / 修改时间：21:59:28" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
+              <time title="创建时间：2021-11-22 17:49:31" itemprop="dateCreated datePublished" datetime="2021-11-22T17:49:31+08:00">2021-11-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-23 17:11:08" itemprop="dateModified" datetime="2021-11-23T17:11:08+08:00">2021-11-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -254,7 +260,14 @@
 <p>防火墙的目的是防止来自互联网的非法入侵，而要达到这个目的，最可靠的方法就是阻止互联网和公司内网之间的所有包。不过这样一来，公司员工就无法上外网了，因此还必须想一个办法让必要的包能够通过，这个办法就是利用代理。</p>
 <p>代理的原理如下图所示，它会先接收来自客户端的请求消息，然后再转发到互联网中，这样就可以实现只允许通过必要的网络包了：</p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122215626128.png" alt="image-20211122215626128"></p>
-
+<p>此外，由于代理在转发过程中可以查看请求的内容，所以可以根据内容判断是否允许访问。</p>
+<h3 id="5-4-4-正向代理的改良版——反向代理"><a href="#5-4-4-正向代理的改良版——反向代理" class="headerlink" title="5.4.4    正向代理的改良版——反向代理"></a>5.4.4    正向代理的改良版——反向代理</h3><p>正向代理需要在浏览器中设置，非常麻烦。而且如果想把代理放在服务器端，无法实现。</p>
+<p>可以通过将请求消息中的 <strong>URI</strong> 中的目录名与 <strong>Web</strong> 服务器进行关联，使得代理能够转发一般的不包含完整网址的请求消息。这种方式称为反向代理。</p>
+<h2 id="5-5-内容分发服务"><a href="#5-5-内容分发服务" class="headerlink" title="5.5    内容分发服务"></a>5.5    内容分发服务</h2><h3 id="5-5-1-利用内容分发服务分担负载"><a href="#5-5-1-利用内容分发服务分担负载" class="headerlink" title="5.5.1    利用内容分发服务分担负载"></a>5.5.1    利用内容分发服务分担负载</h3><p><strong>Web</strong> 服务器运营者和网络运营商签约，将可以自己控制的缓存服务器放在客户端运营商。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211123164723895.png" alt="image-20211123164723895"></p>
+<h3 id="5-5-2-如何找到最近的缓存服务器"><a href="#5-5-2-如何找到最近的缓存服务器" class="headerlink" title="5.5.2    如何找到最近的缓存服务器"></a>5.5.2    如何找到最近的缓存服务器</h3><p>可以像负载均衡一样用 <strong>DNS</strong> 服务器来分配访问。</p>
+<h3 id="5-5-3-通过重定向服务器分配访问目标"><a href="#5-5-3-通过重定向服务器分配访问目标" class="headerlink" title="5.5.3    通过重定向服务器分配访问目标"></a>5.5.3    通过重定向服务器分配访问目标</h3><p>将重定向服务器注册到 <strong>Web</strong> 服务器端的 <strong>DNS</strong> 服务器上。</p>
+<h3 id="5-5-4-缓存的更新方法会影响性能"><a href="#5-5-4-缓存的更新方法会影响性能" class="headerlink" title="5.5.4    缓存的更新方法会影响性能"></a>5.5.4    缓存的更新方法会影响性能</h3>
       
     </div>
 
@@ -409,7 +422,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-22 10:54:49" itemprop="dateModified" datetime="2021-11-22T10:54:49+08:00">2021-11-22</time>
+                <time title="修改时间：2021-11-23 12:04:53" itemprop="dateModified" datetime="2021-11-23T12:04:53+08:00">2021-11-23</time>
               </span>
 
           
@@ -523,6 +536,45 @@
 
 <h2 id="322-零钱兑换"><a href="#322-零钱兑换" class="headerlink" title="322. 零钱兑换"></a>322. 零钱兑换</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105305902.png" alt="image-20211122105305902"></p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122105319509.png" alt="image-20211122105319509"></p>
+<h3 id="337-打家劫舍-III"><a href="#337-打家劫舍-III" class="headerlink" title="337. 打家劫舍 III"></a>337. 打家劫舍 III</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211123103009730.png" alt="image-20211123103009730"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211123103018438.png" alt="image-20211123103018438"></p>
+<ul>
+<li>暴力递归</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left == <span class="literal">NULL</span> &amp;&amp; root-&gt;right == <span class="literal">NULL</span>) <span class="keyword">return</span> root-&gt;val;</span><br><span class="line">        <span class="comment">// 偷父节点</span></span><br><span class="line">        <span class="keyword">int</span> val1 = root-&gt;left;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left) val1 += rob(root-&gt;left-&gt;left) + rob(root-&gt;left-&gt;right);	<span class="comment">// 跳过 root-&gt;left，相当于不考虑左孩子了</span></span><br><span class="line">        <span class="keyword">if</span> (root-&gt;right) val1 += rob(root-&gt;right-&gt;left) + rob(root-&gt;right-&gt;right);	<span class="comment">// 跳过 root-&gt;right，相当于不考虑右孩子了</span></span><br><span class="line">        <span class="comment">// 不偷父节点</span></span><br><span class="line">        <span class="keyword">int</span> val2 = rob(root-&gt;left) + rob(root-&gt;right);	<span class="comment">// 考虑 root 的左右孩子</span></span><br><span class="line">        <span class="keyword">return</span> max(val1, val2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>记忆化递归</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;TreeNode*, <span class="keyword">int</span>&gt; mp;	<span class="comment">// 记录计算过的结果</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span> <span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left == <span class="literal">NULL</span> &amp;&amp; root-&gt;right == <span class="literal">NULL</span>) <span class="keyword">return</span> root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span> (mp[root]) <span class="keyword">return</span> mp[root];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> val1 = root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left) val1 += rob(root-&gt;left-&gt;left) + rob(root-&gt;left-&gt;right); <span class="comment">// 跳过root-&gt;left</span></span><br><span class="line">        <span class="keyword">if</span> (root-&gt;right) val1 += rob(root-&gt;right-&gt;left) + rob(root-&gt;right-&gt;right); <span class="comment">// 跳过root-&gt;right</span></span><br><span class="line">        <span class="comment">// 不偷父节点</span></span><br><span class="line">        <span class="keyword">int</span> val2 = rob(root-&gt;left) + rob(root-&gt;right); <span class="comment">// 考虑root的左右孩子</span></span><br><span class="line">        mp[root] = max(val1, val2); <span class="comment">// umap记录一下结果</span></span><br><span class="line">        <span class="keyword">return</span> max(val1, val2);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>动态规划</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result = robTree(root);</span><br><span class="line">        <span class="keyword">return</span> max(result[<span class="number">0</span>], result[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 长度为 2 的数组，0：不偷，1：偷</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">robTree</span><span class="params">(TreeNode* cur)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cur == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left = robTree(cur-&gt;left);</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right = robTree(cur-&gt;right);</span><br><span class="line">        <span class="comment">// 偷 cur</span></span><br><span class="line">        <span class="keyword">int</span> val1 = cur-&gt;val + left[<span class="number">0</span>] + right[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">// 不偷 cur</span></span><br><span class="line">        <span class="keyword">int</span> val2 = max(left[<span class="number">0</span>], left[<span class="number">1</span>]) + max(right[<span class="number">0</span>], right[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">return</span> &#123;val2, val1&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="338-比特位计数"><a href="#338-比特位计数" class="headerlink" title="338. 比特位计数"></a>338. 比特位计数</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211123114618817.png" alt="image-20211123114618817"></p>
+<ul>
+<li>dp 解法一</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211123115506252.png" alt="image-20211123115506252"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">countBits</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 预先开好空间</span></span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(num + <span class="number">1</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 同样不需要从0开始，因为dp[0] = 0</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i % <span class="number">2</span> == <span class="number">0</span>)&#123; <span class="comment">// 偶数</span></span><br><span class="line">                dp[i] = dp[i / <span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123; <span class="comment">// 奇数</span></span><br><span class="line">                dp[i] = dp[(i - <span class="number">1</span>) / <span class="number">2</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// dp数组即为所求</span></span><br><span class="line">        <span class="keyword">return</span> dp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<ul>
+<li></li>
+</ul>
 
       
     </div>
