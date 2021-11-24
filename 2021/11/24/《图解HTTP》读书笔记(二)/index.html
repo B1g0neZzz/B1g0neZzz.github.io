@@ -31,8 +31,12 @@
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124173058523.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124173201440.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124175110206.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124183343806.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184109340.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184139937.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184148160.png">
 <meta property="article:published_time" content="2021-11-24T09:26:14.000Z">
-<meta property="article:modified_time" content="2021-11-24T10:33:34.732Z">
+<meta property="article:modified_time" content="2021-11-24T10:47:01.449Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124173006044.png">
@@ -186,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-24 17:26:14 / 修改时间：18:33:34" itemprop="dateCreated datePublished" datetime="2021-11-24T17:26:14+08:00">2021-11-24</time>
+              <time title="创建时间：2021-11-24 17:26:14 / 修改时间：18:47:01" itemprop="dateCreated datePublished" datetime="2021-11-24T17:26:14+08:00">2021-11-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,6 +239,29 @@
 </ul>
 <h3 id="3-3-3-分割发送的分块传输编码"><a href="#3-3-3-分割发送的分块传输编码" class="headerlink" title="3.3.3    分割发送的分块传输编码"></a>3.3.3    分割发送的分块传输编码</h3><p>在 <strong>HTTP</strong> 通信过程中，请求的编码实体尚未全部传输完成之前，浏览器无法全部显示请求页面。在传输大容量数据时，通过把数据分割成多块，能够让浏览器逐步显示页面。</p>
 <p>这种把实体主体分块的功能称为分块传输编码（ <strong>Chunked Transfer Coding</strong> ）。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124183343806.png" alt="image-20211124183343806"></p>
+<p>分块传输编码会将实体主体分成多个部分（块）。每一块都会用十六进制来标记块的大小，而实体主体的最后一块会使用 “0(CR+LF)” 来标记。</p>
+<h2 id="3-4-发送多种数据的多部分对象集合"><a href="#3-4-发送多种数据的多部分对象集合" class="headerlink" title="3.4    发送多种数据的多部分对象集合"></a>3.4    发送多种数据的多部分对象集合</h2><p><strong>HTTP</strong> 协议中使用了多部分对象集合，发送的一部分报文主体内可含有多类型实体。通常是在图片或文本文件等上传时使用。</p>
+<p>多部分对象集合包含的对象如下。</p>
+<ul>
+<li><strong>multipart/form-data</strong></li>
+</ul>
+<p>​    在 <strong>Web</strong> 表单文件上传时使用。</p>
+<ul>
+<li><strong>multipart/byteranges</strong></li>
+</ul>
+<p>​    状态码 <strong>206（ Partial Content，部分内容）</strong>响应报文包含了多个范围的内容时使用。</p>
+<ul>
+<li><strong>mutipart/form-data</strong></li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184109340.png" alt="image-20211124184109340"></p>
+<ul>
+<li><strong>multipart/byteranges</strong></li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184139937.png" alt="image-20211124184139937"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124184148160.png" alt="image-20211124184148160"></p>
+<p>使用多部分对象集合时，需要在首部字段里加上 <strong>Content-Type</strong> 。</p>
+<p>使用 <strong>boundary</strong> 字符串来划分多部分对象集合指明的各类实体。在 <strong>boundary</strong> 字符串指定的各个实体的起始行之前插入 “<strong>–</strong>“ 标记（例如 <strong>–AaB03x</strong>、**–THIS_STRING_SEPARATES**），而在多部分对象集合对应的字符串的最后插入 “–” 标记（例如 **–AaB03x–<strong>、</strong>–THIS_STRING_SEPARATES–**）作为结束。</p>
 
     </div>
 
@@ -312,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-HTTP-%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84-HTTP-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">第三章    HTTP 报文内的 HTTP 信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-HTTP-%E6%8A%A5%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">3.1    HTTP 报文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%8F%8A%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">3.2    请求报文及响应报文的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E7%BC%96%E7%A0%81%E6%8F%90%E5%8D%87%E4%BC%A0%E8%BE%93%E6%95%88%E7%8E%87"><span class="nav-number">1.3.</span> <span class="nav-text">3.3    编码提升传输效率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E6%8A%A5%E6%96%87%E4%B8%BB%E4%BD%93%E5%92%8C%E5%AE%9E%E4%BD%93%E4%B8%BB%E4%BD%93%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.3.1    报文主体和实体主体的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-%E5%8E%8B%E7%BC%A9%E4%BC%A0%E8%BE%93%E7%9A%84%E5%86%85%E5%AE%B9%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.3.2    压缩传输的内容编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-%E5%88%86%E5%89%B2%E5%8F%91%E9%80%81%E7%9A%84%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3.3    分割发送的分块传输编码</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-HTTP-%E6%8A%A5%E6%96%87%E5%86%85%E7%9A%84-HTTP-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">第三章    HTTP 报文内的 HTTP 信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-HTTP-%E6%8A%A5%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">3.1    HTTP 报文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%8F%8A%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">3.2    请求报文及响应报文的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E7%BC%96%E7%A0%81%E6%8F%90%E5%8D%87%E4%BC%A0%E8%BE%93%E6%95%88%E7%8E%87"><span class="nav-number">1.3.</span> <span class="nav-text">3.3    编码提升传输效率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E6%8A%A5%E6%96%87%E4%B8%BB%E4%BD%93%E5%92%8C%E5%AE%9E%E4%BD%93%E4%B8%BB%E4%BD%93%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.3.1    报文主体和实体主体的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-%E5%8E%8B%E7%BC%A9%E4%BC%A0%E8%BE%93%E7%9A%84%E5%86%85%E5%AE%B9%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.3.2    压缩传输的内容编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-%E5%88%86%E5%89%B2%E5%8F%91%E9%80%81%E7%9A%84%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3.3    分割发送的分块传输编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%8F%91%E9%80%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%9A%E9%83%A8%E5%88%86%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">3.4    发送多种数据的多部分对象集合</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
