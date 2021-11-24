@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-24 19:02:51 / 修改时间：19:19:41" itemprop="dateCreated datePublished" datetime="2021-11-24T19:02:51+08:00">2021-11-24</time>
+              <time title="创建时间：2021-11-24 19:02:51 / 修改时间：19:46:40" itemprop="dateCreated datePublished" datetime="2021-11-24T19:02:51+08:00">2021-11-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,6 +214,33 @@
 <p>表示服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分。</p>
 <p>一般在只需要客户端往服务器发送信息，而对客户端不需要发送新信息内容的情况下使用。</p>
 <h3 id="4-2-3-206-Partial-Content"><a href="#4-2-3-206-Partial-Content" class="headerlink" title="4.2.3    206 Partial Content"></a>4.2.3    206 Partial Content</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124191928113.png" alt="image-20211124191928113"></p>
+<p>该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的 <strong>GET</strong> 请求。响应报文中包含由 <strong>Content-Range</strong> 指定范围的实体内容。</p>
+<h2 id="4-3-3XX-重定向"><a href="#4-3-3XX-重定向" class="headerlink" title="4.3    3XX 重定向"></a>4.3    3XX 重定向</h2><p><strong>3XX</strong> 响应结果表明浏览器需要执行某些特殊的处理以正确处理请求。</p>
+<h3 id="4-3-1-301-Moved-Permanently"><a href="#4-3-1-301-Moved-Permanently" class="headerlink" title="4.3.1    301 Moved Permanently"></a>4.3.1    301 Moved Permanently</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192334897.png" alt="image-20211124192334897"></p>
+<p>永久性重定向。该状态码表示请求的资源已被分配了新的 <strong>URI</strong>，以后应使用资源现在所指的 <strong>URI</strong>。</p>
+<h3 id="4-3-2-302-Found"><a href="#4-3-2-302-Found" class="headerlink" title="4.3.2    302 Found"></a>4.3.2    302 Found</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192457272.png" alt="image-20211124192457272"></p>
+<p>临时性重定向。该状态码表示请求的资源已被分配了新的 <strong>URI</strong>，希望用户（本次）能使用新的 <strong>URI</strong> 访问。</p>
+<h3 id="4-3-3-303-See-Other"><a href="#4-3-3-303-See-Other" class="headerlink" title="4.3.3    303 See Other"></a>4.3.3    303 See Other</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192617100.png" alt="image-20211124192617100"></p>
+<p><strong>303</strong> 状态码和 <strong>302 Found</strong> 状态码有着相同的功能，但 <strong>303</strong> 状态码明确表示客户端应当采用 <strong>GET</strong> 方法获取资源，这点与 <strong>302</strong> 状态码有区别。</p>
+<p>当 <strong>301、302、303</strong> 响应状态码返回时，几乎所有的浏览器都会把 <strong>POST</strong> 改成 <strong>GET</strong>，并删除请求报文内的主体，之后请求会自动再次发送。</p>
+<p><strong>301、302</strong> 标准是禁止将 <strong>POST</strong> 方法改变成 <strong>GET</strong> 方法的，但实际使用时大家都会这么做。</p>
+<h3 id="4-3-4-304-Not-Modified"><a href="#4-3-4-304-Not-Modified" class="headerlink" title="4.3.4    304 Not Modified"></a>4.3.4    304 Not Modified</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124193315684.png" alt="image-20211124193315684"> </p>
+<p>该状态码表示客户端发送附带条件（是指采用 <strong>GET</strong> 方法的请求报文中包含 <strong>If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since</strong> 中任一首部。）的请求时，客户端允许请求访问资源，但未满足条件情况。<strong>304</strong> 状态码返回时，不包含任何响应主体部分。<strong>304</strong> 虽然被划分在 <strong>3XX</strong> 类别中，但是和重定向没有关系。</p>
+<h3 id="4-3-5-307-Temporary-Redirect"><a href="#4-3-5-307-Temporary-Redirect" class="headerlink" title="4.3.5    307 Temporary Redirect"></a>4.3.5    307 Temporary Redirect</h3><p>临时重定向。该状态码与 <strong>302 Found</strong> 有着相同的含义。尽管 <strong>302</strong> 标准禁止 <strong>POST</strong> 变换成 <strong>GET</strong>，但实际使用时大家并不遵守。</p>
+<p><strong>307</strong> 会遵照浏览器标准，不会从 <strong>POST</strong> 变成 <strong>GET</strong>。</p>
+<h2 id="4-4-4XX-客户端错误"><a href="#4-4-4XX-客户端错误" class="headerlink" title="4.4    4XX 客户端错误"></a>4.4    4XX 客户端错误</h2><p><strong>4XX</strong> 的响应结果表明客户端是发生错误的原因所在。</p>
+<h3 id="4-4-1-400-Bad-Request"><a href="#4-4-1-400-Bad-Request" class="headerlink" title="4.4.1    400 Bad Request"></a>4.4.1    400 Bad Request</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194005500.png" alt="image-20211124194005500"></p>
+<p>该状态码表示请求报文中存在语法错误。当错误发生时，需修改请求的内容后再次发送请求。</p>
+<h3 id="4-4-2-401-Unauthorized"><a href="#4-4-2-401-Unauthorized" class="headerlink" title="4.4.2    401 Unauthorized"></a>4.4.2    401 Unauthorized</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194114086.png" alt="image-20211124194114086"></p>
+<p>该状态码表示发送的请求需要有通过 <strong>HTTP</strong> 认证（ <strong>BASIC <strong>认证，</strong>DIGEST</strong> 认证 ）的认证信息。</p>
+<h3 id="4-4-3-403-Forbidden"><a href="#4-4-3-403-Forbidden" class="headerlink" title="4.4.3    403 Forbidden"></a>4.4.3    403 Forbidden</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194232404.png" alt="image-20211124194232404"></p>
+<p>该状态码表明对请求资源的访问被服务器拒绝了。</p>
+<h3 id="4-4-4-404-Not-Found"><a href="#4-4-4-404-Not-Found" class="headerlink" title="4.4.4    404 Not Found"></a>4.4.4    404 Not Found</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194328105.png" alt="image-20211124194328105"></p>
+<p>该状态码表明服务器上无法找到请求的资源。</p>
+<h2 id="4-5-5XX-服务器错误"><a href="#4-5-5XX-服务器错误" class="headerlink" title="4.5    5XX 服务器错误"></a>4.5    5XX 服务器错误</h2><h3 id="4-5-1-500-Internal-Server-Error"><a href="#4-5-1-500-Internal-Server-Error" class="headerlink" title="4.5.1    500 Internal Server Error"></a>4.5.1    500 Internal Server Error</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194424364.png" alt="image-20211124194424364"></p>
+<p>该状态码表明服务器端在执行请求时发生了错误。也有可能是 <strong>Web</strong> 应用存在的 <strong>bug</strong> 或某些临时的鼓掌。</p>
+<h3 id="4-5-2-503-Service-Unavailable"><a href="#4-5-2-503-Service-Unavailable" class="headerlink" title="4.5.2    503 Service Unavailable"></a>4.5.2    503 Service Unavailable</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194528968.png" alt="image-20211124194528968"></p>
+<p>该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。如果实现得知解除以上状况需要的时间，最好写入 <strong>Retry-After</strong> 首部字段再返回客户端。</p>
 
       
     </div>
