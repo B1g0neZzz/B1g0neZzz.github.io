@@ -179,7 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-24 19:02:51 / 修改时间：19:46:40" itemprop="dateCreated datePublished" datetime="2021-11-24T19:02:51+08:00">2021-11-24</time>
+              <time title="创建时间：2021-11-24 19:02:51 / 修改时间：20:19:41" itemprop="dateCreated datePublished" datetime="2021-11-24T19:02:51+08:00">2021-11-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,6 +241,23 @@
 <p>该状态码表明服务器端在执行请求时发生了错误。也有可能是 <strong>Web</strong> 应用存在的 <strong>bug</strong> 或某些临时的鼓掌。</p>
 <h3 id="4-5-2-503-Service-Unavailable"><a href="#4-5-2-503-Service-Unavailable" class="headerlink" title="4.5.2    503 Service Unavailable"></a>4.5.2    503 Service Unavailable</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194528968.png" alt="image-20211124194528968"></p>
 <p>该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。如果实现得知解除以上状况需要的时间，最好写入 <strong>Retry-After</strong> 首部字段再返回客户端。</p>
+<h1 id="第五章-与-HTTP-协作的-Web-服务器"><a href="#第五章-与-HTTP-协作的-Web-服务器" class="headerlink" title="第五章    与 HTTP 协作的 Web 服务器"></a>第五章    与 HTTP 协作的 Web 服务器</h1><h2 id="5-1-用单台虚拟主机实现多个域名"><a href="#5-1-用单台虚拟主机实现多个域名" class="headerlink" title="5.1    用单台虚拟主机实现多个域名"></a>5.1    用单台虚拟主机实现多个域名</h2><p><strong>HTTP/1.1</strong> 规范允许一台 <strong>HTTP</strong> 服务器搭建多个 <strong>Web</strong> 站点。</p>
+<p>例如，提供 <strong>Web</strong> 托管服务（ <strong>Web Hosting Service</strong> ）的供应商，可以用一台服务器为多位客户服务，也可以以每名客户持有的域名运行各自不同的网站。这是因为利用了虚拟主机（ <strong>Virtual Host</strong>，又称虚拟服务器 ）的功能。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124200426591.png" alt="image-20211124200426591"></p>
+<p>若两个网站同时部署在同一个服务器上（相同的 <strong>IP</strong> 地址），使用 <strong>DNS</strong> 服务解析域名后，两者的访问 <strong>IP</strong> 地址会相同。</p>
+<p>在相同的 <strong>IP</strong> 地址下，由于虚拟主机可以寄存多个不同主机名和域名的 <strong>Web</strong> 网站，因此在发送 <strong>HTTP</strong> 请求时，必须在 <strong>Host</strong> 首部内完整指定主机名或域名的 <strong>URI</strong>。</p>
+<h2 id="5-2-通信数据转发程序：代理、网关、隧道"><a href="#5-2-通信数据转发程序：代理、网关、隧道" class="headerlink" title="5.2    通信数据转发程序：代理、网关、隧道"></a>5.2    通信数据转发程序：代理、网关、隧道</h2><h3 id="5-2-1-代理"><a href="#5-2-1-代理" class="headerlink" title="5.2.1    代理"></a>5.2.1    代理</h3><p>代理是一种有转发功能的应用程序，它扮演了位于服务器和客户端 “中间人” 的角色，接收由客户端发送的请求并转发给服务器，同时也接受服务器返回的响应并转发给客户端。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201201157.png" alt="image-20211124201201157"></p>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p>网关是转发其他服务器通信数据的服务器，接收从客户端发送来的请求时，它就像自己拥有资源的源服务器一样对请求进行处理。有时客户端可能都不会察觉，自己的通信目标是一个网关。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201325810.png" alt="image-20211124201325810"></p>
+<p>网关能使通信线路上的服务器提供非 <strong>HTTP</strong> 协议服务。</p>
+<p>利用网关能提高通信的安全性，因为可以在客户端与网关之间的通信线路上加密以确保连接的安全。</p>
+<h3 id="5-2-3-隧道"><a href="#5-2-3-隧道" class="headerlink" title="5.2.3    隧道"></a>5.2.3    隧道</h3><p>隧道是在相隔甚远的客户端和服务器两者之间进行中转，并保持双方通信连接的应用程序。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201453045.png" alt="image-20211124201453045"></p>
+<h2 id="5-3-保存资源的缓存"><a href="#5-3-保存资源的缓存" class="headerlink" title="5.3    保存资源的缓存"></a>5.3    保存资源的缓存</h2><p>当代理转发从服务器返回的响应时，代理服务器将会保存一份资源的副本。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201759846.png" alt="image-20211124201759846"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201849213.png" alt="image-20211124201849213"></p>
+<h3 id="5-3-1-缓存的有效期"><a href="#5-3-1-缓存的有效期" class="headerlink" title="5.3.1    缓存的有效期"></a>5.3.1    缓存的有效期</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201919085.png" alt="image-20211124201919085"></p>
 
       
     </div>
