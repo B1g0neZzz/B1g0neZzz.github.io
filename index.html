@@ -154,6 +154,267 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%9B%9B)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%9B%9B)/" class="post-title-link" itemprop="url">《图解HTTP》读书笔记(四)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-24 20:20:50" itemprop="dateCreated datePublished" datetime="2021-11-24T20:20:50+08:00">2021-11-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-25 20:39:36" itemprop="dateModified" datetime="2021-11-25T20:39:36+08:00">2021-11-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第六章-HTTP-首部"><a href="#第六章-HTTP-首部" class="headerlink" title="第六章    HTTP 首部"></a>第六章    HTTP 首部</h1><h2 id="6-1-HTTP-报文首部"><a href="#6-1-HTTP-报文首部" class="headerlink" title="6.1    HTTP 报文首部"></a>6.1    HTTP 报文首部</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124202314792.png" alt="image-20211124202314792"></p>
+<h2 id="6-2-HTTP-首部字段"><a href="#6-2-HTTP-首部字段" class="headerlink" title="6.2    HTTP 首部字段"></a>6.2    HTTP 首部字段</h2><h3 id="6-2-1-HTTP-首部字段传递重要信息"><a href="#6-2-1-HTTP-首部字段传递重要信息" class="headerlink" title="6.2.1    HTTP 首部字段传递重要信息"></a>6.2.1    HTTP 首部字段传递重要信息</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124202458753.png" alt="image-20211124202458753"></p>
+<h3 id="6-2-2-HTTP-首部字段结构"><a href="#6-2-2-HTTP-首部字段结构" class="headerlink" title="6.2.2    HTTP 首部字段结构"></a>6.2.2    HTTP 首部字段结构</h3><p><strong>HTTP</strong> 首部字段是由首部字段名和字段值构成的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首部字段名 : 字段值</span><br></pre></td></tr></table></figure>
+
+<p>例如，在 <strong>HTTP</strong> 首部中以 <strong>Content-Type</strong> 这个字段来表示报文主体的对象类型</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: text/html</span><br></pre></td></tr></table></figure>
+
+<p>另外，字段值对应单个 <strong>HTTP</strong> 首部字段可以有多个值：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Keep-Alive: timeout=15, max=100</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-2-3-4-种-HTTP-首部字段类型"><a href="#6-2-3-4-种-HTTP-首部字段类型" class="headerlink" title="6.2.3    4 种 HTTP 首部字段类型"></a>6.2.3    4 种 HTTP 首部字段类型</h3><p><strong>HTTP</strong> 首部字段根据实际用途被分为以下 <strong>4</strong> 种类型。</p>
+<p><strong>通用首部字段（ General Header Fields ）</strong></p>
+<p>请求报文和响应报文两方都会使用的首部。</p>
+<p><strong>请求首部字段（ Request Header Fields ）</strong></p>
+<p>从客户端向服务器端发送请求报文时使用的首部。补充了请求的附加内容、客户端信息、相应内容相关优先级等信息。</p>
+<p><strong>响应首部字段（ Response Header Fields ）</strong></p>
+<p>从服务器端向客户端返回响应报文时使用的首部。补充了响应的附加内容，也会要求客户端附加额外的内容信息。</p>
+<p><strong>实体首部字段（ Entity Header Fields ）</strong></p>
+<p>针对请求报文和响应报文的实体部分使用的首部。补充了资源内容更新时间等与实体有关的信息。</p>
+<h3 id="6-2-4-HTTP-1-1-首部字段一览"><a href="#6-2-4-HTTP-1-1-首部字段一览" class="headerlink" title="6.2.4    HTTP/1.1 首部字段一览"></a>6.2.4    HTTP/1.1 首部字段一览</h3><p><strong>通用首部字段：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124203930911.png" alt="image-20211124203930911"></p>
+<p><strong>请求首部字段：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124204001270.png" alt="image-20211124204001270"></p>
+<p><strong>响应首部字段：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124204020937.png" alt="image-20211124204020937"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124204034651.png" alt="image-20211124204034651"></p>
+<p><strong>实体首部字段：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124204050214.png" alt="image-20211124204050214"></p>
+<h3 id="6-2-5-非-HTTP-1-1-首部字段"><a href="#6-2-5-非-HTTP-1-1-首部字段" class="headerlink" title="6.2.5    非 HTTP/1.1 首部字段"></a>6.2.5    非 HTTP/1.1 首部字段</h3><p>还有 <strong>Cookie</strong>、<strong>Set-Cookie</strong> 和 <strong>Content-Disposition</strong> 等字段。</p>
+<h3 id="6-2-6-End-to-end-首部和-Hop-by-Hop-首部"><a href="#6-2-6-End-to-end-首部和-Hop-by-Hop-首部" class="headerlink" title="6.2.6    End-to-end 首部和 Hop-by-Hop 首部"></a>6.2.6    End-to-end 首部和 Hop-by-Hop 首部</h3><p><strong>HTTP</strong> 首部字段将定义成缓存代理和非缓存代理的行为，分成 <strong>2</strong> 种类型。</p>
+<p><strong>端到端首部（ End-to-end Header ）</strong></p>
+<p>分在此类别中的首部会转发给请求 / 响应对应的最终接收目标，且必须保存在由缓存生成的响应中，另外规定它必须被转发。</p>
+<p><strong>逐跳首部（ Hop-by-hop Header ）</strong></p>
+<p>分在此类别中的首部只对单次转发有效，会因通过缓存或代理而不再转发。<strong>HTTP/1.1</strong> 和之后的版本中，如果要使用 <strong>hop-by-hop</strong> 首部，需提供 <strong>Connection</strong> 首部字段。</p>
+<p>除了以下 <strong>8</strong> 个逐跳首部字段之外，其他所有字段有属于端到端首部。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124204855839.png" alt="image-20211124204855839"></p>
+<h2 id="6-3-HTTP-1-1-通用首部字段"><a href="#6-3-HTTP-1-1-通用首部字段" class="headerlink" title="6.3    HTTP/1.1 通用首部字段"></a>6.3    HTTP/1.1 通用首部字段</h2><h3 id="6-3-1-Cache-Control"><a href="#6-3-1-Cache-Control" class="headerlink" title="6.3.1    Cache-Control"></a>6.3.1    Cache-Control</h3><p>通过指定首部字段 <strong>Cache-Control</strong> 的指令，就能操作缓存的工作机制。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205055551.png" alt="image-20211124205055551"></p>
+<p><strong>缓存请求指令：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205223888.png" alt="image-20211124205223888"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205247582.png" alt="image-20211124205247582"></p>
+<p><strong>缓存响应指令：</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205301525.png" alt="image-20211124205301525"></p>
+<p><strong>表示是否能缓存的指令：</strong></p>
+<p><strong>public 指令</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: public</span><br></pre></td></tr></table></figure>
+
+<p>当指定使用 <strong>public</strong> 指令时，则明确表明其他用户也可利用缓存。</p>
+<p><strong>private 指令</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205439201.png" alt="image-20211124205439201"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: private</span><br></pre></td></tr></table></figure>
+
+<p>当指定 <strong>private</strong> 指令后，响应只以特定的用户作为对象，这与 <strong>public</strong> 指令的行为相反。</p>
+<p><strong>no-cache 指令</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124205638313.png" alt="image-20211124205638313"></p>
+<p><strong>控制可执行缓存的对象的指令</strong></p>
+<p><strong>no-store 指令</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-store</span><br></pre></td></tr></table></figure>
+
+<p>当使用 <strong>no-store</strong> 指令时，暗示请求或响应中包含机密信息。</p>
+<p>因此，该指令规定缓存不能在本地存储请求或响应的任一部分。</p>
+<p><strong>s-maxage</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: s-maxage=604800（单位：秒）</span><br></pre></td></tr></table></figure>
+
+<p><strong>s-maxage</strong> 指令的功能和 <strong>max-age</strong> 指令相同，不同点是 <strong>s-maxage</strong> 指令只适用于供多位用户使用的公共缓存服务器。也就是说，对于向同一用户重复返回响应的服务器来说，这个指令没有任何作用。</p>
+<p>另外，当使用 <strong>s-maxage</strong> 指令后，则直接忽略对 <strong>Expires</strong> 首部字段及 <strong>max-age</strong> 指令的处理。</p>
+<p><strong>max-age</strong> 指令</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125190254949.png" alt="image-20211125190254949"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age=604800（单位：秒）</span><br></pre></td></tr></table></figure>
+
+<p>当客户端发送的请求中包含 <strong>max-age</strong> 指令时，如果判定缓存资源的缓存时间数值比指定时间的数值更小，那么客户端就接收缓存的资源。</p>
+<p>应用 <strong>HTTP/1.1</strong> 版本的缓存服务器遇到同时存在 <strong>Expires</strong> 首部字段的情况时，会优先处理 <strong>max-age</strong> 指令，而忽略掉 <strong>Expires</strong> 首部字段。而 <strong>HTTP/1.0</strong> 版本的缓存服务器的情况却相反，<strong>max-age</strong> 指令会被忽略掉。</p>
+<p><strong>min-fresh</strong> 指令</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125190701321.png" alt="image-20211125190701321"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-fresh=604800（单位：秒）</span><br></pre></td></tr></table></figure>
+
+<p><strong>min-fresh</strong> 指令要求缓存服务器返回至少还未过指定时间的缓存资源。</p>
+<p>比如，当指定 <strong>min-fresh</strong> 为 <strong>60</strong> 秒后，过了 <strong>60</strong> 秒的资源都无法作为响应返回了。</p>
+<p><strong>max-stale</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-stale=3600（单位：秒）</span><br></pre></td></tr></table></figure>
+
+<p>使用 <strong>max-stale</strong> 可指示缓存资源，即使过期也照常接收。</p>
+<p>如果指令未指定参数值，那么无论经过多久，客户端都会接收响应；如果指令中指定了具体数值，那么即使过期，只要仍然处于 <strong>max-stale</strong> 指定的时间内，仍旧会被客户端接收。</p>
+<p><strong>only-if-cached</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: only-if-cached</span><br></pre></td></tr></table></figure>
+
+<p>使用 <strong>only-if-cached</strong> 指令表示客户端仅在缓存服务器本地缓存目标资源的情况下才会要求其返回。换言之，该指令要求缓存服务器不重新加载响应，也不会再次确认资源有效性。若发生请求缓存服务器的本地缓存无响应，则返回状态码 <strong>504 Gateway Timeout</strong>。</p>
+<p><strong>must-revalidate</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-revalidate</span><br></pre></td></tr></table></figure>
+
+<p>使用 <strong>must-revalidate</strong> 指令，代理会向源服务器再次验证即将返回的响应缓存目前是否仍然有效。</p>
+<p>若代理无法连通源服务器再次获取有效资源的话，缓存必须给客户端一条 <strong>504 （Gateway Timeout）</strong> 状态码。</p>
+<p>另外，使用 <strong>must-revalidate</strong> 指令会忽略请求的 <strong>max-stale</strong> 指令。</p>
+<p><strong>proxy-revalidate</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: proxy-revalidate</span><br></pre></td></tr></table></figure>
+
+<p><strong>proxy-revalidate</strong> 指令要求所有的缓存服务器在接收到客户端带有该指令的请求返回响应之前，必须再次验证缓存的有效性。</p>
+<p><strong>no-transform</strong> 指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-transform</span><br></pre></td></tr></table></figure>
+
+<p>使用 <strong>no-transform</strong> 指令规定无论是在请求还是响应中，缓存都不能改变实体主体的媒体类型。</p>
+<p>这样做可防止缓存或代理压缩图片等类似操作。</p>
+<p><strong>Cache-Control</strong> 扩展</p>
+<p><strong>cache-extension token</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: private, community=&quot;UCI&quot;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <strong>cache-extension</strong> 标记（<strong>token</strong>），可以扩展 <strong>Cache-Control</strong> 首部字段内的指令。</p>
+<p><strong>Cache-Control</strong> 首部字段本身没有 <strong>community</strong> 这个指令。借助 <strong>extension tokens</strong> 实现了该指令的添加。如果缓存服务器不能理解 <strong>community</strong> 这个指令，就会直接忽略。因此， <strong>extension tokens</strong> 仅能对理解它的缓存服务器来说是有意义的。</p>
+<h3 id="6-3-2-Connection"><a href="#6-3-2-Connection" class="headerlink" title="6.3.2    Connection"></a>6.3.2    Connection</h3><p><strong>Connection</strong> 首部字段具备如下两个作用。</p>
+<ul>
+<li>控制不再转发给代理的首部字段</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125192444719.png" alt="image-20211125192444719"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection: 不再转发的首部字段名</span><br></pre></td></tr></table></figure>
+
+<p>在客户端发送请求和服务器返回响应内，使用 <strong>Connection</strong> 首部字段，可控制不再转发给代理的首部字段（即 <strong>Hop-by-hop</strong> 首部）。</p>
+<ul>
+<li>管理持久连接</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125192602353.png" alt="image-20211125192602353"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+
+<p><strong>HTTP/1.1</strong> 版本的默认连接都是持久连接。为此，客户端会在持久连接上持续发送请求。当服务器端想明确断开连接时，则指定 <strong>Connection</strong> 首部字段的值为 <strong>Close</strong>。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125192742835.png" alt="image-20211125192742835"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection: Keep-Alive</span><br></pre></td></tr></table></figure>
+
+<p><strong>HTTP/1.1</strong> 之前的 <strong>HTTP</strong> 版本的默认连接都是非持久连接。为此，如果想在旧版本的 <strong>HTTP</strong> 协议上维持持续连接，则需要指定 <strong>Connection</strong> 首部字段的值为 <strong>Keep-Alive</strong>。</p>
+<h3 id="6-3-3-Date"><a href="#6-3-3-Date" class="headerlink" title="6.3.3    Date"></a>6.3.3    Date</h3><p><strong>Date</strong> 表明创建 <strong>HTTP</strong> 报文的日期和时间。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125200406433.png" alt="image-20211125200406433"></p>
+<p><strong>HTTP/1.1</strong> 协议使用在 <strong>RFC1123</strong> 中规定的日期时间的格式，如下实例。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Date: Tue, 03 Jul 2012 04:40:59 GMT</span><br></pre></td></tr></table></figure>
+
+<p>之前的 <strong>HTTP</strong> 协议版本中使用 <strong>RFC850</strong> 中定义的格式，如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Date: Tue, 03-Jul-12 04:40:59 GMT</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-3-4-Pragma"><a href="#6-3-4-Pragma" class="headerlink" title="6.3.4    Pragma"></a>6.3.4    Pragma</h3><p><strong>Pragma</strong> 是 <strong>HTTP/1.1</strong> 之前版本的历史遗留字段，仅作为与 <strong>HTTP/1.0</strong> 的向后兼容而定义。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pragma: no-cache</span><br></pre></td></tr></table></figure>
+
+<p>该首部字段属于通用首部字段，但只用在客户端的发送请求中。客户端会要求所有的中间服务器不返回缓存的资源。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125200931657.png" alt="image-20211125200931657"></p>
+<p>所有的中间缓存服务器如果都能以 <strong>HTTP/1.1</strong> 为基准，那直接采用 <strong>Cache-Control: no-cache</strong> 指定的缓存的处理方式是最为理想的。但要整体掌握全部中间服务器使用的 <strong>HTTP</strong> 协议版本却是不现实的。因此，发送的请求会同时含有下面两个首部字段。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache</span><br><span class="line">Pragma: no-cache</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-3-5-Trailer"><a href="#6-3-5-Trailer" class="headerlink" title="6.3.5    Trailer"></a>6.3.5    Trailer</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201211994.png" alt="image-20211125201211994"></p>
+<p>首部字段 <strong>Trailer</strong> 会事先说明在报文主体后记录了哪些首部字段。该首部字段可应用在 <strong>HTTP/1.1</strong> 版本分块传输编码时。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201358166.png" alt="image-20211125201358166"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201404985.png" alt="image-20211125201404985"></p>
+<h3 id="6-3-6-Transfer-Encoding"><a href="#6-3-6-Transfer-Encoding" class="headerlink" title="6.3.6    Transfer-Encoding"></a>6.3.6    Transfer-Encoding</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201457509.png" alt="image-20211125201457509"></p>
+<p>首部字段 <strong>Transfer-Encoding</strong> 规定了传输报文主体时采用的编码方式。</p>
+<p><strong>HTTP/1.1</strong> 的传输编码方式仅对分块编码有效。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201821944.png" alt="image-20211125201821944"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125201833654.png" alt="image-20211125201833654"></p>
+<h3 id="6-3-7-Upgrade"><a href="#6-3-7-Upgrade" class="headerlink" title="6.3.7    Upgrade"></a>6.3.7    Upgrade</h3><p>首部字段 <strong>Upgrade</strong> 用于检测 <strong>HTTP</strong> 协议及其他协议是否可使用更高的版本进行通信，其参数值可以用来指定一个完全不同的通信协议。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125202005026.png" alt="image-20211125202005026"></p>
+<p><strong>Upgrade</strong> 首部字段产生作用的 <strong>Upgrade</strong> 对象仅限于客户端和邻接服务器之间。因此，使用首部字段 <strong>Upgrade</strong> 时，还需要额外指定 <strong>Connection: Upgrade</strong>。</p>
+<p>对于附有首部字段 <strong>Upgrade</strong> 的请求，服务器可用 <strong>101 Switching Protocols</strong> 状态码作为响应返回。</p>
+<h3 id="6-3-8-Via"><a href="#6-3-8-Via" class="headerlink" title="6.3.8    Via"></a>6.3.8    Via</h3><p><strong>Via</strong> 是为了追踪客户端与服务器之间的请求和响应报文的传输路径。</p>
+<p>报文经过代理或网关时，会先在首部字段 <strong>Via</strong> 中附加该服务器的信息，然后再进行转发。</p>
+<p>首部字段 <strong>Via</strong> 不仅用于追踪报文的转发，还可避免请求回环的发生。所以必须在经过代理时附加该首部字段内容。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125202558633.png" alt="image-20211125202558633"></p>
+<p><strong>Via</strong> 首部是为了追踪传输路径，所以经常会和 <strong>TRACE</strong> 方法一起使用。比如，代理服务器接收到由 <strong>TRACE</strong> 方法发送过来的请求（其中 <strong>Max-Forwards: 0</strong>）时，代理服务器就不能再转发该请求了。这种情况下，代理服务器会将自身的信息附加到 <strong>Via</strong> 首部后，返回该请求的响应。</p>
+<h3 id="6-3-9-Warning"><a href="#6-3-9-Warning" class="headerlink" title="6.3.9    Warning"></a>6.3.9    Warning</h3><p><strong>HTTP/1.1</strong> 的 <strong>Warning</strong> 首部是从 <strong>HTTP/1.0</strong> 的响应首部（<strong>Retry-After</strong>）演变过来的。该首部通常会告知用户一些与缓存相关问题的警告。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203025631.png" alt="image-20211125203025631"></p>
+<p><strong>Warning</strong> 首部的格式如下</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203158388.png" alt="image-20211125203158388"></p>
+<p><strong>HTTP/1.1</strong> 中定义了 <strong>7</strong> 种警告。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203244653.png" alt="image-20211125203244653"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203258991.png" alt="image-20211125203258991"></p>
+<h2 id="6-4-请求首部字段"><a href="#6-4-请求首部字段" class="headerlink" title="6.4    请求首部字段"></a>6.4    请求首部字段</h2><h3 id="6-4-1-Accept"><a href="#6-4-1-Accept" class="headerlink" title="6.4.1    Accept"></a>6.4.1    Accept</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203418367.png" alt="image-20211125203418367"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203431163.png" alt="image-20211125203431163"></p>
+<p><strong>Accept</strong> 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级。可使用 <strong>type/subtype</strong> 这种形式，一次指定多种媒体类型。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203544240.png" alt="image-20211125203544240"></p>
+<p>若想要给显示的媒体类型增加优先级，则使用 <strong>q=</strong> 来二外表示权重值，用分号（;）进行分隔。</p>
+<h3 id="6-4-2-Accept-Charset"><a href="#6-4-2-Accept-Charset" class="headerlink" title="6.4.2    Accept-Charset"></a>6.4.2    Accept-Charset</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203711597.png" alt="image-20211125203711597"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203716788.png" alt="image-20211125203716788"></p>
+<p>通知服务器用户代理支持的字符集及字腹肌的相对优先顺序。</p>
+<h3 id="6-4-3-Accept-Encoding"><a href="#6-4-3-Accept-Encoding" class="headerlink" title="6.4.3    Accept-Encoding"></a>6.4.3    Accept-Encoding</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203819982.png" alt="image-20211125203819982"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203826503.png" alt="image-20211125203826503"></p>
+<p>告知服务器用户代理支持的内容编码及内容编码的优先级顺序。可一次性指定多种内容编码。</p>
+<h3 id="6-4-4-Accept-Language"><a href="#6-4-4-Accept-Language" class="headerlink" title="6.4.4    Accept-Language"></a>6.4.4    Accept-Language</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203916065.png" alt="image-20211125203916065"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125203924565.png" alt="image-20211125203924565"></p>
+<h3 id="6-4-5-Authorization"><a href="#6-4-5-Authorization" class="headerlink" title="6.4.5    Authorization"></a>6.4.5    Authorization</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -846,7 +1107,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-24 16:31:00" itemprop="dateModified" datetime="2021-11-24T16:31:00+08:00">2021-11-24</time>
+                <time title="修改时间：2021-11-25 17:28:18" itemprop="dateModified" datetime="2021-11-25T17:28:18+08:00">2021-11-25</time>
               </span>
 
           
@@ -1021,6 +1282,105 @@
 <h2 id="406-根据身高重建队列"><a href="#406-根据身高重建队列" class="headerlink" title="406. 根据身高重建队列"></a>406. 根据身高重建队列</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124162617288.png" alt="image-20211124162617288"></p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124162632185.png" alt="image-20211124162632185"></p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124162645178.png" alt="image-20211124162645178"></p>
+<h2 id="560-和为-K-的子数组"><a href="#560-和为-K-的子数组" class="headerlink" title="560. 和为 K 的子数组"></a>560. 和为 K 的子数组</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125121607591.png" alt="image-20211125121607591"></p>
+<ul>
+<li>枚举</li>
+</ul>
+<p>固定左边界，枚举右边界</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> start = <span class="number">0</span>; start &lt;= n - <span class="number">1</span>; start ++) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> end = start; end &lt;= n - <span class="number">1</span>; end ++) &#123;</span><br><span class="line">                sum += nums[end];</span><br><span class="line">                <span class="keyword">if</span> (sum == k) &#123;</span><br><span class="line">                    count ++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li>前缀和</li>
+</ul>
+<p>定义 <code>pre[i]</code> 为 <code>[0..i]</code> 里所有数的和，则 <code>pre[i]</code> 可以由 <code>pre[i-1]</code> 递推而来，即：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pre[i] = pre[i<span class="number">-1</span>] + nums[i]</span><br></pre></td></tr></table></figure>
+
+<p>那么 <code>[j..i]</code> 这个子数组和为 k 这个条件我们可以转化为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pre[i] - pre[j<span class="number">-1</span>] == k</span><br></pre></td></tr></table></figure>
+
+<p>简单移项：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pre[j - <span class="number">1</span>] == pre[i] - k</span><br></pre></td></tr></table></figure>
+
+<p>所以我们只要统计有多少个前缀和为 <code>pre[i] - k</code> 的 <code>pre[j]</code> 即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">preSum</span><span class="params">(len + <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i ++) &#123;</span><br><span class="line">            preSum[i + <span class="number">1</span>] = preSum[i] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> left = <span class="number">0</span>; left &lt; len; left ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> right = left; right &lt; len; right ++) &#123;</span><br><span class="line">                <span class="comment">// 区间和 [left..right]，注意下标偏移</span></span><br><span class="line">                <span class="keyword">if</span> (preSum[right + <span class="number">1</span>] - preSum[left] == k) &#123;</span><br><span class="line">                    count ++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>前缀和 + 哈希表优化</li>
+</ul>
+<ol>
+<li>假如存在区间 <code>[left, right]</code> ，使得在 <code>[left, right]</code> 这个区间的子数组和为 <code>k</code>。换句话说，就是前 <code>right</code> 项减去 <code>left - 1</code> 项和等于 <code>k</code>，即前 <code>left - 1</code> 项等于前 <code>right</code> 项和减去 <code>k</code>。</li>
+<li>可以这样做，在扫描数组的同时，假设当前扫到第 <code>i</code> 位，记录它的前 <code>i</code> 项和 <code>sum</code>，用该和减去 <code>k</code>，用该和减去 <code>k</code> ，即 <code>sum-k</code> ，判断 <code>sum-k</code> 是否为某个位置的前 <code>n </code> 项和，若是，更新统计量。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span> <span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k )</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        mp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i:nums) &#123;</span><br><span class="line">            sum += i;</span><br><span class="line">            <span class="keyword">if</span> (mp.find(sum-k) != mp.end()) ans += mp[sum-k];</span><br><span class="line">            mp[sum] ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h2 id="437-路径总和-III"><a href="#437-路径总和-III" class="headerlink" title="437. 路径总和 III"></a>437. 路径总和 III</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125113220089.png" alt="image-20211125113220089"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125113252220.png" alt="image-20211125113252220"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125113305073.png" alt="image-20211125113305073"></p>
+<ul>
+<li><strong>DFS</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rootSum</span><span class="params">(TreeNode* root, <span class="keyword">int</span> targetSum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;val == targetSum) &#123;</span><br><span class="line">            ret ++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        ret += rootSum(root-&gt;left, targetSum - root-&gt;val);</span><br><span class="line">        ret += rootSum(root-&gt;right, targetSum - root-&gt;val);</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode* root, <span class="keyword">int</span> targetSum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> ret = rootSum(root, targetSum);</span><br><span class="line">        ret += pathSum(root-&gt;left, targetSum);</span><br><span class="line">        ret += pathSum(root-&gt;right, targetSum);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li>前缀和</li>
+</ul>
+<p><strong>DFS</strong> 解法存在许多重复计算。我们定义节点的前缀和为：由根节点到当前节点的路径上所有节点的和。我们利用前序遍历二叉树，记录下根节点 <em>root</em> 到当前节点 <em>p</em> 的路径上除当前节点以外所有节点的前缀和。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>, <span class="keyword">int</span>&gt; prefix;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">dfs</span> <span class="params">(TreeNode *root, <span class="keyword">long</span> <span class="keyword">long</span> curr, <span class="keyword">int</span> targetSum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">        curr += root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span> (prefix.count(curr - targetSum)) &#123;</span><br><span class="line">            ret = prefix[curr - targetSum];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        prefix[curr]++;</span><br><span class="line">        ret += dfs(root-&gt;left, curr, targetSum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="448-找到所有数组中消失的数字"><a href="#448-找到所有数组中消失的数字" class="headerlink" title="448. 找到所有数组中消失的数字"></a>448. 找到所有数组中消失的数字</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125170401912.png" alt="image-20211125170401912"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">findDisappearedNumbers</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; num : nums) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = (num - <span class="number">1</span>) % n;</span><br><span class="line">            nums[x] += n;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt;= n) &#123;</span><br><span class="line">                ret.push_back(i + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="461-汉明距离"><a href="#461-汉明距离" class="headerlink" title="461. 汉明距离"></a>461. 汉明距离</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125172755426.png" alt="image-20211125172755426"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> s = x ^ y, ret = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (s) &#123;</span><br><span class="line">            ret += s &amp; <span class="number">1</span>;</span><br><span class="line">            s &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
@@ -1203,97 +1563,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/17/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AD%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/17/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AD%EF%BC%89/" class="post-title-link" itemprop="url">HOT100记录（六）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-17 10:05:27" itemprop="dateCreated datePublished" datetime="2021-11-17T10:05:27+08:00">2021-11-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-20 16:06:48" itemprop="dateModified" datetime="2021-11-20T16:06:48+08:00">2021-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="200-岛屿数量"><a href="#200-岛屿数量" class="headerlink" title="200. 岛屿数量"></a>200. 岛屿数量</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117101910379.png" alt="image-20211117101910379"></p>
-<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117101927343.png" alt="image-20211117101927343"></p>
-<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117101938949.png" alt="image-20211117101938949"></p>
-<ul>
-<li>DFS</li>
-</ul>
-<p>核心思路是遇到陆地就 +1 岛屿数量，然后把该陆地连通的所有陆地全部标为 2，防止后续重复计算。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/17/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AD%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1361,7 +1634,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
