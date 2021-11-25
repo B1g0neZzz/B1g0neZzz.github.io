@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-25 20:48:20" itemprop="dateModified" datetime="2021-11-25T20:48:20+08:00">2021-11-25</time>
+                <time title="修改时间：2021-11-25 21:05:36" itemprop="dateModified" datetime="2021-11-25T21:05:36+08:00">2021-11-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -410,7 +410,24 @@
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125204619725.png" alt="image-20211125204619725"></p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125204630645.png" alt="image-20211125204630645"></p>
 <h3 id="6-4-10-If-Modified-Since"><a href="#6-4-10-If-Modified-Since" class="headerlink" title="6.4.10    If-Modified-Since"></a>6.4.10    If-Modified-Since</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125204726423.png" alt="image-20211125204726423"></p>
-<h3 id="6-4-11-If-None-Match"><a href="#6-4-11-If-None-Match" class="headerlink" title="6.4.11    If-None-Match"></a>6.4.11    If-None-Match</h3>
+<h3 id="6-4-11-If-None-Match"><a href="#6-4-11-If-None-Match" class="headerlink" title="6.4.11    If-None-Match"></a>6.4.11    If-None-Match</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125204856895.png" alt="image-20211125204856895"></p>
+<h3 id="6-4-12-If-Range"><a href="#6-4-12-If-Range" class="headerlink" title="6.4.12    If-Range"></a>6.4.12    If-Range</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125205259973.png" alt="image-20211125205259973"></p>
+<p>告知服务器若指定的 <strong>If-Range</strong> 字段值（<strong>ETag</strong> 值或者时间）和请求资源的 <strong>ETag</strong> 值或时间相一致时，则作为范围请求处理。反之，则返回全体资源。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125205550599.png" alt="image-20211125205550599"></p>
+<p>不使用首部字段 <strong>If-Range</strong> 发送请求的情况。服务端的资源如果更新，那客户端持有资源中的一部分也会随之无效，当然，范围请求作为前提是无效的。这时，服务器会暂且以状态码 <strong>412 Precondition Failed</strong> 作为响应返回，其目的是催促客户端再次发送请求。</p>
+<p>这样一来，与使用首部字段 <strong>If-Range</strong> 比起来，就需要花费两倍的功夫。</p>
+<h3 id="6-4-13-If-Unmodified-Since"><a href="#6-4-13-If-Unmodified-Since" class="headerlink" title="6.4.13    If-Unmodified-Since"></a>6.4.13    If-Unmodified-Since</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210046580.png" alt="image-20211125210046580"></p>
+<p>与 <strong>If-Modified-Since</strong> 作用相反</p>
+<h3 id="6-4-14-Max-Forwards"><a href="#6-4-14-Max-Forwards" class="headerlink" title="6.4.14    Max-Forwards"></a>6.4.14    Max-Forwards</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210128804.png" alt="image-20211125210128804"></p>
+<h3 id="6-4-15-Proxy-Authorization"><a href="#6-4-15-Proxy-Authorization" class="headerlink" title="6.4.15    Proxy-Authorization"></a>6.4.15    Proxy-Authorization</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210214716.png" alt="image-20211125210214716"></p>
+<p>接收到从代理服务器发来的认证质询时，客户端会发送包含首部字段 <strong>Proxy-Authorization</strong> 的请求，以告知服务器认证需要的信息。</p>
+<h3 id="6-4-16-Range"><a href="#6-4-16-Range" class="headerlink" title="6.4.16    Range"></a>6.4.16    Range</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210312473.png" alt="image-20211125210312473"></p>
+<p>指定范围请求。</p>
+<h3 id="6-4-17-Referer"><a href="#6-4-17-Referer" class="headerlink" title="6.4.17    Referer"></a>6.4.17    Referer</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210345429.png" alt="image-20211125210345429"></p>
+<h3 id="6-4-18-TE"><a href="#6-4-18-TE" class="headerlink" title="6.4.18    TE"></a>6.4.18    TE</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125210447270.png" alt="image-20211125210447270"></p>
+<p> 与 <strong>Accept-Encoding</strong> 的功能很像，但是用于传输编码。</p>
+<p>还可以指定伴随 <strong>trailer</strong> 字段的分块传输编码的方式。</p>
+
       
     </div>
 
