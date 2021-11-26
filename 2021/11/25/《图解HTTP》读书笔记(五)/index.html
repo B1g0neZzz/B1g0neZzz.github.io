@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改  7.1.1    通信使用明文可能会被窃听通信的加密 一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（ Secure Socket Laye">
+  <meta name="description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《图解HTTP》读书笔记(五)">
 <meta property="og:url" content="http://example.com/2021/11/25/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改  7.1.1    通信使用明文可能会被窃听通信的加密 一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（ Secure Socket Laye">
+<meta property="og:description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126113510087.png">
 <meta property="article:published_time" content="2021-11-25T13:41:22.000Z">
-<meta property="article:modified_time" content="2021-11-25T13:59:10.793Z">
+<meta property="article:modified_time" content="2021-11-26T03:42:53.502Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
@@ -181,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-25 21:41:22 / 修改时间：21:59:10" itemprop="dateCreated datePublished" datetime="2021-11-25T21:41:22+08:00">2021-11-25</time>
+              <time title="创建时间：2021-11-25 21:41:22" itemprop="dateCreated datePublished" datetime="2021-11-25T21:41:22+08:00">2021-11-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-26 11:42:53" itemprop="dateModified" datetime="2021-11-26T11:42:53+08:00">2021-11-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -212,10 +219,24 @@
 <li>不验证通信方的身份，因此有可能遭遇伪装</li>
 <li>无法证明报文的完整性，所以有可能已遭篡改</li>
 </ul>
-<h3 id="7-1-1-通信使用明文可能会被窃听"><a href="#7-1-1-通信使用明文可能会被窃听" class="headerlink" title="7.1.1    通信使用明文可能会被窃听"></a>7.1.1    通信使用明文可能会被窃听</h3><p><strong>通信的加密</strong></p>
+<span id="more"></span>
+
+<h3 id="7-1-1-通信使用明文可能会被窃听"><a href="#7-1-1-通信使用明文可能会被窃听" class="headerlink" title="7.1.1    通信使用明文可能会被窃听"></a>7.1.1    通信使用明文可能会被窃听</h3><ul>
+<li><strong>通信的加密</strong></li>
+</ul>
 <p>一种方式就是将通信加密。<strong>HTTP</strong> 协议中没有加密机制，但可以通过和 <strong>SSL（ Secure Socket Layer，安全套接层 ）</strong> 或 <strong>TLS（ Transport Layer Security，安全层传输协议）</strong> 的组合使用，加密 <strong>HTTP</strong> 的通信内容。</p>
 <p>用 <strong>SSL</strong> 建立安全通信线路之后，就可以在这条线路上进行 <strong>HTTP</strong> 通信了。与 <strong>SSL</strong> 组合使用的 <strong>HTTP</strong> 被称为 <strong>HTTPS（HTTP Secure，超文本传输安全协议）</strong> 或 <strong>HTTP over SSL</strong>。</p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png" alt="image-20211125214956351"></p>
+<ul>
+<li><strong>内容的加密</strong></li>
+</ul>
+<p>还可以把 <strong>HTTP</strong> 报文里所含的内容进行加密处理。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126113510087.png" alt="image-20211126113510087"></p>
+<h3 id="7-1-2-不验证通信方的身份就可能遭遇伪装"><a href="#7-1-2-不验证通信方的身份就可能遭遇伪装" class="headerlink" title="7.1.2    不验证通信方的身份就可能遭遇伪装"></a>7.1.2    不验证通信方的身份就可能遭遇伪装</h3><p><strong>HTTP</strong> 协议中的请求和响应不会对通信方进行确认。也就是说存在 “服务器是否就是发送请求中 <strong>URI</strong> 真正指定的主机，返回的响应是否真的返回到实际提出请求的客户端” 等类似问题。</p>
+<ul>
+<li><strong>任何人都可发起请求</strong></li>
+</ul>
+<p>在 <strong>HTTP</strong> 协议通信时，由于不存在确认通信方的处理步骤，任何人都可以发起请求。另外，服务器只要接收到请求，不管对方是谁都会返回一个响应（但也仅限于发送端的 <strong>IP</strong> 地址和端口号）。</p>
 
     </div>
 
@@ -296,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-%E4%B8%8D%E9%AA%8C%E8%AF%81%E9%80%9A%E4%BF%A1%E6%96%B9%E7%9A%84%E8%BA%AB%E4%BB%BD%E5%B0%B1%E5%8F%AF%E8%83%BD%E9%81%AD%E9%81%87%E4%BC%AA%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">7.1.2    不验证通信方的身份就可能遭遇伪装</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
