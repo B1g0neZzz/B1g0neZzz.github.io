@@ -32,8 +32,14 @@
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126114307128.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115007954.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115235323.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115657564.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120119787.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120644368.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122444203.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122617941.png">
+<meta property="og:image" content="c:/Users/123456/AppData/Roaming/Typora/typora-user-images/image-20211126160028883.png">
 <meta property="article:published_time" content="2021-11-25T13:41:22.000Z">
-<meta property="article:modified_time" content="2021-11-26T03:54:04.650Z">
+<meta property="article:modified_time" content="2021-11-26T08:00:32.209Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
@@ -193,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-26 11:54:04" itemprop="dateModified" datetime="2021-11-26T11:54:04+08:00">2021-11-26</time>
+                <time title="修改时间：2021-11-26 16:00:32" itemprop="dateModified" datetime="2021-11-26T16:00:32+08:00">2021-11-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +253,7 @@
 <li><strong>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端。</strong></li>
 <li><strong>无法确定正在通信的对方是否具备访问权限。因为某些 Web 服务器上保存着重要的信息，只想发给特定用户通信的权限。</strong></li>
 <li><strong>无法判断请求是来自何方、出自谁手。</strong></li>
-<li><strong>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击）</strong></li>
+<li><strong>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击）。</strong></li>
 </ul>
 <ul>
 <li><strong>查明对手的证书</strong></li>
@@ -257,14 +263,38 @@
 <p>证书由值得信任的第三方机构颁发。</p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115007954.png" alt="image-20211126115007954"></p>
 <h3 id="7-1-3-无法证明报文完整性，可能已遭篡改"><a href="#7-1-3-无法证明报文完整性，可能已遭篡改" class="headerlink" title="7.1.3    无法证明报文完整性，可能已遭篡改"></a>7.1.3    无法证明报文完整性，可能已遭篡改</h3><ul>
-<li>接收到的内容可能有误</li>
+<li><strong>接收到的内容可能有误</strong></li>
 </ul>
 <p>由于 <strong>HTTP</strong> 协议无法证明通信的报文完整性，因此，在请求或响应送出之后直到对方接收之前的这段时间内，即使请求或响应的内容遭到篡改，也没有办法获悉。</p>
 <p>换句话说，没有任何办法确认，发出的请求 / 响应和接收到的请求 / 响应是前后相同的。</p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115235323.png" alt="image-20211126115235323"></p>
+<p>比如，从某个 <strong>Web</strong> 网站上下载内容，是无法确定客户端下载的文件和服务器上存放的文件是否前后一致的。文件内容在传输途中可能已经被篡改为其他的内容。即使内容真的已改变，作为接收方的客户端也是察觉不到的。</p>
+<p>像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击（ <strong>Man-in-the-Middle attack，MITM</strong> ）。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115657564.png" alt="image-20211126115657564"></p>
 <ul>
-<li></li>
+<li><strong>如何防止篡改</strong></li>
 </ul>
+<p><strong>SSL</strong> 提供认证和加密处理及摘要功能。</p>
+<h2 id="7-2-HTTP-加密-认证-完整性保护-HTTPS"><a href="#7-2-HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="7.2    HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>7.2    HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h2><h3 id="7-2-1-HTTP-加上加密处理和认证以及完整性保护后即是-HTTPS"><a href="#7-2-1-HTTP-加上加密处理和认证以及完整性保护后即是-HTTPS" class="headerlink" title="7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS"></a>7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120119787.png" alt="image-20211126120119787"></p>
+<h3 id="7-2-2-HTTPS-是身披-SSL-外壳的-HTTP"><a href="#7-2-2-HTTPS-是身披-SSL-外壳的-HTTP" class="headerlink" title="7.2.2    HTTPS 是身披 SSL 外壳的 HTTP"></a>7.2.2    HTTPS 是身披 SSL 外壳的 HTTP</h3><p><strong>HTTPS</strong> 并非是应用层的一种新协议。只是 <strong>HTTP</strong> 通信接口部分用 <strong>SSL（ Secure Socket Layer）</strong> <strong>TLS（ Transport Layer Security ）</strong> 协议代替而已。</p>
+<p>通常，<strong>HTTP</strong> 直接和 <strong>TCP</strong> 通信。当使用 <strong>SSL</strong> 时，则演变成先和 <strong>SSL</strong> 通信，再由 <strong>SSL</strong> 和 <strong>TCP</strong> 通信了。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120644368.png" alt="image-20211126120644368"></p>
+<h3 id="7-2-3-相互交换密钥的公开密钥加密技术"><a href="#7-2-3-相互交换密钥的公开密钥加密技术" class="headerlink" title="7.2.3    相互交换密钥的公开密钥加密技术"></a>7.2.3    相互交换密钥的公开密钥加密技术</h3><p><strong>SSL</strong> 采用一种叫做公开密钥加密（ <strong>Public-key cryptography</strong> ）的加密处理方式。</p>
+<p>近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。</p>
+<p>加密和解密都会用到密钥。没有密钥就无法对密码解密，反过来说，任何人只要持有密钥就能解密了。如果密钥被攻击者获得，那加密也就失去了意义。</p>
+<ul>
+<li>共享密钥加密的困境</li>
+</ul>
+<p>加密和解密同用一个密钥的方式称为共享密钥加密（ <strong>Common key crypto system</strong> ），也叫对称密钥加密。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122444203.png" alt="image-20211126122444203"></p>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122617941.png" alt="image-20211126122617941"></p>
+<ul>
+<li>使用两把密钥的公开密钥加密</li>
+</ul>
+<p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥，领一把叫做公开密钥。</p>
+<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方受到被加密的信息后，再使用自己的私有密钥进行解密。</p>
+<p><img src="C:\Users\123456\AppData\Roaming\Typora\typora-user-images\image-20211126160028883.png" alt="image-20211126160028883"></p>
 
     </div>
 
@@ -345,7 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-%E4%B8%8D%E9%AA%8C%E8%AF%81%E9%80%9A%E4%BF%A1%E6%96%B9%E7%9A%84%E8%BA%AB%E4%BB%BD%E5%B0%B1%E5%8F%AF%E8%83%BD%E9%81%AD%E9%81%87%E4%BC%AA%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">7.1.2    不验证通信方的身份就可能遭遇伪装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3-%E6%97%A0%E6%B3%95%E8%AF%81%E6%98%8E%E6%8A%A5%E6%96%87%E5%AE%8C%E6%95%B4%E6%80%A7%EF%BC%8C%E5%8F%AF%E8%83%BD%E5%B7%B2%E9%81%AD%E7%AF%A1%E6%94%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">7.1.3    无法证明报文完整性，可能已遭篡改</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-%E4%B8%8D%E9%AA%8C%E8%AF%81%E9%80%9A%E4%BF%A1%E6%96%B9%E7%9A%84%E8%BA%AB%E4%BB%BD%E5%B0%B1%E5%8F%AF%E8%83%BD%E9%81%AD%E9%81%87%E4%BC%AA%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">7.1.2    不验证通信方的身份就可能遭遇伪装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3-%E6%97%A0%E6%B3%95%E8%AF%81%E6%98%8E%E6%8A%A5%E6%96%87%E5%AE%8C%E6%95%B4%E6%80%A7%EF%BC%8C%E5%8F%AF%E8%83%BD%E5%B7%B2%E9%81%AD%E7%AF%A1%E6%94%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">7.1.3    无法证明报文完整性，可能已遭篡改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-HTTP-%E5%8A%A0%E5%AF%86-%E8%AE%A4%E8%AF%81-%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">7.2    HTTP + 加密 + 认证 + 完整性保护 &#x3D; HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-HTTP-%E5%8A%A0%E4%B8%8A%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86%E5%92%8C%E8%AE%A4%E8%AF%81%E4%BB%A5%E5%8F%8A%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4%E5%90%8E%E5%8D%B3%E6%98%AF-HTTPS"><span class="nav-number">1.2.1.</span> <span class="nav-text">7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2-HTTPS-%E6%98%AF%E8%BA%AB%E6%8A%AB-SSL-%E5%A4%96%E5%A3%B3%E7%9A%84-HTTP"><span class="nav-number">1.2.2.</span> <span class="nav-text">7.2.2    HTTPS 是身披 SSL 外壳的 HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-3-%E7%9B%B8%E4%BA%92%E4%BA%A4%E6%8D%A2%E5%AF%86%E9%92%A5%E7%9A%84%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">7.2.3    相互交换密钥的公开密钥加密技术</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
