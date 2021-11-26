@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="持续学习者">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Taiichi&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/2021/10/page/2/index.html">
+  <meta name="description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改  7.1.1    通信使用明文可能会被窃听通信的加密 一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（ Secure Socket Laye">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《图解HTTP》读书笔记(五)">
+<meta property="og:url" content="http://example.com/2021/11/25/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="持续学习者">
+<meta property="og:description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改  7.1.1    通信使用明文可能会被窃听通信的加密 一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（ Secure Socket Laye">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
+<meta property="article:published_time" content="2021-11-25T13:41:22.000Z">
+<meta property="article:modified_time" content="2021-11-25T13:59:10.793Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
 
-<link rel="canonical" href="http://example.com/archives/2021/10/page/2/">
+<link rel="canonical" href="http://example.com/2021/11/25/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)/">
 
 
 <script id="page-configurations">
@@ -38,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Taiichi's blog</title>
+  <title>《图解HTTP》读书笔记(五) | Taiichi's blog</title>
   
 
 
@@ -148,235 +152,99 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">不错! 目前共计 73 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/25/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《图解HTTP》读书笔记(五)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-25 21:41:22 / 修改时间：21:59:10" itemprop="dateCreated datePublished" datetime="2021-11-25T21:41:22+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-17T17:46:50+08:00"
-              content="2021-10-17">
-          10-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/17/Effective-C++(%E4%BA%94)/" itemprop="url">
-            <span itemprop="name">Effective-C++(五)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-17T10:08:35+08:00"
-              content="2021-10-17">
-          10-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/17/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%89%EF%BC%89/" itemprop="url">
-            <span itemprop="name">剑指offer记录（三）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-14T21:01:19+08:00"
-              content="2021-10-14">
-          10-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/14/Effective-C++(%E5%9B%9B)/" itemprop="url">
-            <span itemprop="name">Effective-C++(四)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-12T21:36:28+08:00"
-              content="2021-10-12">
-          10-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/12/%E5%A0%86%E6%8E%92%E5%BA%8F/" itemprop="url">
-            <span itemprop="name">堆排序</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-12T20:03:24+08:00"
-              content="2021-10-12">
-          10-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/12/Effective-C++(%E4%B8%89)/" itemprop="url">
-            <span itemprop="name">Effective-C++(三)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-12T16:03:05+08:00"
-              content="2021-10-12">
-          10-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/12/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="url">
-            <span itemprop="name">剑指offer记录（二）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-10T15:47:46+08:00"
-              content="2021-10-10">
-          10-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/10/%E9%AB%98%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url">
-            <span itemprop="name">高级排序算法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-10T10:16:46+08:00"
-              content="2021-10-10">
-          10-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/10/%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url">
-            <span itemprop="name">基础排序算法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-07T16:27:33+08:00"
-              content="2021-10-07">
-          10-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/07/%E5%89%91%E6%8C%87offer%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
-            <span itemprop="name">剑指offer记录（一）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-05T18:27:29+08:00"
-              content="2021-10-05">
-          10-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">primer阅读笔记——第十六章模板与泛型编程</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="第七章-确保-Web-安全的-HTTPS"><a href="#第七章-确保-Web-安全的-HTTPS" class="headerlink" title="第七章    确保 Web 安全的 HTTPS"></a>第七章    确保 Web 安全的 HTTPS</h1><h2 id="7-1-HTTP-的缺点"><a href="#7-1-HTTP-的缺点" class="headerlink" title="7.1    HTTP 的缺点"></a>7.1    HTTP 的缺点</h2><p><strong>HTTP</strong> 主要有这些不足：</p>
+<ul>
+<li>通信使用明文（不加密），内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ul>
+<h3 id="7-1-1-通信使用明文可能会被窃听"><a href="#7-1-1-通信使用明文可能会被窃听" class="headerlink" title="7.1.1    通信使用明文可能会被窃听"></a>7.1.1    通信使用明文可能会被窃听</h3><p><strong>通信的加密</strong></p>
+<p>一种方式就是将通信加密。<strong>HTTP</strong> 协议中没有加密机制，但可以通过和 <strong>SSL（ Secure Socket Layer，安全套接层 ）</strong> 或 <strong>TLS（ Transport Layer Security，安全层传输协议）</strong> 的组合使用，加密 <strong>HTTP</strong> 的通信内容。</p>
+<p>用 <strong>SSL</strong> 建立安全通信线路之后，就可以在这条线路上进行 <strong>HTTP</strong> 通信了。与 <strong>SSL</strong> 组合使用的 <strong>HTTP</strong> 被称为 <strong>HTTPS（HTTP Secure，超文本传输安全协议）</strong> 或 <strong>HTTP over SSL</strong>。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png" alt="image-20211125214956351"></p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%9B%9B)/" rel="prev" title="《图解HTTP》读书笔记(四)">
+      <i class="fa fa-chevron-left"></i> 《图解HTTP》读书笔记(四)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/26/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AB%EF%BC%89/" rel="next" title="HOT100记录（八）">
+      HOT100记录（八） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2021/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2021/10/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2021/10/page/3/">3</a><a class="extend next" rel="next" href="/archives/2021/10/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -428,6 +296,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
