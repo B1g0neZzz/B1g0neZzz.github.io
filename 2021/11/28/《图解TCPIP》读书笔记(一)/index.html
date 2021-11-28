@@ -20,17 +20,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="OSI 参考模型 OSI 参考模型中各个分层的作用  应用层  ​    为应用程序提供服务并规定应用程序中通信相关的细节。包括文件传输、电子邮件、远程登录（虚拟终端）等协议。  表示层  ​    将应用处理的信息转换为适合网络传输的格式，或将来自下一层的数据转换为上层能够处理的格式。因此它主要负责数据格式的转换。  会话层  ​    负责建立和断开通信连接（数据流动的逻辑通路），以及数据的分">
+  <meta name="description" content="OSI 参考模型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《图解TCP&#x2F;IP》读书笔记(一)">
 <meta property="og:url" content="http://example.com/2021/11/28/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="OSI 参考模型 OSI 参考模型中各个分层的作用  应用层  ​    为应用程序提供服务并规定应用程序中通信相关的细节。包括文件传输、电子邮件、远程登录（虚拟终端）等协议。  表示层  ​    将应用处理的信息转换为适合网络传输的格式，或将来自下一层的数据转换为上层能够处理的格式。因此它主要负责数据格式的转换。  会话层  ​    负责建立和断开通信连接（数据流动的逻辑通路），以及数据的分">
+<meta property="og:description" content="OSI 参考模型">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121932989.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124613762.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124634696.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125044392.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125615530.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128130814126.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128131345010.png">
 <meta property="article:published_time" content="2021-11-28T04:01:21.000Z">
-<meta property="article:modified_time" content="2021-11-28T04:25:41.691Z">
+<meta property="article:modified_time" content="2021-11-28T05:18:30.041Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png">
@@ -184,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-28 12:01:21 / 修改时间：12:25:41" itemprop="dateCreated datePublished" datetime="2021-11-28T12:01:21+08:00">2021-11-28</time>
+              <time title="创建时间：2021-11-28 12:01:21 / 修改时间：13:18:30" itemprop="dateCreated datePublished" datetime="2021-11-28T12:01:21+08:00">2021-11-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,6 +214,8 @@
 
       
         <h2 id="OSI-参考模型"><a href="#OSI-参考模型" class="headerlink" title="OSI 参考模型"></a>OSI 参考模型</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png" alt="image-20211128121723791"></p>
+<span id="more"></span>
+
 <h3 id="OSI-参考模型中各个分层的作用"><a href="#OSI-参考模型中各个分层的作用" class="headerlink" title="OSI 参考模型中各个分层的作用"></a>OSI 参考模型中各个分层的作用</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121932989.png" alt="image-20211128121932989"></p>
 <ul>
 <li>应用层</li>
@@ -238,6 +246,47 @@
 <li>物理层</li>
 </ul>
 <p>​    负责 <strong>0、1</strong> 比特流（<strong>0、1</strong> 序列）与电压的高低、光的闪灭之间的互换。</p>
+<h2 id="OSI-参考模型通信处理举例"><a href="#OSI-参考模型通信处理举例" class="headerlink" title="OSI 参考模型通信处理举例"></a>OSI 参考模型通信处理举例</h2><p>假设使用主机 <strong>A</strong> 的用户 <strong>A</strong> 要给使用主机 <strong>B</strong> 的用户 <strong>B</strong> 发送一封电子邮件。</p>
+<h3 id="会话层以上的处理"><a href="#会话层以上的处理" class="headerlink" title="会话层以上的处理"></a>会话层以上的处理</h3><p>假定用户 <strong>A</strong> 给用户 <strong>B</strong> 发送一封内容为 “早上好” 邮件。网络究竟会进行哪些处理呢？</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124613762.png" alt="image-20211128124613762"></p>
+<ul>
+<li>应用层</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124634696.png" alt="image-20211128124634696"></p>
+<p>从用户输入完所要发送的内容并点击“发送”按钮的那一刻开始，就进入了应用层协议的处理。</p>
+<p>该协议会在所要传送的数据前端附加一个首部（标签）信息。该首部标明了邮件内容为“早上好”和收件人为“B”。主机 <strong>B</strong> 上的应用收到由主机 <strong>A</strong> 发送过来的数据后，分析其数据首部与数据正文，并将邮件保存到硬盘或是其他非易失性存储器（数据不会因为断电而丢失的一种存储设备）以备进行相应的处理。</p>
+<ul>
+<li>表示层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125044392.png" alt="image-20211128125044392"></p>
+<p>​    表示层的 “表示” 有 “表现”、“演示” 的意思，因此更关注数据的具体表现形式。</p>
+<p>​    如果用户 <strong>A</strong> 和用户 <strong>B</strong> 所使用的电子邮件客户端不同，那么数据的表现形式可能截然不同。</p>
+<p>​    表示层就是将数据从 “某个计算机特定的数据格式” 转换为 “网络通用的标准数据格式“ 后再发送出去。</p>
+<p>​    接收端主机收到数据以后将这些网络标准格式的数据恢复为 “该计算机特定的数据格式”，然后再进行相应处理。</p>
+<ul>
+<li>会话层</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125615530.png" alt="image-20211128125615530"></p>
+<p>​    假定用户 <strong>A</strong> 新建了 <strong>5</strong> 封电子邮件准备发给用户 <strong>B</strong>。这 <strong>5</strong> 封邮件的发送顺序可以由很多种。例如，可以每发一封邮件时建立一次连接，随后断开连接。还可以一经建立好连接后就将 <strong>5</strong> 封邮件连续发送给对方。甚至可以同时建立好 <strong>5</strong> 个连接，将 <strong>5</strong> 封邮件同时发送给对方。决定采用何种连接方法是会话层的主要责任。</p>
+<h3 id="1-6-3-传输层以下的处理"><a href="#1-6-3-传输层以下的处理" class="headerlink" title="1.6.3    传输层以下的处理"></a>1.6.3    传输层以下的处理</h3><p>然而，会话层只对何时建立连接、何时发送数据等问题进行管理，并不具有实际传输数据的功能。真正负责在网络上传输具体数据的是会话层以下的 “无名英雄”。</p>
+<ul>
+<li>传输层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128130814126.png" alt="image-20211128130814126"></p>
+<p>​    主机 <strong>A</strong> 与主机 <strong>B</strong> 建立连接和断开连接是传输层的主要作用。</p>
+<p>​    此外，传输层为确保所传输的数据到达目标地址，会在通信两端的计算机之间进行确认，如果数据没有到达，它会负责进行重发。</p>
+<p>​    保证数据传输的可靠性是传输层的一个重要作用。为了确保可靠性，在这一层也会为所要传输的数据附加首部以识别这一分层的数据。</p>
+<ul>
+<li>网络层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128131345010.png" alt="image-20211128131345010"></p>
+<p>​    网络层的作用是在网络与网络相互连接的环境中，将数据从发送端主机到接收端主机。</p>
+<p>​    <strong>传输层与网络层的关系？</strong></p>
+<p>​    网络层有时不能保证数据的可达性。例如 <strong>TCP/IP</strong> 网络层的 <strong>IP</strong> 协议中，就不能保证数据一定会发送到对端地址。因此，数据传送过程中出现数据丢失、顺序混乱等问题可能性会大大增加。像这样没有可靠性传输要求的网络层中，可以由传输层负责提供“正确传输数据的处理”。</p>
+<p>​    每个分层的作用与功能越清晰，规范协议的具体内容就越简单，实现这些具体协议的工作也将会越轻松。</p>
+<ul>
+<li>数据链路层、物理层</li>
+</ul>
 
     </div>
 
@@ -315,7 +364,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">OSI 参考模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%90%84%E4%B8%AA%E5%88%86%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">OSI 参考模型中各个分层的作用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">OSI 参考模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%90%84%E4%B8%AA%E5%88%86%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">OSI 参考模型中各个分层的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E9%80%9A%E4%BF%A1%E5%A4%84%E7%90%86%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">OSI 参考模型通信处理举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82%E4%BB%A5%E4%B8%8A%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">会话层以上的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-3-%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BB%A5%E4%B8%8B%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">1.6.3    传输层以下的处理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
