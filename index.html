@@ -154,6 +154,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/29/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/29/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/" class="post-title-link" itemprop="url">《图解TCP/IP》读书笔记(三)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-29 20:14:58 / 修改时间：20:48:02" itemprop="dateCreated datePublished" datetime="2021-11-29T20:14:58+08:00">2021-11-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="TCP-与-UDP"><a href="#TCP-与-UDP" class="headerlink" title="TCP 与 UDP"></a>TCP 与 UDP</h1><h2 id="传输层的作用"><a href="#传输层的作用" class="headerlink" title="传输层的作用"></a>传输层的作用</h2><p><strong>TCP</strong> 和 <strong>UDP</strong> 使用端口号，识别在传输层上一层的应用层中所要进行处理的具体程序（一个程序可以使用多个端口。）。</p>
+<h3 id="TCP-与-UDP-的区分"><a href="#TCP-与-UDP-的区分" class="headerlink" title="TCP 与 UDP 的区分"></a>TCP 与 UDP 的区分</h3><ul>
+<li><strong>TCP</strong></li>
+</ul>
+<p>​    <strong>TCP</strong> 是面向连接的、可靠的流协议。流就是指不间断的数据结构，你可以把它想象成排水管道中的水流。当应用程序采用 <strong>TCP</strong> 发送消息时，虽然可以保证发送的顺序，但还是犹如没有任何间隔的数据流发送给接收端（例如，在发送端应用程序发送了 <strong>10</strong> 次 <strong>100</strong> 字节的消息，那么在接收端，应用程序有可能会收到一个 <strong>1000</strong> 字节连续不断的数据。因此在 <strong>TCP</strong> 通信中，发送端应用可以在自己所要发送的消息中设置一个表示长度或间隔的字段信息。）</p>
+<p>​    <strong>TCP</strong> 为提供可靠性传输、实行 “顺序控制” 或 “重发控制” 机制。此外还具备 “流控制（流量控制）”、“拥塞控制”、提高网络利用率等众多功能。</p>
+<ul>
+<li><strong>UDP</strong></li>
+</ul>
+<p>​    <strong>UDP</strong> 是不具有可靠性的数据报协议。细微的处理它会交给上层的应用去完成。在 <strong>UDP</strong> 的情况下，虽然可以确保发送消息的大小（例如，发送端应用程序发送一个 <strong>100</strong> 字节的消息，那么接收端应用程序也会以 <strong>100</strong> 字节为长度接收数据。<strong>UDP</strong> 中，消息长度的数据也会发送到接收端，因此在发送端发送的消息中不需要设置一个表示消息长度或间隔的字段信息。），却不能保证消息一定会到达。因此，应用有时会根据自己的需要进行重发处理。</p>
+<h2 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h2><h3 id="根据端口号识别应用"><a href="#根据端口号识别应用" class="headerlink" title="根据端口号识别应用"></a>根据端口号识别应用</h3><p>一台计算机上可以同时运行多个程序。例如接受 <strong>WWW</strong> 服务的 <strong>Web</strong> </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/29/%E3%80%8A%E5%BF%AB%E6%8E%92%E5%BD%92%E5%B9%B6%E6%A8%A1%E6%9D%BF%E3%80%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -261,7 +339,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-29 20:01:41" itemprop="dateModified" datetime="2021-11-29T20:01:41+08:00">2021-11-29</time>
+                <time title="修改时间：2021-11-29 20:14:30" itemprop="dateModified" datetime="2021-11-29T20:14:30+08:00">2021-11-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -884,88 +962,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" class="post-title-link" itemprop="url">《图解HTTP》读书笔记(二)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-24 17:26:14" itemprop="dateCreated datePublished" datetime="2021-11-24T17:26:14+08:00">2021-11-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-28 17:36:44" itemprop="dateModified" datetime="2021-11-28T17:36:44+08:00">2021-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第三章-HTTP-报文内的-HTTP-信息"><a href="#第三章-HTTP-报文内的-HTTP-信息" class="headerlink" title="第三章    HTTP 报文内的 HTTP 信息"></a>第三章    HTTP 报文内的 HTTP 信息</h1><h2 id="3-1-HTTP-报文"><a href="#3-1-HTTP-报文" class="headerlink" title="3.1    HTTP 报文"></a>3.1    HTTP 报文</h2><p><strong>HTTP</strong> 报文大致可分为报文首部和报文主体两块。</p>
-<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124173006044.png" alt="image-20211124173006044"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1037,7 +1033,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
