@@ -20,17 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="持续学习者">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Taiichi&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/page/2/index.html">
+  <meta name="description" content="计算机系统漫游信息就是位 + 上下文源程序实际上就是一个由值 0 和 1 组成的位（又称为比特）序列，8 个位组织成一组，称为字节。每个字节表示程序中的某些文本字符。  hello.c 的表示方法说明了一个基本思想：系统中所有的信息——包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传输的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。比如，在不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《CSAPP》(一)">
+<meta property="og:url" content="http://example.com/2021/11/30/%E3%80%8ACSAPP%E3%80%8B(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="持续学习者">
+<meta property="og:description" content="计算机系统漫游信息就是位 + 上下文源程序实际上就是一个由值 0 和 1 组成的位（又称为比特）序列，8 个位组织成一组，称为字节。每个字节表示程序中的某些文本字符。  hello.c 的表示方法说明了一个基本思想：系统中所有的信息——包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传输的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。比如，在不同">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130122013925.png">
+<meta property="article:published_time" content="2021-11-30T04:18:40.000Z">
+<meta property="article:modified_time" content="2021-11-30T07:54:16.267Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130122013925.png">
 
-<link rel="canonical" href="http://example.com/archives/page/2/">
+<link rel="canonical" href="http://example.com/2021/11/30/%E3%80%8ACSAPP%E3%80%8B(%E4%B8%80)/">
 
 
 <script id="page-configurations">
@@ -38,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Taiichi's blog</title>
+  <title>《CSAPP》(一) | Taiichi's blog</title>
   
 
 
@@ -148,235 +152,89 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">不错! 目前共计 80 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/30/%E3%80%8ACSAPP%E3%80%8B(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CSAPP》(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-30 12:18:40 / 修改时间：15:54:16" itemprop="dateCreated datePublished" datetime="2021-11-30T12:18:40+08:00">2021-11-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h1 id="计算机系统漫游"><a href="#计算机系统漫游" class="headerlink" title="计算机系统漫游"></a>计算机系统漫游</h1><h2 id="信息就是位-上下文"><a href="#信息就是位-上下文" class="headerlink" title="信息就是位 + 上下文"></a>信息就是位 + 上下文</h2><p>源程序实际上就是一个由值 <strong>0</strong> 和 <strong>1</strong> 组成的位（又称为比特）序列，<strong>8</strong> 个位组织成一组，称为字节。每个字节表示程序中的某些文本字符。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130122013925.png" alt="image-20211130122013925"></p>
+<p><code>hello.c</code> 的表示方法说明了一个基本思想：系统中所有的信息——包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传输的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。比如，在不同的上下文中，一个同样的字节序列可能表示一个整数、浮点数、字符串或者机器指令。</p>
+<h2 id="程序被其他程序翻译成不同的格式"><a href="#程序被其他程序翻译成不同的格式" class="headerlink" title="程序被其他程序翻译成不同的格式"></a>程序被其他程序翻译成不同的格式</h2>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-24T19:02:51+08:00"
-              content="2021-11-24">
-          11-24
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/" itemprop="url">
-            <span itemprop="name">《图解HTTP》读书笔记(三)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-24T17:26:14+08:00"
-              content="2021-11-24">
-          11-24
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/24/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" itemprop="url">
-            <span itemprop="name">《图解HTTP》读书笔记(二)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-23T20:33:47+08:00"
-              content="2021-11-23">
-          11-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/23/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/" itemprop="url">
-            <span itemprop="name">《图解HTTP》读书笔记(一)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-23T17:13:33+08:00"
-              content="2021-11-23">
-          11-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/23/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%85%AD)/" itemprop="url">
-            <span itemprop="name">《网络是怎样连接的》读书笔记(六)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-22T17:49:31+08:00"
-              content="2021-11-22">
-          11-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/22/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)/" itemprop="url">
-            <span itemprop="name">《网络是怎样连接的》读书笔记(五)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-22T15:16:56+08:00"
-              content="2021-11-22">
-          11-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/22/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/" itemprop="url">
-            <span itemprop="name">《网络是怎样连接的》读书笔记（三）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-21T18:36:55+08:00"
-              content="2021-11-21">
-          11-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/21/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%83%EF%BC%89/" itemprop="url">
-            <span itemprop="name">HOT100记录（七）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-18T17:54:46+08:00"
-              content="2021-11-18">
-          11-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/18/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" itemprop="url">
-            <span itemprop="name">《网络是怎样连接的》读书笔记(二)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-17T10:58:39+08:00"
-              content="2021-11-17">
-          11-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/17/%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="url">
-            <span itemprop="name">并查集</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-11-17T10:05:27+08:00"
-              content="2021-11-17">
-          11-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/11/17/HOT100%E8%AE%B0%E5%BD%95%EF%BC%88%E5%85%AD%EF%BC%89/" itemprop="url">
-            <span itemprop="name">HOT100记录（六）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/29/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/" rel="prev" title="《图解TCP/IP》读书笔记(三)">
+      <i class="fa fa-chevron-left"></i> 《图解TCP/IP》读书笔记(三)
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-  </div>
+      </footer>
+    
+  </article>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -428,6 +286,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">计算机系统漫游</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%B0%B1%E6%98%AF%E4%BD%8D-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">信息就是位 + 上下文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%A2%AB%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E7%BF%BB%E8%AF%91%E6%88%90%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">程序被其他程序翻译成不同的格式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
