@@ -28,9 +28,9 @@
 <meta property="og:description" content="计算机系统漫游信息就是位 + 上下文源程序实际上就是一个由值 0 和 1 组成的位（又称为比特）序列，8 个位组织成一组，称为字节。每个字节表示程序中的某些文本字符。  hello.c 的表示方法说明了一个基本思想：系统中所有的信息——包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传输的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。比如，在不同">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130122013925.png">
-<meta property="og:image" content="c:/Users/123456/AppData/Roaming/Typora/typora-user-images/image-20211130160242860.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130160242860.png">
 <meta property="article:published_time" content="2021-11-30T04:18:40.000Z">
-<meta property="article:modified_time" content="2021-11-30T08:02:44.646Z">
+<meta property="article:modified_time" content="2021-11-30T08:11:04.700Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130122013925.png">
@@ -184,7 +184,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-30 12:18:40 / 修改时间：16:02:44" itemprop="dateCreated datePublished" datetime="2021-11-30T12:18:40+08:00">2021-11-30</time>
+              <time title="创建时间：2021-11-30 12:18:40 / 修改时间：16:11:04" itemprop="dateCreated datePublished" datetime="2021-11-30T12:18:40+08:00">2021-11-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +217,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux&gt; gcc -o hello hello.c</span><br></pre></td></tr></table></figure>
 
 <p>在这里，<strong>GCC</strong> 编译器驱动程序读取源文件 <code>hello.c</code>，并把它翻译成一个可执行目标文件 <code>hello</code>。这个翻译过程可分为四个阶段完成，如下图。执行这四个阶段的程序（<strong>预处理器、编译器、汇编器和链接器</strong>）一起构成了 <strong>编译系统（compilation system）</strong>。</p>
-<p><img src="C:\Users\123456\AppData\Roaming\Typora\typora-user-images\image-20211130160242860.png" alt="image-20211130160242860"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211130160242860.png" alt="image-20211130160242860"></p>
+<ul>
+<li><p>预处理阶段。预处理器（<strong>cpp —— C Pre-Processor</strong>）根据以字符 <code>#</code> 开头的命令，修改原始的 <strong>C</strong> 程序。比如 <code>hello.c</code> 中第一行的 <code>#include &lt;stdtio.h&gt;</code> 命令告诉预处理器读取系统头文件 <code>stdio.h</code> 的内容，并把它直接插入程序文本中。结果就得到了另一个 <strong>C</strong> 程序，通常是以 <code>.i</code> 作为文件扩展名。</p>
+</li>
+<li><p>编译阶段。编译器（<strong>ccl</strong>）将文本文件 <code>hello.i</code> 翻译成文本文件 <code>hello.s</code>，它包含一个汇编语言程序。该程序包含函数 <code>main</code> 的定义，如下所示</p>
+</li>
+<li></li>
+</ul>
 
     </div>
 
