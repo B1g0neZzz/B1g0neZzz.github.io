@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="何为 OSOS Kernel 的特征">
+  <meta name="description" content="何为 OSOS Kernel 的特征 并发  计算机系统中同时存在多个运行的程序，需要 OS 管理和调度   共享  “同时” 访问 互斥共享   虚拟  利用多道程序设计技术，让每个用户都觉得有一个计算机专门为它服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OS学习(一)">
 <meta property="og:url" content="http://example.com/2021/12/03/OS%E5%AD%A6%E4%B9%A0(%E4%B8%80)/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="何为 OSOS Kernel 的特征">
+<meta property="og:description" content="何为 OSOS Kernel 的特征 并发  计算机系统中同时存在多个运行的程序，需要 OS 管理和调度   共享  “同时” 访问 互斥共享   虚拟  利用多道程序设计技术，让每个用户都觉得有一个计算机专门为它服务">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-03T04:39:14.000Z">
-<meta property="article:modified_time" content="2021-12-03T04:40:24.775Z">
+<meta property="article:modified_time" content="2021-12-03T12:55:05.144Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
@@ -181,7 +181,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-03 12:39:14 / 修改时间：12:40:24" itemprop="dateCreated datePublished" datetime="2021-12-03T12:39:14+08:00">2021-12-03</time>
+              <time title="创建时间：2021-12-03 12:39:14 / 修改时间：20:55:05" itemprop="dateCreated datePublished" datetime="2021-12-03T12:39:14+08:00">2021-12-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="何为-OS"><a href="#何为-OS" class="headerlink" title="何为 OS"></a>何为 OS</h1><h2 id="OS-Kernel-的特征"><a href="#OS-Kernel-的特征" class="headerlink" title="OS Kernel 的特征"></a>OS Kernel 的特征</h2>
+        <h1 id="何为-OS"><a href="#何为-OS" class="headerlink" title="何为 OS"></a>何为 OS</h1><h2 id="OS-Kernel-的特征"><a href="#OS-Kernel-的特征" class="headerlink" title="OS Kernel 的特征"></a>OS Kernel 的特征</h2><ul>
+<li><p>并发</p>
+<ul>
+<li>计算机系统中同时存在多个运行的程序，需要 OS 管理和调度</li>
+</ul>
+</li>
+<li><p>共享</p>
+<ul>
+<li>“同时” 访问</li>
+<li>互斥共享</li>
+</ul>
+</li>
+<li><p>虚拟</p>
+<ul>
+<li>利用多道程序设计技术，让每个用户都觉得有一个计算机专门为它服务</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
