@@ -237,7 +237,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-03 12:39:14 / 修改时间：20:56:05" itemprop="dateCreated datePublished" datetime="2021-12-03T12:39:14+08:00">2021-12-03</time>
+              <time title="创建时间：2021-12-03 12:39:14 / 修改时间：21:39:17" itemprop="dateCreated datePublished" datetime="2021-12-03T12:39:14+08:00">2021-12-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +260,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="何为-OS"><a href="#何为-OS" class="headerlink" title="何为 OS"></a>何为 OS</h1><h2 id="OS-Kernel-的特征"><a href="#OS-Kernel-的特征" class="headerlink" title="OS Kernel 的特征"></a>OS Kernel 的特征</h2><ul>
+          <h1 id="何为-OS"><a href="#何为-OS" class="headerlink" title="何为 OS"></a>何为 OS</h1><ul>
+<li>用户角度上，操作系统是一个控制软件</li>
+<li>管理应用程序</li>
+<li>为应用程序提供服务</li>
+<li>杀死应用程序</li>
+</ul>
+<p>对于底层硬件</p>
+<ul>
+<li>资源管理</li>
+<li>管理外设、分配资源</li>
+</ul>
+<h2 id="OS-Kernel-的特征"><a href="#OS-Kernel-的特征" class="headerlink" title="OS Kernel 的特征"></a>OS Kernel 的特征</h2><ul>
 <li><p>并发</p>
 <ul>
 <li>计算机系统中同时存在多个运行的程序，需要 OS 管理和调度</li>
@@ -277,7 +288,56 @@
 <li>利用多道程序设计技术，让每个用户都觉得有一个计算机专门为它服务</li>
 </ul>
 </li>
-<li><h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2></li>
+<li><p>异步</p>
+<ul>
+<li>程序的执行不是一贯到底，而是走走停停，向前推进的速度不可预知</li>
+<li>但只要运行环境相同，OS 需要保证程序运行的结果也要相同</li>
+</ul>
+</li>
+</ul>
+<h2 id="OS-与设备和程序交互"><a href="#OS-与设备和程序交互" class="headerlink" title="OS 与设备和程序交互"></a>OS 与设备和程序交互</h2><ul>
+<li><p>系统调用（来源于应用程序）</p>
+<ul>
+<li>应用程序主动向操作系统发出服务请求</li>
+</ul>
+</li>
+<li><p>异常（来源于不良的应用程序）</p>
+<ul>
+<li>非法指令或者其他坏的处理状态（如：内存出错）</li>
+</ul>
+</li>
+<li><p>中断（来源于外设）</p>
+<ul>
+<li>来自不同的硬件设备的计时器和网络的中断</li>
+</ul>
+</li>
+</ul>
+<h3 id="中断处理机制"><a href="#中断处理机制" class="headerlink" title="中断处理机制"></a>中断处理机制</h3><p><strong>硬件</strong></p>
+<ul>
+<li>设置中断标记<ul>
+<li>将内部、外部事件设置中断标记</li>
+<li>中断事件的 <strong>ID</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>软件</strong></p>
+<ul>
+<li>保存当前处理状态</li>
+<li>中断服务程序处理</li>
+<li>清除中断标记</li>
+<li>恢复之前保存的处理状态</li>
+</ul>
+<h3 id="异常处理机制"><a href="#异常处理机制" class="headerlink" title="异常处理机制"></a>异常处理机制</h3><ul>
+<li>异常：异常编号<ul>
+<li>保存现场</li>
+<li>异常处理<ul>
+<li>杀死产生了异常的程序</li>
+<li>重新执行异常指令</li>
+</ul>
+</li>
+<li>恢复现场</li>
+</ul>
+</li>
 </ul>
 
       
@@ -747,7 +807,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-03 20:44:08" itemprop="dateModified" datetime="2021-12-03T20:44:08+08:00">2021-12-03</time>
+                <time title="修改时间：2021-12-04 10:37:03" itemprop="dateModified" datetime="2021-12-04T10:37:03+08:00">2021-12-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -771,6 +831,10 @@
 
       
           <h2 id="快排模板"><a href="#快排模板" class="headerlink" title="快排模板"></a>快排模板</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> q[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> x = q[l], i = l - <span class="number">1</span>, j = r + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">do</span> i ++; <span class="keyword">while</span> (q[i] &lt; x);</span><br><span class="line">        <span class="keyword">do</span> j --; <span class="keyword">while</span> (q[j] &gt; x);</span><br><span class="line">        <span class="keyword">if</span> (i &lt; j) swap(q[i], q[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    quickSort(q, l, j);</span><br><span class="line">    quickSort(q, j + <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="第-k-个数"><a href="#第-k-个数" class="headerlink" title="第 k 个数"></a>第 k 个数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/11/29/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF(%E4%B8%80)/#more" rel="contents">
