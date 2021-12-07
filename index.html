@@ -353,7 +353,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-03 12:36:16" itemprop="dateModified" datetime="2021-12-03T12:36:16+08:00">2021-12-03</time>
+                <time title="修改时间：2021-12-07 10:40:36" itemprop="dateModified" datetime="2021-12-07T10:40:36+08:00">2021-12-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -376,44 +376,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="并发性：互斥和同步"><a href="#并发性：互斥和同步" class="headerlink" title="并发性：互斥和同步"></a>并发性：互斥和同步</h1><h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">binary_semaphore</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> &#123;</span>zero, one&#125; value;</span><br><span class="line">    queueType <span class="built_in">queue</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">semWaitB</span><span class="params">(binary_semaphore s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.value == one)</span><br><span class="line">        s.value = zero;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 把当前进程插入队列</span></span><br><span class="line">        <span class="comment">// 阻塞当前进程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> semSignalB(semaphore s)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.<span class="built_in">queue</span> is empty())</span><br><span class="line">        s.value = one;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 把进程 P 从等待队列中移除</span></span><br><span class="line">        <span class="comment">// 把进程 P 插入就绪队列</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>二元信号量可以初始化为 <strong>0</strong> 或 <strong>1</strong>。</li>
-<li><strong>semWaitB</strong> 操作检查信号的值。若值为 <strong>0</strong>，则进程执行 <strong>semWaitB</strong> 就会受阻。若值为 <strong>1</strong>，则将值改为 <strong>0</strong>，并继续执行该进程。</li>
-<li><strong>semWaitB</strong> 操作检查是否有任何进程在该信号上受阻。若有进程受阻，则通过 <strong>semWaitB</strong> 操作，受阻的进程会被唤醒；若没有进程受阻，则值设置为 <strong>1</strong>。</li>
-</ol>
-<p>与二元信号量相关的一个概念是<strong>互斥锁（mutex）</strong>。区别在于，为互斥量加锁的进程和为互斥量解锁的进程必须是同一个进程。相比之下，可能由某个进程对二元信号量进行加锁操作，而由另一个进程为其解锁。（一些文献中二者无区别）</p>
-<h3 id="生产者-消费者问题"><a href="#生产者-消费者问题" class="headerlink" title="生产者 / 消费者问题"></a>生产者 / 消费者问题</h3><p>有一个或多个生产者生产某种类型的数据（记录、字符），并放置在缓冲区中；有一个消费者从缓冲区中取数据，每次取一项；系统保证避免对缓冲区的重复操作，即在任何时候只有一个主体（生产者或消费者）可访问缓冲区。问题是要确保这种情况：当缓存已满时，生产者不会继续向其中添加数据；当缓存为空时，消费者不会从中移走数据。</p>
-<h2 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h2><p>使用信号量设计一个正确的程序是很困难的，难点在于 <strong>semWait</strong> 和 <strong>semSignal</strong> 操作可能分布在整个程序中，而很难看出信号量上的这些操作所产生的整体效果。</p>
-<p>管程是一种程序设计语言结构，它提供的功能与信号量相同，但更易于控制。</p>
-<h3 id="使用信号的管程"><a href="#使用信号的管程" class="headerlink" title="使用信号的管程"></a>使用信号的管程</h3><ol>
-<li>局部数据变量只能被管程的过程访问，任何外部过程都不能访问。</li>
-<li>一个进程通过调用管程的一个过程进入管程。</li>
-<li>在任何时候，只能有一个进程在管程中执行，调用管程的任何其他进程都被阻塞，以等待管程可用。</li>
-</ol>
-<h2 id="读者写者问题"><a href="#读者写者问题" class="headerlink" title="读者写者问题"></a>读者写者问题</h2><h1 id="并发：死锁和饥饿"><a href="#并发：死锁和饥饿" class="headerlink" title="并发：死锁和饥饿"></a>并发：死锁和饥饿</h1><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p><strong>死锁的条件：</strong></p>
-<ol>
-<li><strong>互斥。</strong>一次只有一个进程可以使用一个资源。其他进程不能访问已分配给其他进程的资源。</li>
-<li><strong>占有且等待。</strong> 当一个进程等待其他进程时，继续占有已分配的资源。</li>
-<li><strong>不可抢占</strong>。不能强行抢占进程已占有的资源。</li>
-<li><strong>循环等待。</strong></li>
-</ol>
-<h3 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h3><p>防止四个必要条件：</p>
-<p><strong>互斥</strong>：</p>
-<p>不可能被禁止，只要需要对资源进行互斥访问，就必须支持互斥。</p>
-<p><strong>占有且等待：</strong></p>
-<p>可以要求进程一次性地请求所有需要的资源，并阻塞这个进程直到所有请求都同时满足。</p>
-<p><strong>不可抢占</strong>：</p>
-<p>占有某个资源的一个进程进一步申请资源时若被拒绝，则该进程必须释放其最初占有的资源，必要时可再次申请这些资源和其他资源。其次，一个进程请求当前被另一个进程占有的一个资源时，操作系统可以抢占另一个进程，要求它释放资源。</p>
-<p><strong>循环等待：</strong></p>
-<p>循环等待条件可通过定义资源类型的线性顺序来预防。若一个进程已分配了 <em>R</em> 类型的资源，则其接下来请求的资源只能是那些排在 <em>R</em> 类型之后的资源。</p>
-<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211202220542641.png" alt="image-20211202220542641"></p>
-<h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><ul>
-<li>若一个进程的请求会导致死锁，则不启动该进程</li>
-<li>若一个进程增加的资源请求会导致死锁，则不允许这一资源分配。</li>
-</ul>
-
+          <h1 id="并发性：互斥和同步"><a href="#并发性：互斥和同步" class="headerlink" title="并发性：互斥和同步"></a>并发性：互斥和同步</h1><h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/02/%E5%B9%B6%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
