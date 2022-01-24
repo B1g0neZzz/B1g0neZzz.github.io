@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/07/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -168,7 +168,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/07/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">primer阅读笔记——第二章变量和基本类型</a>
+            <a href="/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">primer阅读笔记——第十三章拷贝控制</a>
         </h2>
 
         <div class="post-meta">
@@ -178,14 +178,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-07 10:04:11" itemprop="dateCreated datePublished" datetime="2021-07-07T10:04:11+08:00">2021-07-07</time>
+              <time title="创建时间：2021-09-15 21:20:19" itemprop="dateCreated datePublished" datetime="2021-09-15T21:20:19+08:00">2021-09-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:28:37" itemprop="dateModified" datetime="2021-09-05T11:28:37+08:00">2021-09-05</time>
+                <time title="修改时间：2021-09-28 19:17:24" itemprop="dateModified" datetime="2021-09-28T19:17:24+08:00">2021-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,10 +208,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="变量和基本类型"><a href="#变量和基本类型" class="headerlink" title="变量和基本类型"></a>变量和基本类型</h2><h3 id="基本内置类型"><a href="#基本内置类型" class="headerlink" title="基本内置类型"></a>基本内置类型</h3><p>C++ 定义了一套包括<strong>算术类型</strong>（<strong>arithmetic type</strong>）和<strong>空类型</strong>（<strong>void</strong>）在内的基本数据类型。其中算术类型包括了字符、整型数、布尔值和浮点数。</p>
+          <h1 id="拷贝控制"><a href="#拷贝控制" class="headerlink" title="拷贝控制"></a>拷贝控制</h1><p>一个类通过定义五种特殊的成员函数来控制对象的拷贝、移动、赋值和销毁操作。</p>
+<ul>
+<li>拷贝构造函数（copy constructor）</li>
+<li>拷贝赋值运算符（copy-assignment operator）</li>
+<li>移动构造函数（move constructor）</li>
+<li>移动赋值运算符（move-assignment operator）</li>
+<li>析构函数（destructor）</li>
+</ul>
+<p>这些操作统称为拷贝控制操作。</p>
+<p>在定义任何类时，拷贝控制操作都是必要部分。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/07/07/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/#more" rel="contents">
+              <a class="btn" href="/2021/09/15/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -235,7 +244,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/%E5%9B%9E%E6%BA%AF%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -249,7 +258,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/" class="post-title-link" itemprop="url">primer阅读笔记——第一章</a>
+            <a href="/2021/09/15/%E5%9B%9E%E6%BA%AF%E6%B3%95/" class="post-title-link" itemprop="url">回溯法</a>
         </h2>
 
         <div class="post-meta">
@@ -259,14 +268,96 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-05 08:20:21" itemprop="dateCreated datePublished" datetime="2021-07-05T08:20:21+08:00">2021-07-05</time>
+              <time title="创建时间：2021-09-15 11:44:35" itemprop="dateCreated datePublished" datetime="2021-09-15T11:44:35+08:00">2021-09-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:28:24" itemprop="dateModified" datetime="2021-09-05T11:28:24+08:00">2021-09-05</time>
+                <time title="修改时间：2021-09-17 19:17:39" itemprop="dateModified" datetime="2021-09-17T19:17:39+08:00">2021-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="回溯法"><a href="#回溯法" class="headerlink" title="回溯法"></a>回溯法</h1><h2 id="树形问题"><a href="#树形问题" class="headerlink" title="树形问题"></a>树形问题</h2><h3 id="LeetCode-17-Letter-Combinations-of-a-Phone-Number"><a href="#LeetCode-17-Letter-Combinations-of-a-Phone-Number" class="headerlink" title="LeetCode 17. Letter Combinations of a Phone Number"></a>LeetCode 17. Letter Combinations of a Phone Number</h3><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210915120155419.png" alt="image-20210915120155419"></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210915120208292.png" alt="image-20210915120208292"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/15/%E5%9B%9E%E6%BA%AF%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">primer读书笔记——第十二章动态内存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 12:35:01" itemprop="dateCreated datePublished" datetime="2021-09-13T12:35:01+08:00">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-15 21:07:41" itemprop="dateModified" datetime="2021-09-15T21:07:41+08:00">2021-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,18 +380,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="编写一个简单的C-程序"><a href="#编写一个简单的C-程序" class="headerlink" title="编写一个简单的C++程序"></a>编写一个简单的C++程序</h2><p>每个 C++ 程序都包含一个或多个函数（function），其中一个必须命名为 <strong>main</strong>。操作系统通过调用 main 来运行 C++ 程序。下面是一个非常简单的 main 函数，它什么也不敢，只是返回给操作系统一个值：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个函数的定义包含四部分：返回类型（return type）、函数名（function name）、一个括号包围的形参列表（parameter list，允许为空）以及函数体（function body）。</p>
-<p>main 函数的返回类型必须为 int，即整数类型。int 类型是一种<strong>内置类型</strong>（built-in type），即语言自身定义的类型。</p>
-<p>函数定义的最后一部分是函数体，它是一个以左花括号（curly brace）开始，以右花括号结束的语句块（block of statements）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在大多数系统中，main 的返回值被用来指示状态。返回 0 表明成功，非 0 的返回值的含义由系统定义，通常用来指出错误类型。</p>
+          <h1 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h1><p>程序用堆（heap）来存储动态分配（dynamically allocate）的对象。动态对象的生存期由程序控制。</p>
+<h2 id="动态内存与智能指针"><a href="#动态内存与智能指针" class="headerlink" title="动态内存与智能指针"></a>动态内存与智能指针</h2><p>C++ 中的动态内存管理通过一对运算符完成：<code>new</code> 在动态内存中为对象分配空间并返回指向该对象的指针，可以选择对对象进行初始化；<code>delete</code> 接受一个动态对象的指针，销毁该对象并释放与之关联的内存。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/07/05/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%AB%A0/#more" rel="contents">
+              <a class="btn" href="/2021/09/13/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -324,7 +408,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -338,7 +422,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/" class="post-title-link" itemprop="url">MySQL学习——一条SQL查询和更新语句是如何执行的？</a>
+            <a href="/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">primer阅读笔记——第十一章关联容器</a>
         </h2>
 
         <div class="post-meta">
@@ -347,98 +431,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-05-31 15:48:54" itemprop="dateCreated datePublished" datetime="2021-05-31T15:48:54+08:00">2021-05-31</time>
+              <time title="创建时间：2021-09-13 09:54:32 / 修改时间：12:34:35" itemprop="dateCreated datePublished" datetime="2021-09-13T09:54:32+08:00">2021-09-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:29:14" itemprop="dateModified" datetime="2021-09-05T11:29:14+08:00">2021-09-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一条SQL查询语句是如何执行的？"><a href="#一条SQL查询语句是如何执行的？" class="headerlink" title="一条SQL查询语句是如何执行的？"></a>一条SQL查询语句是如何执行的？</h1><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210601090053511.png" alt="image-20210601090053511"></p>
-<p>大体来说，<strong>MySQL</strong> 可以分为 <strong>Server</strong> 层和存储引擎层两部分。</p>
-<p><strong>Server</strong> 层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 <strong>MySQL</strong> 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
-<p>而存储引擎层负责数据的存储和提取。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/31/MySQL%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E4%B8%80%E6%9D%A1SQL%E6%9F%A5%E8%AF%A2%E5%92%8C%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/01/Trie%E5%AD%97%E5%85%B8%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/01/Trie%E5%AD%97%E5%85%B8%E6%A0%91/" class="post-title-link" itemprop="url">Trie字典树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-01 11:02:02" itemprop="dateCreated datePublished" datetime="2021-04-01T11:02:02+08:00">2021-04-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:29:30" itemprop="dateModified" datetime="2021-09-05T11:29:30+08:00">2021-09-05</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
                 </span>
             </span>
 
@@ -453,263 +456,395 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="什么是-Trie-树"><a href="#什么是-Trie-树" class="headerlink" title="什么是 Trie 树"></a>什么是 Trie 树</h2><p>是一种专门处理字符串匹配的数据结构，用来解决在一组字符串集合中快速查找某个字符串的问题。</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210401114234276.png" alt="image-20210401114234276"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/01/Trie%E5%AD%97%E5%85%B8%E6%A0%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/28/%E7%BA%BF%E6%AE%B5%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/28/%E7%BA%BF%E6%AE%B5%E6%A0%91/" class="post-title-link" itemprop="url">线段树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-28 10:46:51" itemprop="dateCreated datePublished" datetime="2021-03-28T10:46:51+08:00">2021-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-05 11:30:43" itemprop="dateModified" datetime="2021-09-05T11:30:43+08:00">2021-09-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="线段树（区间树）"><a href="#线段树（区间树）" class="headerlink" title="线段树（区间树）"></a>线段树（区间树）</h2><h3 id="为什么要使用线段树"><a href="#为什么要使用线段树" class="headerlink" title="为什么要使用线段树"></a>为什么要使用线段树</h3><h4 id="最经典的线段树问题：区间染色"><a href="#最经典的线段树问题：区间染色" class="headerlink" title="最经典的线段树问题：区间染色"></a>最经典的线段树问题：区间染色</h4><p>有一面墙，长度为 n，每次选择一段儿墙进行染色</p>
-<p>墙绘制成如下图的样子，墙被分成很多段</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/28/%E7%BA%BF%E6%AE%B5%E6%A0%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/23/%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">堆和优先队列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-23 10:31:39" itemprop="dateCreated datePublished" datetime="2021-03-23T10:31:39+08:00">2021-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-28 10:42:03" itemprop="dateModified" datetime="2021-03-28T10:42:03+08:00">2021-03-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h2><p>普通队列：先进先出；后进后出</p>
-<p>优先队列：出对顺序和如对顺序；和优先级有关</p>
-<h3 id="为什么使用优先队列？"><a href="#为什么使用优先队列？" class="headerlink" title="为什么使用优先队列？"></a>为什么使用优先队列？</h3><p>计算机世界中，最典型的例子就是操作系统中进行任务的调度。在现代操作系统中，会同时执行多个任务。操作系统要为这多个任务分配计算资源，包括分配 CPU 的时间片。具体去分配这些资源时，操作系统要看各个任务的优先级去<strong>动态选择</strong>优先级最高的任务执行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/23/%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">集合和映射</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-22 21:14:25" itemprop="dateCreated datePublished" datetime="2021-03-22T21:14:25+08:00">2021-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-23 10:29:39" itemprop="dateModified" datetime="2021-03-23T10:29:39+08:00">2021-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="集合（Set）"><a href="#集合（Set）" class="headerlink" title="集合（Set）"></a>集合（Set）</h2><p>集合是承载元素的一个容器，集合有一个重要的特点就是<strong>每个元素只能存在一次</strong>。</p>
-<p>很多时候，我们需要这样一种数据结构，它能够帮助我们非常快速地进行<strong>去重</strong>操作</p>
-<p>典型应用：</p>
+          <h1 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h1><p>关联容器支持高效的关键字查找和访问操作。2 个主要的关联容器类型是 <code>map</code> 和 <code>set</code>。</p>
 <ul>
-<li>客户统计</li>
-<li>词汇量统计</li>
+<li><code>map</code> 中的元素是一些键值对（key-value）：关键字起索引作用，值表示与索引相关联的数据。</li>
+<li><code>set</code> 中每个元素只包含一个关键字，支持高效的关键字查询操作：检查一个给定关键字是否在 <code>set</code> 中。</li>
+</ul>
+<p>标准库提供了 8 个关联容器，它们之间的不同体现在三个方面：</p>
+<ul>
+<li>是 <code>map</code> 还是 <code>set</code> 类型。</li>
+<li>是否允许保存重复的关键字。</li>
+<li>是否按顺序保存元素。</li>
+</ul>
+<p>允许重复保存关键字的容器名字都包含单词 <code>multi</code>；无序保存元素的容器名字都以单词 <code>unordered</code> 开头。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/13/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/" class="post-title-link" itemprop="url">二叉树和递归</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-12 17:48:15" itemprop="dateCreated datePublished" datetime="2021-09-12T17:48:15+08:00">2021-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-15 11:42:09" itemprop="dateModified" datetime="2021-09-15T11:42:09+08:00">2021-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二叉树和递归"><a href="#二叉树和递归" class="headerlink" title="二叉树和递归"></a>二叉树和递归</h1><h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>每个递归应该包含两个部分。</p>
+<p>第一部分是递归终止条件。</p>
+<p>第二部分是递归过程。</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210912181500898.png" alt="image-20210912181500898"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/12/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E9%80%92%E5%BD%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">primer阅读笔记——第十章泛型算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-10 19:33:52" itemprop="dateCreated datePublished" datetime="2021-09-10T19:33:52+08:00">2021-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-12 18:27:29" itemprop="dateModified" datetime="2021-09-12T18:27:29+08:00">2021-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="泛型算法"><a href="#泛型算法" class="headerlink" title="泛型算法"></a>泛型算法</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>大多数算法都定义在头文件 <em>algorithm</em> 中。标准库还在头文件 <em>numeric</em> 中定义了一组数值泛型算法。</p>
+<p><code>find</code> 函数将范围中的每个元素与给定值进行比较，返回指向第一个等于给定值的元素的迭代器。如果无匹配元素，则返回其第二个参数来表示搜索失败。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> val = <span class="number">42</span>;	<span class="comment">// 我们将查找的值</span></span><br><span class="line"><span class="comment">// 如果在 vec 中找到想要的元素，则返回结果指向它，否则返回结果为 vec.cend()</span></span><br><span class="line"><span class="keyword">auto</span> result = find(vec.cbegin(), vec.cend(), val);</span><br><span class="line"><span class="comment">// 报告结果</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;The value &quot;</span> &lt;&lt; val</span><br><span class="line">	&lt;&lt; (result == vec.cend()</span><br><span class="line">			? <span class="string">&quot; is not present&quot;</span> : <span class="string">&quot; is present&quot;</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p>迭代器参数令算法不依赖与特定容器，但依赖于元素类型操作。</p>
+<p>泛型算法本身不会执行容器操作，它们只会运行于迭代器之上，执行迭代器操作。算法可能改变容器中元素的值，或者在容器内移动元素，但不会改变底层容器的大小（当算法操作插入迭代器时，迭代器可以向容器中添加元素，但算法自身不会进行这种操作）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%8D%81%E7%AB%A0%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">primer阅读笔记——第九章顺序容器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-10 12:05:47" itemprop="dateCreated datePublished" datetime="2021-09-10T12:05:47+08:00">2021-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-15 12:07:25" itemprop="dateModified" datetime="2021-09-15T12:07:25+08:00">2021-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h1><h2 id="顺序容器概述"><a href="#顺序容器概述" class="headerlink" title="顺序容器概述"></a>顺序容器概述</h2><p>顺序容器类型：</p>
+<table>
+<thead>
+<tr>
+<th align="center">顺序容器类型</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>vector</code></td>
+<td align="center">可变大小数组。支持快速随机访问。在尾部之外的位置插入或删除元素可能很慢</td>
+</tr>
+<tr>
+<td align="center"><code>deque</code></td>
+<td align="center">双端队列。支持快速随机访问。在头尾位置插入/删除速度很快</td>
+</tr>
+<tr>
+<td align="center"><code>list</code></td>
+<td align="center">双向链表。只支持单项顺序访问。在链表任何位置进行插入/删除操作都很快</td>
+</tr>
+<tr>
+<td align="center"><code>forward_list</code></td>
+<td align="center">单向列表。只支持单向顺序访问。在链表任何位置进行插入/删除操作速度都很快</td>
+</tr>
+<tr>
+<td align="center"><code>array</code></td>
+<td align="center">固定大小数组。支持快速随机访问。不能添加或删除元素</td>
+</tr>
+<tr>
+<td align="center"><code>string</code></td>
+<td align="center">与 <code>vector</code> 相似的容器，但专门用于保存字符。随机访问快。在尾部插入/删除速度快</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/10/primer%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B9%9D%E7%AB%A0%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/" class="post-title-link" itemprop="url">primer读书笔记——第八章IO库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-09 20:02:29" itemprop="dateCreated datePublished" datetime="2021-09-09T20:02:29+08:00">2021-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-10 12:05:23" itemprop="dateModified" datetime="2021-09-10T12:05:23+08:00">2021-09-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="IO-库"><a href="#IO-库" class="headerlink" title="IO 库"></a>IO 库</h1><p>部分IO库措施：</p>
+<ul>
+<li><code>istream</code>：输入流类型，提供输入操作。</li>
+<li><code>ostream</code>：输出流类型，提供输出操作。</li>
+<li><code>cin</code>：<code>istream</code> 对象，从标准输入读取数据。</li>
+<li><code>cout</code>：<code>ostream</code> 对象，向标准输出写入数据。</li>
+<li><code>cerr</code>：<code>ostream</code> 对象，通常用于输出程序错误信息，写入标准错误。</li>
+<li><code>&gt;&gt;</code> 运算符：用来从一个 <code>istream</code> 对象读取输入数据。</li>
+<li><code>&lt;&lt;</code> 运算符：用来向一个 <code>ostream</code> 对象写入输出数据。</li>
+<li><code>getline</code> 函数：从一个给定的 <code>istream</code> 读取一行数据，存入一个给定的 <code>string</code> 对象中。</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/22/%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84/#more" rel="contents">
+              <a class="btn" href="/2021/09/09/primer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AC%AC%E5%85%AB%E7%AB%A0IO%E5%BA%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -733,7 +868,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -747,7 +882,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/" class="post-title-link" itemprop="url">二分搜索树</a>
+            <a href="/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">动态规划</a>
         </h2>
 
         <div class="post-meta">
@@ -757,98 +892,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-19 10:49:05" itemprop="dateCreated datePublished" datetime="2021-03-19T10:49:05+08:00">2021-03-19</time>
+              <time title="创建时间：2021-09-09 12:00:12" itemprop="dateCreated datePublished" datetime="2021-09-09T12:00:12+08:00">2021-09-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-20 09:46:11" itemprop="dateModified" datetime="2021-10-20T09:46:11+08:00">2021-10-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="二分搜索树的性质"><a href="#二分搜索树的性质" class="headerlink" title="二分搜索树的性质"></a>二分搜索树的性质</h2><ul>
-<li><p>二分搜索树是二叉树</p>
-</li>
-<li><p>二分搜索树的每个节点的值：</p>
-<ul>
-<li>大于其左子树的所有节点的值</li>
-<li>小于其右子树的所有节点的值</li>
-</ul>
-</li>
-<li><p>每一棵子树也是二分搜索树</p>
-</li>
-</ul>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210322205713772.png" alt="image-20210322205713772"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/19/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">快速排序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-11 15:41:22" itemprop="dateCreated datePublished" datetime="2021-03-11T15:41:22+08:00">2021-03-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-21 12:24:51" itemprop="dateModified" datetime="2021-10-21T12:24:51+08:00">2021-10-21</time>
+                <time title="修改时间：2021-10-22 15:55:52" itemprop="dateModified" datetime="2021-10-22T15:55:52+08:00">2021-10-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -858,9 +909,88 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
                 </span>
-                  ，
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>F(0) = 1, F(1) = 1, F(n) = F(n - 1) + F(n - 2)</p>
+<p>如果用递归方式来求解，则如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>( n == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/08/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">贪心算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-08 21:34:14" itemprop="dateCreated datePublished" datetime="2021-09-08T21:34:14+08:00">2021-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-09 21:26:10" itemprop="dateModified" datetime="2021-09-09T21:26:10+08:00">2021-09-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">排序算法</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">算法与数据结构</span></a>
                 </span>
             </span>
 
@@ -875,16 +1005,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="快速排序法的原理"><a href="#快速排序法的原理" class="headerlink" title="快速排序法的原理"></a>快速排序法的原理</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/6tszqA.png" alt="6tszqA.png"></p>
+          <h2 id="饼干分配"><a href="#饼干分配" class="headerlink" title="饼干分配"></a>饼干分配</h2><p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20210908213513589.png" alt="image-20210908213513589"></p>
 <ul>
-<li><p>首先寻找基准元素，这里示例使用第一个元素作为基准元素</p>
-</li>
-<li><p>分区（ partition ）：所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准值后面</p>
-</li>
-<li><p>递归地对左右两边的子数列进行递归排序</p>
+<li>如 g = [1, 2, 3]，s = [1, 1]，结果为 1</li>
+<li>如 g = [1, 2]，s = [1, 2, 3]，结果为 2</li>
+</ul>
+<p>我们可以尝试将最大的饼干给最贪心的小朋友，这样做的好处是：如果我们最大的饼干可以满足最贪心的小朋友，我们留给下一个次贪心的小朋友的饼干，也是当前看来最大的饼干。从另外一方面，如果当前最大的饼干都不能满足最贪心的小朋友，也就是说所有的饼干都不能满足这个小朋友。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/#more" rel="contents">
+              <a class="btn" href="/2021/09/08/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -907,7 +1036,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -975,14 +1104,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1018,7 +1147,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
