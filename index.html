@@ -509,73 +509,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/13/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%97%A5%E5%BF%97%E5%90%AF%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/13/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%97%A5%E5%BF%97%E5%90%AF%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">Linux学习笔记（十一）--日志/启动/备份管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-13 10:26:44 / 修改时间：10:27:57" itemprop="dateCreated datePublished" datetime="2022-01-13T10:26:44+08:00">2022-01-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="日志-启动-备份管理"><a href="#日志-启动-备份管理" class="headerlink" title="日志/启动/备份管理"></a>日志/启动/备份管理</h1>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/13/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -599,10 +532,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-13 10:26:44 / 修改时间：15:42:22" itemprop="dateCreated datePublished" datetime="2022-01-13T10:26:44+08:00">2022-01-13</time>
+              <time title="创建时间：2022-01-13 10:26:44" itemprop="dateCreated datePublished" datetime="2022-01-13T10:26:44+08:00">2022-01-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 11:42:45" itemprop="dateModified" datetime="2022-01-24T11:42:45+08:00">2022-01-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -627,49 +566,14 @@
           <h1 id="日志-启动-备份管理"><a href="#日志-启动-备份管理" class="headerlink" title="日志/启动/备份管理"></a>日志/启动/备份管理</h1><h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><h3 id="日志管理简介"><a href="#日志管理简介" class="headerlink" title="日志管理简介"></a>日志管理简介</h3><p>查看服务启动</p>
 <p><code>ps aux | grep rsyslogd</code></p>
 <p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113103500301.png" alt="image-20220113103500301"></p>
-<p>查看服务是否自启动</p>
-<p><code>systemctl list-unit-files | grep rsyslog</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113103659152.png" alt="image-20220113103659152"></p>
-<h3 id="常见日志作用"><a href="#常见日志作用" class="headerlink" title="常见日志作用"></a>常见日志作用</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113103913445.png" alt="image-20220113103913445"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113105134929.png" alt="image-20220113105134929"></p>
-<h2 id="rsyslogd-服务"><a href="#rsyslogd-服务" class="headerlink" title="rsyslogd 服务"></a>rsyslogd 服务</h2><h3 id="日志文件格式"><a href="#日志文件格式" class="headerlink" title="日志文件格式"></a>日志文件格式</h3><p>基本日志格式包含以下四列：</p>
-<ul>
-<li>事件产生的时间</li>
-<li>发生事件的服务器的主机名</li>
-<li>产生事件的服务名或程序名</li>
-<li>事件的具体信息</li>
-</ul>
-<h3 id="日志配置文件"><a href="#日志配置文件" class="headerlink" title="日志配置文件"></a>日志配置文件</h3><p><code>/etc/rsyslog.conf</code> 配置文件</p>
-<p><code>authpriv.*         /var/log/secure</code></p>
-<p>服务名称[连接符号] 日志等级     日志记录位置</p>
-<h3 id="服务名称"><a href="#服务名称" class="headerlink" title="服务名称"></a>服务名称</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113113703069.png" alt="image-20220113113703069"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113113758317.png" alt="image-20220113113758317"></p>
-<h3 id="连接符号"><a href="#连接符号" class="headerlink" title="连接符号"></a>连接符号</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113114040593.png" alt="image-20220113114040593"></p>
-<h3 id="日志等级"><a href="#日志等级" class="headerlink" title="日志等级"></a>日志等级</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113114211203.png" alt="image-20220113114211203"></p>
-<h3 id="日志记录位置"><a href="#日志记录位置" class="headerlink" title="日志记录位置"></a>日志记录位置</h3><ul>
-<li>日志文件的绝对路径，如 <code>/var/log/secure</code></li>
-<li>系统设备文件，如 <code>/dev/lp0</code></li>
-<li>转发给远程主机，如 <code>@192.168.0.210:514</code></li>
-<li>用户名，如 “root”</li>
-<li>忽略或丢弃日志，如 “~”</li>
-</ul>
-<h2 id="日志轮替"><a href="#日志轮替" class="headerlink" title="日志轮替"></a>日志轮替</h2><h3 id="日志文件的命名规则"><a href="#日志文件的命名规则" class="headerlink" title="日志文件的命名规则"></a>日志文件的命名规则</h3><ul>
-<li>如果配置文件中有 <strong>dateext</strong> 参数，那么日志会用日期来作为日志文件的后缀，例如 <strong>“secure-20210113”</strong></li>
-<li>如果配置文件中没有 <strong>dateext</strong> 参数，那么日志文件就需要进行改名了。当第一次进行日志轮替时，当前的 <strong>“secure”</strong> 日志会自动改名为 **”secure.1”**，然后新建 <strong>“secure”</strong> 日志，用来保存新的日志。</li>
-</ul>
-<h3 id="logrotate-配置文件"><a href="#logrotate-配置文件" class="headerlink" title="logrotate 配置文件"></a>logrotate 配置文件</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113121555407.png" alt="image-20220113121555407"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113121641663.png" alt="image-20220113121641663"></p>
-<p><strong>RPM</strong> 包安装的大部分都不需要手动加入轮替，源码包安装的需要手动加入轮替。</p>
-<p>比如，把 <strong>apache</strong> 日志加入轮替。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/logrotate.conf</span><br><span class="line">/usr/<span class="built_in">local</span>/apache2/logs/access_log &#123;</span><br><span class="line">	daily</span><br><span class="line">	create</span><br><span class="line">	rotate 30</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="启动管理"><a href="#启动管理" class="headerlink" title="启动管理"></a>启动管理</h2><h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113153408733.png" alt="image-20220113153408733"></p>
-<p><code>runlevel</code> 查看运行级别命令</p>
-<p><code>init 运行级别</code> 改变运行级别命令</p>
-<p>可以通过执行 <code>systemctl set-default</code> 来改变系统开机后直接进入哪个运行级别</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/13/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -719,7 +623,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-13 10:26:13" itemprop="dateModified" datetime="2022-01-13T10:26:13+08:00">2022-01-13</time>
+                <time title="修改时间：2022-01-24 11:42:58" itemprop="dateModified" datetime="2022-01-24T11:42:58+08:00">2022-01-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -743,265 +647,14 @@
 
       
           <h1 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h1><h2 id="进程管理的作用"><a href="#进程管理的作用" class="headerlink" title="进程管理的作用"></a>进程管理的作用</h2><h3 id="判断服务器健康状态"><a href="#判断服务器健康状态" class="headerlink" title="判断服务器健康状态"></a>判断服务器健康状态</h3><p><code>top [选项]</code></p>
-<p>选项：</p>
-<p><code>-d</code> 秒数： 指定 <strong>top</strong> 命令每隔几秒更新。默认是 <strong>3</strong> 秒。</p>
-<p>在 <strong>top</strong> 命令的交互模式当中可以执行的命令：</p>
-<p><strong>? 或 h：</strong> 显示交互模式的帮助</p>
-<p><strong>P：</strong> 以 <strong>CPU</strong> 使用率排序，默认就是此项</p>
-<p><strong>M：</strong> 以内存的使用率排序</p>
-<p><strong>N：</strong> 以 <strong>PID</strong> 排序</p>
-<p><strong>q：</strong> 退出 <strong>top</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112204907411.png" alt="image-20220112204907411"></p>
-<p>开头五行是最重要的。</p>
-<p>第一行信息为任务队列信息：</p>
-<table>
-<thead>
-<tr>
-<th align="center">内容</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">20:48:55</td>
-<td align="center">系统当前时间</td>
-</tr>
-<tr>
-<td align="center">up 1:41</td>
-<td align="center">系统的运行时间，本机已经运行1天13小时32分钟</td>
-</tr>
-<tr>
-<td align="center">2 users</td>
-<td align="center">当前登录了两个用户</td>
-</tr>
-<tr>
-<td align="center">load average: 0.00, 0.02, 0.05</td>
-<td align="center">系统在之前 1 分钟，5 分钟，15 分钟的平均负载。</td>
-</tr>
-</tbody></table>
-<p>第二行为进程信息：</p>
-<table>
-<thead>
-<tr>
-<th align="center">内容</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Tasks: 227 total</td>
-<td align="center">系统中的进程总数</td>
-</tr>
-<tr>
-<td align="center">2 running</td>
-<td align="center">正在运行的进程数</td>
-</tr>
-<tr>
-<td align="center">225 sleeping</td>
-<td align="center">睡眠的进程</td>
-</tr>
-<tr>
-<td align="center">0 stopped</td>
-<td align="center">正在停止的进程</td>
-</tr>
-<tr>
-<td align="center">0 zombie</td>
-<td align="center">僵尸进程。如果不是 0，需要手工检查僵尸进程</td>
-</tr>
-</tbody></table>
-<p>第三行为 <strong>CPU</strong> 信息：</p>
-<table>
-<thead>
-<tr>
-<th align="center">内容</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Cpu（s）: 0.1 us</td>
-<td align="center">用户模式占用的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.1 sy</td>
-<td align="center">系统模式占用的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.0%ni</td>
-<td align="center">改变过优先级的用户进程占用的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">99.7%id</td>
-<td align="center">空闲 <strong>CPU</strong> 的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.1%wa</td>
-<td align="center">等待输入 / 输出的进程的占用 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.0%hi</td>
-<td align="center">硬中断请求服务占用的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.1%si</td>
-<td align="center">软中断请求服务占用的 <strong>CPU</strong> 百分比</td>
-</tr>
-<tr>
-<td align="center">0.0%st</td>
-<td align="center">st（<strong>steal time</strong>）虚拟时间百分比。就是当有虚拟机时，虚拟 <strong>CPU</strong> 等待实际 <strong>CPU</strong> 的时间百分比。</td>
-</tr>
-</tbody></table>
-<p>第四行为物理内存信息</p>
-<table>
-<thead>
-<tr>
-<th align="center">内容</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Mem: 625344k total</td>
-<td align="center">物理内存的总量，单位 <strong>KB</strong></td>
-</tr>
-<tr>
-<td align="center">571504k used</td>
-<td align="center">已经使用的物理内存数量</td>
-</tr>
-<tr>
-<td align="center">53840k free</td>
-<td align="center">空闲的物理内存数量</td>
-</tr>
-<tr>
-<td align="center">65800k buffers</td>
-<td align="center">作为缓冲的内存数量</td>
-</tr>
-</tbody></table>
-<p>第五行为交换分区（<strong>swap</strong>）信息</p>
-<table>
-<thead>
-<tr>
-<th align="center">内容</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Swap：524280k total</td>
-<td align="center">交换分区（虚拟内存）的总大小</td>
-</tr>
-<tr>
-<td align="center">0k used</td>
-<td align="center">已经使用的交换分区的大小</td>
-</tr>
-<tr>
-<td align="center">524280k free</td>
-<td align="center">空闲交换分区的大小</td>
-</tr>
-<tr>
-<td align="center">409280k cached</td>
-<td align="center">作为缓存的交换分区的大小</td>
-</tr>
-</tbody></table>
-<h3 id="查看系统中所有进程"><a href="#查看系统中所有进程" class="headerlink" title="查看系统中所有进程"></a>查看系统中所有进程</h3><p><code>ps aux</code> 查看系统中所有进程，使用 <strong>BSD</strong> 操作系统格式</p>
-<p><strong>USER:</strong> 该进程是由哪个用户产生的</p>
-<p><strong>PID:</strong> 进程的 <strong>ID</strong> 号</p>
-<p><strong>%CPU:</strong> 该进程占用 <strong>CPU</strong> 资源的百分比</p>
-<p><strong>%MEM:</strong> 该进程占用物理内存的百分比</p>
-<p><strong>VSZ:</strong> 该进程占用虚拟内存的大小，单位 <strong>KB</strong></p>
-<p><strong>RSS:</strong> 该进程占用实际物理内存的大小，单位 <strong>KB</strong></p>
-<p><strong>TTY:</strong> 该进程实在哪个终端中运行的。其中 <strong>tty1 - tty7</strong> 代表本地控制台终端，<strong>tty1-tty6</strong> 是本地的字符界面终端，<strong>tty7</strong> 是图形终端。<strong>pts/0-255</strong> 代表虚拟终端。</p>
-<p><strong>STAT:</strong> 进程状态。常见的状态有：<strong>R:</strong> 运行、<strong>S:</strong> 睡眠、<strong>T:</strong> 停止状态、<strong>s:</strong> 包含子进程、**+:** 位于后台。</p>
-<p><strong>START:</strong> 该进程的启动时间。</p>
-<p><strong>TIME:</strong> 该进程占用 <strong>CPU</strong> 的运算时间。</p>
-<p><strong>COMMAND:</strong> 产生此进程的命令名。</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112200622040.png" alt="image-20220112200622040"></p>
-<p><code>ps -le</code> 查看系统中所有进程，使用 <strong>Linux</strong> 标准命令格式</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112200335103.png" alt="image-20220112200335103"></p>
-<p><code>pstree</code> 命令查看进程树</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112211947553.png" alt="image-20220112211947553"></p>
-<ul>
-<li>杀死进程</li>
-</ul>
-<p><code>kill -l</code>    查看可用的进程号</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112212210488.png" alt="image-20220112212210488"></p>
-<p>常用的：</p>
-<table>
-<thead>
-<tr>
-<th>信号代号</th>
-<th>信号名称</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>SIGHUP</td>
-<td>该信号让进程立即关闭，然后重新读取配置文件之后重启。</td>
-</tr>
-<tr>
-<td>9</td>
-<td>SIGKILL</td>
-<td>用来立即结束程序的运行，本信号不能被阻塞、处理和忽略。一般用来强制终止进程。</td>
-</tr>
-<tr>
-<td>15</td>
-<td>SIGTERM</td>
-<td>正常结束进程的信号，<strong>kill</strong> 命令的默认信号。</td>
-</tr>
-</tbody></table>
-<h2 id="工作管理"><a href="#工作管理" class="headerlink" title="工作管理"></a>工作管理</h2><h3 id="把进程放入后台"><a href="#把进程放入后台" class="headerlink" title="把进程放入后台"></a>把进程放入后台</h3><ul>
-<li>执行某个命令后输入 <code>&amp;</code> 符号</li>
-</ul>
-<p>例如：</p>
-<p><code>tar -zcf etc.tar.gz /etc &amp;</code></p>
-<ul>
-<li><code>ctrl+z</code></li>
-</ul>
-<p>例如：<code>top</code></p>
-<p>在 <strong>top</strong> 命令执行的过程中，按下 <strong>ctrl+z</strong> 快捷键。但是放入后台就暂停运行了</p>
-<h3 id="查看后台的工作"><a href="#查看后台的工作" class="headerlink" title="查看后台的工作"></a>查看后台的工作</h3><p><code>jobs [-l]</code></p>
-<p>选项：</p>
-<p><code>-l</code>：显示工作的 <strong>PID</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112214005479.png" alt="image-20220112214005479"></p>
-<h3 id="将后台暂停的工作恢复到前台执行"><a href="#将后台暂停的工作恢复到前台执行" class="headerlink" title="将后台暂停的工作恢复到前台执行"></a>将后台暂停的工作恢复到前台执行</h3><p><code>fg %工作号</code></p>
-<p>参数：</p>
-<p>%工作号：注意工作号和 <strong>PID</strong> 的区别</p>
-<h3 id="把后台暂停的工作恢复到后台执行"><a href="#把后台暂停的工作恢复到后台执行" class="headerlink" title="把后台暂停的工作恢复到后台执行"></a>把后台暂停的工作恢复到后台执行</h3><p><code>bg %工作号</code></p>
-<p>注：后台恢复执行的命令，是不能和前台有交互的，否则不能恢复到后台执行</p>
-<h2 id="系统资源查看"><a href="#系统资源查看" class="headerlink" title="系统资源查看"></a>系统资源查看</h2><h3 id="vmstat-命令监控系统资源"><a href="#vmstat-命令监控系统资源" class="headerlink" title="vmstat 命令监控系统资源"></a>vmstat 命令监控系统资源</h3><p><code>vmstat [刷新延时 刷新次数]</code></p>
-<p>例如：</p>
-<p><code>vmstat 1 3</code> 监听三次系统资源，每次间隔一秒钟</p>
-<h3 id="dmesg-开机时内核检测信息"><a href="#dmesg-开机时内核检测信息" class="headerlink" title="dmesg 开机时内核检测信息"></a>dmesg 开机时内核检测信息</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113093236833.png" alt="image-20220113093236833"></p>
-<h3 id="free-命令查看内存使用状态"><a href="#free-命令查看内存使用状态" class="headerlink" title="free 命令查看内存使用状态"></a>free 命令查看内存使用状态</h3><p><code>free [-b|-k|-m|-g]</code></p>
-<p>选项：</p>
-<p><code>-b</code>：以字节为单位显示</p>
-<p><code>-k</code>：以 <strong>KB</strong> 为单位显示，默认就是以 <strong>KB</strong> 为单位显示</p>
-<p><code>-m</code>：以 <strong>MB</strong> 为单位显示</p>
-<p><code>-g</code>：以 <strong>GB</strong> 为单位显示</p>
-<h3 id="缓存与缓冲的区别"><a href="#缓存与缓冲的区别" class="headerlink" title="缓存与缓冲的区别"></a>缓存与缓冲的区别</h3><p>简单来说缓存（<strong>cache</strong>）是用来加速数据从硬盘中 “读取” 的，而缓冲（<strong>buffer</strong>） 是用来加速数据 “写入” 硬盘的。</p>
-<h3 id="查看-CPU-信息"><a href="#查看-CPU-信息" class="headerlink" title="查看 CPU 信息"></a>查看 CPU 信息</h3><p><code>cat /proc/cpuinfo</code></p>
-<h3 id="uptime-命令"><a href="#uptime-命令" class="headerlink" title="uptime 命令"></a>uptime 命令</h3><p><code>uptime</code> 显示系统的启动时间和平均负载，也就是 <strong>top</strong> 命令的第一行。<code>w</code> 命令也可以看到这个数据。</p>
-<h3 id="查看系统与内核相关信息"><a href="#查看系统与内核相关信息" class="headerlink" title="查看系统与内核相关信息"></a>查看系统与内核相关信息</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113095155873.png" alt="image-20220113095155873"></p>
-<p><code>uname [选项]</code></p>
-<p>选项：</p>
-<p><code>-a</code>：查看系统所有相关信息；</p>
-<p><code>-r</code>：查看内核版本；</p>
-<p><code>-s</code>：查看内核名称。</p>
-<h3 id="列出进程打开或使用的文件信息"><a href="#列出进程打开或使用的文件信息" class="headerlink" title="列出进程打开或使用的文件信息"></a>列出进程打开或使用的文件信息</h3><p><code>lsof [选项]</code> 列出进程调用或打开的文件的信息</p>
-<p>选项：</p>
-<p><code>-c</code> 字符串：只列出以字符串开头的进程打开的文件</p>
-<p><code>-u</code> 用户名：只列出某个用户的进程打开的文件</p>
-<p><code>-p</code> pid：列出某个 <strong>PID</strong> 进程打开的文件</p>
-<h2 id="系统定时任务"><a href="#系统定时任务" class="headerlink" title="系统定时任务"></a>系统定时任务</h2><h3 id="crond-服务管理与访问控制"><a href="#crond-服务管理与访问控制" class="headerlink" title="crond 服务管理与访问控制"></a>crond 服务管理与访问控制</h3><p><code>systemctl restart crond.service</code></p>
-<p><code>chkconfig crond on</code></p>
-<h3 id="编辑定时任务"><a href="#编辑定时任务" class="headerlink" title="编辑定时任务"></a>编辑定时任务</h3><p><code>crontab [选项]</code></p>
-<p>选项：</p>
-<p><code>-e</code>    编辑 <strong>crontab</strong> 定时任务</p>
-<p><code>-l</code>    查询 <strong>crontab</strong> 任务</p>
-<p><code>-r</code>    删除当前用户所有的 <strong>crontab</strong> 任务</p>
-<p>标准格式：</p>
-<p><code>***** command</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113101838579.png" alt="image-20220113101838579"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113101813613.png" alt="image-20220113101813613"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113102158073.png" alt="image-20220113102158073"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220113102253523.png" alt="image-20220113102253523"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/12/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%8D%81%EF%BC%89%E2%80%94%E2%80%94%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1043,10 +696,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-12 18:32:21 / 修改时间：19:50:07" itemprop="dateCreated datePublished" datetime="2022-01-12T18:32:21+08:00">2022-01-12</time>
+              <time title="创建时间：2022-01-12 18:32:21" itemprop="dateCreated datePublished" datetime="2022-01-12T18:32:21+08:00">2022-01-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 11:43:06" itemprop="dateModified" datetime="2022-01-24T11:43:06+08:00">2022-01-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1070,20 +729,14 @@
       
           <h1 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h1><h2 id="服务分类"><a href="#服务分类" class="headerlink" title="服务分类"></a>服务分类</h2><h3 id="RPM-包默认安装的服务"><a href="#RPM-包默认安装的服务" class="headerlink" title="RPM 包默认安装的服务"></a>RPM 包默认安装的服务</h3><h4 id="查询已安装的服务"><a href="#查询已安装的服务" class="headerlink" title="查询已安装的服务"></a>查询已安装的服务</h4><p><code>chkconfig --list</code></p>
 <p>查看服务自启动状态，可以看到所有 <strong>RPM</strong> 包安装的服务</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112191412559.png" alt="image-20220112191412559"></p>
-<p><code>systemctl list-unit-files</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112191543970.png" alt="image-20220112191543970"></p>
-<p><code>/var/lib/</code>：服务产生的数据放在这里</p>
-<p><code>/var/log/</code>：日志</p>
-<h4 id="独立的服务"><a href="#独立的服务" class="headerlink" title="独立的服务"></a>独立的服务</h4><p><code>/usr/lib/systemd/system</code> ：<strong>CentOS 7</strong> 下的启动脚本位置</p>
-<p><code>/etc/sysconfig/</code>：初始化环境配置文件位置</p>
-<p>启动：<code>systemctl start XXX.service</code></p>
-<h4 id="基于-xinetd-服务"><a href="#基于-xinetd-服务" class="headerlink" title="基于 xinetd 服务"></a>基于 xinetd 服务</h4><p><code>/etc/xinetd.conf</code>：<strong>xinetd</strong> 配置文件</p>
-<p><code>/etc/xinetd.d</code>：基于 <strong>xinetd</strong> 服务的启动脚本</p>
-<h3 id="源码包安装的服务"><a href="#源码包安装的服务" class="headerlink" title="源码包安装的服务"></a>源码包安装的服务</h3><h4 id="查询已安装的服务-1"><a href="#查询已安装的服务-1" class="headerlink" title="查询已安装的服务"></a>查询已安装的服务</h4><p>查看服务安装位置，一般是 <code>/usr/local</code> 下</p>
-<h4 id="源码包安装服务的启动"><a href="#源码包安装服务的启动" class="headerlink" title="源码包安装服务的启动"></a>源码包安装服务的启动</h4><p>使用绝对路径，调用脚本来启动。不同的源码包的启动脚本不同。可以查看源码包的安装说明，查看启动脚本的方法。</p>
-<p><code>/usr/local/apache2/bin/apachectl start|stop</code></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/12/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1125,10 +778,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-12 10:25:32 / 修改时间：18:14:55" itemprop="dateCreated datePublished" datetime="2022-01-12T10:25:32+08:00">2022-01-12</time>
+              <time title="创建时间：2022-01-12 10:25:32" itemprop="dateCreated datePublished" datetime="2022-01-12T10:25:32+08:00">2022-01-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 11:43:14" itemprop="dateModified" datetime="2022-01-24T11:43:14+08:00">2022-01-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1152,144 +811,14 @@
       
           <h1 id="Shell-基础"><a href="#Shell-基础" class="headerlink" title="Shell 基础"></a>Shell 基础</h1><h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2><h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112103931007.png" alt="image-20220112103931007"></p>
 <p>选项：</p>
-<p><code>-e</code>：支持反斜线控制的字符转换</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112104228752.png" alt="image-20220112104228752"></p>
-<h3 id="编辑第一个-shell-脚本"><a href="#编辑第一个-shell-脚本" class="headerlink" title="编辑第一个 shell 脚本"></a>编辑第一个 shell 脚本</h3><p><code>vim hello.sh</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112105302873.png" alt="image-20220112105302873"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112105212615.png" alt="image-20220112105212615"></p>
-<h3 id="dos2unix"><a href="#dos2unix" class="headerlink" title="dos2unix"></a>dos2unix</h3><p><strong>dos2unix</strong> 可以将一些在 <strong>Winodws</strong> 下编辑的脚本格式转换成 <strong>Linux</strong> 支持的格式，从而可以在 <strong>Linux</strong> 下运行。</p>
-<h2 id="Bash-基本功能"><a href="#Bash-基本功能" class="headerlink" title="Bash 基本功能"></a>Bash 基本功能</h2><h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><p><code>history [选项] [历史命令保存文件]</code></p>
-<p>选项：</p>
-<p><code>-c</code> 清空历史命令</p>
-<p><code>-w</code> 把缓存中的历史命令写入历史命令保存文件（默认保存在 <code>~/.bash_history</code>）</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112112928034.png" alt="image-20220112112928034"></p>
-<p>历史命令默认会保存 <strong>1000</strong> 条，可以在环境变量配置文件 <code>/etc/profile</code> 中进行修改。</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112113207975.png" alt="image-20220112113207975"></p>
-<h4 id="历史命令的调用"><a href="#历史命令的调用" class="headerlink" title="历史命令的调用"></a>历史命令的调用</h4><ul>
-<li>使用上、下箭头调用以前的历史命令</li>
-<li>使用 <strong>“!n”</strong> 重复执行第 <strong>n</strong> 条历史命令</li>
-<li>使用 <strong>“!!”</strong> 重复执行上一条命令</li>
-<li>使用 <strong>“!字串”</strong> 重复执行最后一条以该字串开头的命令</li>
-</ul>
-<h3 id="命令别名与常用快捷键"><a href="#命令别名与常用快捷键" class="headerlink" title="命令别名与常用快捷键"></a>命令别名与常用快捷键</h3><p><code>alias 别名=&#39;原命令&#39;</code>  设定命令别名 —— 临时生效</p>
-<p><code>alias</code> 查询命令别名</p>
-<p><code>vi /root/.bashrc</code> 永久生效</p>
-<p>常用快捷键：</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112114700511.png" alt="image-20220112114700511"></p>
-<h3 id="输入输出重定向"><a href="#输入输出重定向" class="headerlink" title="输入输出重定向"></a>输入输出重定向</h3><p>标准输入输出是键盘和显示器</p>
-<p><strong>输出重定向</strong>就是让输出到文件中</p>
-<p><code>命令 &gt; 文件</code> ：以覆盖的方式，把命令的正确输出输出到指定的文件或设备当中。</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112120717431.png" alt="image-20220112120717431"></p>
-<p><code>命令 &gt;&gt; 文件</code>：以追加的方式，把命令的正确输出输出到指定的文件或设备当中。</p>
-<p>还可以把错误信息输入到文件：</p>
-<p><code>错误命令 2&gt; 文件</code></p>
-<p><code>错误命令 2&gt;&gt; 文件</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112144031488.png" alt="image-20220112144031488"></p>
-<p><strong>重要</strong></p>
-<p><code>命令 &amp;&gt; 文件</code> 以覆盖的方式，把正确输出和错误输出都保存到同一个文件当中。</p>
-<p><code>命令 &amp;&gt;&gt; 文件</code> 以追加的方式，把正确输出和错误输出都保存到同一个文件当中。</p>
-<p><code>命令&gt;&gt;文件1 2&gt;&gt;文件2</code> 把正确的输出追加到文件 <strong>1</strong> 中，把错误的输出追加到文件 <strong>2</strong> 中。</p>
-<p><strong>输入重定向</strong></p>
-<p><code>wc [选项] [文件名]</code></p>
-<p>选项：</p>
-<p><code>-c</code> 统计字节数</p>
-<p><code>-w</code> 统计单词数</p>
-<p><code>-l</code> 统计行数</p>
-<h3 id="多命令顺序执行与管道符"><a href="#多命令顺序执行与管道符" class="headerlink" title="多命令顺序执行与管道符"></a>多命令顺序执行与管道符</h3><p><strong>多命令顺序执行</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112145554467.png" alt="image-20220112145554467"></p>
-<p>例子：</p>
-<p><code>dd if=输入文件 of=输出文件 bs=字节数 count=个数</code></p>
-<p>选项：</p>
-<p><code>if=输入文件</code>    指定源文件或源设备</p>
-<p><code>of=输出文件</code>    指定目标文件或目标设备</p>
-<p><code>bs=字节数</code>        指定一次输入/输出多少字节，即把这些字节看做一个数据块</p>
-<p><code>count=个数</code>     指定输入/输出多少个数据块</p>
-<p>比如：</p>
-<p><code>date ; dd if=/dev/zero of=/root/testfile bs=1k count=100000;date</code> 可以计算出生成 <strong>100M</strong> 的文件需要多长时间</p>
-<p><strong>管道符</strong></p>
-<p><code>命令1 | 命令2</code> ：命令 <strong>1</strong> 的正确输出作为命令 <strong>2</strong> 的操作对象</p>
-<p>例如：</p>
-<p><code>ll -a /etc/ | more</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112151709699.png" alt="image-20220112151709699"></p>
-<p><code>netstat -an | grep &quot;LISTENING&quot;</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112152044642.png" alt="image-20220112152044642"></p>
-<h3 id="通配符与其他特殊符号"><a href="#通配符与其他特殊符号" class="headerlink" title="通配符与其他特殊符号"></a>通配符与其他特殊符号</h3><p><strong>通配符</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112152437910.png" alt="image-20220112152437910"></p>
-<p>例如：</p>
-<p><code>rm -rf *</code> 删除当前目录下所有文件</p>
-<p><strong>其他特殊符号</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112153309088.png" alt="image-20220112153309088"></p>
-<h2 id="Bash-变量"><a href="#Bash-变量" class="headerlink" title="Bash 变量"></a>Bash 变量</h2><h3 id="用户自定义变量"><a href="#用户自定义变量" class="headerlink" title="用户自定义变量"></a>用户自定义变量</h3><p><strong>变量设置规则：</strong></p>
-<ul>
-<li>变量名称可以由字母、数字和下划线组成，但是不能以数字开头。如果变量名是 “2name” 则是错误的。</li>
-<li>在 <strong>Bash</strong> 中，变量的默认类型都是字符串型，如果要进行数值运算，则必须指定变量类型为数值型。</li>
-<li>变量用等号连接值，等号左右两侧不能有空格。</li>
-<li>变量的值如果有空格，需要使用单引号或双引号包括。</li>
-<li>在变量的值中，可以使用 “\“ 转义符。</li>
-<li>如果需要增加变量的值，那么可以进行变量值的叠加。不过变量需要用双引号包含 <code>&quot;$变量名&quot;</code> 或用 <code>$&#123;变量名&#125;</code> 包含。</li>
-<li>如果是把命令的结果作为变量值赋予变量，则需要使用反引号或 $() 包含命令。</li>
-</ul>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112160634014.png" alt="image-20220112160634014"></p>
-<ul>
-<li>环境变量名建议大写，便于区分。</li>
-</ul>
-<p>举例：</p>
-<ul>
-<li>变量定义</li>
-</ul>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112161058187.png" alt="image-20220112161058187"></p>
-<ul>
-<li>变量叠加</li>
-</ul>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112161219987.png" alt="image-20220112161219987"></p>
-<ul>
-<li>变量查看</li>
-</ul>
-<p><code>set</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112161336045.png" alt="image-20220112161336045"></p>
-<ul>
-<li>变量 删除</li>
-</ul>
-<p><code>unset name</code></p>
-<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>环境变量就相当于全局变量。</p>
-<h4 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h4><p><code>export 变量名=变量值</code>  声明变量</p>
-<p><code>env</code>  查询变量</p>
-<p><code>unset 变量名</code> 删除变量</p>
-<h4 id="系统常见环境变量"><a href="#系统常见环境变量" class="headerlink" title="系统常见环境变量"></a>系统常见环境变量</h4><p><strong>PATH：</strong>系统查找命令的路径</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112163813567.png" alt="image-20220112163813567"></p>
-<p><strong>PS1：</strong> 定义系统提示符的变量</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112164150324.png" alt="image-20220112164150324"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112164310179.png" alt="image-20220112164310179"></p>
-<h3 id="位置参数变量"><a href="#位置参数变量" class="headerlink" title="位置参数变量"></a>位置参数变量</h3><ul>
-<li><code>$n</code>：<strong>n</strong> 为数字，**$0** 代表命令本身，**$1-$9** 代表第一个到第九个参数，十以上的参数需要用大括号包含，如 <code>$&#123;10&#125;</code></li>
-</ul>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112165419810.png" alt="image-20220112165419810"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112165342396.png" alt="image-20220112165342396"></p>
-<ul>
-<li><code>$*</code>：代表命令行中所有的参数，<code>$*</code> 把所有的参数看成一个整体</li>
-<li><code>$@</code>：代表命令行中所有的参数，不过 <code>$@</code> 把每个参数区分对待</li>
-<li><code>$#</code>：代表命令行中所有参数的个数</li>
-</ul>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112170311884.png" alt="image-20220112170311884"></p>
-<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112175501777.png" alt="image-20220112175501777"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220112175347523.png" alt="image-20220112175347523"></p>
-<h4 id="接收键盘输入"><a href="#接收键盘输入" class="headerlink" title="接收键盘输入"></a>接收键盘输入</h4><p><code>read [选项] [变量名]</code></p>
-<p>选项：</p>
-<p><code>-p</code> “提示信息”：在等待 <code>read</code> 输入时，输出提示信息</p>
-<p><code>-t</code> 秒数：<code>read</code> 命令会一直等待用户输入，使用此选项可以指定等待时间</p>
-<p><code>-n</code> 字符数：<code>read</code> 命令只接受指定的字符数，就会执行</p>
-<p><code>-s</code>：隐藏输入的数据，适用于机密信息的输入</p>
-<h3 id="环境变量配置文件"><a href="#环境变量配置文件" class="headerlink" title="环境变量配置文件"></a>环境变量配置文件</h3><h4 id="source-命令"><a href="#source-命令" class="headerlink" title="source 命令"></a>source 命令</h4><p><code>source 配置文件</code> 或 <code>. 配置文件</code></p>
-<p>环境变量配置文件主要有：</p>
-<ul>
-<li><code>/etc/profile</code></li>
-<li><code>/etc/profile.d/*.sh</code></li>
-<li><code>~/.bash_profile</code></li>
-<li><code>~/.bashrc</code></li>
-<li><code>/etc/bashrc</code></li>
-</ul>
-<p>其中，在 <strong>/etc</strong> 目录下的是对所有的用户都生效的。而另外两个是只对 <strong>root</strong> 用户生效的。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/12/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94Shell%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1339,7 +868,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-12 10:01:49" itemprop="dateModified" datetime="2022-01-12T10:01:49+08:00">2022-01-12</time>
+                <time title="修改时间：2022-01-24 11:43:21" itemprop="dateModified" datetime="2022-01-24T11:43:21+08:00">2022-01-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1365,86 +894,96 @@
           <h1 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h1><h2 id="RPM-命令管理"><a href="#RPM-命令管理" class="headerlink" title="RPM 命令管理"></a>RPM 命令管理</h2><h3 id="RPM-包命名规则"><a href="#RPM-包命名规则" class="headerlink" title="RPM 包命名规则"></a>RPM 包命名规则</h3><p><strong>httpd-2.2.15-15.e16.centos.i686.rpm</strong></p>
 <p><strong>httpd</strong> 软件包名</p>
 <p><strong>2.2.15</strong> 软件版本</p>
-<p><strong>15</strong> 软件发布的次数</p>
-<p><strong>e16.centos</strong> 适合的 <strong>Linux</strong> 平台</p>
-<p><strong>i686</strong> 适合的硬件平台</p>
-<p><strong>rpm</strong> rpm 包扩展名</p>
-<h3 id="RPM-包依赖性"><a href="#RPM-包依赖性" class="headerlink" title="RPM 包依赖性"></a>RPM 包依赖性</h3><p>树形依赖：a =&gt; b =&gt; c</p>
-<p>环形依赖：a =&gt; b =&gt; c =&gt; a</p>
-<p>模块依赖：模块依赖查询网站：</p>
-<p>​    <a target="_blank" rel="noopener" href="http://www.rpmfind.net/">www.rpmfind.net</a></p>
-<h3 id="RPM-安装"><a href="#RPM-安装" class="headerlink" title="RPM 安装"></a>RPM 安装</h3><p><code>rpm -ivh 包全名</code></p>
-<p>选项：</p>
-<p><code>-i</code> <strong>install</strong> 安装</p>
-<p><code>-v</code> <strong>verbose</strong> 显示详细信息</p>
-<p><code>-h</code> <strong>hash</strong> 显示进度</p>
-<p><code>--nodeps</code> 不检测依赖性</p>
-<h3 id="RPM-包升级"><a href="#RPM-包升级" class="headerlink" title="RPM 包升级"></a>RPM 包升级</h3><p><code>rpm -Uvh</code> 包全名</p>
-<h3 id="RPM-卸载"><a href="#RPM-卸载" class="headerlink" title="RPM 卸载"></a>RPM 卸载</h3><p><code>rpm -e 包名</code></p>
-<p>选项：</p>
-<p> <code>-e</code>  <strong>erase</strong>  卸载</p>
-<h2 id="RPM-命令查询"><a href="#RPM-命令查询" class="headerlink" title="RPM 命令查询"></a>RPM 命令查询</h2><h3 id="查询是否安装"><a href="#查询是否安装" class="headerlink" title="查询是否安装"></a>查询是否安装</h3><p><code>rpm -q 包名</code> 查询包是否安装</p>
-<p><code>rpm -qa</code> 查询所有已经安装的 <strong>RPM</strong> 包</p>
-<p> <img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111203055116.png" alt="image-20220111203055116"></p>
-<p><code>rpm -qi</code> 查看包的详细信息</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111203406554.png" alt="image-20220111203406554"></p>
-<h3 id="查询包中文件安装位置"><a href="#查询包中文件安装位置" class="headerlink" title="查询包中文件安装位置"></a>查询包中文件安装位置</h3><p><code>rpm -ql 包名</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111203721619.png" alt="image-20220111203721619"></p>
-<h3 id="查询系统文件属于哪个-RPM-包"><a href="#查询系统文件属于哪个-RPM-包" class="headerlink" title="查询系统文件属于哪个 RPM 包"></a>查询系统文件属于哪个 RPM 包</h3><p><code>rpm -qf 系统文件名</code> 查询系统文件属于哪个软件包（file）</p>
-<h3 id="查询包的依赖性"><a href="#查询包的依赖性" class="headerlink" title="查询包的依赖性"></a>查询包的依赖性</h3><p><code>rpm -qR 包名</code> </p>
-<p>选项：</p>
-<p><code>-R</code> 查询软件包的依赖性</p>
-<p><code>-p</code> 查询未安装包信息</p>
-<h2 id="RPM-校验和文件提取"><a href="#RPM-校验和文件提取" class="headerlink" title="RPM 校验和文件提取"></a>RPM 校验和文件提取</h2><p><code>rpm -V 已安装的包名</code>  verify</p>
-<h3 id="RPM-包中文件提取"><a href="#RPM-包中文件提取" class="headerlink" title="RPM 包中文件提取"></a>RPM 包中文件提取</h3><p>比如</p>
-<p><code>rpm -qf /bin/ls</code>  查询 <strong>ls</strong> 命令属于哪个软件包</p>
-<p><code>mv /bin/ls  /tmp/</code>  误删除 <strong>ls</strong> 命令</p>
-<p><code>rpm2cpio /mnt/cdrom/Packages/coreutils-8.4-19.e16.i686.rpm | cpio -div ./bin/ls</code>  提取 <strong>RPM</strong> 包中 <strong>ls</strong> 命令到当前目录的 <code>/bin/ls</code> 下</p>
-<p><code>cp /root/bin/ls /bin/</code> 把 <strong>ls</strong> 命令复制回 <strong>/bin/</strong> 目录，修复文件损失。</p>
-<h2 id="RPM-包管理——yum-在线管理"><a href="#RPM-包管理——yum-在线管理" class="headerlink" title="RPM 包管理——yum 在线管理"></a>RPM 包管理——yum 在线管理</h2><h3 id="常用-yum-命令"><a href="#常用-yum-命令" class="headerlink" title="常用 yum 命令"></a>常用 yum 命令</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><p><code>yum list</code> 查询所有可用软件包列表</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111212518945.png" alt="image-20220111212518945"></p>
-<p><code>yum search 关键字</code> 搜索服务器上所有和关键字相关的包</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111212656187.png" alt="image-20220111212656187"></p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p><code>yum -y install 包名</code></p>
-<p><code>-y</code> 自动回答 <strong>yes</strong></p>
-<h4 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h4><p><code>yum -y update 包名</code></p>
-<h4 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h4><p><code>yum -y remove 包名</code></p>
-<p>非常危险，不安全，慎用</p>
-<h3 id="光盘-yum-源搭建"><a href="#光盘-yum-源搭建" class="headerlink" title="光盘 yum 源搭建"></a>光盘 yum 源搭建</h3><p>第一步，挂载</p>
-<p><code>mount /dev/sr0 /mnt/cdrom/</code></p>
-<p>第二步，让网络 <strong>yum</strong> 源文件失效，可以更改这几个文件的名称</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111215439188.png" alt="image-20220111215439188"></p>
-<p>第三步，修改光盘 <strong>yum</strong> 源文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111215842599.png" alt="image-20220111215842599"></p>
-<h2 id="源码包"><a href="#源码包" class="headerlink" title="源码包"></a>源码包</h2><h3 id="与-RPM-包的区别"><a href="#与-RPM-包的区别" class="headerlink" title="与 RPM 包的区别"></a>与 RPM 包的区别</h3><h4 id="默认安装位置"><a href="#默认安装位置" class="headerlink" title="默认安装位置"></a>默认安装位置</h4><p>RPM 一般安装在默认位置：</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111221058903.png" alt="image-20220111221058903"></p>
-<p>源码包安装在指定位置当中，一般是 <code>/usr/local/软件名/</code></p>
-<h4 id="默认安装位置不同带来的影响"><a href="#默认安装位置不同带来的影响" class="headerlink" title="默认安装位置不同带来的影响"></a>默认安装位置不同带来的影响</h4><p><strong>RPM</strong> 包安装的服务可以使用系统服务管理命令（<strong>service</strong>）来管理，例如 <strong>RPM</strong> 包安装的 <strong>apache</strong> 的启动方法是：</p>
-<p><code>/etc/rc.d/init.d/httpd start</code></p>
-<p><code>service httpd start</code></p>
-<p>而源码包安装的服务则不能被服务管理命令管理，因为没有安装到默认路径中。所以只能用绝对路径进行服务的管理，如：</p>
-<p><code>/usr/local/apache2/bin/apachectl start</code></p>
-<h3 id="源码包安装过程"><a href="#源码包安装过程" class="headerlink" title="源码包安装过程"></a>源码包安装过程</h3><p>源代码保存位置：<code>usr/local/src/</code></p>
-<p>软件安装位置：<code>/usr/local/</code></p>
-<p>第一步：软件配置与检查</p>
-<p><code>./configure --prefix=/usr/local/apache2</code></p>
-<p>第二步：编译</p>
-<p><code>make</code></p>
-<p>第三步：编译安装</p>
-<p><code>make install</code></p>
-<h3 id="脚本安装包"><a href="#脚本安装包" class="headerlink" title="脚本安装包"></a>脚本安装包</h3><p>人为把安装过程写成了自动安装的脚本。</p>
-<h2 id="sudo-权限"><a href="#sudo-权限" class="headerlink" title="sudo 权限"></a>sudo 权限</h2><p><strong>root</strong> 把本来只能超级用户执行的命令赋予普通用户执行。</p>
-<p><strong>sudo</strong> 的操作对象是系统命令。</p>
-<h3 id="sudo-使用"><a href="#sudo-使用" class="headerlink" title="sudo 使用"></a>sudo 使用</h3><p><code>visudo</code> 实际修改的是 <code>/etc/sudoers</code> 文件</p>
-<p><code>root ALL = (ALL) ALL</code> </p>
-<p>用户名  被管理主机的地址 = （可使用的身份）授权命令（绝对路径）</p>
-<p>举例:</p>
-<p><code>visudo</code></p>
-<p><code>sc ALL = /sbin/shutdown -r now</code> 授权 <strong>sc</strong> 用户可以重启服务器</p>
-<p>普通用户执行：</p>
-<p><code>sudo -l</code>  查看可用的 <strong>sudo</strong> 命令</p>
-<p><code>sudo /sbin/shutdown -r now</code> 普通用户执行 <strong>sudo</strong> 赋予的命令</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Linux学习笔记（六）--网络命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-11 11:25:09" itemprop="dateCreated datePublished" datetime="2022-01-11T11:25:09+08:00">2022-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 11:43:28" itemprop="dateModified" datetime="2022-01-24T11:43:28+08:00">2022-01-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h1><h2 id="write"><a href="#write" class="headerlink" title="write"></a>write</h2><p>给在线用户发信息，以 <strong>Ctrl+D</strong> 保存结束</p>
+<p><code>write &lt;用户名&gt;</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1530,7 +1069,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

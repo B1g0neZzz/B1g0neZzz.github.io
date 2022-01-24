@@ -154,100 +154,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="太一">
-      <meta itemprop="description" content="持续学习者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Taiichi's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Linux学习笔记（六）--网络命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-11 11:25:09 / 修改时间：16:55:56" itemprop="dateCreated datePublished" datetime="2022-01-11T11:25:09+08:00">2022-01-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h1><h2 id="write"><a href="#write" class="headerlink" title="write"></a>write</h2><p>给在线用户发信息，以 <strong>Ctrl+D</strong> 保存结束</p>
-<p><code>write &lt;用户名&gt;</code></p>
-<h2 id="wall"><a href="#wall" class="headerlink" title="wall"></a>wall</h2><p><strong>write all</strong></p>
-<p>发广播信息</p>
-<h2 id="last"><a href="#last" class="headerlink" title="last"></a>last</h2><p>列出目前与过去登入系统的用户信息</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111113123070.png" alt="image-20220111113121419"></p>
-<h2 id="lastlog"><a href="#lastlog" class="headerlink" title="lastlog"></a>lastlog</h2><p>检查某特定用户上次登录的时间</p>
-<p><code>lastlog -u 502</code></p>
-<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>显示数据包到主机间的路径</p>
-<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>显示网络相关信息</p>
-<p>选项：</p>
-<p><code>-t</code>：TCP 协议</p>
-<p><code>-u</code>： UDP 协议</p>
-<p><code>-l</code>： 监听</p>
-<p><code>-r</code>： 路由</p>
-<p><code>-n</code>： 显示 <strong>IP</strong> 地址和端口号</p>
-<p>例子：<code>netstat -tlun</code> 查看本机监听的端口号</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111160826826.png" alt="image-20220111160826826"></p>
-<p><code>netstat -an</code>  查看本机所有的网络连接</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161213240.png" alt="image-20220111161213240"></p>
-<p><code>netstat -rn</code> 查看本机路由表</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161406009.png" alt="image-20220111161406009"></p>
-<h2 id="关机命令"><a href="#关机命令" class="headerlink" title="关机命令"></a>关机命令</h2><h3 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h3><p><code>shutdown [选项] 时间</code></p>
-<p>选项：</p>
-<p><code>-c</code>：取消前一个关机命令</p>
-<p><code>-h</code> ：意为 <strong>halt</strong>，关机</p>
-<p><code>-r</code>：重启</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%92%8C%E5%8E%8B%E7%BC%A9%E8%A7%A3%E5%8E%8B%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -354,7 +260,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-11 10:37:57" itemprop="dateModified" datetime="2022-01-11T10:37:57+08:00">2022-01-11</time>
+                <time title="修改时间：2022-01-24 11:43:43" itemprop="dateModified" datetime="2022-01-24T11:43:43+08:00">2022-01-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -378,69 +284,15 @@
 
       
           <h1 id="文件搜索命令"><a href="#文件搜索命令" class="headerlink" title="文件搜索命令"></a>文件搜索命令</h1><h2 id="find"><a href="#find" class="headerlink" title="find"></a>find</h2><p><code>find [搜索范围] [匹配条件]</code></p>
-<h3 id="name"><a href="#name" class="headerlink" title="-name"></a>-name</h3><p><code>find /etc -name init</code></p>
-<p>在目录 <code>/etc</code> 中查找文件 <code>init</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110211028107.png" alt="image-20220110211028107"></p>
-<p><code>find</code> 默认为精确查找，可以：</p>
-<p><code>find /etc -name *init*</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110211336241.png" alt="image-20220110211336241"></p>
-<p>星号 <code>*</code> 匹配任意字符，问号 <code>?</code> 匹配一个任意字符</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110211627571.png" alt="image-20220110211627571"></p>
-<h3 id="iname"><a href="#iname" class="headerlink" title="-iname"></a>-iname</h3><p>与 <code>-name</code> 一样，只不过不区分大小写。</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110211836114.png" alt="image-20220110211836114"></p>
-<h3 id="size"><a href="#size" class="headerlink" title="-size"></a>-size</h3><p><code>find / -size +204800</code></p>
-<p>在根目录下查找大于 100MB 的文件。</p>
-<p>单位是扇区，1 扇区是 512 字节，是 0.5k。</p>
-<p>在根目录下查找大于 100MB 的文件</p>
-<p>+n 大于 -n 小于 n 等于</p>
-<h3 id="user"><a href="#user" class="headerlink" title="-user"></a>-user</h3><p><code>find /home -user dayi</code></p>
-<p>在根目录下查找所有者为 <code>dayi</code> 的文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110213027329.png" alt="image-20220110213027329"></p>
-<h3 id="cmin"><a href="#cmin" class="headerlink" title="-cmin"></a>-cmin</h3><p><code>find /etc -cmin -5</code></p>
-<p>在 <code>/etc</code> 下查找 5 分钟内被修改过属性的文件和目录</p>
-<p><code>-amin</code> 访问时间 <code>access</code></p>
-<p><code>-cmin</code> 文件属性 <code>change</code></p>
-<p><code>-mmin</code> 文件内容 <code>modify</code></p>
-<h3 id="a"><a href="#a" class="headerlink" title="-a"></a>-a</h3><p><code>find /etc -size 163840 -a -size -204800</code></p>
-<p>在 <code>/etc</code> 下查找大于 80MB 小于 100MB 的文件。</p>
-<p><code>-a</code> 两个条件同时满足</p>
-<p><code>-o</code> 两个条件满足任意一个即可</p>
-<h3 id="exec"><a href="#exec" class="headerlink" title="-exec"></a>-exec</h3><p><code>find /etc -name inittab -exec ls -l &#123;&#125; \;</code></p>
-<p>在 <code>/etc</code> 下查找 <code>inittab</code> 文件并显示其详细信息</p>
-<p><code>-exec/ok 命令 &#123;&#125; \;</code> 对搜索结果执行操作</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110214422476.png" alt="image-20220110214422476"></p>
-<h3 id="inum"><a href="#inum" class="headerlink" title="-inum"></a>-inum</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110214957059.png" alt="image-20220110214957059"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110215046241.png" alt="image-20220110215046241"></p>
-<h3 id="type"><a href="#type" class="headerlink" title="-type"></a>-type</h3><p>根据文件类型查找</p>
-<p><code>f</code> 文件 <code>d</code> 目录 <code>l</code> 软链接文件</p>
-<h2 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h2><p>在文件资料库中查找文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110220028940.png" alt="image-20220110220028940"></p>
-<p>但是，如果新创建的文件，还没有输入到文件资料库中，就找不到，这时候可以用 <code>updatedb</code></p>
-<p><code>/tmp</code> 是临时，不在 <code>locate</code> 所收录的文件资料库中。</p>
-<h2 id="which"><a href="#which" class="headerlink" title="which"></a>which</h2><p>搜索命令所在目录及别名信息</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110220546142.png" alt="image-20220110220546142"></p>
-<h2 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h2><p>搜索命令所在目录及帮助文档路径</p>
-<p><code>whereis [命令名称]</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110220836670.png" alt="image-20220110220836670"></p>
-<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h2><p>在文件中搜寻字符串匹配的行并输出</p>
-<p><code>grep -iv [指定字串] [文件]</code></p>
-<p><code>grep mysql /root/install.log</code></p>
-<p><code>-i</code> 不区分大小写</p>
-<p><code>-v</code>  排除指定字符串</p>
-<p><code>grep -v ^# /etc/inittab</code></p>
-<h2 id="man"><a href="#man" class="headerlink" title="man"></a>man</h2><p><strong>manual</strong> 手册</p>
-<p>获得帮助信息</p>
-<p><code>man ls</code></p>
-<p>查看 <code>ls</code> 命令的帮助信息</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111101132808.png" alt="image-20220111101132808"></p>
-<p><code>man services</code></p>
-<p>查看配置文件 <code>services</code> 的帮助信息</p>
-<p>可能有的既有配置文件又有命令，这样可以通过 <code>1</code> 和 <code>5</code> 来选择，前者是命令帮助，后者是配置文件帮助。</p>
-<p><code>man 1 passwd</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111102514987.png" alt="image-20220111102514987"></p>
-<p><code>man 5 passwd</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111102545595.png" alt="image-20220111102545595"></p>
-
+<h3 id="name"><a href="#name" class="headerlink" title="-name"></a>-name</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/10/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -482,10 +334,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-10 11:30:09 / 修改时间：17:39:23" itemprop="dateCreated datePublished" datetime="2022-01-10T11:30:09+08:00">2022-01-10</time>
+              <time title="创建时间：2022-01-10 11:30:09" itemprop="dateCreated datePublished" datetime="2022-01-10T11:30:09+08:00">2022-01-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 11:43:50" itemprop="dateModified" datetime="2022-01-24T11:43:50+08:00">2022-01-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -510,37 +368,14 @@
           <h1 id="权限管理命令"><a href="#权限管理命令" class="headerlink" title="权限管理命令"></a>权限管理命令</h1><h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>英文原意：<strong>change the permissions mode of a file</strong></p>
 <p>语法：<code>chmod [&#123;ugoa&#125;&#123;+-=&#125;&#123;rwx&#125;][文件或目录][mode=421][文件或目录]</code></p>
 <p><code>-R</code> 递归修改</p>
-<p>举例：</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110115343193.png" alt="image-20220110115343193"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110150645688.png" alt="image-20220110150645688"></p>
-<p>权限的数字表示 <code>r---4 w---2 x---1</code></p>
-<p>例如：<code>rwxrw-r--</code> 对应 <code>7 6 4</code></p>
-<p><code>-R</code> 递归修改</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110152703760.png" alt="image-20220110152703760"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110152944607.png" alt="image-20220110152944607"></p>
-<h3 id="目录权限-文件权限"><a href="#目录权限-文件权限" class="headerlink" title="目录权限 / 文件权限"></a>目录权限 / 文件权限</h3><p>对于文件：</p>
-<p><code>r</code> 可以执行 <code>cat more head tail less</code> 等命令</p>
-<p><code>w</code> 可以执行 <code>vim</code> 等命令</p>
-<p><code>x</code> 是 <code>script command</code> 等文件可以执行</p>
-<p>对于目录：</p>
-<p><code>r</code> 表示 <code>ls</code> 等命令</p>
-<p><code>w</code> 可以执行 <code>touch mkdir rmdir rm</code> 等命令</p>
-<p><code>x</code> 可以执行 <code>cd</code> 等命令</p>
-<h2 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h2><p>英文原意：<strong>change file ownership</strong></p>
-<p>改变文件的所有者</p>
-<p>执行权限：管理员</p>
-<p><code>chown [用户] [文件或目录]</code></p>
-<h2 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h2><p>英文原意：<strong>change file group ownership</strong></p>
-<p>执行权限：所有用户</p>
-<p><code>chgrp [用户组] [文件或目录]</code></p>
-<h2 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h2><p><code>umask -S</code> 以 <code>rwx</code> 形式显示新建文件默认权限</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110172159221.png" alt="image-20220110172159221"></p>
-<p>但是在 Linux 中，默认创建的文件不具有执行权限，默认创建的文件夹有执行权限。</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110173003913.png" alt="image-20220110173003913"></p>
-<p>可以修改 <code>umask</code>，例如，我们要将默认创建文件的方式为 <code>rwx --- ---</code>，如下修改 <code>umask</code> 为 077 即可</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110173148877.png" alt="image-20220110173148877"></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110173245927.png" alt="image-20220110173245927"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/10/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -590,7 +425,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-10 17:40:55" itemprop="dateModified" datetime="2022-01-10T17:40:55+08:00">2022-01-10</time>
+                <time title="修改时间：2022-01-24 11:43:56" itemprop="dateModified" datetime="2022-01-24T11:43:56+08:00">2022-01-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -615,113 +450,14 @@
       
           <h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><h2 id="文件处理命令"><a href="#文件处理命令" class="headerlink" title="文件处理命令"></a>文件处理命令</h2><h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><p><strong>命令格式：</strong> 命令  [-选项] [参数]</p>
 <p>​        例： <code>ls -la /etc</code></p>
-<h3 id="ls-命令"><a href="#ls-命令" class="headerlink" title="ls 命令"></a>ls 命令</h3><p>作用：显示目录文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230162613606.png" alt="image-20211230162613606"></p>
-<p>在 <strong>Linux</strong> 中，~ 表示用户的家目录</p>
-<p>对于一般用户，~ 表示 /home/ (用户名)</p>
-<p>对于 root 用户，~ 表示 /root</p>
-<p><code>ls -a</code> 可以看到隐藏文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230164027173.png" alt="image-20211230164027173"></p>
-<p><code>ls -l</code> </p>
-<p><strong>l</strong> 代表 <strong>long</strong></p>
-<p>第一列 <code>-rw</code> 等代表权限</p>
-<p>第二列代表引用计数</p>
-<p>第三列代表文件所有者</p>
-<p>第四列代表文件所属组</p>
-<p>第五列代表文件大小</p>
-<p>第六列代表文件最后修改时间</p>
-<p>最后一列代表文件名</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230171548488.png" alt="image-20211230171548488"></p>
-<h4 id="rw-r–r–"><a href="#rw-r–r–" class="headerlink" title="-rw-r–r–"></a>-rw-r–r–</h4><ul>
-<li><p>第一个字符 <code>-</code> 文件类型（<code>-</code> 二进制文件 <code>d</code> 目录 <code>l</code> 软链接文件）</p>
-</li>
-<li><p><code>rw-</code>   <code>r--</code>  <code>r--</code></p>
-</li>
-</ul>
-<p>​        u         g         o</p>
-<p>​        u 所有者，g 所属组，o 其他人</p>
-<p>​        r 读，w 写， x 执行</p>
-<h4 id="ls-d"><a href="#ls-d" class="headerlink" title="ls -d"></a>ls -d</h4><p>查看某个目录的信息</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230192546015.png" alt="image-20211230192546015"></p>
-<h4 id="ls-i"><a href="#ls-i" class="headerlink" title="ls -i"></a>ls -i</h4><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230194145683.png" alt="image-20211230194145683"></p>
-<h2 id="目录处理命令"><a href="#目录处理命令" class="headerlink" title="目录处理命令"></a>目录处理命令</h2><h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230195513419.png" alt="image-20211230195513419"></p>
-<p>这种情况，使用 <code>-p</code> 可以递归创建</p>
-<h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>print work directory</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230200632316.png" alt="image-20211230200632316"></p>
-<h3 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h3><p>remove empty directories</p>
-<p>删除空目录</p>
-<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>copy</p>
-<p><code>cp -rp [源文件或目录] [目标目录]</code></p>
-<p><code>-r</code> 复制目录</p>
-<p><code>-p</code> 保留文件属性</p>
-<p>如果是文件，直接 <code>cp 源文件 目标目录</code> 即可</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230201903962.png" alt="image-20211230201903962"></p>
-<p>不加 <code>-p</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230202847253.png" alt="image-20211230202847253"></p>
-<p>加了 <code>-p</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230202959432.png" alt="image-20211230202959432"></p>
-<p><code>cp</code> 命令还可以复制时修改，如下，<strong>gzhh</strong> 文件夹名称改为 <strong>cjj</strong></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230203434860.png" alt="image-20211230203434860"></p>
-<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>move</p>
-<p>相当于剪切</p>
-<p>可以实现改名</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20211230204127540.png" alt="image-20211230204127540"></p>
-<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>remove</p>
-<p><code>rm -rf [文件或目录]</code></p>
-<p><code>-r</code> 删除目录</p>
-<p><code>-f</code> 强制执行 force</p>
-<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建空文件</p>
-<p>例：<code>touch Japanlove.list</code></p>
-<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看一个文件的内容</p>
-<p><code>-n</code> 显示行号</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110093722411.png" alt="image-20220110093722411"></p>
-<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p>如果文件比较长的话，可以使用 <code>more</code> 来分页显示文件内容</p>
-<p>有几个子命令：</p>
-<p>（空格）或 f：翻页</p>
-<p>Enter：换行</p>
-<p>q 或 Q：退出</p>
-<p>b：向上翻页</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110094347138.png" alt="image-20220110094347138"></p>
-<h3 id="less"><a href="#less" class="headerlink" title="less"></a>less</h3><p>和 more 差不多，不过用 <code>page up</code> 键向上翻页，上箭头可以向上翻一行。</p>
-<p><code>/</code> 加关键词可以搜索</p>
-<p>但是文件中可能不止这一页有关键词，可以用 <code>n</code> 来找下一个</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110101417324.png" alt="image-20220110101417324"></p>
-<h3 id="head"><a href="#head" class="headerlink" title="head"></a>head</h3><p>显示文件前面几行</p>
-<p><code>-n</code> 表示行数</p>
-<p>默认显示前 10 行</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110102421808.png" alt="image-20220110102421808"></p>
-<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>看文件的后几行</p>
-<p><code>tail -f</code> 可以动态更新</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110103056238.png" alt="image-20220110103056238"></p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h3 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h3><p>命令英文原意：<code>link</code></p>
-<p><code>ln -s [原文件] [目标文件]</code></p>
-<p>创建软链接</p>
-<p><code>ln -s /etc/issue /tmp/issue.soft</code></p>
-<p>创建文件 <code>/etc/issue</code> 的软链接到 <code>/tmp/issue.soft</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110104352410.png" alt="image-20220110104352410"></p>
-<p><code>ln /etc/issue /tmp/issue.hard</code></p>
-<p>创建文件 <code>/etc/issue</code> 的硬链接到 <code>/tmp/issue.hard</code></p>
-<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><p>软链接特征：类似 <strong>Windows</strong> 快捷方式（使用场景）</p>
-<p>特点1：</p>
-<p>软链接文件的所有执行权限都是 <code>rwx</code></p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110105418810.png" alt="image-20220110105418810"></p>
-<p>特点2：</p>
-<p>软链接的文件大小都很小</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110105756485.png" alt="image-20220110105756485"></p>
-<p>特点3：</p>
-<p>软链接都有一个箭头指向原文件</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110105809697.png" alt="image-20220110105809697"></p>
-<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110110222083.png" alt="image-20220110110222083"></p>
-<p>特征1：</p>
-<p>拷贝 <code>cp -p</code> + 同步更新</p>
-<p>特征2：</p>
-<p>通过 <code>i</code> 节点来分辨是否是硬链接</p>
-<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220110111025840.png" alt="image-20220110111025840"></p>
-<p>特征3：</p>
-<p>不能跨分区</p>
-<p>特征4：</p>
-<p>不能针对目录使用</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/29/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1331,6 +1067,153 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/03/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF(%E4%BA%8C)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/03/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF(%E4%BA%8C)/" class="post-title-link" itemprop="url">算法模板(二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-03 15:54:42" itemprop="dateCreated datePublished" datetime="2021-12-03T15:54:42+08:00">2021-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-27 11:19:10" itemprop="dateModified" datetime="2021-12-27T11:19:10+08:00">2021-12-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><h3 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h3><p>使用数组来表示单链表，设 <code>e[N]</code> 为单链表的值，<code>ne[N]</code> 为单链表的 <code>next</code> 指针。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211204114357184.png" alt="image-20211204114357184"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// head 表示头节点的下标</span></span><br><span class="line"><span class="comment">// e[i] 表示节点 i 的值</span></span><br><span class="line"><span class="comment">// ne[i] 表示节点 i 的 next 指针是多少</span></span><br><span class="line"><span class="keyword">int</span> head, e[N], ne[N], idx;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    head = <span class="number">-1</span>;</span><br><span class="line">    idx = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 x 插到头节点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add_to_head</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    e[idx] = x;</span><br><span class="line">    ne[idx] = head;</span><br><span class="line">    head = idx;</span><br><span class="line">    idx ++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 x 插入到下标为 k 的后面</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    e[idx] = x;</span><br><span class="line">    ne[idx] = ne[k];</span><br><span class="line">    ne[k] = idx;</span><br><span class="line">    idx ++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将下标是 k 的点后面的点删掉</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ne[k] = ne[ne[k]];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> m;</span><br><span class="line"><span class="comment">// l[i] 表示每个点左边的点是谁</span></span><br><span class="line"><span class="comment">// r[i] 表示每个点右边的点是谁</span></span><br><span class="line"><span class="keyword">int</span> e[N], l[N], r[N], idx;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 0 表示左端点， 1 表示右端点</span></span><br><span class="line">    r[<span class="number">0</span>] = <span class="number">1</span>, l[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    idx = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在下标是 k 的点的右边，插入 x</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    e[idx] = val;</span><br><span class="line">    r[idx] = r[k];</span><br><span class="line">    l[idx] = k;</span><br><span class="line">    l[r[k]] = idx;</span><br><span class="line">    r[k] = idx;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除下标是 k 的点</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    r[l[k]] = r[k];</span><br><span class="line">    l[r[k]] = l[k];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="单调栈与单调队列"><a href="#单调栈与单调队列" class="headerlink" title="单调栈与单调队列"></a>单调栈与单调队列</h2><h3 id="数组实现栈"><a href="#数组实现栈" class="headerlink" title="数组实现栈"></a>数组实现栈</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> stk[N], tt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入</span></span><br><span class="line">stk[ ++ tt] = x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 弹出</span></span><br><span class="line">tt --;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断栈是否为空</span></span><br><span class="line"><span class="keyword">if</span> (tt &gt; <span class="number">0</span>) <span class="keyword">not</span> empty</span><br><span class="line"><span class="keyword">else</span> empty</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 栈顶</span></span><br><span class="line">stk[tt];</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="数组实现队列"><a href="#数组实现队列" class="headerlink" title="数组实现队列"></a>数组实现队列</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在队尾插入元素，在队头弹出元素</span></span><br><span class="line"><span class="keyword">int</span> q[N], hh, tt = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入</span></span><br><span class="line">q[ ++ tt] = x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 弹出</span></span><br><span class="line">hh ++;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断队列是否为空</span></span><br><span class="line"><span class="keyword">if</span> (hh &lt;= tt) <span class="keyword">not</span> empty</span><br><span class="line"><span class="keyword">else</span> empty</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 取出队头元素</span></span><br><span class="line">q[hh]</span><br><span class="line"><span class="comment">// 取出队尾元素</span></span><br><span class="line">q[tt]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h3><p>最常用的：给定一个序列，求这个序列中每一个数，左边或右边离它最近且符合某些条件的数。</p>
+<p>举栗：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211206174001662.png" alt="image-20211206174001662"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> stk[n], tt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; x;</span><br><span class="line">        <span class="keyword">while</span> (tt &amp;&amp; stk[tt] &gt;= x) tt --;</span><br><span class="line">        <span class="keyword">if</span> (tt) <span class="built_in">cout</span> &lt;&lt; stk[tt] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">cout</span> &lt;&lt; <span class="number">-1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        </span><br><span class="line">    	stk[ ++ tt] = x;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h3><p>最常用的就是在滑动窗口里求最大值或最小值</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211206182345124.png" alt="image-20211206182345124"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211206182530092.png" alt="image-20211206182530092"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211206182549760.png" alt="image-20211206182549760"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, k;</span><br><span class="line"><span class="keyword">int</span> a[N], q[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;k);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> hh = <span class="number">0</span>, tt = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 判断队头是否已经滑出窗口</span></span><br><span class="line">        <span class="keyword">if</span> (hh &lt;= tt &amp;&amp; i - k + <span class="number">1</span> &gt; q[hh]) hh ++;</span><br><span class="line">        <span class="keyword">while</span> (hh &lt;= tt &amp;&amp; a[q[tt]] &gt;= a[i]) tt --;</span><br><span class="line">        q[ ++ tt] = i;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= k - <span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[q[hh]]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="KMP-算法"><a href="#KMP-算法" class="headerlink" title="KMP 算法"></a>KMP 算法</h2><p><code>next[i] = j</code> 的含义是 <code>p[1, j] = p[i - j + 1, i]</code></p>
+<p>也就是说，以 <code>i</code> 为终点的后缀和前缀相等。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 举栗</span></span><br><span class="line">P = <span class="string">&quot;abababab&quot;</span>;</span><br><span class="line"><span class="comment">//	 12345678  -&gt; 下标</span></span><br><span class="line">next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">next[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">next[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">next[<span class="number">4</span>] = <span class="number">2</span>;</span><br><span class="line">next[<span class="number">5</span>] = <span class="number">3</span>;</span><br><span class="line">next[<span class="number">6</span>] = <span class="number">4</span>;</span><br><span class="line">next[<span class="number">7</span>] = <span class="number">5</span>;</span><br><span class="line">next[<span class="number">8</span>] = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">S = <span class="string">&quot;abababc&quot;</span>;</span><br><span class="line">	 <span class="number">1234567</span></span><br><span class="line">i = <span class="number">7</span></span><br><span class="line">j = <span class="number">6</span> <span class="comment">// 每次 p[j + 1] 与 s[i] 比较</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211207103846665.png" alt="image-20211207103846665"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211207103904908.png" alt="image-20211207103904908"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211207103932438.png" alt="image-20211207103932438"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10010</span>, M = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">char</span> p[N], s[M];</span><br><span class="line"><span class="keyword">int</span> next[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; p + <span class="number">1</span> &gt;&gt; m &gt;&gt; s + <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//  求 next 的过程</span></span><br><span class="line">    <span class="comment">//  i 从 2 开始是因为 next 数组索引是从 1 开始的，而next[1] 必定是 0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; i &lt;= n; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &amp;&amp; p[i] != p[j + <span class="number">1</span>]) j = next[j];</span><br><span class="line">        <span class="keyword">if</span> (p[i] == p[j + <span class="number">1</span>]) j ++;</span><br><span class="line">        next[i] = j;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// kmp 匹配过程</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt;= m; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &amp;&amp; s[i] != p[j + <span class="number">1</span>]) j = next[j];</span><br><span class="line">        <span class="keyword">if</span> (s[i] == p[j + <span class="number">1</span>]) j ++;</span><br><span class="line">        <span class="keyword">if</span> (j == n)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 匹配成功</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, i - n);</span><br><span class="line">            j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1402,7 +1285,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
