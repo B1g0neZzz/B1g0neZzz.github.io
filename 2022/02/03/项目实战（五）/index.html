@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220209162240089.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220209181732735.png">
 <meta property="article:published_time" content="2022-02-03T07:58:41.000Z">
-<meta property="article:modified_time" content="2022-02-09T11:19:49.846Z">
+<meta property="article:modified_time" content="2022-02-09T11:22:07.156Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20220203173145484.png">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-09 19:19:49" itemprop="dateModified" datetime="2022-02-09T19:19:49+08:00">2022-02-09</time>
+                <time title="修改时间：2022-02-09 19:22:07" itemprop="dateModified" datetime="2022-02-09T19:22:07+08:00">2022-02-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,7 +297,17 @@
 
 
 
-<h2 id="IP-地址转换"><a href="#IP-地址转换" class="headerlink" title="IP 地址转换"></a>IP 地址转换</h2><p>通常，人们习惯用可读性好的字符串来表示 <strong>IP</strong> 地址，比如用点分十进制字符串表示 <strong>IPv4</strong> 地址，以及用十六进制字符串表示 <strong>IPv6</strong> 地址。但编程中我们需要先把它们转化为整数（二进制数）方能使用。而记录日志时则相反，我们要把整数表示的 <strong>IP</strong> 地址转化为可读的字符串。</p>
+<h2 id="IP-地址转换"><a href="#IP-地址转换" class="headerlink" title="IP 地址转换"></a>IP 地址转换</h2><p>通常，人们习惯用可读性好的字符串来表示 <strong>IP</strong> 地址，比如用点分十进制字符串表示 <strong>IPv4</strong> 地址，以及用十六进制字符串表示 <strong>IPv6</strong> 地址。但编程中我们需要先把它们转化为整数（二进制数）方能使用。而记录日志时则相反，我们要把整数表示的 <strong>IP</strong> 地址转化为可读的字符串。下面 <strong>3</strong> 个函数可用于用点分十进制字符串表示的 <strong>IPv4</strong> 地址和用网络字节序整数表示的 <strong>IPv4</strong> 地址之间的转换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">in_addr_t</span> <span class="title">inet_addr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *cp)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inet_aton</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *cp, struct in_addr *inp)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">inet_ntoa</span><span class="params">(struct in_addr in)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 
     </div>
 
