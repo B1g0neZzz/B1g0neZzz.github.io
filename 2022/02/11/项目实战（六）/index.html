@@ -33,8 +33,12 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211202008313.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211202257968.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211202607454.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211205443408.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211210105875.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211211911585.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211214019237.png">
 <meta property="article:published_time" content="2022-02-11T10:46:24.000Z">
-<meta property="article:modified_time" content="2022-02-11T12:26:11.746Z">
+<meta property="article:modified_time" content="2022-02-11T13:44:56.161Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211200523794.png">
@@ -188,7 +192,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-11 18:46:24 / 修改时间：20:26:11" itemprop="dateCreated datePublished" datetime="2022-02-11T18:46:24+08:00">2022-02-11</time>
+              <time title="创建时间：2022-02-11 18:46:24 / 修改时间：21:44:56" itemprop="dateCreated datePublished" datetime="2022-02-11T18:46:24+08:00">2022-02-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,6 +247,70 @@
 <p>内核在第一个阶段是异步，在第二个阶段是同步；与非阻塞 <strong>IO</strong> 的区别在于它提供了消息通知机制，不需要用户进程不断地轮询检查，减少了系统 <strong>API</strong> 的调用次数，提高了效率。</p>
 <h3 id="e-异步（asynchronous）"><a href="#e-异步（asynchronous）" class="headerlink" title="e. 异步（asynchronous）"></a>e. 异步（asynchronous）</h3><p><strong>Linux</strong> 中，可以调用 <strong>aio_read</strong> 函数告诉内核文件描述符缓冲区指针和缓冲区的大小、文件偏移以及通知的方式，然后立即返回，当内核将数据拷贝到缓冲区后，再通知应用程序。</p>
 <p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211202607454.png" alt="image-20220211202607454"></p>
+<h2 id="Web-Server（网页服务器）"><a href="#Web-Server（网页服务器）" class="headerlink" title="Web Server（网页服务器）"></a>Web Server（网页服务器）</h2><p>一个 <strong>Web Server</strong> 就是一个服务器软件（程序），或者是运行这个服务器软件的计算机。其主要功能是通过 <strong>HTTP</strong> 协议与客户端（通常是浏览器（<strong>Browser</strong>））进行通信，来接收、存储、处理来自客户端的 <strong>HTTP</strong> 请求，并对其请求做出 <strong>HTTP</strong> 响应，返回给客户端其请求的内容（文件、网页等）或返回一个 <strong>Error</strong> 信息。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211205443408.png" alt="image-20220211205443408"></p>
+<h2 id="服务器编程基本框架"><a href="#服务器编程基本框架" class="headerlink" title="服务器编程基本框架"></a>服务器编程基本框架</h2><p>虽然服务器程序种类繁多，但其基本框架都一样，不同之处在于逻辑处理。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211210105875.png" alt="image-20220211210105875"></p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I/O 处理单元</td>
+<td>处理客户连接，读写网络数据</td>
+</tr>
+<tr>
+<td>逻辑单元</td>
+<td>业务进程或线程</td>
+</tr>
+<tr>
+<td>网络存储单元</td>
+<td>数据库、文件或缓存</td>
+</tr>
+<tr>
+<td>请求队列</td>
+<td>各单元之间的通信方式</td>
+</tr>
+</tbody></table>
+<h2 id="两种高效的事件处理模式"><a href="#两种高效的事件处理模式" class="headerlink" title="两种高效的事件处理模式"></a>两种高效的事件处理模式</h2><p>服务器程序通常需要处理三类事件：<strong>I/O</strong> 事件、信号及定时事件。有两种高效的事件处理模式：<strong>Reactor</strong> 和 <strong>Proactor</strong>，同步 <strong>I/O</strong> 模型通常用于实现 <strong>Reactor</strong> 模式，异步 <strong>I/O</strong> 模型通常用于实现 <strong>Proactor</strong> 模式。</p>
+<h3 id="Reactor-模式"><a href="#Reactor-模式" class="headerlink" title="Reactor 模式"></a>Reactor 模式</h3><p>要求主线程（<strong>I/O</strong> 处理单元）只负责监听文件描述符上是否有事件发生，有的话就立即将该事件通知工作线程（逻辑单元），将 <strong>socket</strong> 可读可写事件放入请求队列，交给工作线程处理。除此之外，主线程不做任何其他实质性的工作。读写数据，接受新的连接，以及处理客户请求均在工作线程中完成。</p>
+<p>使用同步 <strong>I/O</strong> （以 <strong>epoll_wait</strong> 为例）实现的 <strong>Reactor</strong> 模式的工作流程是：</p>
+<ol>
+<li>主线程往 <strong>epoll</strong> 内核事件表中注册 <strong>socket</strong> 上的读就绪事件。</li>
+<li>主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 上有数据可读。</li>
+<li>当 <strong>socket</strong> 上有数据可读时，<strong>epoll_wait</strong> 通知主线程。主线程则将 <strong>socket</strong> 可读事件放入请求队列。</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它从 <strong>socket</strong> 读取数据，并处理客户请求，然后往 <strong>epoll</strong> 内核事件表中注册该 <strong>socket</strong> 上的写就绪事件。</li>
+<li>当主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 可写。</li>
+<li>当 <strong>socket</strong> 可写时，<strong>epoll_wait</strong> 通知主线程。主线程将 <strong>socket</strong> 可写事件放入请求队列。</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它往 <strong>socket</strong> 上写入服务器处理客户请求的结果。</li>
+</ol>
+<p><strong>Reactor</strong> 模式的工作流程：</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211211911585.png" alt="image-20220211211911585"></p>
+<h3 id="Proactor-模式"><a href="#Proactor-模式" class="headerlink" title="Proactor 模式"></a>Proactor 模式</h3><p><strong>Proactor</strong> 模式将所有 <strong>I/O</strong> 操作都交给主线程和内核来处理（进行读、写），工作线程仅仅负责业务逻辑。使用异步 <strong>I/O</strong> 模型（以 <strong>aio_read</strong> 和 <strong>aio_write</strong> 为例）实现的 <strong>Proactor</strong> 模式的工作流程是：</p>
+<ol>
+<li>主线程调用 <strong>aio_read</strong> 函数向内核注册 <strong>socket</strong> 上的读完成事件，并告诉内核读缓冲区的位置，以及读操作完成时如何通知应用程序（这里以信号为例）。</li>
+<li>主线程继续处理其他逻辑。</li>
+<li>当 <strong>socket</strong> 上的数据被读入用户缓冲区后，内核将向应用程序发送一个信号，以通知应用程序数据已经可用。</li>
+<li>应用程序预先定义好的信号处理函数选择一个工作线程来处理客户请求。工作线程处理完客户请求后，调用 <strong>aio_write</strong> 函数向内核注册 <strong>socket</strong> 上的写完成事件，并告诉内核用户写缓冲区的位置，以及写操作完成时如何通知应用程序。</li>
+<li>主线程继续处理其他逻辑。</li>
+<li>当用户缓冲区的数据被写入 <strong>socket</strong> 之后，内核将向应用程序发送一个信号，以通知应用程序数据已经发送完毕。</li>
+<li>应用程序预先定义好的信号处理函数选择一个工作线程来做善后处理，比如决定是否关闭 <strong>socket</strong>。</li>
+</ol>
+<p><strong>Proactor</strong> 模式的工作流程：</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211214019237.png" alt="image-20220211214019237"></p>
+<h3 id="模拟-Proacor-模式"><a href="#模拟-Proacor-模式" class="headerlink" title="模拟 Proacor 模式"></a>模拟 Proacor 模式</h3><p>使用同步 <strong>I/O</strong> 方式模拟出 <strong>Proactor</strong> 模式。原理是：主线程执行数据读写操作，读写完成之后，主线程向工作线程通知这一 “完成事件”。那么从工作线程的角度来看，它们就直接获得了数据读写的结果，接下来要做的只是对读写的结果进行逻辑处理。</p>
+<p>使用同步 <strong>I/O</strong> 模型（以 <strong>epoll_wait</strong> 为例）模拟出的 <strong>Proactor</strong> 模式的工作流程如下：</p>
+<ol>
+<li> 主线程往 <strong>epoll</strong> 内核事件表中注册 <strong>socket</strong> 上的读就绪事件。</li>
+<li>主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 上有数据可读。</li>
+<li>当 <strong>socket</strong> 上有数据可读时，<strong>epoll_wait</strong> 通知主线程。主线程从 <strong>socket</strong> 循环读取数据，直到没有更多数据可读，然后将读取到的数据封装成一个请求对象并插入请求队列。</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它获得请求对象并处理客户请求，然后往 <strong>epoll</strong> 内核事件表中注册 <strong>socket</strong> 上的写就绪事件。</li>
+<li>主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 可写。</li>
+<li>当 <strong>socket</strong> 可写时，<strong>epoll_wait</strong> 通知主线程。主线程往 <strong>socket</strong> 上写服务器处理客户请求的结果。</li>
+</ol>
 
     </div>
 
@@ -320,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">项目实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5-%E5%BC%82%E6%AD%A5-%E7%BD%91%E7%BB%9CIO"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞 &#x2F; 非阻塞、同步 &#x2F; 异步(网络IO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix%E3%80%81Linux-%E4%B8%8A%E7%9A%84%E4%BA%94%E7%A7%8D-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Unix、Linux 上的五种 IO 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%98%BB%E5%A1%9E-blocking"><span class="nav-number">1.2.1.</span> <span class="nav-text">a. 阻塞 blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E9%9D%9E%E9%98%BB%E5%A1%9E-non-blocking"><span class="nav-number">1.2.2.</span> <span class="nav-text">b.非阻塞 non-blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-IO-%E5%A4%8D%E7%94%A8%EF%BC%88IO-multiplexing%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">c. IO 复用（IO multiplexing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%EF%BC%88signal-driven%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">d. 信号驱动（signal-driven）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E5%BC%82%E6%AD%A5%EF%BC%88asynchronous%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">e. 异步（asynchronous）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">项目实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5-%E5%BC%82%E6%AD%A5-%E7%BD%91%E7%BB%9CIO"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞 &#x2F; 非阻塞、同步 &#x2F; 异步(网络IO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix%E3%80%81Linux-%E4%B8%8A%E7%9A%84%E4%BA%94%E7%A7%8D-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Unix、Linux 上的五种 IO 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%98%BB%E5%A1%9E-blocking"><span class="nav-number">1.2.1.</span> <span class="nav-text">a. 阻塞 blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E9%9D%9E%E9%98%BB%E5%A1%9E-non-blocking"><span class="nav-number">1.2.2.</span> <span class="nav-text">b.非阻塞 non-blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-IO-%E5%A4%8D%E7%94%A8%EF%BC%88IO-multiplexing%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">c. IO 复用（IO multiplexing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%EF%BC%88signal-driven%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">d. 信号驱动（signal-driven）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E5%BC%82%E6%AD%A5%EF%BC%88asynchronous%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">e. 异步（asynchronous）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Server%EF%BC%88%E7%BD%91%E9%A1%B5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Web Server（网页服务器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">1.4.</span> <span class="nav-text">服务器编程基本框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%AB%98%E6%95%88%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">两种高效的事件处理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">Reactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">Proactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-Proacor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">模拟 Proacor 模式</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
