@@ -37,8 +37,9 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211210105875.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211211911585.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211214019237.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211214826946.png">
 <meta property="article:published_time" content="2022-02-11T10:46:24.000Z">
-<meta property="article:modified_time" content="2022-02-11T13:44:56.161Z">
+<meta property="article:modified_time" content="2022-02-12T03:18:57.200Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211200523794.png">
@@ -190,10 +191,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-02-11 18:46:24 / 修改时间：21:44:56" itemprop="dateCreated datePublished" datetime="2022-02-11T18:46:24+08:00">2022-02-11</time>
+              <time title="创建时间：2022-02-11 18:46:24" itemprop="dateCreated datePublished" datetime="2022-02-11T18:46:24+08:00">2022-02-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-12 11:18:57" itemprop="dateModified" datetime="2022-02-12T11:18:57+08:00">2022-02-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -306,11 +313,14 @@
 <ol>
 <li> 主线程往 <strong>epoll</strong> 内核事件表中注册 <strong>socket</strong> 上的读就绪事件。</li>
 <li>主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 上有数据可读。</li>
-<li>当 <strong>socket</strong> 上有数据可读时，<strong>epoll_wait</strong> 通知主线程。主线程从 <strong>socket</strong> 循环读取数据，直到没有更多数据可读，然后将读取到的数据封装成一个请求对象并插入请求队列。</li>
+<li>当 <strong>socket</strong> 上有数据可读时，<strong>epoll_wait</strong> 通知主线程。主线程从 <strong>socket</strong> 循环读取数据，直到没有更多数据可读，然后将读取到的数据封装成一个<strong>请求对象</strong>并插入请求队列。</li>
 <li>睡眠在请求队列上的某个工作线程被唤醒，它获得请求对象并处理客户请求，然后往 <strong>epoll</strong> 内核事件表中注册 <strong>socket</strong> 上的写就绪事件。</li>
 <li>主线程调用 <strong>epoll_wait</strong> 等待 <strong>socket</strong> 可写。</li>
 <li>当 <strong>socket</strong> 可写时，<strong>epoll_wait</strong> 通知主线程。主线程往 <strong>socket</strong> 上写服务器处理客户请求的结果。</li>
 </ol>
+<p>同步 <strong>I/O</strong> 模拟 <strong>Proactor</strong> 模式的工作流程：</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220211214826946.png" alt="image-20220211214826946"></p>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>线程池是由服务器预先创建的一组子线程，线程池中的线程数量应该和 <strong>CPU</strong> 数量差不多。</p>
 
     </div>
 
@@ -388,7 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">项目实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5-%E5%BC%82%E6%AD%A5-%E7%BD%91%E7%BB%9CIO"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞 &#x2F; 非阻塞、同步 &#x2F; 异步(网络IO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix%E3%80%81Linux-%E4%B8%8A%E7%9A%84%E4%BA%94%E7%A7%8D-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Unix、Linux 上的五种 IO 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%98%BB%E5%A1%9E-blocking"><span class="nav-number">1.2.1.</span> <span class="nav-text">a. 阻塞 blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E9%9D%9E%E9%98%BB%E5%A1%9E-non-blocking"><span class="nav-number">1.2.2.</span> <span class="nav-text">b.非阻塞 non-blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-IO-%E5%A4%8D%E7%94%A8%EF%BC%88IO-multiplexing%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">c. IO 复用（IO multiplexing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%EF%BC%88signal-driven%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">d. 信号驱动（signal-driven）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E5%BC%82%E6%AD%A5%EF%BC%88asynchronous%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">e. 异步（asynchronous）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Server%EF%BC%88%E7%BD%91%E9%A1%B5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Web Server（网页服务器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">1.4.</span> <span class="nav-text">服务器编程基本框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%AB%98%E6%95%88%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">两种高效的事件处理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">Reactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">Proactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-Proacor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">模拟 Proacor 模式</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">项目实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5-%E5%BC%82%E6%AD%A5-%E7%BD%91%E7%BB%9CIO"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞 &#x2F; 非阻塞、同步 &#x2F; 异步(网络IO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unix%E3%80%81Linux-%E4%B8%8A%E7%9A%84%E4%BA%94%E7%A7%8D-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Unix、Linux 上的五种 IO 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%98%BB%E5%A1%9E-blocking"><span class="nav-number">1.2.1.</span> <span class="nav-text">a. 阻塞 blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E9%9D%9E%E9%98%BB%E5%A1%9E-non-blocking"><span class="nav-number">1.2.2.</span> <span class="nav-text">b.非阻塞 non-blocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-IO-%E5%A4%8D%E7%94%A8%EF%BC%88IO-multiplexing%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">c. IO 复用（IO multiplexing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%EF%BC%88signal-driven%EF%BC%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">d. 信号驱动（signal-driven）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E5%BC%82%E6%AD%A5%EF%BC%88asynchronous%EF%BC%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">e. 异步（asynchronous）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Server%EF%BC%88%E7%BD%91%E9%A1%B5%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Web Server（网页服务器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6"><span class="nav-number">1.4.</span> <span class="nav-text">服务器编程基本框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%AB%98%E6%95%88%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">两种高效的事件处理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">Reactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proactor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">Proactor 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F-Proacor-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">模拟 Proacor 模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.6.</span> <span class="nav-text">线程池</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
