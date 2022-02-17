@@ -27,10 +27,12 @@
 <meta property="og:site_name" content="Taiichi&#39;s blog">
 <meta property="og:description" content="侯捷C++面向对象高级开发（下）conversion function，转换函数12345678910111213141516class Fraction&amp;#123;public:    Fraction(int num, int den&#x3D;1)        : m_numeractor(num), m_denominator(den) &amp;#123;  &amp;#125;    operator dou">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220217193837193.png">
 <meta property="article:published_time" content="2022-02-16T08:47:01.000Z">
-<meta property="article:modified_time" content="2022-02-17T10:39:49.556Z">
+<meta property="article:modified_time" content="2022-02-17T11:43:02.516Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220217193837193.png">
 
 <link rel="canonical" href="http://example.com/2022/02/16/%E4%BE%AF%E6%8D%B7C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%8B%EF%BC%89/">
 
@@ -187,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 18:39:49" itemprop="dateModified" datetime="2022-02-17T18:39:49+08:00">2022-02-17</time>
+                <time title="修改时间：2022-02-17 19:43:02" itemprop="dateModified" datetime="2022-02-17T19:43:02+08:00">2022-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,34 +236,18 @@
 
 
 
-<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span>* p = &amp;x;</span><br><span class="line"><span class="keyword">int</span>&amp; r = x;		<span class="comment">// r 代表 x，现在 r, x 都是 0</span></span><br><span class="line"><span class="keyword">int</span> x2 = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">r = x2;		<span class="comment">// r 不能重新代表其他物体。现在 r, x 都是 5</span></span><br><span class="line"><span class="keyword">int</span>&amp; r2 = r;	<span class="comment">// 现在 r2 是 5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span>* p = &amp;x;</span><br><span class="line"><span class="comment">// 注意</span></span><br><span class="line"><span class="comment">// 1. sizeof(r) == sizeof(x)</span></span><br><span class="line"><span class="comment">// 2. &amp;x == &amp;r</span></span><br><span class="line"><span class="comment">// object 和其 reference 的大小相同，地址也相同（全部都是假象）</span></span><br><span class="line"><span class="comment">// reference 的底层实现是指针，其实大小只有 4 个字节</span></span><br><span class="line"><span class="keyword">int</span>&amp; r = x;		<span class="comment">// r 代表 x，现在 r, x 都是 0</span></span><br><span class="line"><span class="keyword">int</span> x2 = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">r = x2;		<span class="comment">// r 不能重新代表其他物体。现在 r, x 都是 5</span></span><br><span class="line"><span class="keyword">int</span>&amp; r2 = r;	<span class="comment">// 现在 r2 是 5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="vptr-和-vtbl"><a href="#vptr-和-vtbl" class="headerlink" title="vptr 和 vtbl"></a>vptr 和 vtbl</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc2</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_data1, m_data2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_data3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> B &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_data1, m_data4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>先看，<strong>class A</strong>，因为 <strong>A</strong> 有虚函数，所有一根虚指针 <strong>vptr</strong> 指向一个虚表 <strong>vtbl</strong>。<strong>vtbl</strong> 中放的都是函数指针。<strong>A</strong> 中有两个虚函数，所以有 <strong>vtabl</strong> 中有两个指针分别指向 <strong>A::vfunc1</strong> 和 <strong>A::vfunc2</strong>。</p>
+<p><strong>class B</strong> 中，推翻了 <strong>A</strong> 的 <strong>vfunc1</strong>，创建了自己的 <strong>vfunc1</strong>，继承了 <strong>A</strong> 的 <strong>vfunc2</strong>。</p>
+<p><strong>class C</strong> 中，推翻了 <strong>B</strong> 的 <strong>vfunc1</strong>，继承了 <strong>B</strong> 的 <strong>vfunc2</strong>，也就是 <strong>A</strong> 的 <strong>vfunc2</strong>。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220217193837193.png" alt="image-20220217193837193"></p>
 
     </div>
 
@@ -280,7 +266,10 @@
     <a href="/2022/02/15/%E4%BE%AF%E6%8D%B7C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%8A%EF%BC%89/" rel="prev" title="侯捷C++面向对象高级开发（上）">
       <i class="fa fa-chevron-left"></i> 侯捷C++面向对象高级开发（上）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/17/%E4%BE%AF%E6%8D%B7STL%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="侯捷STL（一）">
+      侯捷STL（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -339,7 +328,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%AF%E6%8D%B7C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">侯捷C++面向对象高级开发（下）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#conversion-function%EF%BC%8C%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">conversion function，转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#non-explicit-one-argument-ctor"><span class="nav-number">1.2.</span> <span class="nav-text">non-explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conversion-function-VS-non-explicit-one-argument-ctor"><span class="nav-number">1.3.</span> <span class="nav-text">conversion function VS non-explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-one-argument-ctor"><span class="nav-number">1.4.</span> <span class="nav-text">explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pointer-like-classes"><span class="nav-number">1.5.</span> <span class="nav-text">pointer-like classes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.5.1.</span> <span class="nav-text">关于智能指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.6.</span> <span class="nav-text">reference</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%AF%E6%8D%B7C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%EF%BC%88%E4%B8%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">侯捷C++面向对象高级开发（下）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#conversion-function%EF%BC%8C%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">conversion function，转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#non-explicit-one-argument-ctor"><span class="nav-number">1.2.</span> <span class="nav-text">non-explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conversion-function-VS-non-explicit-one-argument-ctor"><span class="nav-number">1.3.</span> <span class="nav-text">conversion function VS non-explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-one-argument-ctor"><span class="nav-number">1.4.</span> <span class="nav-text">explicit-one-argument ctor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pointer-like-classes"><span class="nav-number">1.5.</span> <span class="nav-text">pointer-like classes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.5.1.</span> <span class="nav-text">关于智能指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.6.</span> <span class="nav-text">reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vptr-%E5%92%8C-vtbl"><span class="nav-number">1.7.</span> <span class="nav-text">vptr 和 vtbl</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -355,7 +344,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
