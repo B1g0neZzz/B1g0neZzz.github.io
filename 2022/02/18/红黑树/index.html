@@ -46,12 +46,22 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104313165.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104531504.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104652548.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104826524.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105134477.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105327707.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105725437.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219110008810.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219110109885.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219113845711.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120131595.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120347349.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120506772.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220218205004491.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220218210246911.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220218210445474.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220218210703646.png">
 <meta property="article:published_time" content="2022-02-18T12:28:23.000Z">
-<meta property="article:modified_time" content="2022-02-19T02:47:05.551Z">
+<meta property="article:modified_time" content="2022-02-19T04:05:41.576Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220218203239214.png">
@@ -211,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-19 10:47:05" itemprop="dateModified" datetime="2022-02-19T10:47:05+08:00">2022-02-19</time>
+                <time title="修改时间：2022-02-19 12:05:41" itemprop="dateModified" datetime="2022-02-19T12:05:41+08:00">2022-02-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -340,16 +350,38 @@
 <p>然后将这棵树分裂成子树。</p>
 <img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104652548.png" alt="image-20220219104652548" style="zoom:67%;" />
 
+<p>现在，再来添加一个节点，<strong>18</strong>。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219104826524.png" alt="image-20220219104826524" style="zoom:67%;" />
+
+<p>再来添加一个节点 <strong>6</strong>，同样，先融合，再拆解。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105134477.png" alt="image-20220219105134477" style="zoom:67%;" />
+
+<p>再变换，将中间元素与其父节点融合，如果其父亲节点正好只有一个元素，父亲节点转而变为 <strong>3</strong> 节点。</p>
+ <img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105327707.png" alt="image-20220219105327707" style="zoom:67%;" />
 
 
 
+<p>再添加一个元素，<strong>11</strong>。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219105725437.png" alt="image-20220219105725437" style="zoom:67%;" />
+
+<p>再添加一个元素， <strong>5</strong>，还是先融合后拆解。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219110008810.png" alt="image-20220219110008810" style="zoom:67%;" />
+
+<p>然后将 <strong>6</strong> 融合到父节点。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219110109885.png" alt="image-20220219110109885" style="zoom:67%;" />
+
+<p>然后进行分裂。</p>
+<img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219113845711.png" alt="image-20220219113845711" style="zoom:67%;" />
 
 
 
-
-
-
-
+<h3 id="总结-2-3-树添加元素的过程"><a href="#总结-2-3-树添加元素的过程" class="headerlink" title="总结 2-3 树添加元素的过程"></a>总结 2-3 树添加元素的过程</h3><p>如果插入 <strong>3-节点</strong></p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120131595.png" alt="image-20220219120131595"></p>
+<p>如果融合的是根节点，那这样就结束了。</p>
+<p>但是如果插入 <strong>3-节点</strong>，同时父亲节点为 <strong>2-节点</strong> 。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120347349.png" alt="image-20220219120347349"></p>
+<p>插入 <strong>3-节点</strong>，同时父亲节点为 <strong>3-节点</strong> 。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220219120506772.png" alt="image-20220219120506772"></p>
 <h2 id="RBTree"><a href="#RBTree" class="headerlink" title="RBTree"></a>RBTree</h2><h3 id="RBTree-的定义"><a href="#RBTree-的定义" class="headerlink" title="RBTree 的定义"></a>RBTree 的定义</h3><p><strong>RBTree</strong> 的定义如下：</p>
 <ol>
 <li>任何一个节点都有颜色，黑色或者红色。</li>
@@ -458,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BST"><span class="nav-number">1.1.</span> <span class="nav-text">BST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">BST 的插入操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">BST 的删除操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">BST 存在的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E5%9B%A0%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">平衡因子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AVL-%E6%A0%91%E7%9A%84%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">AVL 树的旋转操作基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LL-%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.1.</span> <span class="nav-text">LL 的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LR-%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">LR 的情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%A0%91"><span class="nav-number">1.4.</span> <span class="nav-text">2-3 树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%A0%91%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%B9%B3%E8%A1%A1%E6%80%A7"><span class="nav-number">1.4.1.</span> <span class="nav-text">2-3 树的绝对平衡性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RBTree"><span class="nav-number">1.5.</span> <span class="nav-text">RBTree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">RBTree 的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.2.</span> <span class="nav-text">RBTree 的旋转操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%9F%A5%E6%89%BE%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.3.</span> <span class="nav-text">RBTree 的查找操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.4.</span> <span class="nav-text">RBTree 的插入操作</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BST"><span class="nav-number">1.1.</span> <span class="nav-text">BST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">BST 的插入操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">BST 的删除操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BST-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">BST 存在的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E5%9B%A0%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">平衡因子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AVL-%E6%A0%91%E7%9A%84%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">AVL 树的旋转操作基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LL-%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.1.</span> <span class="nav-text">LL 的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LR-%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.3.2.</span> <span class="nav-text">LR 的情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%A0%91"><span class="nav-number">1.4.</span> <span class="nav-text">2-3 树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%A0%91%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%B9%B3%E8%A1%A1%E6%80%A7"><span class="nav-number">1.4.1.</span> <span class="nav-text">2-3 树的绝对平衡性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2-3-%E6%A0%91%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">总结 2-3 树添加元素的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RBTree"><span class="nav-number">1.5.</span> <span class="nav-text">RBTree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">RBTree 的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.2.</span> <span class="nav-text">RBTree 的旋转操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%9F%A5%E6%89%BE%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.3.</span> <span class="nav-text">RBTree 的查找操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBTree-%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.4.</span> <span class="nav-text">RBTree 的插入操作</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
