@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220322225206686.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220323215105835.png">
 <meta property="article:published_time" content="2022-03-22T14:23:03.000Z">
-<meta property="article:modified_time" content="2022-03-23T13:59:11.704Z">
+<meta property="article:modified_time" content="2022-03-23T14:19:31.404Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220322225206686.png">
@@ -190,7 +190,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 21:59:11" itemprop="dateModified" datetime="2022-03-23T21:59:11+08:00">2022-03-23</time>
+                <time title="修改时间：2022-03-23 22:19:31" itemprop="dateModified" datetime="2022-03-23T22:19:31+08:00">2022-03-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,6 +264,19 @@
 <li><strong>事务支持</strong></li>
 </ul>
 <p>​    使得对于安全性能很高的数据访问要求得以实现。</p>
+<h3 id="非关系型数据库（非-RDBMS）"><a href="#非关系型数据库（非-RDBMS）" class="headerlink" title="非关系型数据库（非 RDBMS）"></a>非关系型数据库（<strong>非 RDBMS</strong>）</h3><p><strong>介绍：</strong></p>
+<p><strong>非关系型数据库</strong>，可看成传统关系型数据库的功能 <strong>阉割版本</strong>，基于键值对存储数据，不需要经过 <strong>SQL</strong> 层的解析，<strong>性能非常高</strong>。同时，通过减少不常用的功能，进一步提高性能。</p>
+<p><strong>有哪些非关系型数据库：</strong></p>
+<p><font color="red"><strong>键值型数据库</strong></font></p>
+<p>键值型数据库通过 <strong>Key-Value</strong> 键值的方式来存储数据，其中 <strong>Key</strong> 和 <strong>Value</strong> 可以使简单的对象，也可以是复杂的对象。<strong>Key</strong> 作为唯一的标识符，优点是查找速度快，在这方面明显优于关系型数据库，缺点是无法像关系型数据库一样使用条件过滤（比如 <strong>WHERE</strong>），如果你不知道去哪里找数据，就要遍历所有的键，这就会消耗大量的计算。</p>
+<p>键值型数据库典型的使用场景是作为 <strong>内存缓存</strong>。<strong>Redis</strong> 是最流行的键值型数据库。</p>
+<p><font color="red"><strong>文档型数据库</strong></font></p>
+<p>此类数据库可存放并获取文档，可以是 <strong>XML、JSON</strong> 等格式。在数据库中文档作为处理信息的基本单位，一个文档就相当于一条记录。文档数据库所存放的文档，就相当于键值数据库所存放的 <strong>“值”</strong>。 <strong>MongoDB</strong> 是最流行的文档型数据库。伺候，还有 <strong>CouchDB</strong> 等。</p>
+<p><font color="red"><strong>搜索引擎数据库</strong></font></p>
+<p>虽然关系型数据库采用了索引提升检索效率，但是针对全文索引效率却较低。搜索引擎数据库是应用在搜索引擎领域的数据存储形式，由于搜索引擎会爬取大量的数据，并以特定的格式进行存储，这样在检索的时候才能保证性能最优。核心原理是 “倒排索引”。</p>
+<p>典型产品：<strong>Solr、Elasticsearch、Splunk</strong> 等。</p>
+<p><font color="red"><strong>列式数据库</strong></font></p>
+<p>列式数据库是相对于行式存储的数据库，<strong>Oracle、MySQL、SQL Server</strong> 等数据库都是采用行式存储（<strong>Row-based</strong>），而列式数据库是将数据按照列存储到数据库中，这样做的好处是可以大量降低系统的 <strong>I/O</strong>，适合于分布式文件系统，不足在于功能相对有限。典型产品：<strong>HBase</strong> 等。</p>
 
     </div>
 
@@ -282,7 +295,10 @@
     <a href="/2022/03/07/%E3%80%8AMySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%85%AD)/" rel="prev" title="《MySQL必知必会》读书笔记(六)">
       <i class="fa fa-chevron-left"></i> 《MySQL必知必会》读书笔记(六)
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/24/TCP-IP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94-%E7%90%86%E8%A7%A3%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%92%8C%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="TCP/IP网络编程读书笔记（一）—— 理解网络编程和 Socket">
+      TCP/IP网络编程读书笔记（一）—— 理解网络编程和 Socket <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -341,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">数据库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要使用数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.</span> <span class="nav-text">数据库与数据库管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据库的相关概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RDBMS-%E4%B8%8E-%E9%9D%9E-RDBMS"><span class="nav-number">1.3.</span> <span class="nav-text">RDBMS 与 非 RDBMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88RDBMS%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">关系型数据库（RDBMS）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">数据库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要使用数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.</span> <span class="nav-text">数据库与数据库管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据库的相关概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RDBMS-%E4%B8%8E-%E9%9D%9E-RDBMS"><span class="nav-number">1.3.</span> <span class="nav-text">RDBMS 与 非 RDBMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88RDBMS%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">关系型数据库（RDBMS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E9%9D%9E-RDBMS%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">非关系型数据库（非 RDBMS）</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -357,7 +373,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
