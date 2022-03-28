@@ -20,18 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="数据库概述为什么要使用数据库 持久化（persistence）：**把数据保存到可掉电式存储设备以供之后使用。** 大多数情况下，特别是企业级应用，**数据持久化意味着将内存中的数据保存到硬盘上加以“固化”**，而持久化的实现过程大多通过各种关系数据库来完成。 持久化的主要作用是 将内存中的数据存储在关系型数据库中，当然也可以存储在硬盘文件、XML 数据文件中。">
+  <meta name="description" content="为什么要使用数据库 持久化（persistence）：**把数据保存到可掉电式存储设备以供之后使用。** 大多数情况下，特别是企业级应用，**数据持久化意味着将内存中的数据保存到硬盘上加以“固化”**，而持久化的实现过程大多通过各种关系数据库来完成。 持久化的主要作用是 将内存中的数据存储在关系型数据库中，当然也可以存储在硬盘文件、XML 数据文件中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL学习（一）—— 数据库概述">
 <meta property="og:url" content="http://example.com/2022/03/22/MySQL%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="数据库概述为什么要使用数据库 持久化（persistence）：**把数据保存到可掉电式存储设备以供之后使用。** 大多数情况下，特别是企业级应用，**数据持久化意味着将内存中的数据保存到硬盘上加以“固化”**，而持久化的实现过程大多通过各种关系数据库来完成。 持久化的主要作用是 将内存中的数据存储在关系型数据库中，当然也可以存储在硬盘文件、XML 数据文件中。">
+<meta property="og:description" content="为什么要使用数据库 持久化（persistence）：**把数据保存到可掉电式存储设备以供之后使用。** 大多数情况下，特别是企业级应用，**数据持久化意味着将内存中的数据保存到硬盘上加以“固化”**，而持久化的实现过程大多通过各种关系数据库来完成。 持久化的主要作用是 将内存中的数据存储在关系型数据库中，当然也可以存储在硬盘文件、XML 数据文件中。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220322225206686.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220323215105835.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220326225751154.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220328221118412.png">
 <meta property="article:published_time" content="2022-03-22T14:23:03.000Z">
-<meta property="article:modified_time" content="2022-03-26T14:58:13.688Z">
+<meta property="article:modified_time" content="2022-03-28T14:11:24.295Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220322225206686.png">
@@ -191,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-26 22:58:13" itemprop="dateModified" datetime="2022-03-26T22:58:13+08:00">2022-03-26</time>
+                <time title="修改时间：2022-03-28 22:11:24" itemprop="dateModified" datetime="2022-03-28T22:11:24+08:00">2022-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,13 +215,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="数据库概述"><a href="#数据库概述" class="headerlink" title="数据库概述"></a>数据库概述</h1><h2 id="为什么要使用数据库"><a href="#为什么要使用数据库" class="headerlink" title="为什么要使用数据库"></a>为什么要使用数据库</h2><ul>
+        <h1 id="为什么要使用数据库"><a href="#为什么要使用数据库" class="headerlink" title="为什么要使用数据库"></a>为什么要使用数据库</h1><ul>
 <li>持久化（<strong>persistence</strong>）：**<font color="red">把数据保存到可掉电式存储设备以供之后使用。</font>** 大多数情况下，特别是企业级应用，**<font color="red">数据持久化意味着将内存中的数据保存到硬盘上加以“固化”</font>**，而持久化的实现过程大多通过各种关系数据库来完成。</li>
 <li>持久化的主要作用是 <strong><font color="red">将内存中的数据存储在关系型数据库中</font><strong>，当然也可以存储在硬盘文件、</strong>XML</strong> 数据文件中。</li>
 </ul>
 <span id="more"></span>
 
-<h2 id="数据库与数据库管理系统"><a href="#数据库与数据库管理系统" class="headerlink" title="数据库与数据库管理系统"></a>数据库与数据库管理系统</h2><h3 id="数据库的相关概念"><a href="#数据库的相关概念" class="headerlink" title="数据库的相关概念"></a>数据库的相关概念</h3><table>
+<h1 id="数据库与数据库管理系统"><a href="#数据库与数据库管理系统" class="headerlink" title="数据库与数据库管理系统"></a>数据库与数据库管理系统</h1><h2 id="数据库的相关概念"><a href="#数据库的相关概念" class="headerlink" title="数据库的相关概念"></a>数据库的相关概念</h2><table>
 <thead>
 <tr>
 <th><strong><font color="red">DB：数据库（Database）</font></strong></th>
@@ -246,7 +247,7 @@
 
 
 
-<h2 id="RDBMS-与-非-RDBMS"><a href="#RDBMS-与-非-RDBMS" class="headerlink" title="RDBMS 与 非 RDBMS"></a>RDBMS 与 非 RDBMS</h2><h3 id="关系型数据库（RDBMS）"><a href="#关系型数据库（RDBMS）" class="headerlink" title="关系型数据库（RDBMS）"></a>关系型数据库（RDBMS）</h3><p><strong>实质：</strong></p>
+<h1 id="RDBMS-与-非-RDBMS"><a href="#RDBMS-与-非-RDBMS" class="headerlink" title="RDBMS 与 非 RDBMS"></a>RDBMS 与 非 RDBMS</h1><h2 id="关系型数据库（RDBMS）"><a href="#关系型数据库（RDBMS）" class="headerlink" title="关系型数据库（RDBMS）"></a>关系型数据库（RDBMS）</h2><p><strong>实质：</strong></p>
 <ul>
 <li>这种类型的数据库是 <strong>最古老</strong> 的数据库类型，关系型数据库模型是吧复杂的数据结构归结为简单的 <strong>二元关系</strong>（即二维表格形式）。</li>
 </ul>
@@ -265,7 +266,7 @@
 <li><strong>事务支持</strong></li>
 </ul>
 <p>​    使得对于安全性能很高的数据访问要求得以实现。</p>
-<h3 id="非关系型数据库（非-RDBMS）"><a href="#非关系型数据库（非-RDBMS）" class="headerlink" title="非关系型数据库（非 RDBMS）"></a>非关系型数据库（<strong>非 RDBMS</strong>）</h3><p><strong>介绍：</strong></p>
+<h2 id="非关系型数据库（非-RDBMS）"><a href="#非关系型数据库（非-RDBMS）" class="headerlink" title="非关系型数据库（非 RDBMS）"></a>非关系型数据库（<strong>非 RDBMS</strong>）</h2><p><strong>介绍：</strong></p>
 <p><strong>非关系型数据库</strong>，可看成传统关系型数据库的功能 <strong>阉割版本</strong>，基于键值对存储数据，不需要经过 <strong>SQL</strong> 层的解析，<strong>性能非常高</strong>。同时，通过减少不常用的功能，进一步提高性能。</p>
 <p><strong>有哪些非关系型数据库：</strong></p>
 <p><font color="red"><strong>键值型数据库</strong></font></p>
@@ -278,17 +279,63 @@
 <p>典型产品：<strong>Solr、Elasticsearch、Splunk</strong> 等。</p>
 <p><font color="red"><strong>列式数据库</strong></font></p>
 <p>列式数据库是相对于行式存储的数据库，<strong>Oracle、MySQL、SQL Server</strong> 等数据库都是采用行式存储（<strong>Row-based</strong>），而列式数据库是将数据按照列存储到数据库中，这样做的好处是可以大量降低系统的 <strong>I/O</strong>，适合于分布式文件系统，不足在于功能相对有限。典型产品：<strong>HBase</strong> 等。</p>
-<h2 id="关系型数据库设计原则"><a href="#关系型数据库设计原则" class="headerlink" title="关系型数据库设计原则"></a>关系型数据库设计原则</h2><ul>
+<h1 id="关系型数据库设计原则"><a href="#关系型数据库设计原则" class="headerlink" title="关系型数据库设计原则"></a>关系型数据库设计原则</h1><ul>
 <li>关系型数据库的典型数据结构就是 <strong>数据表</strong>，这些数据表的组成都是结构化的（<strong>Structured</strong>）。</li>
 <li>将数据放到表中，表再放到库中。</li>
 <li>一个数据库中可以有多个表，每个表都有一个名字，用来标识自己。表名具有唯一性。</li>
 <li>表具有一些特性，这些特性定义了数据在表中如何存储，类似 <strong>Java</strong> 和 <strong>Python</strong> 中 “类” 的设计。</li>
 </ul>
-<h3 id="表、记录、字段"><a href="#表、记录、字段" class="headerlink" title="表、记录、字段"></a>表、记录、字段</h3><ul>
+<h2 id="表、记录、字段"><a href="#表、记录、字段" class="headerlink" title="表、记录、字段"></a>表、记录、字段</h2><ul>
 <li><strong>E-R（entity-relationship，实体-联系）</strong> 模型中有三个主要概念是：<strong>实体集、属性、联系集</strong>。</li>
 <li>一个实体集（<strong>class</strong>）对应数据库中的一个表（<strong>table</strong>），一个实体（<strong>instance</strong>）则对应于数据库表中的一行（<strong>row</strong>），也称为一条记录（<strong>record</strong>）。一个属性（<strong>attribute</strong>）对应于数据库表中的一列（<strong>column</strong>），也称为一个字段（<strong>field</strong>）。</li>
 </ul>
 <p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220326225751154.png" alt="image-20220326225751154"></p>
+<h2 id="表的关联关系"><a href="#表的关联关系" class="headerlink" title="表的关联关系"></a>表的关联关系</h2><ul>
+<li>表与表之间的数据记录有关系（<strong>relationship</strong>）。现实世界中的各种实体以及实体之间的各种联系均用关系模型来表示。</li>
+<li>四种：一对一关联、一对多关联、多对多关联、自我引用。</li>
+</ul>
+<h3 id="一对一关联（one-to-one）"><a href="#一对一关联（one-to-one）" class="headerlink" title="一对一关联（one-to-one）"></a>一对一关联（one-to-one）</h3><ul>
+<li>在实际的开发中应用不多，因为一对一可以建成一张表。</li>
+<li>举例：设计 <strong>学生表</strong>：学号、姓名、手机号码、班级、系别、身份证号码、家庭住址、籍贯、紧急联系人…<ul>
+<li>拆为两个表：两个表的记录是 一一对应关系。</li>
+<li><strong>基础信息表</strong>（常用信息）：学号、姓名、手机号码、班级、系别。</li>
+<li><strong>档案信息表</strong>（不常用信息）：学号、身份证号码、家庭住址、籍贯、紧急联系人..</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>两种建表原则：<ul>
+<li>主键唯一：主表的主键和从表的外键（唯一），形成主外键关系，外键唯一。</li>
+<li>外键是主键：主表的主键和从表的主键，形成主外键关系。</li>
+</ul>
+</li>
+</ul>
+<h3 id="一对多关系（one-to-many）"><a href="#一对多关系（one-to-many）" class="headerlink" title="一对多关系（one-to-many）"></a>一对多关系（one-to-many）</h3><ul>
+<li><p>常见实例场景：<strong>客户表和订单表</strong>，<strong>分类表和商品表</strong>，<strong>部门表和员工表</strong>。</p>
+</li>
+<li><p>举例</p>
+<ul>
+<li>员工表：编号、姓名、…、所属部门</li>
+<li>部门表：编号、名称、简介</li>
+</ul>
+</li>
+<li><p>一对多见表原则：在从表（多方）创建一个字段，字段作为主键指向主表（一方）的主键</p>
+</li>
+</ul>
+<h3 id="多对多（many-to-many）"><a href="#多对多（many-to-many）" class="headerlink" title="多对多（many-to-many）"></a>多对多（many-to-many）</h3><p>要表示多对多关系，必须创建第三张表，该表通常称为 <strong>联接表</strong>，它将多对多关系划分为两个一对多关系。将这两个表的主键都插入到第三个表中。</p>
+<ul>
+<li><strong><font color="red">举例：学生-课程</font></strong><ul>
+<li><strong>学生信息表</strong>：一行代表一个学生的信息（学号、姓名、手机号码、班级、系别…）</li>
+<li><strong>课程信息表</strong>：一行代表一个课程的信息（课程编号、授课老师、简介…）</li>
+<li><strong>选课信息表</strong>：一个学生可以选多门课，一门课可以被多个学生选择</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">学号	课程编号</span><br><span class="line">1	  1001</span><br><span class="line">2	  1001</span><br><span class="line">1	  1002</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="自我引用"><a href="#自我引用" class="headerlink" title="自我引用"></a>自我引用</h3><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220328221118412.png" alt="image-20220328221118412"></p>
 
     </div>
 
@@ -308,7 +355,7 @@
       <i class="fa fa-chevron-left"></i> 《MySQL必知必会》读书笔记(六)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/24/TCP-IP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94-%E7%90%86%E8%A7%A3%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%92%8C%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="TCP/IP网络编程读书笔记（一）—— 理解网络编程和 Socket">
+    <a href="/2022/03/24/TCPIP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94-%E7%90%86%E8%A7%A3%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%92%8C%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="next" title="TCP/IP网络编程读书笔记（一）—— 理解网络编程和 Socket">
       TCP/IP网络编程读书笔记（一）—— 理解网络编程和 Socket <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -369,7 +416,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">数据库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要使用数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.</span> <span class="nav-text">数据库与数据库管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据库的相关概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RDBMS-%E4%B8%8E-%E9%9D%9E-RDBMS"><span class="nav-number">1.3.</span> <span class="nav-text">RDBMS 与 非 RDBMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88RDBMS%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">关系型数据库（RDBMS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E9%9D%9E-RDBMS%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">非关系型数据库（非 RDBMS）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">关系型数据库设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E3%80%81%E8%AE%B0%E5%BD%95%E3%80%81%E5%AD%97%E6%AE%B5"><span class="nav-number">1.4.1.</span> <span class="nav-text">表、记录、字段</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">数据库与数据库管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">数据库的相关概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RDBMS-%E4%B8%8E-%E9%9D%9E-RDBMS"><span class="nav-number">3.</span> <span class="nav-text">RDBMS 与 非 RDBMS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88RDBMS%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">关系型数据库（RDBMS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E9%9D%9E-RDBMS%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">非关系型数据库（非 RDBMS）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">4.</span> <span class="nav-text">关系型数据库设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E3%80%81%E8%AE%B0%E5%BD%95%E3%80%81%E5%AD%97%E6%AE%B5"><span class="nav-number">4.1.</span> <span class="nav-text">表、记录、字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E7%9A%84%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.</span> <span class="nav-text">表的关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%EF%BC%88one-to-one%EF%BC%89"><span class="nav-number">4.2.1.</span> <span class="nav-text">一对一关联（one-to-one）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E7%B3%BB%EF%BC%88one-to-many%EF%BC%89"><span class="nav-number">4.2.2.</span> <span class="nav-text">一对多关系（one-to-many）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%EF%BC%88many-to-many%EF%BC%89"><span class="nav-number">4.2.3.</span> <span class="nav-text">多对多（many-to-many）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%88%91%E5%BC%95%E7%94%A8"><span class="nav-number">4.2.4.</span> <span class="nav-text">自我引用</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -385,7 +432,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
