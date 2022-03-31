@@ -38,6 +38,9 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331104755945.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331104909310.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105034465.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105448822.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105743428.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105827908.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211208153339275.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211209114708552.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211210195815654.png">
@@ -47,7 +50,7 @@
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211212200743371.png">
 <meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211212200816118.png">
 <meta property="article:published_time" content="2021-12-07T04:19:13.000Z">
-<meta property="article:modified_time" content="2022-03-31T02:50:59.656Z">
+<meta property="article:modified_time" content="2022-03-31T04:05:33.339Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211207122607772.png">
@@ -207,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 10:50:59" itemprop="dateModified" datetime="2022-03-31T10:50:59+08:00">2022-03-31</time>
+                <time title="修改时间：2022-03-31 12:05:33" itemprop="dateModified" datetime="2022-03-31T12:05:33+08:00">2022-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,7 +287,34 @@
 <p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331104909310.png" alt="image-20220331104909310"></p>
 <p>然后继续，当交换到不能交换时，整棵树又变成堆</p>
 <p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105034465.png" alt="image-20220331105034465"></p>
-<p><strong>up</strong> 操作：</p>
+<p>所以 <strong>down</strong> 操作就是，把一个数变大了，就要把它往下移。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 使用 t 来表示三个点中的最小值</span></span><br><span class="line">    <span class="keyword">int</span> t = u;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> &lt;= sz &amp;&amp; h[u * <span class="number">2</span>] &lt; h[t]) t = u * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> + <span class="number">1</span> &lt;= sz &amp;&amp; h[u * <span class="number">2</span> + <span class="number">1</span>] &lt; h[t]) t = u * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (u != t)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[u], h[t]);</span><br><span class="line">        down(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<p>对应的， <strong>up</strong> 操作就是把一个数变小了，把它往上移。</p>
+<p>举例：</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105448822.png" alt="image-20220331105448822"></p>
+<p><strong>2</strong> 节点只与父节点比较即可，因为父节点一定小于等于左孩子的。所以左孩子不必动。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105743428.png" alt="image-20220331105743428"></p>
+<p>以此类推。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220331105827908.png" alt="image-20220331105827908"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 如果有父节点且比父节点小</span></span><br><span class="line">    <span class="keyword">while</span> (u / <span class="number">2</span> &amp;&amp; h[u / <span class="number">2</span>] &gt; h[u]) </span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[u / <span class="number">2</span>], h[u]);</span><br><span class="line">        u /= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 <ol>
 <li>插入一个数</li>
 </ol>
@@ -299,7 +329,7 @@
 <ol start="3">
 <li>删除最小值</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">heap[<span class="number">1</span>] = heap[size];</span><br><span class="line">size --;</span><br><span class="line">down(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用整个堆的最后一个元素覆盖堆顶元素</span></span><br><span class="line">heap[<span class="number">1</span>] = heap[size];</span><br><span class="line"><span class="comment">// 将最后一个元素删掉</span></span><br><span class="line">size --;</span><br><span class="line"><span class="comment">// 把堆顶 down</span></span><br><span class="line">down(<span class="number">1</span>);</span><br><span class="line"><span class="comment">// 为什么这么做？</span></span><br><span class="line"><span class="comment">// 因为一维数组删除第一个节点非常困难</span></span><br><span class="line"><span class="comment">// 但是删除最后一个节点很简单</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -317,8 +347,11 @@
 
 
 
+<p>如何构建一个堆？</p>
+<p>如果将 <strong>n</strong> 个元素逐个插入到一个空堆中，算法复杂度是 <strong>O(nlogn)</strong></p>
+<p>但是可以从最后一个非叶子结点 <strong>n/2</strong> 开始向前，每个节点 <strong>down</strong> 操作，算法复杂度 <strong>O(n)</strong></p>
 <p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211208153339275.png" alt="image-20211208153339275"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> h[N], size;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t = u;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> &lt;= size &amp;&amp; h[u * <span class="number">2</span>] &lt; h[t]) t = u * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> + <span class="number">1</span> &lt;= size &amp;&amp; h[u * <span class="number">2</span> + <span class="number">1</span>] &lt; h[t]) t = u * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (u != t)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[u], h[t]);</span><br><span class="line">        down(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (u / <span class="number">2</span> &amp;&amp; h[u / <span class="number">2</span>] &gt; h[u])</span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[u / <span class="number">2</span>], h[u]);</span><br><span class="line">        u /= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;h[i]);</span><br><span class="line">    size = n;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i; i --) down(i);</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">while</span> (m --)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, h[<span class="number">1</span>]);</span><br><span class="line">        h[<span class="number">1</span>] = h[size];</span><br><span class="line">        size --;</span><br><span class="line">        down(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, h[N], sz;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 使用 t 来表示三个点中的最小值</span></span><br><span class="line">    <span class="keyword">int</span> t = u;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> &lt;= sz &amp;&amp; h[u * <span class="number">2</span>] &lt; h[t]) t = u * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (u * <span class="number">2</span> + <span class="number">1</span> &lt;= sz &amp;&amp; h[u * <span class="number">2</span> + <span class="number">1</span>] &lt; h[t]) t = u * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (u != t)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(h[u], h[t]);</span><br><span class="line">        down(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) <span class="built_in">cin</span> &gt;&gt; h[i];</span><br><span class="line">    sz = n;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i &gt;= <span class="number">1</span>; i --) down(i);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (m --) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, h[<span class="number">1</span>]);</span><br><span class="line">        h[<span class="number">1</span>] = h[sz--];</span><br><span class="line">        down(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -461,7 +494,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
