@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改">
+<meta property="og:type" content="website">
+<meta property="og:title" content="《图解HTTP》读书笔记(五)">
+<meta property="og:url" content="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94).html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="第七章    确保 Web 安全的 HTTPS7.1    HTTP 的缺点HTTP 主要有这些不足：  通信使用明文（不加密），内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭篡改">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126113510087.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126114307128.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115007954.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115235323.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115657564.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120119787.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120644368.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122444203.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122617941.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160028883.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160700666.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160737572.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126162642897.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126170227661.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126172231496.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126174223825.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175226882.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175400690.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175413745.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175427677.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126180116641.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126203050151.png">
+<meta property="article:published_time" content="2021-11-25T13:41:22.000Z">
+<meta property="article:modified_time" content="2022-03-03T04:01:51.974Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png">
+
+<link rel="canonical" href="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%94)">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《图解HTTP》读书笔记(五) | Taiichi's blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">《图解HTTP》读书笔记(五)
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《图解HTTP》读书笔记(五)</li>
+          
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="第七章-确保-Web-安全的-HTTPS"><a href="#第七章-确保-Web-安全的-HTTPS" class="headerlink" title="第七章    确保 Web 安全的 HTTPS"></a>第七章    确保 Web 安全的 HTTPS</h1><h2 id="7-1-HTTP-的缺点"><a href="#7-1-HTTP-的缺点" class="headerlink" title="7.1    HTTP 的缺点"></a>7.1    HTTP 的缺点</h2><p><strong>HTTP</strong> 主要有这些不足：</p>
+<ul>
+<li>通信使用明文（不加密），内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="7-1-1-通信使用明文可能会被窃听"><a href="#7-1-1-通信使用明文可能会被窃听" class="headerlink" title="7.1.1    通信使用明文可能会被窃听"></a>7.1.1    通信使用明文可能会被窃听</h3><ul>
+<li><strong>通信的加密</strong></li>
+</ul>
+<p>一种方式就是将通信加密。<strong>HTTP</strong> 协议中没有加密机制，但可以通过和 <strong>SSL（ Secure Socket Layer，安全套接层 ）</strong> 或 <strong>TLS（ Transport Layer Security，安全层传输协议）</strong> 的组合使用，加密 <strong>HTTP</strong> 的通信内容。</p>
+<p>用 <strong>SSL</strong> 建立安全通信线路之后，就可以在这条线路上进行 <strong>HTTP</strong> 通信了。与 <strong>SSL</strong> 组合使用的 <strong>HTTP</strong> 被称为 <strong>HTTPS（HTTP Secure，超文本传输安全协议）</strong> 或 <strong>HTTP over SSL</strong>。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211125214956351.png" alt="image-20211125214956351"></p>
+<ul>
+<li><strong>内容的加密</strong></li>
+</ul>
+<p>还可以把 <strong>HTTP</strong> 报文里所含的内容进行加密处理。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126113510087.png" alt="image-20211126113510087"></p>
+<h3 id="7-1-2-不验证通信方的身份就可能遭遇伪装"><a href="#7-1-2-不验证通信方的身份就可能遭遇伪装" class="headerlink" title="7.1.2    不验证通信方的身份就可能遭遇伪装"></a>7.1.2    不验证通信方的身份就可能遭遇伪装</h3><p><strong>HTTP</strong> 协议中的请求和响应不会对通信方进行确认。也就是说存在 “服务器是否就是发送请求中 <strong>URI</strong> 真正指定的主机，返回的响应是否真的返回到实际提出请求的客户端” 等类似问题。</p>
+<ul>
+<li><strong>任何人都可发起请求</strong></li>
+</ul>
+<p>在 <strong>HTTP</strong> 协议通信时，由于不存在确认通信方的处理步骤，任何人都可以发起请求。另外，服务器只要接收到请求，不管对方是谁都会返回一个响应（但也仅限于发送端的 <strong>IP</strong> 地址和端口号）。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126114307128.png" alt="image-20211126114307128"></p>
+<p>不确认通信方，会存在以下各种隐患：</p>
+<ul>
+<li>​    <strong>无法确定请求发送至目标的 Web 服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的 Web 服务器。</strong></li>
+<li><strong>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端。</strong></li>
+<li><strong>无法确定正在通信的对方是否具备访问权限。因为某些 Web 服务器上保存着重要的信息，只想发给特定用户通信的权限。</strong></li>
+<li><strong>无法判断请求是来自何方、出自谁手。</strong></li>
+<li><strong>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击）。</strong></li>
+</ul>
+<ul>
+<li><strong>查明对手的证书</strong></li>
+</ul>
+<p>虽然使用 <strong>HTTP</strong> 协议无法确定通信方，但如果使用 <strong>SSL</strong> 则可以。</p>
+<p><strong>SSL</strong> 不仅提供加密处理，而且还使用了一种被称为证书的手段，可用于确定通信方。</p>
+<p>证书由值得信任的第三方机构颁发。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115007954.png" alt="image-20211126115007954"></p>
+<h3 id="7-1-3-无法证明报文完整性，可能已遭篡改"><a href="#7-1-3-无法证明报文完整性，可能已遭篡改" class="headerlink" title="7.1.3    无法证明报文完整性，可能已遭篡改"></a>7.1.3    无法证明报文完整性，可能已遭篡改</h3><ul>
+<li><strong>接收到的内容可能有误</strong></li>
+</ul>
+<p>由于 <strong>HTTP</strong> 协议无法证明通信的报文完整性，因此，在请求或响应送出之后直到对方接收之前的这段时间内，即使请求或响应的内容遭到篡改，也没有办法获悉。</p>
+<p>换句话说，没有任何办法确认，发出的请求 / 响应和接收到的请求 / 响应是前后相同的。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115235323.png" alt="image-20211126115235323"></p>
+<p>比如，从某个 <strong>Web</strong> 网站上下载内容，是无法确定客户端下载的文件和服务器上存放的文件是否前后一致的。文件内容在传输途中可能已经被篡改为其他的内容。即使内容真的已改变，作为接收方的客户端也是察觉不到的。</p>
+<p>像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击（ <strong>Man-in-the-Middle attack，MITM</strong> ）。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126115657564.png" alt="image-20211126115657564"></p>
+<ul>
+<li><strong>如何防止篡改</strong></li>
+</ul>
+<p><strong>SSL</strong> 提供认证和加密处理及摘要功能。</p>
+<h2 id="7-2-HTTP-加密-认证-完整性保护-HTTPS"><a href="#7-2-HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="7.2    HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>7.2    HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h2><h3 id="7-2-1-HTTP-加上加密处理和认证以及完整性保护后即是-HTTPS"><a href="#7-2-1-HTTP-加上加密处理和认证以及完整性保护后即是-HTTPS" class="headerlink" title="7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS"></a>7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120119787.png" alt="image-20211126120119787"></p>
+<h3 id="7-2-2-HTTPS-是身披-SSL-外壳的-HTTP"><a href="#7-2-2-HTTPS-是身披-SSL-外壳的-HTTP" class="headerlink" title="7.2.2    HTTPS 是身披 SSL 外壳的 HTTP"></a>7.2.2    HTTPS 是身披 SSL 外壳的 HTTP</h3><p><strong>HTTPS</strong> 并非是应用层的一种新协议。只是 <strong>HTTP</strong> 通信接口部分用 <strong>SSL（ Secure Socket Layer）</strong> <strong>TLS（ Transport Layer Security ）</strong> 协议代替而已。</p>
+<p>通常，<strong>HTTP</strong> 直接和 <strong>TCP</strong> 通信。当使用 <strong>SSL</strong> 时，则演变成先和 <strong>SSL</strong> 通信，再由 <strong>SSL</strong> 和 <strong>TCP</strong> 通信了。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126120644368.png" alt="image-20211126120644368"></p>
+<h3 id="7-2-3-相互交换密钥的公开密钥加密技术"><a href="#7-2-3-相互交换密钥的公开密钥加密技术" class="headerlink" title="7.2.3    相互交换密钥的公开密钥加密技术"></a>7.2.3    相互交换密钥的公开密钥加密技术</h3><p><strong>SSL</strong> 采用一种叫做公开密钥加密（ <strong>Public-key cryptography</strong> ）的加密处理方式。</p>
+<p>近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。</p>
+<p>加密和解密都会用到密钥。没有密钥就无法对密码解密，反过来说，任何人只要持有密钥就能解密了。如果密钥被攻击者获得，那加密也就失去了意义。</p>
+<ul>
+<li>共享密钥加密的困境</li>
+</ul>
+<p>加密和解密同用一个密钥的方式称为共享密钥加密（ <strong>Common key crypto system</strong> ），也叫对称密钥加密。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122444203.png" alt="image-20211126122444203"></p>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126122617941.png" alt="image-20211126122617941"></p>
+<ul>
+<li>使用两把密钥的公开密钥加密</li>
+</ul>
+<p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥，另一把叫做公开密钥。</p>
+<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方受到被加密的信息后，再使用自己的私有密钥进行解密。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160028883.png" alt="image-20211126160028883"></p>
+<ul>
+<li><strong>HTTPS</strong> 采用混合加密机制</li>
+</ul>
+<p><strong>HTTPS</strong> 采用对称密钥加密和非对称加密两者并用的混合加密机制。</p>
+<p>非对称加密处理起来比对称加密方式更为复杂，因此若在通信时使用非对称加密方式，效率就很低。</p>
+<ol>
+<li>使用非对称加密方式安全地交换在稍后的对称密钥加密中要使用的密钥。</li>
+</ol>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160700666.png" alt="image-20211126160700666"></p>
+<ol start="2">
+<li>确保交换的密钥是安全的前提下，使用对称加密方式进行通信。</li>
+</ol>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126160737572.png" alt="image-20211126160737572"></p>
+<h3 id="7-2-4-证明公开密钥正确性的证书"><a href="#7-2-4-证明公开密钥正确性的证书" class="headerlink" title="7.2.4    证明公开密钥正确性的证书"></a>7.2.4    证明公开密钥正确性的证书</h3><p>但是，我们无法证明公开密钥本身就是货真价实的公开密钥。比如，正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了。</p>
+<p>为了解决上述问题，可以使用由数字证书认证机构（ <strong>CA，Certificate Authority</strong> ）和其相关机关办法的公开密钥证书。</p>
+<p>首先，服务器的运营人员向数字证书认证机构提出公开密钥的申请。数字证书认证机构在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公钥证书后绑定在一起。</p>
+<p>服务器会将这份由数字证书认证机构颁发的公钥证书发送给客户端，以进行公开密钥加密方式通信。</p>
+<p>接到整数的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事：一，认证服务器的公开密钥的是真实有效的数字证书认证机构。二，服务器的公开密钥是值得信赖的。</p>
+<p>此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式时，如何安全转交是一件很困难的事，因此，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126162642897.png" alt="image-20211126162642897"></p>
+<h3 id="7-2-5-HTTPS-的安全通信机制"><a href="#7-2-5-HTTPS-的安全通信机制" class="headerlink" title="7.2.5    HTTPS 的安全通信机制"></a>7.2.5    HTTPS 的安全通信机制</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126170227661.png" alt="image-20211126170227661"></p>
+<p><strong>步骤 1：</strong> 客户端通过发送 <strong>Client Hello</strong> 报文开始 <strong>SSL</strong> 通信。报文中包含客户端支持的 <strong>SSL</strong> 的指定版本、加密组件（ <strong>Cipher Suite</strong> ）列表（ 所使用的加密算法及密钥长度等 ）。</p>
+<p><strong>步骤 2：</strong> 服务器可进行 <strong>SSL</strong> 通信时，会以 <strong>Server Hello</strong> 报文作为应答。和客户端一样，在报文中包含 <strong>SSL</strong> 版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。</p>
+<p><strong>步骤 3：</strong> 之后服务器发送 <strong>Certificate</strong> 报文。报文中包含公开密钥证书。</p>
+<p><strong>步骤 4：</strong> 最后服务器发送 <strong>Server Hello Done</strong> 报文通知客户端，最初阶段的 <strong>SSL</strong> 握手协商部分结束。</p>
+<p><strong>步骤 5：</strong> <strong>SSL</strong> 第一次握手结束之后，客户端以 <strong>Client Key Exchange</strong> 报文作为回应。报文中包含通信加密中使用的一种被称为 <strong>Pre-master secret</strong> 的随机密码串。该报文已用步骤 <strong>3</strong> 中的公开密钥进行加密。</p>
+<p><strong>步骤 6：</strong> 接着客户端继续发送 <strong>Change Cipher Spec</strong> 报文。该报文会提示服务器，在此报文之后的通信会采用 <strong>Pre-master secret</strong> 密钥加密。</p>
+<p><strong>步骤 7：</strong> 客户端发送 <strong>Finished</strong> 报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。</p>
+<p><strong>步骤 8：</strong> 服务器同样发送 <strong>Change Cipher Spec</strong> 报文。</p>
+<p><strong>步骤 9：</strong> 服务器同样发送 <strong>Finished</strong> 报文。</p>
+<p><strong>步骤 10：</strong> 服务器和客户端的 <strong>Finished</strong> 报文交换完毕之后，<strong>SSL</strong> 连接就算建立完成。当然，通信会收到 <strong>SSL</strong> 的保护。从此处开始进行应用层协议的通信，即发送 <strong>HTTP</strong> 请求。</p>
+<p><strong>步骤 11：</strong> 应用层协议通信，即发送 <strong>HTTP</strong> 响应。</p>
+<p><strong>步骤 12：</strong> 最后由客户端断开连接。断开连接时，发送 <strong>close_notify</strong> 报文。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126172231496.png" alt="image-20211126172231496"></p>
+<h1 id="第八章-确认访问用户身份的认证"><a href="#第八章-确认访问用户身份的认证" class="headerlink" title="第八章    确认访问用户身份的认证"></a>第八章    确认访问用户身份的认证</h1><h2 id="8-1-何为认证"><a href="#8-1-何为认证" class="headerlink" title="8.1    何为认证"></a>8.1    何为认证</h2><p><strong>HTTP/1.1</strong> 使用的认证方式如下所示。</p>
+<ul>
+<li><strong>BASIC</strong> 认证（基本认证）</li>
+<li><strong>DIGEST</strong> 认证（摘要认证）</li>
+<li><strong>SSL</strong> 客户端认证</li>
+<li><strong>FormBase</strong> 认证（基于表单认证）</li>
+</ul>
+<h2 id="8-2-BASIC-认证"><a href="#8-2-BASIC-认证" class="headerlink" title="8.2    BASIC 认证"></a>8.2    BASIC 认证</h2><p><strong>BASIC</strong> 认证（基本认证）是从 <strong>HTTP/1.1</strong> 就定义的认证方式。</p>
+<p><strong>BISIC</strong> 认证的认证步骤：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126174223825.png" alt="image-20211126174223825"></p>
+<p><strong>步骤 1：</strong> 当请求的资源需要 <strong>BASIC</strong> 认证时，服务器会随状态码 <strong>401 Authorization Required</strong>，返回带 <strong>WWW-Authenticate</strong> 首部字段的响应。该字段内包含认证的方式（ <strong>BASIC</strong> ）及 <strong>Request-URI</strong> 安全域字符串（<strong>realm</strong>）。</p>
+<p><strong>步骤 2：</strong> 接收到状态码 <strong>401</strong> 的客户端为了通过 <strong>BASIC</strong> 认证，需要将用户 <strong>ID</strong> 即密码发送给服务器。再经过 <strong>Base64</strong> 编码处理。</p>
+<p><strong>步骤 3：</strong> 接收到包含首部字段 <strong>Authorization</strong> 请求的服务器，会对认证信息的正确性进行验证。如验证通过，则返回一条包含 <strong>Request-URI</strong> 资源的响应。 </p>
+<p>但是 <strong>BASIC</strong> 认证虽然采用 <strong>Base64</strong> 编码方式，但这不是加密处理。不需要任何附加信息即可对其解码。</p>
+<p>另外，除此之外想再进行一次 <strong>BASIC</strong> 认证时，一般的浏览器却无法实现认证注销操作，这也是问题之一。</p>
+<h2 id="8-3-DIGEST-认证"><a href="#8-3-DIGEST-认证" class="headerlink" title="8.3    DIGEST 认证"></a>8.3    DIGEST 认证</h2><p><strong>DIGEST 认证的认证步骤</strong></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175226882.png" alt="image-20211126175226882"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175400690.png" alt="image-20211126175400690"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175413745.png" alt="image-20211126175413745"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126175427677.png" alt="image-20211126175427677"></p>
+<h2 id="8-4-SSL-客户端认证"><a href="#8-4-SSL-客户端认证" class="headerlink" title="8.4    SSL 客户端认证"></a>8.4    SSL 客户端认证</h2><p>从使用用户 <strong>ID</strong> 和密码的认证方式方面来讲，只要二者的内容正确，即可认证是本人的行为。但如果用户 <strong>ID</strong> 和密码被盗，就很有可能被第三者冒充。利用 <strong>SSL</strong> 客户端认证则可以避免该情况的发生。</p>
+<p><strong>SSL</strong> 客户端认证是借由 <strong>HTTPS</strong> 的客户端证书完成认证的方式。</p>
+<h3 id="8-4-1-SSL-客户端认证的认证步骤"><a href="#8-4-1-SSL-客户端认证的认证步骤" class="headerlink" title="8.4.1    SSL 客户端认证的认证步骤"></a>8.4.1    <strong>SSL</strong> 客户端认证的认证步骤</h3><p>为达到 <strong>SSL</strong> 客户端认证的目的，需要事先将客户端证书分发给客户端，且客户端必须安装此证书。</p>
+<p><strong>步骤 1：</strong> 接收到需要认证资源的请求，服务器会发送 <strong>Certificate Request</strong> 报文，要求客户端提供客户端证书。</p>
+<p><strong>步骤 2：</strong> 用户选择将要发送的客户端证书后，客户端会把客户端证书信息以 <strong>Client Certificate</strong> 报文方式发送给服务器。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126180116641.png" alt="image-20211126180116641"></p>
+<p><strong>步骤 3：</strong> 服务器验证客户端整数，验证通过后方可领取证书内客户端的公开密钥，然后开始 <strong>HTTPS</strong> 加密通信。</p>
+<h2 id="8-5-基于表单认证"><a href="#8-5-基于表单认证" class="headerlink" title="8.5    基于表单认证"></a>8.5    基于表单认证</h2><h3 id="8-5-1-认证多半为基于表单认证"><a href="#8-5-1-认证多半为基于表单认证" class="headerlink" title="8.5.1    认证多半为基于表单认证"></a>8.5.1    认证多半为基于表单认证</h3><p>由于使用上的便利性及安全性问题，<strong>HTTP</strong> 协议标准提供的 <strong>BASIC</strong> 认证和 <strong>DIGEST</strong> 认证几乎不怎么使用。另外，<strong>SSL</strong> 客户端认证虽然具有高度的安全等级，但因为导入及维持费用等问题，还尚未普及。</p>
+<h3 id="8-5-2-Session-管理及-Cookie-应用"><a href="#8-5-2-Session-管理及-Cookie-应用" class="headerlink" title="8.5.2    Session 管理及 Cookie 应用"></a>8.5.2    <strong>Session</strong> 管理及 <strong>Cookie</strong> 应用</h3><p>一般会使用 <strong>Cookie</strong> 来管理 <strong>Session</strong>（会话），以弥补 <strong>HTTP</strong> 协议中不存在的状态管理功能。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126203050151.png" alt="image-20211126203050151"></p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《图解HTTP》读书笔记(五)</li>
+          
+  </ul>
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9D-Web-%E5%AE%89%E5%85%A8%E7%9A%84-HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第七章    确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-HTTP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">7.1    HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-%E9%80%9A%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%98%8E%E6%96%87%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E7%AA%83%E5%90%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1    通信使用明文可能会被窃听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-%E4%B8%8D%E9%AA%8C%E8%AF%81%E9%80%9A%E4%BF%A1%E6%96%B9%E7%9A%84%E8%BA%AB%E4%BB%BD%E5%B0%B1%E5%8F%AF%E8%83%BD%E9%81%AD%E9%81%87%E4%BC%AA%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">7.1.2    不验证通信方的身份就可能遭遇伪装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3-%E6%97%A0%E6%B3%95%E8%AF%81%E6%98%8E%E6%8A%A5%E6%96%87%E5%AE%8C%E6%95%B4%E6%80%A7%EF%BC%8C%E5%8F%AF%E8%83%BD%E5%B7%B2%E9%81%AD%E7%AF%A1%E6%94%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">7.1.3    无法证明报文完整性，可能已遭篡改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-HTTP-%E5%8A%A0%E5%AF%86-%E8%AE%A4%E8%AF%81-%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">7.2    HTTP + 加密 + 认证 + 完整性保护 &#x3D; HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-HTTP-%E5%8A%A0%E4%B8%8A%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86%E5%92%8C%E8%AE%A4%E8%AF%81%E4%BB%A5%E5%8F%8A%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4%E5%90%8E%E5%8D%B3%E6%98%AF-HTTPS"><span class="nav-number">1.2.1.</span> <span class="nav-text">7.2.1    HTTP 加上加密处理和认证以及完整性保护后即是 HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2-HTTPS-%E6%98%AF%E8%BA%AB%E6%8A%AB-SSL-%E5%A4%96%E5%A3%B3%E7%9A%84-HTTP"><span class="nav-number">1.2.2.</span> <span class="nav-text">7.2.2    HTTPS 是身披 SSL 外壳的 HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-3-%E7%9B%B8%E4%BA%92%E4%BA%A4%E6%8D%A2%E5%AF%86%E9%92%A5%E7%9A%84%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">7.2.3    相互交换密钥的公开密钥加密技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-4-%E8%AF%81%E6%98%8E%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E6%AD%A3%E7%A1%AE%E6%80%A7%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="nav-number">1.2.4.</span> <span class="nav-text">7.2.4    证明公开密钥正确性的证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-5-HTTPS-%E7%9A%84%E5%AE%89%E5%85%A8%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">7.2.5    HTTPS 的安全通信机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%A1%AE%E8%AE%A4%E8%AE%BF%E9%97%AE%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E7%9A%84%E8%AE%A4%E8%AF%81"><span class="nav-number">2.</span> <span class="nav-text">第八章    确认访问用户身份的认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-%E4%BD%95%E4%B8%BA%E8%AE%A4%E8%AF%81"><span class="nav-number">2.1.</span> <span class="nav-text">8.1    何为认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-BASIC-%E8%AE%A4%E8%AF%81"><span class="nav-number">2.2.</span> <span class="nav-text">8.2    BASIC 认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-DIGEST-%E8%AE%A4%E8%AF%81"><span class="nav-number">2.3.</span> <span class="nav-text">8.3    DIGEST 认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-SSL-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">8.4    SSL 客户端认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-1-SSL-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81%E7%9A%84%E8%AE%A4%E8%AF%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.4.1.</span> <span class="nav-text">8.4.1    SSL 客户端认证的认证步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-%E5%9F%BA%E4%BA%8E%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81"><span class="nav-number">2.5.</span> <span class="nav-text">8.5    基于表单认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-1-%E8%AE%A4%E8%AF%81%E5%A4%9A%E5%8D%8A%E4%B8%BA%E5%9F%BA%E4%BA%8E%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81"><span class="nav-number">2.5.1.</span> <span class="nav-text">8.5.1    认证多半为基于表单认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-2-Session-%E7%AE%A1%E7%90%86%E5%8F%8A-Cookie-%E5%BA%94%E7%94%A8"><span class="nav-number">2.5.2.</span> <span class="nav-text">8.5.2    Session 管理及 Cookie 应用</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

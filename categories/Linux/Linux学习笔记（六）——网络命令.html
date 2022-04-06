@@ -20,19 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="持续学习者">
+  <meta name="description" content="网络命令write给在线用户发信息，以 Ctrl+D 保存结束">
 <meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:title" content="Linux学习笔记（六）--网络命令">
+<meta property="og:url" content="http://example.com/categories/Linux/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
-<meta property="og:description" content="持续学习者">
+<meta property="og:description" content="网络命令write给在线用户发信息，以 Ctrl+D 保存结束">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-11T08:33:14.000Z">
-<meta property="article:modified_time" content="2021-03-12T02:11:05.925Z">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111113123070.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111160826826.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161213240.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161406009.png">
+<meta property="article:published_time" content="2022-01-11T03:25:09.000Z">
+<meta property="article:modified_time" content="2022-01-24T03:46:52.149Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111113123070.png">
 
-<link rel="canonical" href="http://example.com/categories/">
+<link rel="canonical" href="http://example.com/categories/Linux/Linux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4">
 
 
 <script id="page-configurations">
@@ -45,7 +50,7 @@
   };
 </script>
 
-  <title>分类 | Taiichi's blog
+  <title>Linux学习笔记（六）--网络命令 | Taiichi's blog
 </title>
   
 
@@ -162,11 +167,18 @@
     <div class="post-block" lang="zh-CN">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">分类
+<h1 class="post-title" itemprop="name headline">Linux学习笔记（六）--网络命令
 </h1>
 
 <div class="post-meta">
   
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/Linux/">LINUX</a></li>
+            <li>LINUX学习笔记（六）——网络命令</li>
+          
+  </ul>
 
 </div>
 
@@ -176,21 +188,49 @@
       
       
       <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              暂无分类
-            </div>
-            <div class="category-all">
-              
-            </div>
-          </div>
-        
+          <h1 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h1><h2 id="write"><a href="#write" class="headerlink" title="write"></a>write</h2><p>给在线用户发信息，以 <strong>Ctrl+D</strong> 保存结束</p>
+<span id="more"></span>
+
+<p><code>write &lt;用户名&gt;</code></p>
+<h2 id="wall"><a href="#wall" class="headerlink" title="wall"></a>wall</h2><p><strong>write all</strong></p>
+<p>发广播信息</p>
+<h2 id="last"><a href="#last" class="headerlink" title="last"></a>last</h2><p>列出目前与过去登入系统的用户信息</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111113123070.png" alt="image-20220111113121419"></p>
+<h2 id="lastlog"><a href="#lastlog" class="headerlink" title="lastlog"></a>lastlog</h2><p>检查某特定用户上次登录的时间</p>
+<p><code>lastlog -u 502</code></p>
+<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>显示数据包到主机间的路径</p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>显示网络相关信息</p>
+<p>选项：</p>
+<p><code>-t</code>：TCP 协议</p>
+<p><code>-u</code>： UDP 协议</p>
+<p><code>-l</code>： 监听</p>
+<p><code>-r</code>： 路由</p>
+<p><code>-n</code>： 显示 <strong>IP</strong> 地址和端口号</p>
+<p>例子：<code>netstat -tlun</code> 查看本机监听的端口号</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111160826826.png" alt="image-20220111160826826"></p>
+<p><code>netstat -an</code>  查看本机所有的网络连接</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161213240.png" alt="image-20220111161213240"></p>
+<p><code>netstat -rn</code> 查看本机路由表</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220111161406009.png" alt="image-20220111161406009"></p>
+<h2 id="关机命令"><a href="#关机命令" class="headerlink" title="关机命令"></a>关机命令</h2><h3 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h3><p><code>shutdown [选项] 时间</code></p>
+<p>选项：</p>
+<p><code>-c</code>：取消前一个关机命令</p>
+<p><code>-h</code> ：意为 <strong>halt</strong>，关机</p>
+<p><code>-r</code>：重启</p>
+
       </div>
       
       
       
     </div>
     
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/Linux/">LINUX</a></li>
+            <li>LINUX学习笔记（六）——网络命令</li>
+          
+  </ul>
 
     
     
@@ -245,6 +285,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">网络命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#write"><span class="nav-number">1.1.</span> <span class="nav-text">write</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wall"><span class="nav-number">1.2.</span> <span class="nav-text">wall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#last"><span class="nav-number">1.3.</span> <span class="nav-text">last</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lastlog"><span class="nav-number">1.4.</span> <span class="nav-text">lastlog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traceroute"><span class="nav-number">1.5.</span> <span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">1.6.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E5%91%BD%E4%BB%A4"><span class="nav-number">1.7.</span> <span class="nav-text">关机命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown"><span class="nav-number">1.7.1.</span> <span class="nav-text">shutdown</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

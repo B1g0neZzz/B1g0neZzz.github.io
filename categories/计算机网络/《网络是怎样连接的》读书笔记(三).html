@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第三章    从网线到网络设备——探索集线器、交换机和路由器3.1    信号在网线和集线器中传输3.1.1    每个包都是独立传输的所有的包在传输到目的地的过程中都是独立的，相互之间没有任何关联。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="《网络是怎样连接的》读书笔记（三）">
+<meta property="og:url" content="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89).html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="第三章    从网线到网络设备——探索集线器、交换机和路由器3.1    信号在网线和集线器中传输3.1.1    每个包都是独立传输的所有的包在传输到目的地的过程中都是独立的，相互之间没有任何关联。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122155450761.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122155655233.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122160211003.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122160342561.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122162452631.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122164013385.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122165659140.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122170152187.png">
+<meta property="article:published_time" content="2021-11-22T07:16:56.000Z">
+<meta property="article:modified_time" content="2021-12-19T21:05:34.000Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122155450761.png">
+
+<link rel="canonical" href="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《网络是怎样连接的》读书笔记（三） | Taiichi's blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">《网络是怎样连接的》读书笔记（三）
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《网络是怎样连接的》读书笔记(三)</li>
+          
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="第三章-从网线到网络设备——探索集线器、交换机和路由器"><a href="#第三章-从网线到网络设备——探索集线器、交换机和路由器" class="headerlink" title="第三章    从网线到网络设备——探索集线器、交换机和路由器"></a>第三章    从网线到网络设备——探索集线器、交换机和路由器</h1><h2 id="3-1-信号在网线和集线器中传输"><a href="#3-1-信号在网线和集线器中传输" class="headerlink" title="3.1    信号在网线和集线器中传输"></a>3.1    信号在网线和集线器中传输</h2><h3 id="3-1-1-每个包都是独立传输的"><a href="#3-1-1-每个包都是独立传输的" class="headerlink" title="3.1.1    每个包都是独立传输的"></a>3.1.1    每个包都是独立传输的</h3><p>所有的包在传输到目的地的过程中都是独立的，相互之间没有任何关联。</p>
+<span id="more"></span>
+
+<h3 id="3-1-2-防止网线中的信号衰减很重要"><a href="#3-1-2-防止网线中的信号衰减很重要" class="headerlink" title="3.1.2    防止网线中的信号衰减很重要"></a>3.1.2    防止网线中的信号衰减很重要</h3><p>网卡中的 <strong>PHY（MAU）</strong> 模块负责将包转换成电信号，信号通过 <strong>RJ-45</strong> 接口进入双绞线。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122155450761.png" alt="image-20211122155450761"></p>
+<p>但是，信号到达集线器的时候并不是跟刚发送出去的时候一模一样。集线器收到的信号有时会出现衰减。信号在网线的传输过程中，能量会逐渐损失。网线越长，信号衰减就越严重。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122155655233.png" alt="image-20211122155655233"></p>
+<h3 id="3-1-3-“双绞”是为了抑制噪声"><a href="#3-1-3-“双绞”是为了抑制噪声" class="headerlink" title="3.1.3    “双绞”是为了抑制噪声"></a>3.1.3    “双绞”是为了抑制噪声</h3><p><strong>产生噪声的原因：</strong></p>
+<p>网线周围的电磁波，当电磁波接触到金属等导体时，在其中就会产生电流。因此，如果网线周围存在电磁波，就会在网线中产生和原本的信号不同的电流。由于信号本身也是一种带有电压变化的电流，其本质和噪声产生的电流是一样的，所以信号和噪声的电流就会混杂在一起，导致信号的波形发生失真，这就是噪声的影响。</p>
+<p>双绞线抵抗外源性噪声：</p>
+<p>将信号线缠绕在一起，信号线就变成了螺旋形，其中两根信号线中产生的噪声电流方向就会相反，从而使得噪声电流相互抵消，噪声就得到了抑制。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122160211003.png" alt="image-20211122160211003"></p>
+<p>另一种电磁波是从网线中相邻的信号线泄露出来的。由于传输的信号本身就是一种电流，当电流流过时就会向周围发出电磁波，这些电磁波对于其他信号线来说就成了噪声。这种内部产生的噪声称为串扰。</p>
+<p>要抑制这种噪声，关键在于双绞线的缠绕方式。在一根网线中，每一对信号线的扭绞间隔（节距）都有一定的差异，这使得在某些地方正信号线距离近，另一些地方则是负信号线距离近。由于正负信号线产生的噪声影响是相反的，所以两者就会相互抵消。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122160342561.png" alt="image-20211122160342561"></p>
+<h3 id="3-1-4-集线器将信号发往所有线路"><a href="#3-1-4-集线器将信号发往所有线路" class="headerlink" title="3.1.4    集线器将信号发往所有线路"></a>3.1.4    集线器将信号发往所有线路</h3><p>当信号到达集线器后，会被广播到整个网络中。</p>
+<h2 id="3-2-交换机的包转发操作"><a href="#3-2-交换机的包转发操作" class="headerlink" title="3.2    交换机的包转发操作"></a>3.2    交换机的包转发操作</h2><h3 id="3-2-1-交换机根据地址表进行转发"><a href="#3-2-1-交换机根据地址表进行转发" class="headerlink" title="3.2.1    交换机根据地址表进行转发"></a>3.2.1    交换机根据地址表进行转发</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122162452631.png" alt="image-20211122162452631"></p>
+<p>交换机的端口不核对接收方 <strong>MAC</strong> 地址，而是直接接收所有的包并存放到缓冲区中。</p>
+<p>将包放入缓冲区后，接下来需要查询一下这个包的接收方 <strong>MAC</strong> 地址是否已经在 <strong>MAC</strong> 地址表中有记录了。 <strong>MAC</strong> 地址表主要包含两个信息，一个是设备的 <strong>MAC</strong> 地址，另一个是该设备连接在交换机的哪个端口上。</p>
+<h3 id="3-3-2-MAC-地址表的维护"><a href="#3-3-2-MAC-地址表的维护" class="headerlink" title="3.3.2    MAC 地址表的维护"></a>3.3.2    MAC 地址表的维护</h3><p>交换机在转发包的过程中，还需要对 <strong>MAC</strong> 地址表的内容进行维护，维护操作分为两种。</p>
+<p>第一种是收到包时，将发送方 <strong>MAC</strong> 地址以及其输入端口的号码写入 <strong>MAC</strong> 地址表中。由于收到包的那个端口就连接着发送这个包的设备，所以只要将这个包的发送方 <strong>MAC</strong> 地址写入地址表，以后当收到发往这个地址的包时，交换机就可以将它转发到正确的端口了。</p>
+<p>另一种是删除地址表中某条记录的操作，这是为了防止设备移动时产生问题。比如，我们在开会时会把笔记本电脑从办公桌拿到会议室，这时设备就发生了移动。从交换机的角度来看，就是本来连接在某个端口上的笔记本电脑小时了。这时如果交换机受到了发往这台已经消失的笔记本的包，那么它依然会将包转发到原来的端口，通信就会出错。</p>
+<h3 id="3-2-3-特殊操作"><a href="#3-2-3-特殊操作" class="headerlink" title="3.2.3    特殊操作"></a>3.2.3    特殊操作</h3><p>当交换机查询地址表之后发现记录中的目标端口和这个包的源端口是同一个端口。如下图，集线器和交换机连接在一起。计算机 <strong>A</strong> 发送的包到达集线器后会被集线器转发到所有端口上，也就会到达交换机和计算机 <strong>B</strong>。这时交换机转发这个包之后，这个包会原路返回集线器，然后集线器又会把包转发到所有端口，于是这个包有到达了计算机 <strong>A</strong> 和计算机 <strong>B</strong>。所以计算机 <strong>B</strong> 就会收到两个相同的包，这会导致无法通信。因此，当交换机发现一个包要发回到原端口时，就会直接丢弃这个包。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122164013385.png" alt="image-20211122164013385"></p>
+<p>还有一种特殊情况，就是地址表中找不到指定的 <strong>MAC</strong> 地址，这种情况下，只能将包转发到除了源端口之外的所有端口上。</p>
+<p>此外，如果接收方 <strong>MAC</strong> 地址是一个广播地址，那么交换机会将包发送到除源端口之外的所有端口。</p>
+<h3 id="3-2-4-全双工模式可以同时发送和接收"><a href="#3-2-4-全双工模式可以同时发送和接收" class="headerlink" title="3.2.4    全双工模式可以同时发送和接收"></a>3.2.4    全双工模式可以同时发送和接收</h3><p>全双工模式是交换机特有的工作模式，它可以同时进行发送和接收操作，集线器不具备这样的特性。</p>
+<h3 id="3-2-5-自动协商：确定最优的传输速率"><a href="#3-2-5-自动协商：确定最优的传输速率" class="headerlink" title="3.2.5    自动协商：确定最优的传输速率"></a>3.2.5    自动协商：确定最优的传输速率</h3><p>由相互连接的双方探测对方是否支持全双工模式，并自动切换成相应的工作模式。此外，除了能自动切换工作模式之外，还能探测对方的传输速率并进行自动切换。这种自动切换的功能称为自动协商。</p>
+<h2 id="3-3-路由器的包转发操作"><a href="#3-3-路由器的包转发操作" class="headerlink" title="3.3    路由器的包转发操作"></a>3.3    路由器的包转发操作</h2><h3 id="3-3-1-路由器的基本知识"><a href="#3-3-1-路由器的基本知识" class="headerlink" title="3.3.1    路由器的基本知识"></a>3.3.1    路由器的基本知识</h3><p>路由器转发的工作原理和交换机类似，也是通过查表判断包转发的目标。不过路由器是基于 <strong>IP</strong> 设计的，而交换机是基于以太网设计的。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122165659140.png" alt="image-20211122165659140"></p>
+<p>路由器在转发包时，首先会通过端口将发过来的包接收进来，这一步的工作过程取决于端口对应的通信技术。接下来，转发模块会根据接收到的包的 <strong>IP</strong> 头部中记录的接收方 <strong>IP</strong> 地址，在路由表中进行查询，以此判断转发目标。然后，转发模块将包转移到转发目标对应的端口。</p>
+<h3 id="3-3-2-路由表中的信息"><a href="#3-3-2-路由表中的信息" class="headerlink" title="3.3.2    路由表中的信息"></a>3.3.2    路由表中的信息</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211122170152187.png" alt="image-20211122170152187"></p>
+<h3 id="3-3-3-路由器的包接收操作"><a href="#3-3-3-路由器的包接收操作" class="headerlink" title="3.3.3    路由器的包接收操作"></a>3.3.3    路由器的包接收操作</h3><p>路由器的端口都具有 <strong>MAC</strong> 地址，只接收与自身地址匹配的包，遇到不匹配的包则直接丢弃。</p>
+<h3 id="3-3-4-查询路由表确定输出端口"><a href="#3-3-4-查询路由表确定输出端口" class="headerlink" title="3.3.4    查询路由表确定输出端口"></a>3.3.4    查询路由表确定输出端口</h3><p>接下来，路由器会根据 <strong>MAC</strong> 头部后方的 <strong>IP</strong> 头部中的内容进行包的转发操作。</p>
+<h3 id="3-3-5-找不到匹配路由时选择默认路由"><a href="#3-3-5-找不到匹配路由时选择默认路由" class="headerlink" title="3.3.5    找不到匹配路由时选择默认路由"></a>3.3.5    找不到匹配路由时选择默认路由</h3><p>当匹配不到其他路由时，网络包就会被转发到互联网接入路由器。</p>
+<p>路由表中子网掩码为 <strong>0.0.0.0</strong> 的记录表示 “默认路由”。</p>
+<h3 id="3-3-6-包的有效期"><a href="#3-3-6-包的有效期" class="headerlink" title="3.3.6    包的有效期"></a>3.3.6    包的有效期</h3><p>路由器发送包之前，还需要做一些工作。</p>
+<p>第一个工作是更新 <strong>IP</strong> 头部中的 <strong>TTL（Timeto Live，生存时间）</strong>字段。<strong>TTL</strong> 字段表示包的有效期，包没经过一个路由器的转发，这个值就会减 1，当这个值变为 0 时，就表示超过了有效期，这个包就会被丢弃。</p>
+<h3 id="3-3-7-通过分片功能拆分大网络包"><a href="#3-3-7-通过分片功能拆分大网络包" class="headerlink" title="3.3.7    通过分片功能拆分大网络包"></a>3.3.7    通过分片功能拆分大网络包</h3><p>一旦转发的包长度超过了路由器输出端口能传输的最大长度，就无法直接发送这个包了。</p>
+<p>遇到这种情况，可以使用 <strong>IP</strong> 协议中定义的分片功能对包进行拆分，缩短每个包的长度。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《网络是怎样连接的》读书笔记(三)</li>
+          
+  </ul>
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%BB%8E%E7%BD%91%E7%BA%BF%E5%88%B0%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%E2%80%94%E2%80%94%E6%8E%A2%E7%B4%A2%E9%9B%86%E7%BA%BF%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%92%8C%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">第三章    从网线到网络设备——探索集线器、交换机和路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E4%BF%A1%E5%8F%B7%E5%9C%A8%E7%BD%91%E7%BA%BF%E5%92%8C%E9%9B%86%E7%BA%BF%E5%99%A8%E4%B8%AD%E4%BC%A0%E8%BE%93"><span class="nav-number">1.1.</span> <span class="nav-text">3.1    信号在网线和集线器中传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-%E6%AF%8F%E4%B8%AA%E5%8C%85%E9%83%BD%E6%98%AF%E7%8B%AC%E7%AB%8B%E4%BC%A0%E8%BE%93%E7%9A%84"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.1.1    每个包都是独立传输的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-%E9%98%B2%E6%AD%A2%E7%BD%91%E7%BA%BF%E4%B8%AD%E7%9A%84%E4%BF%A1%E5%8F%B7%E8%A1%B0%E5%87%8F%E5%BE%88%E9%87%8D%E8%A6%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.1.2    防止网线中的信号衰减很重要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-%E2%80%9C%E5%8F%8C%E7%BB%9E%E2%80%9D%E6%98%AF%E4%B8%BA%E4%BA%86%E6%8A%91%E5%88%B6%E5%99%AA%E5%A3%B0"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.1.3    “双绞”是为了抑制噪声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-%E9%9B%86%E7%BA%BF%E5%99%A8%E5%B0%86%E4%BF%A1%E5%8F%B7%E5%8F%91%E5%BE%80%E6%89%80%E6%9C%89%E7%BA%BF%E8%B7%AF"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.1.4    集线器将信号发往所有线路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E5%8C%85%E8%BD%AC%E5%8F%91%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">3.2    交换机的包转发操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E4%BA%A4%E6%8D%A2%E6%9C%BA%E6%A0%B9%E6%8D%AE%E5%9C%B0%E5%9D%80%E8%A1%A8%E8%BF%9B%E8%A1%8C%E8%BD%AC%E5%8F%91"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.2.1    交换机根据地址表进行转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-MAC-%E5%9C%B0%E5%9D%80%E8%A1%A8%E7%9A%84%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.3.2    MAC 地址表的维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E7%89%B9%E6%AE%8A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.2.3    特殊操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-%E5%85%A8%E5%8F%8C%E5%B7%A5%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%E5%90%8C%E6%97%B6%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">3.2.4    全双工模式可以同时发送和接收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-5-%E8%87%AA%E5%8A%A8%E5%8D%8F%E5%95%86%EF%BC%9A%E7%A1%AE%E5%AE%9A%E6%9C%80%E4%BC%98%E7%9A%84%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="nav-number">1.2.5.</span> <span class="nav-text">3.2.5    自动协商：确定最优的传输速率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%8C%85%E8%BD%AC%E5%8F%91%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">3.3    路由器的包转发操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.3.1    路由器的基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-%E8%B7%AF%E7%94%B1%E8%A1%A8%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.3.2    路由表中的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%8C%85%E6%8E%A5%E6%94%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3.3    路由器的包接收操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-4-%E6%9F%A5%E8%AF%A2%E8%B7%AF%E7%94%B1%E8%A1%A8%E7%A1%AE%E5%AE%9A%E8%BE%93%E5%87%BA%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.3.4    查询路由表确定输出端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-5-%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8C%B9%E9%85%8D%E8%B7%AF%E7%94%B1%E6%97%B6%E9%80%89%E6%8B%A9%E9%BB%98%E8%AE%A4%E8%B7%AF%E7%94%B1"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.3.5    找不到匹配路由时选择默认路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-6-%E5%8C%85%E7%9A%84%E6%9C%89%E6%95%88%E6%9C%9F"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.3.6    包的有效期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-7-%E9%80%9A%E8%BF%87%E5%88%86%E7%89%87%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86%E5%A4%A7%E7%BD%91%E7%BB%9C%E5%8C%85"><span class="nav-number">1.3.7.</span> <span class="nav-text">3.3.7    通过分片功能拆分大网络包</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

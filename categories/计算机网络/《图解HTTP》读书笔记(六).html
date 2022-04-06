@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第九章    基于 HTTP 的功能追加协议9.1    基于 HTTP 的协议有一些新协议的规则是基于 HTTP 的，并在此基础上添加了新的功能。 9.2    消除 HTTP 瓶颈的 SPDYGoogle 在 2010 年发布了 SPDY（取自 SPeeDY，发音同 speedy），其开发目标旨在解决 HTTP 的性能瓶颈，缩短 Web 页面的加载时间。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="《图解HTTP》读书笔记(六)">
+<meta property="og:url" content="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%85%AD).html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="第九章    基于 HTTP 的功能追加协议9.1    基于 HTTP 的协议有一些新协议的规则是基于 HTTP 的，并在此基础上添加了新的功能。 9.2    消除 HTTP 瓶颈的 SPDYGoogle 在 2010 年发布了 SPDY（取自 SPeeDY，发音同 speedy），其开发目标旨在解决 HTTP 的性能瓶颈，缩短 Web 页面的加载时间。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126204211236.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126204606238.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126205122044.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126205446532.png">
+<meta property="article:published_time" content="2021-11-26T12:32:46.000Z">
+<meta property="article:modified_time" content="2021-12-19T21:05:34.000Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126204211236.png">
+
+<link rel="canonical" href="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%85%AD)">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《图解HTTP》读书笔记(六) | Taiichi's blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">《图解HTTP》读书笔记(六)
+</h1>
+
+<div class="post-meta">
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《图解HTTP》读书笔记(六)</li>
+          
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="第九章-基于-HTTP-的功能追加协议"><a href="#第九章-基于-HTTP-的功能追加协议" class="headerlink" title="第九章    基于 HTTP 的功能追加协议"></a>第九章    基于 HTTP 的功能追加协议</h1><h2 id="9-1-基于-HTTP-的协议"><a href="#9-1-基于-HTTP-的协议" class="headerlink" title="9.1    基于 HTTP 的协议"></a>9.1    基于 HTTP 的协议</h2><p>有一些新协议的规则是基于 <strong>HTTP</strong> 的，并在此基础上添加了新的功能。</p>
+<h2 id="9-2-消除-HTTP-瓶颈的-SPDY"><a href="#9-2-消除-HTTP-瓶颈的-SPDY" class="headerlink" title="9.2    消除 HTTP 瓶颈的 SPDY"></a>9.2    消除 HTTP 瓶颈的 SPDY</h2><p><strong>Google</strong> 在 <strong>2010</strong> 年发布了 <strong>SPDY</strong>（取自 <strong>SPeeDY</strong>，发音同 <strong>speedy</strong>），其开发目标旨在解决 <strong>HTTP</strong> 的性能瓶颈，缩短 <strong>Web</strong> 页面的加载时间。</p>
+<span id="more"></span>
+
+<h3 id="9-2-1-HTTP-的瓶颈"><a href="#9-2-1-HTTP-的瓶颈" class="headerlink" title="9.2.1    HTTP 的瓶颈"></a>9.2.1    HTTP 的瓶颈</h3><p>使用 <strong>HTTP</strong> 协议探知服务器上是否有内容更新，就必须频繁地从客户端到服务器端进行确认。如果服务器上没有内容更新，那么就会产生徒劳的通信。</p>
+<p>若想在现有 <strong>Web</strong> 实现所需的功能，以下这些 <strong>HTTP</strong> 标准就会成为瓶颈。</p>
+<ul>
+<li>一条连接上只可发送一个请求。</li>
+<li>请求只能从客户端开始。客户端不可以接收除响应以外的指令。</li>
+<li>请求 / 响应首部未经压缩就发送。首部信息越多延迟越大。</li>
+<li>发送冗长的首部。每次互相发送相同的首部造成的浪费较多。</li>
+<li>可任意选择数据压缩格式。非强制压缩发送。</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126204211236.png" alt="image-20211126204211236"></p>
+<ul>
+<li><strong>Ajax</strong> 的解决方法</li>
+</ul>
+<p><strong>Ajax（ Asynchronous JavaScript and XML，异步 JavaScript 与 XML 技术 ）</strong> 是一种有效利用  <strong>JavaScript</strong> 和 <strong>DOM （Document Object Model，文档对象模型）</strong> 的操作，以达到局部 <strong>Web</strong> 页面替换加载的异步通信手段。和以前的同步通信相比，由于它只更新一部分页面，响应中传输的数据量会因此而减少，这一优点显而易见。</p>
+<p>而利用 <strong>Ajax</strong> 实时地从服务器获取内容，有可能会导致大量请求产生。另外， <strong>Ajax</strong> 仍未解决 <strong>HTTP</strong> 协议本身存在的问题。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126204606238.png" alt="image-20211126204606238"></p>
+<ul>
+<li><strong>Comet</strong> 的解决方法</li>
+</ul>
+<p>一旦服务器端有内容更新了，<strong>Comet</strong> 不会让请求等待，而是直接给客户端返回响应。这是一种通过延迟应答，模拟实现服务器端向客户端推送（ <strong>Server Push</strong> ）的功能。</p>
+<p>通常，服务器端接收到请求，在处理完毕后就会立即返回响应，但为了实现推送功能，<strong>Comet</strong> 会先将响应置于挂起状态，当服务器端有内容更新时，再返回该响应。因此，服务器端一旦有更新，就可以立即反馈给客户端。</p>
+<p>内容上虽然可以做到实时更新，单位了保留响应，一次连接的持续时间也变长了。期间，为了维持连接会消耗更多的资源。另外，<strong>Comet</strong> 也仍未解决 <strong>HTTP</strong> 协议本身存在的问题。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126205122044.png" alt="image-20211126205122044"></p>
+<ul>
+<li><strong>SPDY</strong> 的目标</li>
+</ul>
+<p>处于持续开发状态中的 <strong>SPDY</strong> 协议，正是为了在协议级别消除 <strong>HTTP</strong> 所遭遇的瓶颈。</p>
+<h3 id="9-2-2-SPDY-的设计与功能"><a href="#9-2-2-SPDY-的设计与功能" class="headerlink" title="9.2.2    SPDY 的设计与功能"></a>9.2.2    SPDY 的设计与功能</h3><p><strong>SPDY</strong> 没有完全改写 <strong>HTTP</strong> 协议，而是在 <strong>TCP/IP</strong> 的应用层与运输层之间通过新加会话层的形式运作。同时，考虑安全性问题，<strong>SPDY</strong> 规定通信中使用 <strong>SSL</strong>。</p>
+<p><strong>SPDY</strong> 以会话层的形式加入，控制对数据的流动，但还是采用 <strong>HTTP</strong> 建立通信连接。因此，可照常使用 <strong>HTTP</strong> 的 <strong>GET</strong> 和 <strong>POST</strong> 等方法、<strong>Cookie</strong> 以及 <strong>HTTP</strong> 报文等。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211126205446532.png" alt="image-20211126205446532"></p>
+<p>使用 <strong>SPDY</strong> 后，<strong>HTTP</strong> 协议额外获得以下功能。</p>
+<p><strong>多路复用流</strong></p>
+<p>通过单一的 <strong>TCP</strong> 连接，可以无限制处理多个 <strong>HTTP</strong> 请求。所有请求的处理都在一条 <strong>TCP</strong> 连接上完成，因此 <strong>TCP</strong> 的处理效率得到提高。</p>
+<p><strong>赋予请求优先级</strong></p>
+<p><strong>SPDY</strong> 不仅可以无限制地并发处理请求，还可以给请求逐个分配优先级顺序。这样主要是为了在发送多个请求时，解决因带宽低而导致响应变慢的问题。</p>
+<p><strong>压缩 HTTP 首部</strong></p>
+<p>压缩 <strong>HTTP</strong> 请求和响应的首部。这样一来，通信产生的数据包数量和发送的字节数就更少了。</p>
+<p><strong>推送功能</strong></p>
+<p>支持服务器主动向客户端推送数据的功能。这样，服务器可直接发送数据，而不必等待客户端的请求。</p>
+<p><strong>服务器提示功能</strong></p>
+<p>服务器可以主动提示客户端请求所需的资源。由于在客户端发现资源之前就可以获知资源的存在，因此在资源已缓存等情况下，可以避免发送不必要的请求。</p>
+<h2 id="9-3-使用浏览器进行全双工通信的-WebSocket"><a href="#9-3-使用浏览器进行全双工通信的-WebSocket" class="headerlink" title="9.3    使用浏览器进行全双工通信的 WebSocket"></a>9.3    使用浏览器进行全双工通信的 WebSocket</h2><h3 id="9-3-1-WebSocket-的设计与功能"><a href="#9-3-1-WebSocket-的设计与功能" class="headerlink" title="9.3.1    WebSocket 的设计与功能"></a>9.3.1    WebSocket 的设计与功能</h3><p><strong>WebSocket</strong>，即 <strong>Web</strong> 浏览器与 <strong>Web</strong> 服务器之间全双工通信标准。</p>
+<h3 id="9-3-2-WebSocket-协议"><a href="#9-3-2-WebSocket-协议" class="headerlink" title="9.3.2    WebSocket 协议"></a>9.3.2    WebSocket 协议</h3><p>一旦 <strong>Web</strong> 服务器与客户端之间建立起 <strong>WebSocket</strong> 协议的通信连接，之后所有的通信都依靠这个专用协议进行。通信过程中，任意一方都可直接向对方发送报文。</p>
+<p>主要特点：</p>
+<ul>
+<li><strong>推送功能</strong></li>
+</ul>
+<p>支持由服务器向客户端推送数据的推送功能。这样，服务器可直接发送数据，而不必等待客户端的请求。</p>
+<ul>
+<li><strong>减少通信量</strong></li>
+</ul>
+<p>只要建立起 <strong>WebSocket</strong> 连接，就希望一直保持连接状态。和 <strong>HTTP</strong> 相比，不但每次连接时的总开销减少，而且由于 <strong>WebSocket</strong> 的首部信息很小，通信量也相应减少了。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/categories/">CATEGORIES</a></li>
+            <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li>
+            <li>《图解HTTP》读书笔记(六)</li>
+          
+  </ul>
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E5%9F%BA%E4%BA%8E-HTTP-%E7%9A%84%E5%8A%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">第九章    基于 HTTP 的功能追加协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E5%9F%BA%E4%BA%8E-HTTP-%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.1.</span> <span class="nav-text">9.1    基于 HTTP 的协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E6%B6%88%E9%99%A4-HTTP-%E7%93%B6%E9%A2%88%E7%9A%84-SPDY"><span class="nav-number">1.2.</span> <span class="nav-text">9.2    消除 HTTP 瓶颈的 SPDY</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-1-HTTP-%E7%9A%84%E7%93%B6%E9%A2%88"><span class="nav-number">1.2.1.</span> <span class="nav-text">9.2.1    HTTP 的瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-2-SPDY-%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.2.</span> <span class="nav-text">9.2.2    SPDY 的设计与功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-%E4%BD%BF%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%A8%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E7%9A%84-WebSocket"><span class="nav-number">1.3.</span> <span class="nav-text">9.3    使用浏览器进行全双工通信的 WebSocket</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-1-WebSocket-%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%8A%9F%E8%83%BD"><span class="nav-number">1.3.1.</span> <span class="nav-text">9.3.1    WebSocket 的设计与功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-2-WebSocket-%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">9.3.2    WebSocket 协议</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
