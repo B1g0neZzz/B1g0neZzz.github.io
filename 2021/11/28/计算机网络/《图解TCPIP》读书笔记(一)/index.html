@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="OSI 参考模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《图解TCP&#x2F;IP》读书笔记(一)">
+<meta property="og:url" content="http://example.com/2021/11/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="OSI 参考模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121932989.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124613762.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124634696.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125044392.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125615530.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128130814126.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128131345010.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128170434599.png">
+<meta property="article:published_time" content="2021-11-28T04:01:21.000Z">
+<meta property="article:modified_time" content="2021-12-19T21:05:34.000Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png">
+
+<link rel="canonical" href="http://example.com/2021/11/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《图解TCP/IP》读书笔记(一) | Taiichi's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《图解TCP/IP》读书笔记(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-28 12:01:21" itemprop="dateCreated datePublished" datetime="2021-11-28T12:01:21+08:00">2021-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-20 05:05:34" itemprop="dateModified" datetime="2021-12-20T05:05:34+08:00">2021-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="OSI-参考模型"><a href="#OSI-参考模型" class="headerlink" title="OSI 参考模型"></a>OSI 参考模型</h2><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121723791.png" alt="image-20211128121723791"></p>
+<span id="more"></span>
+
+<h3 id="OSI-参考模型中各个分层的作用"><a href="#OSI-参考模型中各个分层的作用" class="headerlink" title="OSI 参考模型中各个分层的作用"></a>OSI 参考模型中各个分层的作用</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128121932989.png" alt="image-20211128121932989"></p>
+<ul>
+<li>应用层</li>
+</ul>
+<p>​    为应用程序提供服务并规定应用程序中通信相关的细节。包括文件传输、电子邮件、远程登录（虚拟终端）等协议。</p>
+<ul>
+<li>表示层</li>
+</ul>
+<p>​    将应用处理的信息转换为适合网络传输的格式，或将来自下一层的数据转换为上层能够处理的格式。因此它主要负责数据格式的转换。</p>
+<ul>
+<li>会话层</li>
+</ul>
+<p>​    负责建立和断开通信连接（数据流动的逻辑通路），以及数据的分割等数据传输相关的管理。</p>
+<ul>
+<li>传输层</li>
+</ul>
+<p>​    起着可靠传输的作用。只在通信双方节点上进行处理，而无需在路由器上处理。</p>
+<ul>
+<li>网络层</li>
+</ul>
+<p>​    将数据传输到目标地址。目标地址可以是多个网络通过路由器连接而成的某一个地址。因此这一层主要负责寻址和路由选择。</p>
+<ul>
+<li>数据链路层</li>
+</ul>
+<p>​    负责物理层面上互连的、节点之间的通信传输。例如与 <strong>1</strong> 个以太网相连的 <strong>2</strong> 个节点之间的通信。</p>
+<p>​    将 <strong>0、1</strong> 序列划分为具有意义的数据帧传送给对端（数据帧的生成与接收）。</p>
+<ul>
+<li>物理层</li>
+</ul>
+<p>​    负责 <strong>0、1</strong> 比特流（<strong>0、1</strong> 序列）与电压的高低、光的闪灭之间的互换。</p>
+<h2 id="OSI-参考模型通信处理举例"><a href="#OSI-参考模型通信处理举例" class="headerlink" title="OSI 参考模型通信处理举例"></a>OSI 参考模型通信处理举例</h2><p>假设使用主机 <strong>A</strong> 的用户 <strong>A</strong> 要给使用主机 <strong>B</strong> 的用户 <strong>B</strong> 发送一封电子邮件。</p>
+<h3 id="会话层以上的处理"><a href="#会话层以上的处理" class="headerlink" title="会话层以上的处理"></a>会话层以上的处理</h3><p>假定用户 <strong>A</strong> 给用户 <strong>B</strong> 发送一封内容为 “早上好” 邮件。网络究竟会进行哪些处理呢？</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124613762.png" alt="image-20211128124613762"></p>
+<ul>
+<li>应用层</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128124634696.png" alt="image-20211128124634696"></p>
+<p>从用户输入完所要发送的内容并点击“发送”按钮的那一刻开始，就进入了应用层协议的处理。</p>
+<p>该协议会在所要传送的数据前端附加一个首部（标签）信息。该首部标明了邮件内容为“早上好”和收件人为“B”。主机 <strong>B</strong> 上的应用收到由主机 <strong>A</strong> 发送过来的数据后，分析其数据首部与数据正文，并将邮件保存到硬盘或是其他非易失性存储器（数据不会因为断电而丢失的一种存储设备）以备进行相应的处理。</p>
+<ul>
+<li>表示层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125044392.png" alt="image-20211128125044392"></p>
+<p>​    表示层的 “表示” 有 “表现”、“演示” 的意思，因此更关注数据的具体表现形式。</p>
+<p>​    如果用户 <strong>A</strong> 和用户 <strong>B</strong> 所使用的电子邮件客户端不同，那么数据的表现形式可能截然不同。</p>
+<p>​    表示层就是将数据从 “某个计算机特定的数据格式” 转换为 “网络通用的标准数据格式“ 后再发送出去。</p>
+<p>​    接收端主机收到数据以后将这些网络标准格式的数据恢复为 “该计算机特定的数据格式”，然后再进行相应处理。</p>
+<ul>
+<li>会话层</li>
+</ul>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128125615530.png" alt="image-20211128125615530"></p>
+<p>​    假定用户 <strong>A</strong> 新建了 <strong>5</strong> 封电子邮件准备发给用户 <strong>B</strong>。这 <strong>5</strong> 封邮件的发送顺序可以由很多种。例如，可以每发一封邮件时建立一次连接，随后断开连接。还可以一经建立好连接后就将 <strong>5</strong> 封邮件连续发送给对方。甚至可以同时建立好 <strong>5</strong> 个连接，将 <strong>5</strong> 封邮件同时发送给对方。决定采用何种连接方法是会话层的主要责任。</p>
+<h3 id="1-6-3-传输层以下的处理"><a href="#1-6-3-传输层以下的处理" class="headerlink" title="1.6.3    传输层以下的处理"></a>1.6.3    传输层以下的处理</h3><p>然而，会话层只对何时建立连接、何时发送数据等问题进行管理，并不具有实际传输数据的功能。真正负责在网络上传输具体数据的是会话层以下的 “无名英雄”。</p>
+<ul>
+<li>传输层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128130814126.png" alt="image-20211128130814126"></p>
+<p>​    主机 <strong>A</strong> 与主机 <strong>B</strong> 建立连接和断开连接是传输层的主要作用。</p>
+<p>​    此外，传输层为确保所传输的数据到达目标地址，会在通信两端的计算机之间进行确认，如果数据没有到达，它会负责进行重发。</p>
+<p>​    保证数据传输的可靠性是传输层的一个重要作用。为了确保可靠性，在这一层也会为所要传输的数据附加首部以识别这一分层的数据。</p>
+<ul>
+<li>网络层</li>
+</ul>
+<p>​    <img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128131345010.png" alt="image-20211128131345010"></p>
+<p>​    网络层的作用是在网络与网络相互连接的环境中，将数据从发送端主机到接收端主机。</p>
+<p>​    <strong>传输层与网络层的关系？</strong></p>
+<p>​    网络层有时不能保证数据的可达性。例如 <strong>TCP/IP</strong> 网络层的 <strong>IP</strong> 协议中，就不能保证数据一定会发送到对端地址。因此，数据传送过程中出现数据丢失、顺序混乱等问题可能性会大大增加。像这样没有可靠性传输要求的网络层中，可以由传输层负责提供“正确传输数据的处理”。</p>
+<p>​    每个分层的作用与功能越清晰，规范协议的具体内容就越简单，实现这些具体协议的工作也将会越轻松。</p>
+<ul>
+<li>数据链路层、物理层</li>
+</ul>
+<p>​    通信传输实际上是通过物理的传输介质实现的。数据链路层的作用就是在这些通过传输介质互联的设备之间进行数据处理。</p>
+<p>​    物理层中，将数据的 <strong>0、1</strong> 转换为电压和脉冲光传输给物理的传输介质。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211128170434599.png" alt="image-20211128170434599"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E9%AB%98%E9%A2%91%E9%97%AE%E9%A2%98/" rel="prev" title="HTTP高频问题">
+      <i class="fa fa-chevron-left"></i> HTTP高频问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3TCPIP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" rel="next" title="《图解TCP/IP》读书笔记(二)">
+      《图解TCP/IP》读书笔记(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">OSI 参考模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%90%84%E4%B8%AA%E5%88%86%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">OSI 参考模型中各个分层的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI-%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E9%80%9A%E4%BF%A1%E5%A4%84%E7%90%86%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">OSI 参考模型通信处理举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82%E4%BB%A5%E4%B8%8A%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">会话层以上的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-3-%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BB%A5%E4%B8%8B%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">1.6.3    传输层以下的处理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

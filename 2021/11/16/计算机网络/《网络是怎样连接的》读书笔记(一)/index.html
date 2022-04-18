@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第一章 浏览器生成消息——探索浏览器内部1.1    生成 HTTP 请求信息1.1.1    探索之旅从输入网址开始URL（Uniform Resource Locator，统一资源定位符） ，实际上除了以 http:&#x2F;&#x2F; 开头，还可以以其他一些文字开头，例如 “ftp:（File Transfer Protocol 文件传输协议）”、file、mailto: 等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《网络是怎样连接的》读书笔记(一)">
+<meta property="og:url" content="http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="第一章 浏览器生成消息——探索浏览器内部1.1    生成 HTTP 请求信息1.1.1    探索之旅从输入网址开始URL（Uniform Resource Locator，统一资源定位符） ，实际上除了以 http:&#x2F;&#x2F; 开头，还可以以其他一些文字开头，例如 “ftp:（File Transfer Protocol 文件传输协议）”、file、mailto: 等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202110990.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202146308.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202203261.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202718521.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202840967.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116205435370.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116210023205.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116210934026.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116211138688.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212337924.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212400006.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212417361.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116214233800.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117174318894.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117174553354.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117194319002.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117194526844.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117195037317.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117195113751.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117201101091.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117203012752.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117213104391.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118165158627.png">
+<meta property="article:published_time" content="2021-11-16T12:12:43.000Z">
+<meta property="article:modified_time" content="2021-12-19T21:05:34.000Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202110990.png">
+
+<link rel="canonical" href="http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《网络是怎样连接的》读书笔记(一) | Taiichi's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《网络是怎样连接的》读书笔记(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-16 20:12:43" itemprop="dateCreated datePublished" datetime="2021-11-16T20:12:43+08:00">2021-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-20 05:05:34" itemprop="dateModified" datetime="2021-12-20T05:05:34+08:00">2021-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第一章-浏览器生成消息——探索浏览器内部"><a href="#第一章-浏览器生成消息——探索浏览器内部" class="headerlink" title="第一章 浏览器生成消息——探索浏览器内部"></a>第一章 浏览器生成消息——探索浏览器内部</h1><h2 id="1-1-生成-HTTP-请求信息"><a href="#1-1-生成-HTTP-请求信息" class="headerlink" title="1.1    生成 HTTP 请求信息"></a>1.1    生成 HTTP 请求信息</h2><h3 id="1-1-1-探索之旅从输入网址开始"><a href="#1-1-1-探索之旅从输入网址开始" class="headerlink" title="1.1.1    探索之旅从输入网址开始"></a>1.1.1    探索之旅从输入网址开始</h3><p><strong>URL（Uniform Resource Locator，统一资源定位符）</strong> ，实际上除了以 http:// 开头，还可以以其他一些文字开头，例如 <strong>“ftp:（File Transfer Protocol 文件传输协议）”<strong>、</strong>file</strong>、<strong>mailto:</strong> 等。</p>
+<span id="more"></span>
+
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202110990.png" alt="image-20211116202110990"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202146308.png" alt="image-20211116202146308"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202203261.png" alt="image-20211116202203261"></p>
+<h3 id="1-1-2-浏览器要先解析-URL"><a href="#1-1-2-浏览器要先解析-URL" class="headerlink" title="1.1.2    浏览器要先解析 URL"></a>1.1.2    浏览器要先解析 URL</h3><p>浏览器要做的第一步工作就是对 <strong>URL</strong> 进行解析，从而生成发送给 Web 服务器的请求信息。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202718521.png" alt="image-20211116202718521"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116202840967.png" alt="image-20211116202840967"></p>
+<h3 id="1-1-3-省略文件名的情况"><a href="#1-1-3-省略文件名的情况" class="headerlink" title="1.1.3    省略文件名的情况"></a>1.1.3    省略文件名的情况</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.lab.glasscom.com/dir/</span><br></pre></td></tr></table></figure>
+
+<p>以 “/” 结尾代表 /dir/ 后面本来应该有的文件名忽略了。会访问在服务器上实现设置好文件名省略时要访问的默认文件名。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.lab.glasscom.com/</span><br></pre></td></tr></table></figure>
+
+<p>访问 “/“ 目录的默认文件。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.lab.glasscom.com</span><br></pre></td></tr></table></figure>
+
+<p>代表访问根目录下事先设置的默认文件。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.lab.glasscom.com/whatisthis</span><br></pre></td></tr></table></figure>
+
+<p>如果 Web 服务器上存在名为 whatisthis 的文件，则将 whatisthis 作为文件名来处理；如果存在名为 whatisthis 的目录，则将 whatisthis 作为目录名来处理。</p>
+<h3 id="1-1-4-HTTP-的基本思路"><a href="#1-1-4-HTTP-的基本思路" class="headerlink" title="1.1.4    HTTP 的基本思路"></a>1.1.4    HTTP 的基本思路</h3><p>解析完 <strong>URL</strong> 之后，我们就知道应该要访问的目标在哪里了。接下来，浏览器会使用 <strong>HTTP</strong> 协议来访问 <strong>Web</strong> 服务器。</p>
+<p><strong>HTTP</strong> 协议定义了客户端和服务器之间交互的消息内容和步骤。首先，客户端会向服务器发送请求消息，如下图。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116205435370.png" alt="image-20211116205435370"></p>
+<p>请求消息中包含的内容是 “对什么” 和 “进行怎样的操作” 两个部分。其中相当于 “对什么” 的部分称为 <strong>URI（Uniform Resource Identifier，统一资源标识符）</strong>。 一般来说，<strong>URI</strong> 的内容是一个存放网页数据的文件名或者是一个 <strong>CGI</strong> 程序的文件名，例如 “/dir1/file1.html” “/dir1/program1.cgi” 等，也可以直接使用 <strong>URL</strong> 作为 <strong>URI</strong>。</p>
+<p>相当于接下来 “进行怎样的操作” 的部分称为方法。方法表示需要让 <strong>Web</strong> 服务器完成怎样的工作。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116210023205.png" alt="image-20211116210023205"></p>
+<p>除了上面提到的内容之外， HTTP 消息中还有一些用来表示附加信息的头字段。客户端向 <strong>Web</strong> 服务器发送数据时，会先发送头字段，然后再发送数据。</p>
+<p>收到请求消息后，Web 服务器会对其中的内容进行解析，完成自己的工作后，将结果存放在响应信息中。在响应信息的开头有一个状态码，它用来表示操作的执行结果是成功还是发生了错误。状态码后面就是头字段和网页数据。响应消息会被发送回客户端。到这里，HTTP 的整个工作就完成了。</p>
+<h3 id="1-1-5-生成-HTTP-请求消息"><a href="#1-1-5-生成-HTTP-请求消息" class="headerlink" title="1.1.5    生成 HTTP 请求消息"></a>1.1.5    生成 HTTP 请求消息</h3><p>对 <strong>URL</strong> 进行解析之后，浏览器确定了 <strong>Web</strong> 服务器和文件名，接下来就是根据这些信息来生成 <strong>HTTP</strong> 请求消息了。</p>
+<p>浏览器按照如下图规定的格式来生成请求消息：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116210934026.png" alt="image-20211116210934026"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116211138688.png" alt="image-20211116211138688"></p>
+<p>请求消息的第一行称为请求行。我们的场景是在地址栏中输入网址并显示网页，因此这里应该使用 <strong>GET</strong> 方法。方法后加一个空格是 <strong>URI</strong>，末尾需要加上 <strong>HTTP</strong> 的版本号。</p>
+<p>第二行开始为消息头。尽管通过第一行我们就可以大致了解请求的内容，但有些情况下还需要一些额外的详细信息，而消息头的功能就是用来存放这些信息。消息头的规格中定义了很多项目，如日期、客户端支持的数据类型、语言、压缩格式、客户端和服务器的软件名称和版本、数据有效期和最后更新时间等。 </p>
+<p>写完消息头之后，还需要添加一个完全没有内容的空行，然后写上需要发送的数据。这一部分称为消息体，也就是消息的主体。使用 GET 时仅凭方法和 <strong>URI</strong>，<strong>Web</strong> 服务器就能够判断需要进行怎样的操作，消息体中不需要填写任何数据。</p>
+<p>当使用 <strong>POST</strong> 方法时，需要将表单中填写的信息写在消息体中。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212337924.png" alt="image-20211116212337924"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212400006.png" alt="image-20211116212400006"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116212417361.png" alt="image-20211116212417361"></p>
+<h3 id="1-1-6-发送请求后会收到响应"><a href="#1-1-6-发送请求后会收到响应" class="headerlink" title="1.1.6    发送请求后会收到响应"></a>1.1.6    发送请求后会收到响应</h3><p>响应消息的格式以及基本思路和请求信息时相同的，差别只在第一行上。在响应信息中，第一行的内容为状态码和响应短语，用来表示请求的执行结果是成功还是出错。状态码是一个数字，它主要用来向程序告知执行的结果。相应短语是一段文字，用来向人们告知执行的结果。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211116214233800.png" alt="image-20211116214233800"></p>
+<p>返回响应消息之后，浏览器会将数据提取出来并显示在屏幕上，我们就能够看到网页的样子了。</p>
+<h2 id="1-2-向-DNS-服务器查询-Web-服务器的-IP-地址"><a href="#1-2-向-DNS-服务器查询-Web-服务器的-IP-地址" class="headerlink" title="1.2    向 DNS 服务器查询 Web 服务器的 IP 地址"></a>1.2    向 DNS 服务器查询 Web 服务器的 IP 地址</h2><h3 id="1-2-1-IP-地址的基本知识"><a href="#1-2-1-IP-地址的基本知识" class="headerlink" title="1.2.1    IP 地址的基本知识"></a>1.2.1    IP 地址的基本知识</h3><p>生成 <strong>HTTP</strong> 消息之后，接下来委托操作系统将消息发送给 <strong>Web</strong> 服务器。在委托操作系统发送消息时，必须要提供的不是通信对象的域名，而是它的 <strong>IP</strong> 地址。因此，在生成 <strong>HTTP</strong> 消息之后，下一个步骤就是根据域名查询 <strong>IP</strong> 地址。</p>
+<p>在网络中，所有的设备都会被分配一个地址。这个地址就相当于现实中某条路上的“xx 号 xx 室“。其中 ”号“ 对应的号码是分配给整个子网的，而 ”室“ 对应的号码是分配给子网中的计算机的，这就是网络中的地址。”号“ 对应的号码称为网络号，”室“ 对应的号码称为主机号，这个地址的整体称为 <strong>IP</strong> 地址。通过 <strong>IP</strong> 地址我们可以判断出访问对象服务器的位置，从而将消息发送到服务器。</p>
+<p>如下图所示，实际的 <strong>IP</strong> 地址是一串 32 比特的数字，按照 8 比特（1 字节）为一组分为 4 组，分别用十进制表示然后再用圆点隔开。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117174318894.png" alt="image-20211117174318894"></p>
+<p>这就是我们平常经常见到的 <strong>IP</strong> 地址格式，但仅凭这一串数字我们无法区分哪部分是网络号，哪部分是主机号。在 <strong>IP</strong> 地址的规则中，网络号和主机号连起来总共是 32 比特，但这两部分的具体结构是不固定的。在组件网络时，用户可以自行决定它们之间的分配关系，因此，我们还需要另外的附加信息来表示 <strong>IP</strong> 地址的内部结构。</p>
+<p>这一附加信息称为子网掩码。子网掩码的格式如下图所示：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117174553354.png" alt="image-20211117174553354"></p>
+<p>其中，子网掩码为 1 的部分表示网络号，子网掩码为 0 的部分表示主机号。</p>
+<p>我们可以将子网掩码按照 <strong>IP</strong> 地址一样的方式以每 8 比特为单位用圆点分组后写在 <strong>IP</strong> 地址的右侧，如下图。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117194319002.png" alt="image-20211117194319002"></p>
+<p>我们也可以把 1 的部分的比特数用十进制表示，如下图。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117194526844.png" alt="image-20211117194526844"></p>
+<p>主机号部分全部为 0 代表整个子网：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117195037317.png" alt="image-20211117195037317"></p>
+<p>主机号部分全部为 1 代表向子网上所有设备发送包，即广播：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117195113751.png" alt="image-20211117195113751"></p>
+<h3 id="1-2-2-域名和-IP-地址并用的理由"><a href="#1-2-2-域名和-IP-地址并用的理由" class="headerlink" title="1.2.2    域名和 IP 地址并用的理由"></a>1.2.2    域名和 IP 地址并用的理由</h3><p>因为域名不仅长，而且其长度是不固定的。处理长度不固定的数据比处理长度固定的数据要复杂，这也是造成效率低下的重要原因之一。</p>
+<h3 id="1-2-3-Socket-库提供查询-IP-地址的功能"><a href="#1-2-3-Socket-库提供查询-IP-地址的功能" class="headerlink" title="1.2.3    Socket 库提供查询 IP 地址的功能"></a>1.2.3    Socket 库提供查询 IP 地址的功能</h3><p>查询 <strong>IP</strong> 地址的方法非常简单，只要询问最近的 <strong>DNS</strong> 服务器 “<a target="_blank" rel="noopener" href="http://www.lab.glassrom.com/">www.lab.glassrom.com</a> 的 <strong>IP</strong> 地址是什么” 就可以了，<strong>DNS</strong> 服务器会回答说“该服务器的 <strong>IP</strong> 地址为 xxx.xxx.xxx.xxx”。</p>
+<p>我们的计算机上一定有相应的 <strong>DNS</strong> 客户端，称为 <strong>DNS</strong> 解析器。（通过 <strong>DNS</strong> 查询 <strong>IP</strong> 地址的操作称为域名解析，因此负责执行解析（resolution）这一操作的就叫解析器（resolver）了）。</p>
+<p>解析器实际上是一段程序，它包含在操作系统的 <strong>Socket</strong> 库中。</p>
+<h3 id="1-2-4-通过解析器向-DNS-服务器发出查询"><a href="#1-2-4-通过解析器向-DNS-服务器发出查询" class="headerlink" title="1.2.4    通过解析器向 DNS 服务器发出查询"></a>1.2.4    通过解析器向 DNS 服务器发出查询</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117201101091.png" alt="image-20211117201101091"></p>
+<p>调用解析器后，解析器会向 <strong>DNS</strong> 服务器发送查询信息，然后 <strong>DNS</strong> 服务器会返回响应信息。响应信息中包含查询到的 <strong>IP</strong> 地址，解析器会取出 <strong>IP</strong> 地址，并将其写入浏览器指定的内存地址中。接下来，浏览器在向 <strong>Web</strong> 服务器发送消息时，只要从该内存地址取出 <strong>IP</strong> 地址，并将它与 <strong>HTTP</strong> 请求消息一起交给操作系统就可以了。</p>
+<h3 id="1-2-5-解析器的内部原理"><a href="#1-2-5-解析器的内部原理" class="headerlink" title="1.2.5    解析器的内部原理"></a>1.2.5    解析器的内部原理</h3><p>解析器会生成要发送给 <strong>DNS</strong> 服务器的查询消息。这个过程与浏览器生成要发送给 <strong>Web</strong> 服务器的 <strong>HTTP</strong> 请求消息的过程类似，解析器会根据 <strong>DNS</strong> 的规格，生成一条表示“请告诉我 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com”/">www.lab.glasscom.com”</a> 的 <strong>IP</strong> 地址“的数据，并将它发送给 <strong>DNS</strong> 服务器。发送消息这个操作并不是由解析器亲自来执行，而是要<strong>委托给操作系统内部的协议栈</strong>来执行。因为和浏览器一样，解析器本身也不具备使用网络收发数据的功能。协议栈会执行发送消息的操作，然后通过网卡将信息发送给 <strong>DNS</strong> 服务器。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117203012752.png" alt="image-20211117203012752"></p>
+<p>当 <strong>DNS</strong> 服务器收到查询消息后，它会根据消息中的查询内容进行查询。如果要访问的 <strong>Web</strong> 服务器已经在 <strong>DNS</strong> 服务器上注册，那么这条记录就能够被找到，然后其 <strong>IP</strong> 地址会被写入响应消息并返回给客户端。接下来，消息经过网络到达客户端，再经过协议栈被传递给解析器，然后解析器读取出消息取出 <strong>IP</strong> 地址，并将 <strong>IP</strong> 地址传递给应用程序。实际上，解析器会将取出的 <strong>IP</strong> 地址写入应用程序指定的内存地址中。</p>
+<p>顺带一提，向 DNS 服务器发送消息时，我们当然也需要知道 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址，只不过这个 <strong>IP</strong> 地址是作为 <strong>TCP/IP</strong> 的一个设置项目事先设置好的，不需要再去查询了。</p>
+<h2 id="1-3-全世界-DNS-服务器的大接力"><a href="#1-3-全世界-DNS-服务器的大接力" class="headerlink" title="1.3    全世界 DNS 服务器的大接力"></a>1.3    全世界 DNS 服务器的大接力</h2><h3 id="1-3-1-DNS-服务器的基本工作"><a href="#1-3-1-DNS-服务器的基本工作" class="headerlink" title="1.3.1    DNS 服务器的基本工作"></a>1.3.1    DNS 服务器的基本工作</h3><p><strong>DNS</strong> 服务器的基本工作就是接收来自客户端的查询信息，然后根据消息的内容返回响应。</p>
+<p>其中，来自客户端的查询消息包括以下 3 种信息。</p>
+<ol>
+<li>域名</li>
+</ol>
+<p>​        服务器、邮件服务器（邮件地址中 @ 后面的部分）的名称</p>
+<ol start="2">
+<li>Class</li>
+</ol>
+<p>​        在最早设计 <strong>DNS</strong> 方案时，<strong>DNS</strong> 在互联网意外的其他网络的应用也被考虑到了，而 <strong>Class</strong> 就是用来识别网络的信息。不过，如今除了互联网并没有其他的网络了，因此 <strong>Class</strong> 的值永远是代表互联网的 <strong>IN</strong>。</p>
+<ol start="3">
+<li>记录类型</li>
+</ol>
+<p>​        表示域名对应何种类型的记录。例如，当类型为 <strong>A</strong> 时，表示域名对应的是 <strong>IP</strong> 地址；当类型为 <strong>MX</strong> 时，表示域名对应的是邮件服务器。</p>
+<h3 id="1-3-2-域名的层次结构"><a href="#1-3-2-域名的层次结构" class="headerlink" title="1.3.2    域名的层次结构"></a>1.3.2    域名的层次结构</h3><p><strong>DNS</strong> 服务器中的所有信息都是按照域名分层次的结构来保存的。在域名中，越靠右的位置表示其层级越高，比如 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com/">www.lab.glasscom.com</a> 这个域名，com 域的下一层是 glasscom 域，再下一层是 lab 域，再下面才是 www 这个名字。</p>
+<h3 id="1-3-3-寻找相应的-DNS-服务器并获取-IP-地址"><a href="#1-3-3-寻找相应的-DNS-服务器并获取-IP-地址" class="headerlink" title="1.3.3    寻找相应的 DNS 服务器并获取 IP 地址"></a>1.3.3    寻找相应的 DNS 服务器并获取 IP 地址</h3><p>关键在于如何找到我们要访问的 <strong>Web</strong> 服务器的信息归哪一台 <strong>DNS</strong> 服务器管。</p>
+<p>将负责管理下级域的 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址注册到它们的上机 <strong>DNS</strong> 服务器中，然后上级 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址再注册到更上一级的 <strong>DNS</strong> 服务器中，以此类推。这样，我们就可以通过上级 <strong>DNS</strong> 服务器查询出下级 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址，也就可以向下级 <strong>DNS</strong> 服务器发送查询请求了。</p>
+<p>在互联网中，类似 com 的上面还有一层域，称为根域。根域的 <strong>DNS</strong> 服务器中保管者 com 等的 <strong>DNS</strong> 服务器的信息。</p>
+<p>分配给根域 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址在全世界仅有 13 个，这些根域 <strong>DNS</strong> 服务器的相关信息已经包含在 <strong>DNS</strong> 服务器的配置文件中了。</p>
+<p>如下图，客户端首先会访问最近的一台 <strong>DNS</strong> 服务器（也就是客户端的 <strong>TCP/IP</strong> 设置中填写的 <strong>DNS</strong> 服务器地址），假设我们要查询 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com/">www.lab.glasscom.com</a> 这台 <strong>Web</strong> 服务器的相关信息。由于最近的 <strong>DNS</strong> 服务器中保存了根域 <strong>DNS</strong> 服务器的信息，因此它会将来自客户端的查询信息转发给根域的 <strong>DNS</strong> 服务器。根域服务器中也没有 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com/">www.lab.glasscom.com</a> 这个域名，但根据域名结构可以判断这个域名属于 com 域，因此根域 DNS 服务器会返回它所管理的 com 域中的 <strong>DNS</strong> 服务器的 <strong>IP</strong> 地址，意思是 “虽然我不知道你要查的那个域名的地址”，但你可以去 com 域问问看。接下来，最近的 <strong>DNS</strong> 服务器又会向 com 域的 <strong>DNS</strong> 服务器发送查询信息。com 域中也没有 <a target="_blank" rel="noopener" href="http://www.lab.glasscom.com/">www.lab.glasscom.com</a> 这个域名的信息，和刚才一样，com 域服务器会返回它下面的  glasscom.com 域的 DNS 服务器的 <strong>IP</strong> 地址。以此类推，只要重复前面的步骤，就可以顺藤摸瓜找到目标 <strong>DNS</strong> 服务器，只要向目标 <strong>DNS</strong> 服务器发送查询信息，就能够得到 <strong>IP</strong> 地址。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211117213104391.png" alt="image-20211117213104391"> </p>
+<h3 id="1-3-4-通过缓存加快-DNS-服务器的响应"><a href="#1-3-4-通过缓存加快-DNS-服务器的响应" class="headerlink" title="1.3.4    通过缓存加快 DNS 服务器的响应"></a>1.3.4    通过缓存加快 DNS 服务器的响应</h3><p>有时候并不需要从最上级的根域开始查找，因为 <strong>DNS</strong> 服务器有一个缓存功能，可以记住之前查询过的域名。如果要查询的域名和相关信息已经在缓存中，那么就可以直接返回响应，接下来的查询可以从缓存的位置开始向下进行。</p>
+<p>但是信息被缓存后，原本的信息可能会发生改变，这样缓存中的信息有可能是不正确的。因此 <strong>DNS</strong> 服务器对缓存的信息设置有效期，而且也会告知客户端响应的结果来自缓存还是负责管理该域名的服务器。</p>
+<h2 id="1-4-委托协议栈发送消息"><a href="#1-4-委托协议栈发送消息" class="headerlink" title="1.4    委托协议栈发送消息"></a>1.4    委托协议栈发送消息</h2><h3 id="1-4-1-数据收发操作概览"><a href="#1-4-1-数据收发操作概览" class="headerlink" title="1.4.1    数据收发操作概览"></a>1.4.1    数据收发操作概览</h3><p>知道了 <strong>IP</strong> 地址后，就可以委托操作系统内部的协议栈向这个目标 <strong>IP</strong> 地址，也就是我们要访问的 <strong>Web</strong> 服务器发送消息了。</p>
+<p>使用 <strong>Socket</strong> 库来收发数据的操作过程如下图所示，收发数据的两台计算机之间连接了一条数据通道，数据沿着这条管道流动，最终到达目的地：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211118165158627.png" alt="image-20211118165158627"></p>
+<p>首先，服务器一方先创建 <strong>Socket</strong>，然后等待客户端向该 <strong>Socket</strong> 连接管道。当服务器进入等待状态时，客户端就可以连接管道了。 （服务器程序一般会在启动后就创建好 <strong>Socket</strong> 并等待客户端连接管道）</p>
+<p>收发数据的操作大致分为 4 个阶段：</p>
+<ol>
+<li>创建 <strong>Socket</strong> （创建 <strong>Socket</strong> 阶段）</li>
+<li>将管道连接到服务器端的 <strong>Socket</strong> 上（连接阶段）</li>
+<li>收发数据（通信阶段）</li>
+<li>断开管道并删除 <strong>Socket</strong>（断开阶段）</li>
+</ol>
+<h3 id="1-4-2-创建-Socket-阶段"><a href="#1-4-2-创建-Socket-阶段" class="headerlink" title="1.4.2    创建 Socket 阶段"></a>1.4.2    创建 Socket 阶段</h3><p>调用 <strong>Socket</strong> 库中的 <strong>socket</strong> 程序组件就可以创建 <strong>Socket</strong> 了。</p>
+<p><strong>Socket</strong> 创建完成后，协议栈会返回一个描述符，用来识别不同的 <strong>Socket</strong>。</p>
+<h3 id="1-4-3-连接阶段：把管道接上去"><a href="#1-4-3-连接阶段：把管道接上去" class="headerlink" title="1.4.3    连接阶段：把管道接上去"></a>1.4.3    连接阶段：把管道接上去</h3><p>接下来，需要委托协议栈将客户端创建的 <strong>Socket</strong> 与服务器那边的 <strong>Socket</strong> 连接起来。应用程序通过调用 <strong>Socket</strong> 库中的名为 <strong>connect</strong> 的程序组件来完成这一操作。（需要指定描述符、服务器 <strong>IP</strong> 地址和端口号这 3 个参数）</p>
+<h3 id="1-4-4-通信阶段：传递消息"><a href="#1-4-4-通信阶段：传递消息" class="headerlink" title="1.4.4    通信阶段：传递消息"></a>1.4.4    通信阶段：传递消息</h3><p>首先，应用程序需要在内存中准备好要发送的数据。根据用户输入的网址生成 <strong>HTTP</strong> 请求消息就是我们要发送的数据。接下来调用 <strong>write</strong>，服务器通过 <strong>read</strong> 读取。</p>
+<h3 id="1-4-5-断开阶段：收发数据结束"><a href="#1-4-5-断开阶段：收发数据结束" class="headerlink" title="1.4.5    断开阶段：收发数据结束"></a>1.4.5    断开阶段：收发数据结束</h3><p>最终，连接在套接字之间的管道会被断开，套接字本身也会被删除。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/15/C++/C++%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/" rel="prev" title="C++编译与链接">
+      <i class="fa fa-chevron-left"></i> C++编译与链接
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" rel="next" title="《网络是怎样连接的》读书笔记(二)">
+      《网络是怎样连接的》读书笔记(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E6%B6%88%E6%81%AF%E2%80%94%E2%80%94%E6%8E%A2%E7%B4%A2%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8"><span class="nav-number">1.</span> <span class="nav-text">第一章 浏览器生成消息——探索浏览器内部</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%94%9F%E6%88%90-HTTP-%E8%AF%B7%E6%B1%82%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">1.1    生成 HTTP 请求信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E6%8E%A2%E7%B4%A2%E4%B9%8B%E6%97%85%E4%BB%8E%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E5%BC%80%E5%A7%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1    探索之旅从输入网址开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A6%81%E5%85%88%E8%A7%A3%E6%9E%90-URL"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2    浏览器要先解析 URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E7%9C%81%E7%95%A5%E6%96%87%E4%BB%B6%E5%90%8D%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3    省略文件名的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-HTTP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4    HTTP 的基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-5-%E7%94%9F%E6%88%90-HTTP-%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.1.5    生成 HTTP 请求消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-6-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E5%90%8E%E4%BC%9A%E6%94%B6%E5%88%B0%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.1.6    发送请求后会收到响应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%90%91-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9F%A5%E8%AF%A2-Web-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84-IP-%E5%9C%B0%E5%9D%80"><span class="nav-number">1.2.</span> <span class="nav-text">1.2    向 DNS 服务器查询 Web 服务器的 IP 地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-IP-%E5%9C%B0%E5%9D%80%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1    IP 地址的基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E5%9F%9F%E5%90%8D%E5%92%8C-IP-%E5%9C%B0%E5%9D%80%E5%B9%B6%E7%94%A8%E7%9A%84%E7%90%86%E7%94%B1"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2    域名和 IP 地址并用的理由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-Socket-%E5%BA%93%E6%8F%90%E4%BE%9B%E6%9F%A5%E8%AF%A2-IP-%E5%9C%B0%E5%9D%80%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3    Socket 库提供查询 IP 地址的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-%E9%80%9A%E8%BF%87%E8%A7%A3%E6%9E%90%E5%99%A8%E5%90%91-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E5%87%BA%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.2.4    通过解析器向 DNS 服务器发出查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-5-%E8%A7%A3%E6%9E%90%E5%99%A8%E7%9A%84%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.2.5    解析器的内部原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%85%A8%E4%B8%96%E7%95%8C-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%A4%A7%E6%8E%A5%E5%8A%9B"><span class="nav-number">1.3.</span> <span class="nav-text">1.3    全世界 DNS 服务器的大接力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1    DNS 服务器的基本工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E5%9F%9F%E5%90%8D%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2    域名的层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-%E5%AF%BB%E6%89%BE%E7%9B%B8%E5%BA%94%E7%9A%84-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B6%E8%8E%B7%E5%8F%96-IP-%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3    寻找相应的 DNS 服务器并获取 IP 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-%E9%80%9A%E8%BF%87%E7%BC%93%E5%AD%98%E5%8A%A0%E5%BF%AB-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4    通过缓存加快 DNS 服务器的响应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%A7%94%E6%89%98%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-number">1.4.</span> <span class="nav-text">1.4    委托协议栈发送消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91%E6%93%8D%E4%BD%9C%E6%A6%82%E8%A7%88"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1    数据收发操作概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-%E5%88%9B%E5%BB%BA-Socket-%E9%98%B6%E6%AE%B5"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2    创建 Socket 阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-3-%E8%BF%9E%E6%8E%A5%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8A%8A%E7%AE%A1%E9%81%93%E6%8E%A5%E4%B8%8A%E5%8E%BB"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3    连接阶段：把管道接上去</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-4-%E9%80%9A%E4%BF%A1%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BC%A0%E9%80%92%E6%B6%88%E6%81%AF"><span class="nav-number">1.4.4.</span> <span class="nav-text">1.4.4    通信阶段：传递消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-5-%E6%96%AD%E5%BC%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%94%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9D%9F"><span class="nav-number">1.4.5.</span> <span class="nav-text">1.4.5    断开阶段：收发数据结束</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

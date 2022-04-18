@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第四章    返回结果的 HTTP 状态码4.1    状态码告知从服务器端返回的请求结果状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《图解HTTP》读书笔记(三)">
+<meta property="og:url" content="http://example.com/2021/11/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/index.html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="第四章    返回结果的 HTTP 状态码4.1    状态码告知从服务器端返回的请求结果状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190659875.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190758196.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190918749.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124191407405.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124191928113.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192334897.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192457272.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192617100.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124193315684.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194005500.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194114086.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194232404.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194328105.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194424364.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194528968.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124200426591.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201201157.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201325810.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201453045.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201759846.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201849213.png">
+<meta property="og:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201919085.png">
+<meta property="article:published_time" content="2021-11-24T11:02:51.000Z">
+<meta property="article:modified_time" content="2021-12-19T21:05:34.000Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190659875.png">
+
+<link rel="canonical" href="http://example.com/2021/11/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《图解HTTP》读书笔记(三) | Taiichi's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%B8%89)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《图解HTTP》读书笔记(三)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-24 19:02:51" itemprop="dateCreated datePublished" datetime="2021-11-24T19:02:51+08:00">2021-11-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-20 05:05:34" itemprop="dateModified" datetime="2021-12-20T05:05:34+08:00">2021-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第四章-返回结果的-HTTP-状态码"><a href="#第四章-返回结果的-HTTP-状态码" class="headerlink" title="第四章    返回结果的 HTTP 状态码"></a>第四章    返回结果的 HTTP 状态码</h1><h2 id="4-1-状态码告知从服务器端返回的请求结果"><a href="#4-1-状态码告知从服务器端返回的请求结果" class="headerlink" title="4.1    状态码告知从服务器端返回的请求结果"></a>4.1    状态码告知从服务器端返回的请求结果</h2><p>状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190659875.png" alt="image-20211124190659875"></p>
+<span id="more"></span>
+
+<p>状态码的第一位指定了响应类别：</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190758196.png" alt="image-20211124190758196"></p>
+<h2 id="4-2-2XX-成功"><a href="#4-2-2XX-成功" class="headerlink" title="4.2    2XX 成功"></a>4.2    2XX 成功</h2><p>2XX 的响应结果表明请求被正常处理了。</p>
+<h3 id="4-2-1-200-OK"><a href="#4-2-1-200-OK" class="headerlink" title="4.2.1    200 OK"></a>4.2.1    200 OK</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124190918749.png" alt="image-20211124190918749"></p>
+<p>表示从客户端发来的请求在服务器端被正常处理了。</p>
+<p>在响应报文内，随状态码一起返回的信息会因方法的不同而发生改变。比如，使用 <strong>GET</strong> 方法时，对应请求资源的实体会作为响应返回；而使用 <strong>HEAD</strong> 方法时，只返回首部，不返回实体的主体部分。</p>
+<h3 id="4-2-2-204-No-Content"><a href="#4-2-2-204-No-Content" class="headerlink" title="4.2.2    204 No Content"></a>4.2.2    204 No Content</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124191407405.png" alt="image-20211124191407405"></p>
+<p>表示服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分。</p>
+<p>一般在只需要客户端往服务器发送信息，而对客户端不需要发送新信息内容的情况下使用。</p>
+<h3 id="4-2-3-206-Partial-Content"><a href="#4-2-3-206-Partial-Content" class="headerlink" title="4.2.3    206 Partial Content"></a>4.2.3    206 Partial Content</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124191928113.png" alt="image-20211124191928113"></p>
+<p>该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的 <strong>GET</strong> 请求。响应报文中包含由 <strong>Content-Range</strong> 指定范围的实体内容。</p>
+<h2 id="4-3-3XX-重定向"><a href="#4-3-3XX-重定向" class="headerlink" title="4.3    3XX 重定向"></a>4.3    3XX 重定向</h2><p><strong>3XX</strong> 响应结果表明浏览器需要执行某些特殊的处理以正确处理请求。</p>
+<h3 id="4-3-1-301-Moved-Permanently"><a href="#4-3-1-301-Moved-Permanently" class="headerlink" title="4.3.1    301 Moved Permanently"></a>4.3.1    301 Moved Permanently</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192334897.png" alt="image-20211124192334897"></p>
+<p>永久性重定向。该状态码表示请求的资源已被分配了新的 <strong>URI</strong>，以后应使用资源现在所指的 <strong>URI</strong>。</p>
+<h3 id="4-3-2-302-Found"><a href="#4-3-2-302-Found" class="headerlink" title="4.3.2    302 Found"></a>4.3.2    302 Found</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192457272.png" alt="image-20211124192457272"></p>
+<p>临时性重定向。该状态码表示请求的资源已被分配了新的 <strong>URI</strong>，希望用户（本次）能使用新的 <strong>URI</strong> 访问。</p>
+<h3 id="4-3-3-303-See-Other"><a href="#4-3-3-303-See-Other" class="headerlink" title="4.3.3    303 See Other"></a>4.3.3    303 See Other</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124192617100.png" alt="image-20211124192617100"></p>
+<p><strong>303</strong> 状态码和 <strong>302 Found</strong> 状态码有着相同的功能，但 <strong>303</strong> 状态码明确表示客户端应当采用 <strong>GET</strong> 方法获取资源，这点与 <strong>302</strong> 状态码有区别。</p>
+<p>当 <strong>301、302、303</strong> 响应状态码返回时，几乎所有的浏览器都会把 <strong>POST</strong> 改成 <strong>GET</strong>，并删除请求报文内的主体，之后请求会自动再次发送。</p>
+<p><strong>301、302</strong> 标准是禁止将 <strong>POST</strong> 方法改变成 <strong>GET</strong> 方法的，但实际使用时大家都会这么做。</p>
+<h3 id="4-3-4-304-Not-Modified"><a href="#4-3-4-304-Not-Modified" class="headerlink" title="4.3.4    304 Not Modified"></a>4.3.4    304 Not Modified</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124193315684.png" alt="image-20211124193315684"> </p>
+<p>该状态码表示客户端发送附带条件（是指采用 <strong>GET</strong> 方法的请求报文中包含 <strong>If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since</strong> 中任一首部。）的请求时，客户端允许请求访问资源，但未满足条件情况。<strong>304</strong> 状态码返回时，不包含任何响应主体部分。<strong>304</strong> 虽然被划分在 <strong>3XX</strong> 类别中，但是和重定向没有关系。</p>
+<h3 id="4-3-5-307-Temporary-Redirect"><a href="#4-3-5-307-Temporary-Redirect" class="headerlink" title="4.3.5    307 Temporary Redirect"></a>4.3.5    307 Temporary Redirect</h3><p>临时重定向。该状态码与 <strong>302 Found</strong> 有着相同的含义。尽管 <strong>302</strong> 标准禁止 <strong>POST</strong> 变换成 <strong>GET</strong>，但实际使用时大家并不遵守。</p>
+<p><strong>307</strong> 会遵照浏览器标准，不会从 <strong>POST</strong> 变成 <strong>GET</strong>。</p>
+<h2 id="4-4-4XX-客户端错误"><a href="#4-4-4XX-客户端错误" class="headerlink" title="4.4    4XX 客户端错误"></a>4.4    4XX 客户端错误</h2><p><strong>4XX</strong> 的响应结果表明客户端是发生错误的原因所在。</p>
+<h3 id="4-4-1-400-Bad-Request"><a href="#4-4-1-400-Bad-Request" class="headerlink" title="4.4.1    400 Bad Request"></a>4.4.1    400 Bad Request</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194005500.png" alt="image-20211124194005500"></p>
+<p>该状态码表示请求报文中存在语法错误。当错误发生时，需修改请求的内容后再次发送请求。</p>
+<h3 id="4-4-2-401-Unauthorized"><a href="#4-4-2-401-Unauthorized" class="headerlink" title="4.4.2    401 Unauthorized"></a>4.4.2    401 Unauthorized</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194114086.png" alt="image-20211124194114086"></p>
+<p>该状态码表示发送的请求需要有通过 <strong>HTTP</strong> 认证（ <strong>BASIC <strong>认证，</strong>DIGEST</strong> 认证 ）的认证信息。</p>
+<h3 id="4-4-3-403-Forbidden"><a href="#4-4-3-403-Forbidden" class="headerlink" title="4.4.3    403 Forbidden"></a>4.4.3    403 Forbidden</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194232404.png" alt="image-20211124194232404"></p>
+<p>该状态码表明对请求资源的访问被服务器拒绝了。</p>
+<h3 id="4-4-4-404-Not-Found"><a href="#4-4-4-404-Not-Found" class="headerlink" title="4.4.4    404 Not Found"></a>4.4.4    404 Not Found</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194328105.png" alt="image-20211124194328105"></p>
+<p>该状态码表明服务器上无法找到请求的资源。</p>
+<h2 id="4-5-5XX-服务器错误"><a href="#4-5-5XX-服务器错误" class="headerlink" title="4.5    5XX 服务器错误"></a>4.5    5XX 服务器错误</h2><h3 id="4-5-1-500-Internal-Server-Error"><a href="#4-5-1-500-Internal-Server-Error" class="headerlink" title="4.5.1    500 Internal Server Error"></a>4.5.1    500 Internal Server Error</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194424364.png" alt="image-20211124194424364"></p>
+<p>该状态码表明服务器端在执行请求时发生了错误。也有可能是 <strong>Web</strong> 应用存在的 <strong>bug</strong> 或某些临时的鼓掌。</p>
+<h3 id="4-5-2-503-Service-Unavailable"><a href="#4-5-2-503-Service-Unavailable" class="headerlink" title="4.5.2    503 Service Unavailable"></a>4.5.2    503 Service Unavailable</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124194528968.png" alt="image-20211124194528968"></p>
+<p>该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。如果实现得知解除以上状况需要的时间，最好写入 <strong>Retry-After</strong> 首部字段再返回客户端。</p>
+<h1 id="第五章-与-HTTP-协作的-Web-服务器"><a href="#第五章-与-HTTP-协作的-Web-服务器" class="headerlink" title="第五章    与 HTTP 协作的 Web 服务器"></a>第五章    与 HTTP 协作的 Web 服务器</h1><h2 id="5-1-用单台虚拟主机实现多个域名"><a href="#5-1-用单台虚拟主机实现多个域名" class="headerlink" title="5.1    用单台虚拟主机实现多个域名"></a>5.1    用单台虚拟主机实现多个域名</h2><p><strong>HTTP/1.1</strong> 规范允许一台 <strong>HTTP</strong> 服务器搭建多个 <strong>Web</strong> 站点。</p>
+<p>例如，提供 <strong>Web</strong> 托管服务（ <strong>Web Hosting Service</strong> ）的供应商，可以用一台服务器为多位客户服务，也可以以每名客户持有的域名运行各自不同的网站。这是因为利用了虚拟主机（ <strong>Virtual Host</strong>，又称虚拟服务器 ）的功能。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124200426591.png" alt="image-20211124200426591"></p>
+<p>若两个网站同时部署在同一个服务器上（相同的 <strong>IP</strong> 地址），使用 <strong>DNS</strong> 服务解析域名后，两者的访问 <strong>IP</strong> 地址会相同。</p>
+<p>在相同的 <strong>IP</strong> 地址下，由于虚拟主机可以寄存多个不同主机名和域名的 <strong>Web</strong> 网站，因此在发送 <strong>HTTP</strong> 请求时，必须在 <strong>Host</strong> 首部内完整指定主机名或域名的 <strong>URI</strong>。</p>
+<h2 id="5-2-通信数据转发程序：代理、网关、隧道"><a href="#5-2-通信数据转发程序：代理、网关、隧道" class="headerlink" title="5.2    通信数据转发程序：代理、网关、隧道"></a>5.2    通信数据转发程序：代理、网关、隧道</h2><h3 id="5-2-1-代理"><a href="#5-2-1-代理" class="headerlink" title="5.2.1    代理"></a>5.2.1    代理</h3><p>代理是一种有转发功能的应用程序，它扮演了位于服务器和客户端 “中间人” 的角色，接收由客户端发送的请求并转发给服务器，同时也接受服务器返回的响应并转发给客户端。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201201157.png" alt="image-20211124201201157"></p>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p>网关是转发其他服务器通信数据的服务器，接收从客户端发送来的请求时，它就像自己拥有资源的源服务器一样对请求进行处理。有时客户端可能都不会察觉，自己的通信目标是一个网关。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201325810.png" alt="image-20211124201325810"></p>
+<p>网关能使通信线路上的服务器提供非 <strong>HTTP</strong> 协议服务。</p>
+<p>利用网关能提高通信的安全性，因为可以在客户端与网关之间的通信线路上加密以确保连接的安全。</p>
+<h3 id="5-2-3-隧道"><a href="#5-2-3-隧道" class="headerlink" title="5.2.3    隧道"></a>5.2.3    隧道</h3><p>隧道是在相隔甚远的客户端和服务器两者之间进行中转，并保持双方通信连接的应用程序。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201453045.png" alt="image-20211124201453045"></p>
+<h2 id="5-3-保存资源的缓存"><a href="#5-3-保存资源的缓存" class="headerlink" title="5.3    保存资源的缓存"></a>5.3    保存资源的缓存</h2><p>当代理转发从服务器返回的响应时，代理服务器将会保存一份资源的副本。</p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201759846.png" alt="image-20211124201759846"></p>
+<p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201849213.png" alt="image-20211124201849213"></p>
+<h3 id="5-3-1-缓存的有效期"><a href="#5-3-1-缓存的有效期" class="headerlink" title="5.3.1    缓存的有效期"></a>5.3.1    缓存的有效期</h3><p><img src="https://taiichi.oss-accelerate.aliyuncs.com/img/image-20211124201919085.png" alt="image-20211124201919085"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E4%BA%8C)/" rel="prev" title="《图解HTTP》读书笔记(二)">
+      <i class="fa fa-chevron-left"></i> 《图解HTTP》读书笔记(二)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(%E5%9B%9B)/" rel="next" title="《图解HTTP》读书笔记(四)">
+      《图解HTTP》读书笔记(四) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E7%9A%84-HTTP-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">第四章    返回结果的 HTTP 状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%8A%B6%E6%80%81%E7%A0%81%E5%91%8A%E7%9F%A5%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%BF%94%E5%9B%9E%E7%9A%84%E8%AF%B7%E6%B1%82%E7%BB%93%E6%9E%9C"><span class="nav-number">1.1.</span> <span class="nav-text">4.1    状态码告知从服务器端返回的请求结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-2XX-%E6%88%90%E5%8A%9F"><span class="nav-number">1.2.</span> <span class="nav-text">4.2    2XX 成功</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-200-OK"><span class="nav-number">1.2.1.</span> <span class="nav-text">4.2.1    200 OK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-204-No-Content"><span class="nav-number">1.2.2.</span> <span class="nav-text">4.2.2    204 No Content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-206-Partial-Content"><span class="nav-number">1.2.3.</span> <span class="nav-text">4.2.3    206 Partial Content</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-3XX-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">1.3.</span> <span class="nav-text">4.3    3XX 重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-301-Moved-Permanently"><span class="nav-number">1.3.1.</span> <span class="nav-text">4.3.1    301 Moved Permanently</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-2-302-Found"><span class="nav-number">1.3.2.</span> <span class="nav-text">4.3.2    302 Found</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-3-303-See-Other"><span class="nav-number">1.3.3.</span> <span class="nav-text">4.3.3    303 See Other</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-4-304-Not-Modified"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.3.4    304 Not Modified</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-5-307-Temporary-Redirect"><span class="nav-number">1.3.5.</span> <span class="nav-text">4.3.5    307 Temporary Redirect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-4XX-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.</span> <span class="nav-text">4.4    4XX 客户端错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-400-Bad-Request"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.4.1    400 Bad Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-401-Unauthorized"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.4.2    401 Unauthorized</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-3-403-Forbidden"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.4.3    403 Forbidden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-4-404-Not-Found"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4.4    404 Not Found</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-5XX-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="nav-number">1.5.</span> <span class="nav-text">4.5    5XX 服务器错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-1-500-Internal-Server-Error"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.5.1    500 Internal Server Error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-2-503-Service-Unavailable"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.5.2    503 Service Unavailable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E4%B8%8E-HTTP-%E5%8D%8F%E4%BD%9C%E7%9A%84-Web-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">第五章    与 HTTP 协作的 Web 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E7%94%A8%E5%8D%95%E5%8F%B0%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%E5%9F%9F%E5%90%8D"><span class="nav-number">2.1.</span> <span class="nav-text">5.1    用单台虚拟主机实现多个域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E9%80%9A%E4%BF%A1%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8F%91%E7%A8%8B%E5%BA%8F%EF%BC%9A%E4%BB%A3%E7%90%86%E3%80%81%E7%BD%91%E5%85%B3%E3%80%81%E9%9A%A7%E9%81%93"><span class="nav-number">2.2.</span> <span class="nav-text">5.2    通信数据转发程序：代理、网关、隧道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-%E4%BB%A3%E7%90%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">5.2.1    代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E5%85%B3"><span class="nav-number">2.2.2.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-3-%E9%9A%A7%E9%81%93"><span class="nav-number">2.2.3.</span> <span class="nav-text">5.2.3    隧道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E4%BF%9D%E5%AD%98%E8%B5%84%E6%BA%90%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">2.3.</span> <span class="nav-text">5.3    保存资源的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E7%BC%93%E5%AD%98%E7%9A%84%E6%9C%89%E6%95%88%E6%9C%9F"><span class="nav-number">2.3.1.</span> <span class="nav-text">5.3.1    缓存的有效期</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
