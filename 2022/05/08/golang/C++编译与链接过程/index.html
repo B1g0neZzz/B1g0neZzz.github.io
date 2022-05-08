@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="从 hello world 开始1234567package main	&#x2F;&#x2F; 程序的包名import &quot;fmt&quot;func main() &amp;#123; &#x2F;&#x2F; 注意左花括号 &amp;#123; 必须与函数名同一行，否则编译错误    &#x2F;&#x2F; golang 中的表达式，加&quot;;&quot;，和不加都可以，建议是不加    fmt.Println(&quot; hello Go!&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go入门">
+<meta property="og:url" content="http://example.com/2022/05/08/golang/C++%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Taiichi&#39;s blog">
+<meta property="og:description" content="从 hello world 开始1234567package main	&#x2F;&#x2F; 程序的包名import &quot;fmt&quot;func main() &amp;#123; &#x2F;&#x2F; 注意左花括号 &amp;#123; 必须与函数名同一行，否则编译错误    &#x2F;&#x2F; golang 中的表达式，加&quot;;&quot;，和不加都可以，建议是不加    fmt.Println(&quot; hello Go!&amp;qu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/PC/AppData/Roaming/Typora/typora-user-images/image-20220508220754267.png">
+<meta property="article:published_time" content="2022-05-08T12:36:07.000Z">
+<meta property="article:modified_time" content="2022-05-08T14:07:55.068Z">
+<meta property="article:author" content="太一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/PC/AppData/Roaming/Typora/typora-user-images/image-20220508220754267.png">
+
+<link rel="canonical" href="http://example.com/2022/05/08/golang/C++%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>go入门 | Taiichi's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/B1g0neZzz" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Taiichi's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/08/golang/C++%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="太一">
+      <meta itemprop="description" content="持续学习者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taiichi's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          go入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-08 20:36:07 / 修改时间：22:07:55" itemprop="dateCreated datePublished" datetime="2022-05-08T20:36:07+08:00">2022-05-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index"><span itemprop="name">go</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="从-hello-world-开始"><a href="#从-hello-world-开始" class="headerlink" title="从 hello world 开始"></a>从 hello world 开始</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main	<span class="comment">// 程序的包名</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123; <span class="comment">// 注意左花括号 &#123; 必须与函数名同一行，否则编译错误</span></span><br><span class="line">    <span class="comment">// golang 中的表达式，加&quot;;&quot;，和不加都可以，建议是不加</span></span><br><span class="line">    fmt.Println(<span class="string">&quot; hello Go!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+
+
+<h1 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	四种变量的声明方式</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一、二、三可以声明全局变量</span></span><br><span class="line"><span class="comment">// 方法四只能在函数内部声明变量</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 方法一：声明一个变量 默认的值是0</span></span><br><span class="line">	<span class="keyword">var</span> a <span class="keyword">int</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 方法二：声明一个变量 初始化一个值</span></span><br><span class="line">	<span class="keyword">var</span> b <span class="keyword">int</span> = <span class="number">100</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 方法三：在初始化的时候，可以省去数据类型，通过值自动匹配当前的变量的数据类型</span></span><br><span class="line">	<span class="keyword">var</span> c = <span class="number">100</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;c = &quot;</span>, c)</span><br><span class="line">	fmt.Printf(<span class="string">&quot;type of a = %T\n&quot;</span>, a)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 方法四：（常用的方法）省去 var 关键字，直接自动匹配</span></span><br><span class="line">	e := <span class="number">100</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;e = &quot;</span>, e)</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 声明多个变量</span></span><br><span class="line">    <span class="keyword">var</span> xx, yy <span class="keyword">int</span> = <span class="number">100</span>, <span class="number">200</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;xx = &quot;</span>, xx, <span class="string">&quot;, yy = &quot;</span>, yy)</span><br><span class="line">	<span class="keyword">var</span> kk, ll = <span class="number">100</span>, <span class="string">&quot;Aceld&quot;</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;kk = &quot;</span>, kk, <span class="string">&quot;, ll = &quot;</span>, ll)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 多行的多变量声明</span></span><br><span class="line">	<span class="keyword">var</span> (</span><br><span class="line">		vv <span class="keyword">int</span> = <span class="number">00</span></span><br><span class="line">		jj <span class="keyword">bool</span> = <span class="literal">true</span></span><br><span class="line">	)</span><br><span class="line">	fmt.Println(<span class="string">&quot;vv = &quot;</span>, vv, <span class="string">&quot;, jj = &quot;</span>, jj)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="const-与-iota"><a href="#const-与-iota" class="headerlink" title="const 与 iota"></a>const 与 iota</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// const 来定义枚举类型</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	<span class="comment">// 可以在 const() 添加一个关键字 iota，每行的 iota 都会累加 1，第一行的 iota 的默认值是 0</span></span><br><span class="line">	BEIJING = <span class="literal">iota</span> * <span class="number">10</span></span><br><span class="line">	SHANGHAI </span><br><span class="line">	SHENZHEN</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	<span class="comment">// iota 只能够配合 const() 一起使用，</span></span><br><span class="line">	a, b = <span class="literal">iota</span> + <span class="number">1</span>, <span class="literal">iota</span> + <span class="number">2</span>	<span class="comment">// iota = 0, a = iota + 1, b = iota + 2, a = 1, b = 2</span></span><br><span class="line">	c, d						<span class="comment">// iota = 1, c = iota + 1, d = iota + 2, c = 2, d = 3</span></span><br><span class="line">	e, f						<span class="comment">// iota = 2, e = iota + 1, f = iota + 2, e = 3, f = 4</span></span><br><span class="line"></span><br><span class="line">	g, h = <span class="literal">iota</span> * <span class="number">2</span>, <span class="literal">iota</span> * <span class="number">3</span>	<span class="comment">// iota = 3, g = iota * 2, h = iota * 3, g = 6, h = 9</span></span><br><span class="line">	i, k						<span class="comment">// iota = 4, i = iota * 2, k = iota * 3, i = 8, k = 12</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 常量(只读属性)</span></span><br><span class="line">	<span class="keyword">const</span> length <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;length = &quot;</span>, length)</span><br><span class="line">	fmt.Println(<span class="string">&quot;BEIJING = &quot;</span>, BEIJING)</span><br><span class="line">	fmt.Println(<span class="string">&quot;SHANGHAI = &quot;</span>, SHANGHAI)</span><br><span class="line">	fmt.Println(<span class="string">&quot;SHENZHEN = &quot;</span>, SHENZHEN)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a, <span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="func-的多返回值"><a href="#func-的多返回值" class="headerlink" title="func 的多返回值"></a>func 的多返回值</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo1</span><span class="params">(a <span class="keyword">string</span>, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">	c := <span class="number">100</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回多个值，匿名的</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo2</span><span class="params">(a <span class="keyword">string</span>, b <span class="keyword">int</span>)</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">666</span>, <span class="number">777</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回多个返回值，有形参名的</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo3</span><span class="params">(a <span class="keyword">string</span>, b <span class="keyword">int</span>)</span> <span class="params">(r1 <span class="keyword">int</span>, r2 <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;--- foo3 ---&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// r1 r2 属于 foo3 的形参， 初始化默认的值是 0</span></span><br><span class="line">	<span class="comment">// r1 r2 作用域空间 是 foo3整个函数体的 &#123;&#125; 空间</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;r1 = &quot;</span>, r1)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r2 = &quot;</span>, r2)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 给有名称的返回值变量赋值</span></span><br><span class="line">	r1 = <span class="number">1000</span></span><br><span class="line">	r2 = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo4</span><span class="params">(a <span class="keyword">string</span>, b <span class="keyword">int</span>)</span> <span class="params">(r1, r2 <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;--- foo4 ---&quot;</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, b)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 给有名称的返回值变量赋值</span></span><br><span class="line">	r1 = <span class="number">1000</span></span><br><span class="line">	r2 = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := foo1(<span class="string">&quot;abc&quot;</span>, <span class="number">555</span>)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;c = &quot;</span>, c)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 := foo2(<span class="string">&quot;haha&quot;</span>, <span class="number">999</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 = &quot;</span>, ret1, <span class="string">&quot; ret2 = &quot;</span>, ret2)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 = foo3(<span class="string">&quot;foo3&quot;</span>, <span class="number">333</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 = &quot;</span>, ret1, <span class="string">&quot;ret2 = &quot;</span>, ret2)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 = foo4(<span class="string">&quot;foo4&quot;</span>, <span class="number">444</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 = &quot;</span>, ret1, <span class="string">&quot;ret2 = &quot;</span>, ret2)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="init-函数与-import-导包"><a href="#init-函数与-import-导包" class="headerlink" title="init 函数与 import 导包"></a>init 函数与 import 导包</h1><p><img src="C:\Users\PC\AppData\Roaming\Typora\typora-user-images\image-20220508220754267.png" alt="image-20220508220754267"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/02/C++/gcc%E4%B8%8Emakefile%E4%B8%8Egdb/" rel="prev" title="开发工具">
+      <i class="fa fa-chevron-left"></i> 开发工具
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E-hello-world-%E5%BC%80%E5%A7%8B"><span class="nav-number">1.</span> <span class="nav-text">从 hello world 开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">声明变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#const-%E4%B8%8E-iota"><span class="nav-number">3.</span> <span class="nav-text">const 与 iota</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#func-%E7%9A%84%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">4.</span> <span class="nav-text">func 的多返回值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#init-%E5%87%BD%E6%95%B0%E4%B8%8E-import-%E5%AF%BC%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">init 函数与 import 导包</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="太一"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">太一</p>
+  <div class="site-description" itemprop="description">持续学习者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/B1g0neZzz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;B1g0neZzz" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">太一</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
