@@ -22,7 +22,7 @@
 
   <meta name="description" content="gcc什么是 gcc gcc（ GNU C Compiler ） 编译器的作者是 Richard Stallman，也是 GNU 项目的奠基者。 现在的 gcc 是 GNU Compiler Collection 的缩写。最初是作为 C 语言的编译器（ GNU C Compiler ），现在已经支持多种语言了，如 C、C++、Java、Pascal、Ada、COBOL 语言等。 gcc 支持多种硬">
 <meta property="og:type" content="article">
-<meta property="og:title" content="开发工具">
+<meta property="og:title" content="gcc与Makefile与gdb">
 <meta property="og:url" content="http://example.com/2022/05/02/C++/gcc%E4%B8%8Emakefile%E4%B8%8Egdb/index.html">
 <meta property="og:site_name" content="Taiichi&#39;s blog">
 <meta property="og:description" content="gcc什么是 gcc gcc（ GNU C Compiler ） 编译器的作者是 Richard Stallman，也是 GNU 项目的奠基者。 现在的 gcc 是 GNU Compiler Collection 的缩写。最初是作为 C 语言的编译器（ GNU C Compiler ），现在已经支持多种语言了，如 C、C++、Java、Pascal、Ada、COBOL 语言等。 gcc 支持多种硬">
@@ -33,8 +33,14 @@
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220502213005303.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524210453543.png">
 <meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524210521328.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221240572.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221103603.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221735626.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524222046626.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524224318756.png">
+<meta property="og:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220525112849495.png">
 <meta property="article:published_time" content="2022-05-02T13:04:59.000Z">
-<meta property="article:modified_time" content="2022-05-24T13:30:13.090Z">
+<meta property="article:modified_time" content="2022-05-25T03:28:56.736Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220502212345479.png">
@@ -52,7 +58,7 @@
   };
 </script>
 
-  <title>开发工具 | Taiichi's blog</title>
+  <title>gcc与Makefile与gdb | Taiichi's blog</title>
   
 
 
@@ -177,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          开发工具
+          gcc与Makefile与gdb
         </h1>
 
         <div class="post-meta">
@@ -194,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-24 21:30:13" itemprop="dateModified" datetime="2022-05-24T21:30:13+08:00">2022-05-24</time>
+                <time title="修改时间：2022-05-25 11:28:56" itemprop="dateModified" datetime="2022-05-25T11:28:56+08:00">2022-05-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,6 +295,81 @@
 <h2 id="运行共享库"><a href="#运行共享库" class="headerlink" title="运行共享库"></a>运行共享库</h2><p><strong>一、</strong> 拷贝 <strong>.so</strong> 文件到系统共享库路径下，一般指 <code>/usr/lib</code></p>
 <p><strong>二、</strong> 更改 <strong>LD_LIBRARY_PATH</strong></p>
 <p><strong>三、</strong> <strong>ldconfig</strong></p>
+<h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><h2 id="Makefile-基本规则"><a href="#Makefile-基本规则" class="headerlink" title="Makefile 基本规则"></a>Makefile 基本规则</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221240572.png" alt="image-20220524221240572"></p>
+<ul>
+<li>目标<strong>（TARGET）</strong>程序产生的文件，如可执行文件和目标文件；目标也可以是要执行的动作，如 <strong>clean</strong>，也称为伪目标。</li>
+<li>依赖<strong>（DEPENDENCIES）</strong>是用来产生目标的输入文件列表，一个目标通常依赖于多个文件。</li>
+<li>命令<strong>（COMMAND）</strong>是 <strong>make</strong> 执行的动作（命令是 <strong>shell</strong> 命令或是可在 <strong>shell</strong> 下执行的程序）。注意：每个命令行的起始字符必须为 <strong>TAB</strong> 字符！</li>
+<li>如果 <strong>DEPENDENCIES</strong> 中有一个或多个文件更新的话，<strong>COMMAND</strong> 就要执行，这就是 <strong>Makefile</strong> 最核心的内容。</li>
+</ul>
+<h2 id="使用-Makefile"><a href="#使用-Makefile" class="headerlink" title="使用 Makefile"></a>使用 Makefile</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221103603.png" alt="image-20220524221103603"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:main.o add.o sub.o</span><br><span class="line">		gcc -Wall -g main.o add.o sub.o -o main</span><br><span class="line">main.o:main.c</span><br><span class="line">		gcc -Wall -g -c main.c -o main.o</span><br><span class="line">add.o:add.c add.h</span><br><span class="line">		gcc -Wall -g -c add.c -o add.o</span><br><span class="line">sub.o:sub.c sub.h</span><br><span class="line">		gcc -Wall -g -c sub.c -o sub.o</span><br><span class="line">		</span><br></pre></td></tr></table></figure>
+
+<h3 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h3><p>可以指定伪目标 <strong>make clean</strong> 删除指定文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">main:main.o add.o sub.o</span><br><span class="line">		gcc -Wall -g main.o add.o sub.o -o main</span><br><span class="line">main.o:main.c</span><br><span class="line">		gcc -Wall -g -c main.c -o main.o</span><br><span class="line">add.o:add.c add.h</span><br><span class="line">		gcc -Wall -g -c add.c -o add.o</span><br><span class="line">sub.o:sub.c sub.h</span><br><span class="line">		gcc -Wall -g -c sub.c -o sub.o</span><br><span class="line">clean:</span><br><span class="line">		rm -f main main.o add.o sub.o</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="显式指定伪目标"><a href="#显式指定伪目标" class="headerlink" title="显式指定伪目标"></a>显式指定伪目标</h3><p>如果当前目录下有一个 <strong>clean</strong>，那么 <strong>make clean</strong> 就会报错。</p>
+<p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524221735626.png" alt="image-20220524221735626"></p>
+<p>这就需要我们显式指定 <strong>clean</strong> 是一个伪目标：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.PHONY:clean</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Makefile-自动化变量"><a href="#Makefile-自动化变量" class="headerlink" title="Makefile 自动化变量"></a>Makefile 自动化变量</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524222046626.png" alt="image-20220524222046626"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main:main.o add.o sub.o</span><br><span class="line">		gcc -Wall -g main.o add.o sub.o -o main</span><br></pre></td></tr></table></figure>
+
+<p>例如，<code>$@</code> 是 <code>main</code>，<code>$&lt;</code> 是 <code>main.o</code>，<code>$^</code> 是 <code>main.o add.o sub.o</code></p>
+<p>再举例，上面写的 <strong>Makefile</strong> 可以写成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(OBJECTS).PHONY:clean</span><br><span class="line">OBJECTS=main.o add.o sub.o</span><br><span class="line">main:$(OBJECTS)</span><br><span class="line">		gcc -Wall -g $(OBJECTS) -o $@</span><br><span class="line">main.o:main.c</span><br><span class="line">		gcc -Wall -g -c $&lt; -o $@</span><br><span class="line">add.o:add.c add.h</span><br><span class="line">		gcc -Wall -g -c $&lt; -o $@</span><br><span class="line">sub.o:sub.c sub.h</span><br><span class="line">		gcc -Wall -g -c $&lt; -o $@</span><br><span class="line">clean:</span><br><span class="line">		rm -f main $(OBJECTS)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Makefile-编译多个可执行文件"><a href="#Makefile-编译多个可执行文件" class="headerlink" title="Makefile 编译多个可执行文件"></a>Makefile 编译多个可执行文件</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220524224318756.png" alt="image-20220524224318756"></p>
+<ul>
+<li>模式规则<ul>
+<li><code>%.o:%.c</code></li>
+</ul>
+</li>
+<li>后缀规则<ul>
+<li><code>.c.o:</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">BIN=<span class="number">01</span>test <span class="number">02</span>test</span><br><span class="line">all:$(BIN)</span><br><span class="line">%.o:%.c</span><br><span class="line">	gcc -Wall -g -c $&lt; -o $@</span><br><span class="line"><span class="number">01</span>test:<span class="number">01</span>test.o</span><br><span class="line">	gcc -Wall -g $^ -o $@</span><br><span class="line"><span class="number">02</span>test:<span class="number">02</span>test.o</span><br><span class="line">	gcc -Wall -g $^ -o $@</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm -f *.o <span class="number">01</span>test <span class="number">2</span> test</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="make-常用内嵌函数"><a href="#make-常用内嵌函数" class="headerlink" title="make 常用内嵌函数"></a>make 常用内嵌函数</h2><ul>
+<li>函数调用格式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(function arguments)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>$(wildcard PATTERN)</code></p>
+<ul>
+<li>当前目录下匹配模式的文件</li>
+<li>例如：<code>src=$(wildcard *.c)</code></li>
+</ul>
+</li>
+<li><p><code>$(patsubst PATTERN, REPLACEMENT, TEXT)</code></p>
+<ul>
+<li>模式替换函数</li>
+<li>例如：<code>$(patsubst %.c, %.o, $src)</code></li>
+<li>等价于 <code>$(src:.c=.o)</code></li>
+</ul>
+</li>
+<li><p><strong>shell</strong> 函数</p>
+<ul>
+<li>执行 <strong>shell</strong> 命令</li>
+<li>例如： <code>$(shell ls -d */)</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="多级目录-Makefile"><a href="#多级目录-Makefile" class="headerlink" title="多级目录 Makefile"></a>多级目录 Makefile</h2><p><img src="http://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20220525112849495.png" alt="image-20220525112849495"></p>
 
     </div>
 
@@ -369,7 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc"><span class="nav-number">1.</span> <span class="nav-text">gcc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-gcc"><span class="nav-number">1.1.</span> <span class="nav-text">什么是 gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">1.2.</span> <span class="nav-text">gcc 主要特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">1.3.</span> <span class="nav-text">gcc 常用选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E7%BC%96%E8%AF%91%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">gcc 编译步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">gcc 示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wall-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">-Wall 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcc-%E7%BC%96%E8%AF%91%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.2.</span> <span class="nav-text">gcc 编译多个文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E6%90%9C%E7%B4%A2%E8%B7%AF%E5%BE%84"><span class="nav-number">1.6.</span> <span class="nav-text">库搜索路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">运行共享库</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc"><span class="nav-number">1.</span> <span class="nav-text">gcc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-gcc"><span class="nav-number">1.1.</span> <span class="nav-text">什么是 gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">1.2.</span> <span class="nav-text">gcc 主要特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">1.3.</span> <span class="nav-text">gcc 常用选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E7%BC%96%E8%AF%91%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">gcc 编译步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">gcc 示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wall-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">-Wall 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcc-%E7%BC%96%E8%AF%91%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.2.</span> <span class="nav-text">gcc 编译多个文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E6%90%9C%E7%B4%A2%E8%B7%AF%E5%BE%84"><span class="nav-number">1.6.</span> <span class="nav-text">库搜索路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">运行共享库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Makefile"><span class="nav-number">2.</span> <span class="nav-text">Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile-%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">Makefile 基本规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Makefile"><span class="nav-number">2.2.</span> <span class="nav-text">使用 Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E7%9B%AE%E6%A0%87"><span class="nav-number">2.2.1.</span> <span class="nav-text">伪目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E6%8C%87%E5%AE%9A%E4%BC%AA%E7%9B%AE%E6%A0%87"><span class="nav-number">2.2.2.</span> <span class="nav-text">显式指定伪目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile-%E8%87%AA%E5%8A%A8%E5%8C%96%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">Makefile 自动化变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile-%E7%BC%96%E8%AF%91%E5%A4%9A%E4%B8%AA%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.</span> <span class="nav-text">Makefile 编译多个可执行文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-%E5%B8%B8%E7%94%A8%E5%86%85%E5%B5%8C%E5%87%BD%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">make 常用内嵌函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95-Makefile"><span class="nav-number">2.6.</span> <span class="nav-text">多级目录 Makefile</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
