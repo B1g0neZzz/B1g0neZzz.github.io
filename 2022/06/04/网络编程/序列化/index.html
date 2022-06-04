@@ -28,7 +28,7 @@
 <meta property="og:description" content="序列化序列化 和 反序列化 主要用于解决在跨平台和跨语言的情况下，模块之间的交互和调用，但其本质是为了解决数据传输问题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-04T02:11:48.000Z">
-<meta property="article:modified_time" content="2022-06-04T03:13:32.464Z">
+<meta property="article:modified_time" content="2022-06-04T05:02:50.265Z">
 <meta property="article:author" content="太一">
 <meta name="twitter:card" content="summary">
 
@@ -181,7 +181,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-06-04 10:11:48 / 修改时间：11:13:32" itemprop="dateCreated datePublished" datetime="2022-06-04T10:11:48+08:00">2022-06-04</time>
+              <time title="创建时间：2022-06-04 10:11:48 / 修改时间：13:02:50" itemprop="dateCreated datePublished" datetime="2022-06-04T10:11:48+08:00">2022-06-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,6 +265,30 @@
 <p><strong>Protobuf</strong> 是一个纯粹的展示层协议，可以和各种传输层协议一起使用，<strong>Protobuf</strong> 的文档也非常完善。<strong>google</strong> 提供了多种语言的实现：<strong>java、c#、c++、go</strong> 和 <strong>python</strong> ，每一种实现都包含了相应语言的编译器以及库文件。</p>
 <p><strong>Protobuf</strong> 支持的数据类型相对较少，不支持常量类型。由于其设计的理念是纯粹的展现层协议，目前并没有一个专门支持 <strong>Protobuf</strong> 的 <strong>RPC</strong> 框架。</p>
 </blockquote>
+<h2 id="protobuf-的优势与劣势"><a href="#protobuf-的优势与劣势" class="headerlink" title="protobuf 的优势与劣势"></a>protobuf 的优势与劣势</h2><blockquote>
+<p>优势：</p>
+</blockquote>
+<ol>
+<li><p>序列化后体积相比 <strong>json</strong> 和 <strong>XML</strong> 很小，适合网络传输</p>
+</li>
+<li><p>支持跨平台多语言</p>
+</li>
+<li><p>消息格式升级和兼容性还不错</p>
+</li>
+<li><p>序列化反序列化速度很快，快于 <strong>json</strong> 的处理速度</p>
+</li>
+</ol>
+<blockquote>
+<p>劣势：</p>
+</blockquote>
+<ol>
+<li><p>应用不够广(相比 <strong>xml</strong> 和 <strong>json</strong> )</p>
+</li>
+<li><p>二进制格式导致可读性差</p>
+</li>
+<li><p>缺乏自描述</p>
+</li>
+</ol>
 <h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h2><blockquote>
 <ul>
 <li>准备数据<ul>
@@ -291,6 +315,12 @@
 </li>
 </ul>
 </blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要序列化的数据</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">string</span> sex;	<span class="comment">// man woman</span></span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> id;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
     </div>
 
@@ -368,7 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">网络通信中的问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">常用的序列化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XML-Extensible-Markup-Language-%E7%B1%BB%E4%BC%BC%E4%BA%8E-HTML"><span class="nav-number">1.2.1.</span> <span class="nav-text">XML ( Extensible Markup Language ) 类似于 HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json%EF%BC%88-javaScript-Object-Notation-%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">json（ javaScript Object Notation ）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#protobuf"><span class="nav-number">2.</span> <span class="nav-text">protobuf</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">操作流程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">网络通信中的问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">常用的序列化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XML-Extensible-Markup-Language-%E7%B1%BB%E4%BC%BC%E4%BA%8E-HTML"><span class="nav-number">1.2.1.</span> <span class="nav-text">XML ( Extensible Markup Language ) 类似于 HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json%EF%BC%88-javaScript-Object-Notation-%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">json（ javaScript Object Notation ）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#protobuf"><span class="nav-number">2.</span> <span class="nav-text">protobuf</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#protobuf-%E7%9A%84%E4%BC%98%E5%8A%BF%E4%B8%8E%E5%8A%A3%E5%8A%BF"><span class="nav-number">2.1.</span> <span class="nav-text">protobuf 的优势与劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">操作流程</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
