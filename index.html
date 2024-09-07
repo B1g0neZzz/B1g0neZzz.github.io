@@ -65,6 +65,61 @@
 
   
     
+    <h3 class="article-title"><a href="/2024/09/07/字符串拼接的一个小坑/"><span>字符串拼接的一个小坑</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/09/07/字符串拼接的一个小坑/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-09-07T11:16:04.000Z">
+          2024-09-07
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>今天遇到了一个坑，记录一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string nameSeed = &quot;ABCDE&quot;;</span><br><span class="line">string a = &quot;hhh&quot; + nameSeed[0];</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<p>我的期望输出是 <code>hhhA</code>，但是输出为空</p>
+<p>原因是在C++中，字符串面量（例如<code>&quot;hhh&quot;</code>）实际上是<strong>字符数组</strong>，表现为<strong>指向字符的指针</strong>。</p>
+<p>比如，假设<code>&quot;hhh&quot;</code>在内存中表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">地址	内容</span><br><span class="line">0x100	&#x27;h&#x27;</span><br><span class="line">0x101	&#x27;h&#x27;</span><br><span class="line">0x102	&#x27;h&#x27;</span><br><span class="line">0x103	&#x27;\0&#x27;	// 字符串以空字符 &#x27;\0&#x27; 结尾</span><br></pre></td></tr></table></figure>
+
+<p><code>&quot;hhh&quot;</code> 这个字面量实际上是指向地址 <code>0x100</code> 的指针</p>
+<p>当做类似 <code>&quot;hhh&quot; + nameSeed[0]</code> 的操作时，实际上C++会把<code>&quot;hhh&quot;</code> 视作一个指针，然后尝试对它进行加法操作。加法操作会对这个指针进行位移。<code>nameSeed[0]</code> 返回的是字符<code>&#39;A&#39;</code>，它的ASCII码值是<code>65</code>，意味着指针位移<code>65</code>个字符。这会导致指针指向一个完全不同的内存位置，超出原始字符串的范围。结果是<strong>指向了内存中随机的地址，而这个位置通常不包含任何有意义的数据，导致了程序行为异常</strong>。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2024/09/07/常量指针与指针常量/"><span>常量指针与指针常量</span></a></h3>
     
   
@@ -100,6 +155,11 @@
 
 <p>举例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int a = 20;</span><br><span class="line">int b = 10;</span><br><span class="line">int * const p = &amp;a;</span><br><span class="line">*p = 10; // true</span><br><span class="line">p = &amp;b; // error</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="const-同时修饰指针与变量"><a href="#const-同时修饰指针与变量" class="headerlink" title="const 同时修饰指针与变量"></a>const 同时修饰指针与变量</h1><p>指针与变量都不可以改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int * const p;</span><br></pre></td></tr></table></figure>
 
 
       

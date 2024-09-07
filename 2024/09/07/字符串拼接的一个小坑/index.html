@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>字符串拼接的一个小坑 | 太一的博客 | 一个程序学徒</title>
+
+  
+  <meta name="author" content="太一">
+  
+
+  
+  <meta name="description" content="Java 后端">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="字符串拼接的一个小坑"/>
+
+  <meta property="og:site_name" content="太一的博客"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="太一的博客" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">太一的博客</a>
+    </h1>
+    <p class="site-description">一个程序学徒</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/categories">Categories</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>字符串拼接的一个小坑</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/09/07/字符串拼接的一个小坑/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-09-07T11:16:04.000Z">
+          2024-09-07
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>今天遇到了一个坑，记录一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string nameSeed = &quot;ABCDE&quot;;</span><br><span class="line">string a = &quot;hhh&quot; + nameSeed[0];</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<p>我的期望输出是 <code>hhhA</code>，但是输出为空</p>
+<p>原因是在C++中，字符串面量（例如<code>&quot;hhh&quot;</code>）实际上是<strong>字符数组</strong>，表现为<strong>指向字符的指针</strong>。</p>
+<p>比如，假设<code>&quot;hhh&quot;</code>在内存中表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">地址	内容</span><br><span class="line">0x100	&#x27;h&#x27;</span><br><span class="line">0x101	&#x27;h&#x27;</span><br><span class="line">0x102	&#x27;h&#x27;</span><br><span class="line">0x103	&#x27;\0&#x27;	// 字符串以空字符 &#x27;\0&#x27; 结尾</span><br></pre></td></tr></table></figure>
+
+<p><code>&quot;hhh&quot;</code> 这个字面量实际上是指向地址 <code>0x100</code> 的指针</p>
+<p>当做类似 <code>&quot;hhh&quot; + nameSeed[0]</code> 的操作时，实际上C++会把<code>&quot;hhh&quot;</code> 视作一个指针，然后尝试对它进行加法操作。加法操作会对这个指针进行位移。<code>nameSeed[0]</code> 返回的是字符<code>&#39;A&#39;</code>，它的ASCII码值是<code>65</code>，意味着指针位移<code>65</code>个字符。这会导致指针指向一个完全不同的内存位置，超出原始字符串的范围。结果是<strong>指向了内存中随机的地址，而这个位置通常不包含任何有意义的数据，导致了程序行为异常</strong>。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 太一
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>

@@ -104,6 +104,11 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int a = 20;</span><br><span class="line">int b = 10;</span><br><span class="line">int * const p = &amp;a;</span><br><span class="line">*p = 10; // true</span><br><span class="line">p = &amp;b; // error</span><br></pre></td></tr></table></figure>
 
 
+
+<h1 id="const-同时修饰指针与变量"><a href="#const-同时修饰指针与变量" class="headerlink" title="const 同时修饰指针与变量"></a>const 同时修饰指针与变量</h1><p>指针与变量都不可以改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int * const p;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
