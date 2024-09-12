@@ -110,6 +110,20 @@
 <li>父类指针或引用指向子类对象</li>
 </ul>
 <p>重写：函数返回值类型 函数名 参数列表 完全一致称为重写</p>
+<h1 id="虚表"><a href="#虚表" class="headerlink" title="虚表"></a>虚表</h1><p>还是上面的例子，打印一下 <code>sizeof(animal)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Animal animal;</span><br><span class="line">cout &lt;&lt; sizeof(animal) &lt;&lt; endl; // 8</span><br></pre></td></tr></table></figure>
+
+<p>是因为，<code>class Animal</code> 中有一个 <code>vfptr</code> 指针指向 <code>vftable</code></p>
+<p><code>vfptr</code> 是指虚函数指针，指向 <code>vftable</code> 虚函数表</p>
+<ul>
+<li>v - virtual</li>
+<li>f - function</li>
+<li>ptr - pointer</li>
+<li></li>
+</ul>
+<p>当子类重写父类的虚函数</p>
+<p>子类中的虚函数表内部会替换成子类的虚函数地址</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20240912225126619.png" alt="image-20240912225126619"></p>
 
       
     </div>
