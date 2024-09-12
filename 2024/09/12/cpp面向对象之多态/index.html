@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cpp面向对象之多态 | 太一的博客 | 一个程序学徒</title>
+
+  
+  <meta name="author" content="太一">
+  
+
+  
+  <meta name="description" content="Java 后端">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="cpp面向对象之多态"/>
+
+  <meta property="og:site_name" content="太一的博客"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="太一的博客" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">太一的博客</a>
+    </h1>
+    <p class="site-description">一个程序学徒</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/categories">Categories</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>cpp面向对象之多态</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/09/12/cpp面向对象之多态/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-09-12T13:48:41.000Z">
+          2024-09-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>多态分为两类</p>
+<ul>
+<li>静态多态：函数重载 和 运算符重载属于静态多态，复用函数名</li>
+<li>动态多态：派生类和虚函数实现运行时多态</li>
+</ul>
+<p>静态多态和动态多态区别：</p>
+<ul>
+<li>静态多态的函数地址早绑定 - 编译阶段确定函数地址</li>
+<li>动态多态的函数地址晚绑定 - 运行阶段确定函数地址</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// 动物类</span><br><span class="line">class Animal</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void speak()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;动物在说话&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 猫类</span><br><span class="line">class Cat :public Animal &#123;</span><br><span class="line">public:</span><br><span class="line">    void speak()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;miao miao miao&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 执行说话的函数</span><br><span class="line">// 如果不是虚函数 地址早绑定 在编译阶段就确定函数地址</span><br><span class="line">// 虚函数实现了地址晚绑定 在运行阶段确定函数地址</span><br><span class="line">void doSpeak(Animal &amp;animal) </span><br><span class="line">&#123;</span><br><span class="line">    // miao miao miao</span><br><span class="line">    animal.speak();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void test01()</span><br><span class="line">&#123;</span><br><span class="line">    Cat cat;</span><br><span class="line">    doSpeak(cat);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    test01();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结：</p>
+<p>多态满足条件</p>
+<ul>
+<li>有继承关系</li>
+<li>子类重写父类中的虚函数</li>
+</ul>
+<p>多态使用条件</p>
+<ul>
+<li>父类指针或引用指向子类对象</li>
+</ul>
+<p>重写：函数返回值类型 函数名 参数列表 完全一致称为重写</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 太一
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
