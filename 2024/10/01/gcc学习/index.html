@@ -92,10 +92,29 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HELLOWORLD <span class="string">&quot;hello world!!!\n&quot;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(HELLOWORLD);</span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>我们可以使用<code>-E</code>选项让gcc只运行C预编译器</p>
+<span id="more"></span>
+
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br></pre></td></tr></table></figure>
 
 <p>查看<code>hello.i</code> 文件可以看到，我们的<code>HELLOWORLD</code>宏已经被展开了</p>
 <p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241001173816052.png" alt="image-20241001173816052"></p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>可以使用<code>-S</code>选项告诉编译器产生汇编语言文件后停止编译，产生的汇编语言文件扩展名为<code>.s</code></p>
+<p><code>gcc -S hello.i -o hello.s</code></p>
+<p>查看<code>hello.s</code>文件可以看到，生成了汇编文件</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241001175653822.png" alt="image-20241001175653822"></p>
+<h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><p>gcc会调用as工具生成可重定位目标文件</p>
+<p>可以使用 <code>-c</code> 选项通知gcc取消链接步骤，即编译源码并在最后生成目标文件</p>
+<p><code>gcc -c hello.s -o hello.o</code></p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><code>gcc hello.o -o hello</code></p>
+<p><code>gcc hello.c -o hello</code> 直接编译链接成可执行目标文件</p>
+<p><code>gcc -c hello.c</code> 或 <code>gcc -c hello.c -o hello.o</code> 编译生成可重定位目标文件</p>
+<h1 id="gcc实用选项"><a href="#gcc实用选项" class="headerlink" title="gcc实用选项"></a>gcc实用选项</h1><h2 id="Wall-选项"><a href="#Wall-选项" class="headerlink" title="-Wall 选项"></a>-Wall 选项</h2><p>我们有一个 <code>bad.c</code> 程序</p>
+<p>编译 <code>gcc bad.c -o bad</code> 运行 <code>./bad</code>，发现输出 <code>0.000000</code>，与我们预期输出 <code>4</code> 不符，原因是应该输出 <code>%d</code> 但是使用了<code>%f</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Two plus two is %f&quot;</span>, <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 <code>-Wall</code> 选项可以检查出错误</p>
+<p><code>gcc -Wall bad.c -o bad</code></p>
+<p>![image-20241001183102382](&#x2F;Users&#x2F;gaozhihao&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20241001183102382.png)</p>
 
       
     </div>
