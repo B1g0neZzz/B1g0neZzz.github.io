@@ -114,7 +114,26 @@
 
 <p>如果使用 <code>-Wall</code> 选项可以检查出错误</p>
 <p><code>gcc -Wall bad.c -o bad</code></p>
-<p>![image-20241001183102382](&#x2F;Users&#x2F;gaozhihao&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20241001183102382.png)</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241001183102382.png" alt="image-20241001183102382"></p>
+<h2 id="gcc编译多文件"><a href="#gcc编译多文件" class="headerlink" title="gcc编译多文件"></a>gcc编译多文件</h2><p>我们现在有三个文件，分别是 <code>hello_fn.c</code>、<code>hello_fn.h</code>、<code>main.c</code></p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241001183941542.png" alt="image-20241001183941542"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello_fn.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _HELLO_FN_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _HELLO_FN_H</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hello</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello_fn.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hello_fn.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hello</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello %s!!!!\n&quot;</span>, name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// main.c</span><br><span class="line">#include &quot;hello_fn.h&quot;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    hello(&quot;world&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="一次性编译"><a href="#一次性编译" class="headerlink" title="一次性编译"></a>一次性编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall hello_fn.c main.c -o newhello</span><br></pre></td></tr></table></figure>
+
+<h3 id="独立编译"><a href="#独立编译" class="headerlink" title="独立编译"></a>独立编译</h3><p>独立编译的好处是，如果只有某个模块改变了，只需要编译这个模块，而不需要所有的模块全部编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall -c main.c -o main.o</span><br><span class="line">gcc -Wall -c hello_fn.c -o hello_fn.o</span><br><span class="line">gcc -Wall main.o hello_fn.o -o newhello</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="使用外部库"><a href="#使用外部库" class="headerlink" title="使用外部库"></a>使用外部库</h1><h2 id="静态库与动态库"><a href="#静态库与动态库" class="headerlink" title="静态库与动态库"></a>静态库与动态库</h2><ul>
+<li>静态库（ <strong>.a</strong> ）：程序在编译链接的时候把库的代码链接到可执行文件中。程序运行的时候将不再需要静态库。</li>
+<li><h2 id="共享库（-so或-sa-）：程序在运行的时候才去链接共享库的代码，多个程序共享使用库的代码。-一个与共享库链接的可执行文件仅仅包含它用到的函数入口地址的一个表，而不是外部函数所在目标文件的整个机器码-在可执行文件开始运行以前，外部函数的机器码由操作系统从磁盘上的该共享库中复制到内存中，这个过程称为动态链接（-dynamic-linking-）"><a href="#共享库（-so或-sa-）：程序在运行的时候才去链接共享库的代码，多个程序共享使用库的代码。-一个与共享库链接的可执行文件仅仅包含它用到的函数入口地址的一个表，而不是外部函数所在目标文件的整个机器码-在可执行文件开始运行以前，外部函数的机器码由操作系统从磁盘上的该共享库中复制到内存中，这个过程称为动态链接（-dynamic-linking-）" class="headerlink" title="共享库（ .so或.sa ）：程序在运行的时候才去链接共享库的代码，多个程序共享使用库的代码。- 一个与共享库链接的可执行文件仅仅包含它用到的函数入口地址的一个表，而不是外部函数所在目标文件的整个机器码- 在可执行文件开始运行以前，外部函数的机器码由操作系统从磁盘上的该共享库中复制到内存中，这个过程称为动态链接（ dynamic linking ）"></a>共享库（ <strong>.so或.sa</strong> ）：程序在运行的时候才去链接共享库的代码，多个程序共享使用库的代码。<br>- 一个与共享库链接的可执行文件仅仅包含它用到的函数入口地址的一个表，而不是外部函数所在目标文件的整个机器码<br>- 在可执行文件开始运行以前，外部函数的机器码由操作系统从磁盘上的该共享库中复制到内存中，这个过程称为动态链接（ <strong>dynamic linking</strong> ）</h2></li>
+</ul>
 
       
     </div>
