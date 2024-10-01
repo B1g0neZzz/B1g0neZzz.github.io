@@ -65,6 +65,60 @@
 
   
     
+    <h3 class="article-title"><a href="/2024/10/01/gcc学习/"><span>gcc学习</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/10/01/gcc学习/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-10-01T09:10:27.000Z">
+          2024-10-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="GCC编译四个步骤"><a href="#GCC编译四个步骤" class="headerlink" title="GCC编译四个步骤"></a>GCC编译四个步骤</h1><h1 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h1><p>预处理环节主要是进行头文件、宏的展开</p>
+<p>例如我们有一个简单的<code>hello.c</code>程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HELLOWORLD <span class="string">&quot;hello world!!!\n&quot;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(HELLOWORLD);</span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用<code>-E</code>选项让gcc只运行C预编译器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br></pre></td></tr></table></figure>
+
+<p>查看<code>hello.i</code> 文件可以看到，我们的<code>HELLOWORLD</code>宏已经被展开了</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241001173816052.png" alt="image-20241001173816052"></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2024/09/12/cpp面向对象之多态/"><span>cpp面向对象之多态</span></a></h3>
     
   
