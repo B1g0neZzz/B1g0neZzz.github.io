@@ -156,6 +156,11 @@
 <li><strong>fPIC：</strong> 产生位置无关码（<strong>position independent code</strong>）</li>
 <li>库名规则：<strong>libxxx.so</strong></li>
 </ul>
+<h3 id="运行共享库"><a href="#运行共享库" class="headerlink" title="运行共享库"></a>运行共享库</h3><ol>
+<li>拷贝<code>.so</code>文件到系统共享库路径下，一般指<code>/usr/lib</code>，然后运行 <code>ldconfig</code> 刷新库缓存</li>
+<li>更改 <strong>LD_LIBRARY_PATH</strong></li>
+<li><strong>ldconfig</strong> 配置 <strong>ld.so.conf</strong>，<strong>ldconfig</strong> 更新 <strong>ld.so.cache</strong></li>
+</ol>
 
       
     </div>
