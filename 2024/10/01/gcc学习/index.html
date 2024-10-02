@@ -139,6 +139,23 @@
 </ul>
 </li>
 </ul>
+<h2 id="生成静态库"><a href="#生成静态库" class="headerlink" title="生成静态库"></a>生成静态库</h2><p>假设之前的 <code>hello_fn.h</code>、<code>hello_fn.c</code>、<code>main.c</code>三个文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall -c hello_fn.c -o hello_fn.o</span><br><span class="line">ar rcs libhello.a hello_fn.o</span><br></pre></td></tr></table></figure>
+
+<p><code>ar</code> 是 <code>gnu</code> 归档工具，<code>rcs</code> 表示（ <strong>replace and create</strong> ）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall main.c libhello.a -o main</span><br><span class="line">./main</span><br></pre></td></tr></table></figure>
+
+<p>另外一种连接方式，<code>-l&#123;库名&#125;</code>，<code>lib</code>和<code>.a</code>都需要省略。<code>-L.</code> 表示库文件在当前目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Wall -L. main.c -o main -lhello</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="生成共享库"><a href="#生成共享库" class="headerlink" title="生成共享库"></a>生成共享库</h2><p>示例：<code>gcc -shared -fPIC hello_fn.o -o libhello.so</code></p>
+<ul>
+<li><strong>shared：</strong>表示生成共享库格式</li>
+<li><strong>fPIC：</strong> 产生位置无关码（<strong>position independent code</strong>）</li>
+<li>库名规则：<strong>libxxx.so</strong></li>
+</ul>
 
       
     </div>
