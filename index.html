@@ -65,6 +65,74 @@
 
   
     
+    <h3 class="article-title"><a href="/2024/10/02/makefile/"><span>makefile</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/10/02/makefile/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-10-02T08:42:04.000Z">
+          2024-10-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="make-工具"><a href="#make-工具" class="headerlink" title="make 工具"></a>make 工具</h1><ul>
+<li>利用 <strong>make</strong>  工具可以自动完成编译工作。这些工作包括：如果仅修改了某几个源文件，则只重新编译这几个源文件；如果某个头文件被修改了，则重新编译所有包含该头文件的源文件。利用这种自动编译可大大简化开发工作，避免不必要的重新编译。</li>
+<li><strong>make</strong> 工具通过一个称为 <strong>Makefile</strong> 的文件来完成并自动维护编译工作。<strong>Makefile</strong> 文件描述了整个工程的编译、链接等规则。</li>
+</ul>
+<h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><h2 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TARGET ... : DEPENDENCIES ...</span><br><span class="line">	COMMAND</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>目标（ <strong>TARGET</strong> ）程序产生的文件，如可执行文件和目标文件；目标也可以是要执行的动作，如 <strong>clean</strong>，也称为伪目标</li>
+<li>依赖（ <strong>DEPENDENCIES</strong> ）是用来产生目标的输入文件列表，一个目标通常依赖于多个文件</li>
+<li>命令（ <strong>COMMAND</strong> ）是 <strong>make</strong> 执行的动作（命令是 <strong>shell</strong> 命令或是可在 <strong>shell</strong> 下执行的程序）。注意：<strong>每个命令行的起始字符必须为 TAB 字符</strong></li>
+<li>如果 <strong>DEPENDENCIES</strong> 中有一个或多个文件更新的话，<strong>COMMAND</strong> 就要执行，这就是 <strong>Makefile</strong> 最核心的内容</li>
+</ul>
+<h2 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.PHONY:clean</span><br><span class="line">main:main.o add.o sub.o</span><br><span class="line">	gcc -Wall -g main.o add.o sub.o -o main</span><br><span class="line">main.o:main.c</span><br><span class="line">	gcc -Wall -g -c main.c -o main.o</span><br><span class="line">add.o:add.c add.h</span><br><span class="line">	gcc -Wall -g -c add.c -o add.o</span><br><span class="line">sub.o:sub.c sub.h</span><br><span class="line">	gcc -Wall -g -c sub.c -o sub.o</span><br><span class="line">clean:</span><br><span class="line">	rm -f main main.o add.o sub.o</span><br></pre></td></tr></table></figure>
+
+<p>为什么要显式指定伪目标？</p>
+<p>例如，如果当前文件夹下有clean，使用make clean就会：</p>
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241003113736167.png" alt="image-20241003113736167"></p>
+<h2 id="Makefile-中的变量"><a href="#Makefile-中的变量" class="headerlink" title="Makefile 中的变量"></a>Makefile 中的变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$@	规则的目标文件名</span><br><span class="line">$&lt;	规则的第一个依赖文件名</span><br><span class="line">$^	规则的所有依赖文件列表</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="keyword">.PHONY</span>:clean</span></span><br><span class="line">OBJECTS=main.o add.o sub.o</span><br><span class="line"><span class="section">main:<span class="variable">$(OBJECTS)</span></span></span><br><span class="line">	gcc -Wall -g <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">add.o:add.c add.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">sub.o:sub.c sub.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f main <span class="variable">$(OBJECTS)</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2024/10/01/gcc学习/"><span>gcc学习</span></a></h3>
     
   
