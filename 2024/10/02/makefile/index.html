@@ -110,6 +110,44 @@
 
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="keyword">.PHONY</span>:clean</span></span><br><span class="line">OBJECTS=main.o add.o sub.o</span><br><span class="line"><span class="section">main:<span class="variable">$(OBJECTS)</span></span></span><br><span class="line">	gcc -Wall -g <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">add.o:add.c add.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">sub.o:sub.c sub.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f main <span class="variable">$(OBJECTS)</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="Makefile-编译多个可执行文件"><a href="#Makefile-编译多个可执行文件" class="headerlink" title="Makefile 编译多个可执行文件"></a>Makefile 编译多个可执行文件</h3><ul>
+<li><p>模式规则</p>
+<ul>
+<li><code>%.o:%.c</code></li>
+</ul>
+</li>
+<li><p>后缀规则</p>
+<ul>
+<li><code>.c.o:</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">.PYHONY:clean all</span></span><br><span class="line">CC=gcc</span><br><span class="line">CFLAGS=-Wall -g</span><br><span class="line">BIN=01test 02test 03test</span><br><span class="line"><span class="section">all:<span class="variable">$(BIN)</span></span></span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">01test:01test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">02test:02test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">03test:03test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.o <span class="variable">$(BIN)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="make常用内嵌函数"><a href="#make常用内嵌函数" class="headerlink" title="make常用内嵌函数"></a>make常用内嵌函数</h2><ul>
+<li>函数调用<ul>
+<li><code>$(function arguments)</code></li>
+</ul>
+</li>
+<li><code>$(wildcard PATTERN)</code><ul>
+<li>当前目录下匹配模式的文件</li>
+<li>例如：<code>src=$(wildcard *.c)</code></li>
+</ul>
+</li>
+<li><code>$(patsubst PATTERN,REPLACEMENT,TEXT)</code><ul>
+<li>模式替换函数</li>
+<li>例如：<code>$(patsubst %.c,%.o,$src)</code></li>
+<li>等价于<code>$(sr:.c=.o)</code></li>
+</ul>
+</li>
+<li><code>shell</code> 函数<ul>
+<li>执行<code>shell</code>命令</li>
+<li>例如：<code>$(shell ls -d */)</code></li>
+</ul>
+</li>
+</ul>
 
       
     </div>
