@@ -97,17 +97,33 @@
 <li>注释行用 <code>#</code> 符号</li>
 </ul>
 <h1 id="变量概述"><a href="#变量概述" class="headerlink" title="变量概述"></a>变量概述</h1><ul>
-<li>变量命名<ul>
+<li><p>变量命名</p>
+<ul>
 <li>变量名必须以字母或下划线开头，后面可以跟字母、数字或下划线。任何其它字符都标志变量名的结束</li>
 <li>变量名关于大小写敏感</li>
 </ul>
 </li>
-<li>变量类型：<ul>
-<li>根据变量的<strong>作用域</strong>，变量可以分为<strong>本地变量</strong>和<strong>环境变量</strong></li>
-<li>本地变量只在创建它们的 <strong>shell</strong> 程序中可用。而环境变量则在 <strong>Shell</strong> 中的所有用户进程中可用，通常也称为 <strong>全局变量</strong></li>
+<li><p>变量类型：</p>
+<ul>
+<li><p>根据变量的<strong>作用域</strong>，变量可以分为<strong>本地变量</strong>和<strong>环境变量</strong></p>
+</li>
+<li><p>本地变量只在创建它们的 <strong>shell</strong> 程序中可用。而环境变量则在 <strong>Shell</strong> 中的所有用户进程中可用，通常也称为 <strong>全局变量</strong></p>
+</li>
+<li><p>环境变量称为全局变量，按照惯例需要大写</p>
+<p><code>export LANG</code></p>
+<ul>
+<li>注意：可被所有的 <strong>Shell</strong> 环境下访问；如果父进程 <strong>Shell</strong> 进程产生了子 <strong>Shell</strong> 进程，则环境变量可被“继承”并复制</li>
 </ul>
 </li>
-<li>变量赋值：<code>variable=value</code><ul>
+<li><p>只读变量 <strong>是指不能被清除或者重新赋值的变量</strong></p>
+<ul>
+<li><code>#readonly myvar</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>变量赋值：<code>variable=value</code></p>
+<ul>
 <li>等号两边不能有空格</li>
 <li>如果要给变量赋空值，可以在等号后面跟一个换行符</li>
 </ul>
