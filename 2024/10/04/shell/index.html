@@ -96,6 +96,8 @@
 </li>
 <li>注释行用 <code>#</code> 符号</li>
 </ul>
+<span id="more"></span>
+
 <h1 id="变量概述"><a href="#变量概述" class="headerlink" title="变量概述"></a>变量概述</h1><ul>
 <li><p>变量命名</p>
 <ul>
@@ -139,6 +141,12 @@
 </ul>
 </li>
 </ul>
+<h1 id="位置参量（命令行参数）"><a href="#位置参量（命令行参数）" class="headerlink" title="位置参量（命令行参数）"></a>位置参量（命令行参数）</h1><ul>
+<li><strong>位置参量</strong>是一组特殊的内置变量，通常被 <strong>shell</strong> 脚本用来 <strong>从命令行接受参数</strong>，或被函数用来保存传递给它的参数。</li>
+<li>执行 <strong>shell</strong> 脚本时，用户可以通过命令行向脚本传递信息，跟在脚本名后面的用 <strong>空格</strong> 隔开的每个字符都称为位置参量。</li>
+<li>在脚本中使用这些参数时，需通过位置参量来引用。例如：**$1** 表示第一个参数，**$2** 表示第二个参数，以此类推。**$9** 以后需要用花括号把数字括起来，如第 <strong>10</strong> 个位置参量以 <strong>${10}</strong> 的方式来访问。</li>
+</ul>
+<p>![image-20241004233618042](&#x2F;Users&#x2F;gaozhihao&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20241004233618042.png)</p>
 
       
     </div>
