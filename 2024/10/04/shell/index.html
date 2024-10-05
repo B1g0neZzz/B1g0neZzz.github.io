@@ -146,8 +146,40 @@
 <li>执行 <strong>shell</strong> 脚本时，用户可以通过命令行向脚本传递信息，跟在脚本名后面的用 <strong>空格</strong> 隔开的每个字符都称为位置参量。</li>
 <li>在脚本中使用这些参数时，需通过位置参量来引用。例如：**$1** 表示第一个参数，**$2** 表示第二个参数，以此类推。**$9** 以后需要用花括号把数字括起来，如第 <strong>10</strong> 个位置参量以 <strong>${10}</strong> 的方式来访问。</li>
 </ul>
-<p>![image-20241004233618042](&#x2F;Users&#x2F;gaozhihao&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20241004233618042.png)</p>
-
+<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241004233618042.png" alt="image-20241004233618042"></p>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><ul>
+<li>数组定义<ul>
+<li><code>arr=(math english chinese)</code></li>
+</ul>
+</li>
+<li>数组初始化<ul>
+<li>arr&#x3D;(math english chinese)</li>
+</ul>
+</li>
+<li>数组引用<ul>
+<li>引用变量：<code>$&#123;arr[0]&#125;</code></li>
+<li>数组个数：<code>$&#123;#arr[*]&#125;</code></li>
+<li>所有元素：<code>$&#123;arr[*]&#125;</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h1><h2 id="输入——-read命令"><a href="#输入——-read命令" class="headerlink" title="输入—— read命令"></a>输入—— read命令</h2><ul>
+<li><code>read var</code> 从标准输入读取一行并赋值给变量 <strong>var</strong></li>
+<li><code>read</code> 从标准输入读取一行并赋值给内置变量 <strong>REPLY</strong></li>
+<li><code>read -a arr</code> 读取一组词，依次赋值给数组 <strong>arr</strong></li>
+</ul>
+<h2 id="输出-——-echo-命令"><a href="#输出-——-echo-命令" class="headerlink" title="输出 —— echo 命令"></a>输出 —— echo 命令</h2><ul>
+<li><p>输出一行文本</p>
+<ul>
+<li><code>echo &quot;Hello World&quot;</code></li>
+</ul>
+</li>
+<li><p>输出一个变量值</p>
+</li>
+<li><p><code>echo $num</code> 或 <code>echo $&#123;num&#125;</code></p>
+</li>
+</ul>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
       
     </div>
 
