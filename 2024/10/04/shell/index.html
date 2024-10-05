@@ -180,12 +180,49 @@
 </li>
 </ul>
 <h2 id="单引号、双引号、反引号区别"><a href="#单引号、双引号、反引号区别" class="headerlink" title="单引号、双引号、反引号区别"></a>单引号、双引号、反引号区别</h2><ul>
-<li>单引号	忽略所有特殊字符</li>
-<li>双引号        忽略大部分特殊字符（ <strong>$,&#96;</strong> 等字符除外 ）</li>
-<li>反引号        命令替换（将一个命令的标准输出插入到命令的任何位置）<ul>
+<li><p>单引号	忽略所有特殊字符</p>
+</li>
+<li><p>双引号        忽略大部分特殊字符（ <strong>$,&#96;</strong> 等字符除外 ）</p>
+</li>
+<li><p>反引号        命令替换（将一个命令的标准输出插入到命令的任何位置）</p>
+<ul>
 <li><strong>$()</strong> 同上</li>
 </ul>
 </li>
+<li><p>命令可以替换嵌套</p>
+<ul>
+<li>如果使用反引号，则内部的反引号必须用反斜杠来转义</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo `basename \`pwd\``</span><br><span class="line">echo $(basename $(pwd))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="条件测试"><a href="#条件测试" class="headerlink" title="条件测试"></a>条件测试</h1><ul>
+<li>条件测试可以根据某个特定条件是否满足，来选择执行相应的任务</li>
+<li><strong>Bash</strong> 中允许测试两种类型的条件：<ul>
+<li>命令成功或失败，表达式为真或假</li>
+</ul>
+</li>
+<li>任何一种测试中，都要有 <strong>退出状态</strong>（返回值），退出状态为 <strong>0</strong> 表示命令 <strong>成功</strong> 或表达式为 <strong>真</strong>，<strong>非0</strong> 则表示命令 <strong>失败</strong> 或表达式为假</li>
+<li>状态变量 <strong>$?</strong> 中保存命令退出状态的值</li>
+</ul>
+<h2 id="测试表达式的值"><a href="#测试表达式的值" class="headerlink" title="测试表达式的值"></a>测试表达式的值</h2><ul>
+<li><p>表达式测试包括 <strong>字符串测试、整数测试</strong> 和 <strong>文件测试</strong></p>
+</li>
+<li><p>内置测试命令 <strong>test</strong></p>
+<ul>
+<li>通常用 <strong>test</strong> 命令来测试表达式的值</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x=5;y=10</span><br><span class="line">test $x -gt $y</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>**test ** 命令可以用 <strong>方括号</strong> 来代替</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ $y -gt $x ]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="流编辑器-sed"><a href="#流编辑器-sed" class="headerlink" title="流编辑器 sed"></a>流编辑器 sed</h1><ul>
+<li><strong>sed</strong> 是一个精简的、非交互式的流式编辑器，它在命令行中输入编辑命令和指定文件名，然后在屏幕上查看输出。</li>
+<li><strong>逐行</strong>读取文件内容存储在临时 <strong>缓冲区</strong> 中，称为“模式空间”（ <strong>pattern space</strong> ），接着用 <strong>sed命令</strong>处理缓冲区的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。源文件内容并没有改变。</li>
 </ul>
 
       
