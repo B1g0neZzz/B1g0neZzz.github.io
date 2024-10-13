@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 2 | 太一的博客 | 一个程序学徒</title>
+  <title>文件与IO | 太一的博客 | 一个程序学徒</title>
 
   
   <meta name="author" content="太一">
@@ -14,12 +14,15 @@
   
 
   
+  
+  <meta name="keywords" content="">
+  
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="文件与IO"/>
 
   <meta property="og:site_name" content="太一的博客"/>
 
@@ -60,20 +63,19 @@
 </header>
 
     <main class="site-main posts-loop">
-    
-  <article>
+    <article>
 
   
     
-    <h3 class="article-title"><a href="/2024/09/07/字符串拼接的一个小坑/"><span>字符串拼接的一个小坑</span></a></h3>
+    <h3 class="article-title"><span>文件与IO</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2024/09/07/字符串拼接的一个小坑/" rel="bookmark">
-        <time class="entry-date published" datetime="2024-09-07T11:16:04.000Z">
-          2024-09-07
+      <a href="/2024/10/13/文件与IO/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-10-13T09:30:52.000Z">
+          2024-10-13
         </time>
       </a>
     </span>
@@ -85,10 +87,27 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>今天遇到了一个坑，记录一下</p>
-        
-          <p><a class="excerpt-btn" href="/2024/09/07/字符串拼接的一个小坑/"><span>...More</span></a></p>
-        
+        <h1 id="什么是I-O"><a href="#什么是I-O" class="headerlink" title="什么是I&#x2F;O"></a>什么是I&#x2F;O</h1><ul>
+<li>输入&#x2F;输出是主存和外部设备之间拷贝数据的过程<ul>
+<li>设备 -&gt; 内存（输入操作）</li>
+<li>内存 -&gt; 设备 （输出操作）</li>
+</ul>
+</li>
+<li>高级I&#x2F;O<ul>
+<li><strong>ANSI C</strong> 提供的标准 <strong>I&#x2F;O</strong> 库称为高级 <strong>I&#x2F;O</strong>，通常也称为带缓冲的 <strong>I&#x2F;O</strong></li>
+</ul>
+</li>
+<li>低级I&#x2F;O<ul>
+<li>通常也称为不带缓冲的 <strong>I&#x2F;O</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h1><ul>
+<li>对于 <strong>Linux</strong> 而言，所有对设备或文件的操作都是通过文件描述符进行的。</li>
+<li>当打开或者创建一个文件的时候，内核向进程返回一个文件描述符（非负整数）。后续对文件的操作只需通过该文件描述符，内核记录有关这个文件的信息。</li>
+<li>一个进程启动时，默认打开了 <strong>3</strong> 个文件，标准输入、标准输出、标准错误，对应文件描述符是 <strong>0（ STDIN_FILENO ）、1（ STDOUT_FILENO）、2（ STDERR_FILENO ）</strong>，这些常量定义在 <strong>unistd.h</strong> 头文件中。</li>
+</ul>
+
       
     </div>
 
@@ -107,63 +126,16 @@
   </div>
 </article>
 
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2024/09/07/常量指针与指针常量/"><span>常量指针与指针常量</span></a></h3>
-    
   
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2024/09/07/常量指针与指针常量/" rel="bookmark">
-        <time class="entry-date published" datetime="2024-09-07T05:49:50.000Z">
-          2024-09-07
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="常量指针"><a href="#常量指针" class="headerlink" title="常量指针"></a>常量指针</h1><p>指针的指向可以改，指针指向的值不可以改。</p>
-        
-          <p><a class="excerpt-btn" href="/2024/09/07/常量指针与指针常量/"><span>...More</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
 
 
 
 
-<nav class="pagination">
-  
-  <a href="/" class="pagination-prev">Prev</a>
-  
-  
-</nav>
+
+
+
+
     </main>
 
     <footer class="site-footer">
