@@ -102,10 +102,38 @@
 </ul>
 </li>
 </ul>
+<span id="more"></span>
+
 <h1 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h1><ul>
 <li>对于 <strong>Linux</strong> 而言，所有对设备或文件的操作都是通过文件描述符进行的。</li>
 <li>当打开或者创建一个文件的时候，内核向进程返回一个文件描述符（非负整数）。后续对文件的操作只需通过该文件描述符，内核记录有关这个文件的信息。</li>
 <li>一个进程启动时，默认打开了 <strong>3</strong> 个文件，标准输入、标准输出、标准错误，对应文件描述符是 <strong>0（ STDIN_FILENO ）、1（ STDOUT_FILENO）、2（ STDERR_FILENO ）</strong>，这些常量定义在 <strong>unistd.h</strong> 头文件中。</li>
+</ul>
+<h2 id="文件描述符与文件指针转换"><a href="#文件描述符与文件指针转换" class="headerlink" title="文件描述符与文件指针转换"></a>文件描述符与文件指针转换</h2><ul>
+<li><code>fileno</code>：将文件指针转换为文件描述符</li>
+<li><code>fdopen</code>：将文件描述符转换为文件指针</li>
+</ul>
+<h1 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h1><h2 id="open-系统调用"><a href="#open-系统调用" class="headerlink" title="open 系统调用"></a>open 系统调用</h2><p><code>int open(const char *path, int flags);</code></p>
+<p>参数</p>
+<ul>
+<li><strong>path：</strong>文件的名称，可以包含（绝对和相对）路径</li>
+<li><strong>flags：</strong> 文件打开模式</li>
+</ul>
+<p>返回值：</p>
+<p>​	打开成功，返回文件描述符</p>
+<p>​	打开失败，返回 <strong>-1</strong></p>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// #define ERR_EXIT(m) (perror(m), exit(EXIT_FAILURE))</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ERR_EXIT(m) \</span></span><br><span class="line"><span class="meta">        do \</span></span><br><span class="line"><span class="meta">        &#123; \</span></span><br><span class="line"><span class="meta">            perror(m); \</span></span><br><span class="line"><span class="meta">            exit(EXIT_FAILURE); \</span></span><br><span class="line"><span class="meta">        &#125; while(0) </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> fd;</span><br><span class="line">    fd = open(<span class="string">&quot;test.txt&quot;</span>, O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (fd == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ERR_EXIT(<span class="string">&quot;open error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;open success&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li><strong>close</strong> 系统调用</li>
+<li><strong>create</strong> 系统调用</li>
+<li><strong>read</strong> 系统调用</li>
+<li><strong>write</strong> 系统调用</li>
 </ul>
 
       
