@@ -113,7 +113,7 @@
 <li><code>fileno</code>：将文件指针转换为文件描述符</li>
 <li><code>fdopen</code>：将文件描述符转换为文件指针</li>
 </ul>
-<h1 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h1><h2 id="open-系统调用"><a href="#open-系统调用" class="headerlink" title="open 系统调用"></a>open 系统调用</h2><p><code>int open(const char *path, int flags);</code></p>
+<h1 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h1><h2 id="open-系统调用"><a href="#open-系统调用" class="headerlink" title="open 系统调用"></a>open 系统调用</h2><h3 id="open系统调用1"><a href="#open系统调用1" class="headerlink" title="open系统调用1"></a>open系统调用1</h3><p><code>int open(const char *path, int flags);</code></p>
 <p>参数</p>
 <ul>
 <li><strong>path：</strong>文件的名称，可以包含（绝对和相对）路径</li>
@@ -127,8 +127,16 @@
 
 
 
-
-
+<h3 id="open系统调用2"><a href="#open系统调用2" class="headerlink" title="open系统调用2"></a>open系统调用2</h3><p><code>int open(const char *path, int flags, mode_t mode);</code></p>
+<p>参数</p>
+<ul>
+<li><strong>path：</strong>文件的名称，可以包含（绝对和相对）路径</li>
+<li><strong>flags：</strong> 文件打开模式</li>
+<li><strong>mode：</strong> 用来规定对该文件的所有者，文件的用户组及系统中其他用户的访问权限</li>
+</ul>
+<p>返回值：</p>
+<p>​	打开成功，返回文件描述符</p>
+<p>​	打开失败，返回 <strong>-1</strong></p>
 <ul>
 <li><strong>close</strong> 系统调用</li>
 <li><strong>create</strong> 系统调用</li>
