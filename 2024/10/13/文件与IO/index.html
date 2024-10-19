@@ -137,10 +137,27 @@
 <p>返回值：</p>
 <p>​	打开成功，返回文件描述符</p>
 <p>​	打开失败，返回 <strong>-1</strong></p>
+<h2 id="close-系统调用"><a href="#close-系统调用" class="headerlink" title="close 系统调用"></a>close 系统调用</h2><p>为了重新利用文件描述符，用 <strong>close()</strong> 系统调用释放打开的文件描述符</p>
+<p>函数原型：<code>int close(int fd);</code></p>
+<p>函数参数：</p>
+<p>​	<strong>fd ：</strong> 要关闭的文件的文件描述符</p>
+<p>返回值</p>
+<p>​	如果出现错误，返回 <strong>-1</strong></p>
+<p>​	调用成功返回 <strong>0</strong></p>
+<h3 id="可打开的文件描述符个数"><a href="#可打开的文件描述符个数" class="headerlink" title="可打开的文件描述符个数"></a>可打开的文件描述符个数</h3><p><strong>进程</strong>可打开的文件描述符个数 <code>ulimit -n</code></p>
+<p><strong>系统</strong>可打开的文件描述符个数 <code>cat /proc/sys/fs/file-max</code></p>
+<h2 id="read-系统调用"><a href="#read-系统调用" class="headerlink" title="read 系统调用"></a>read 系统调用</h2><p>一旦有了与一个打开文件描述相连的文件描述符，只要该文件是用 <strong>O_RDONLY或O_RDWR</strong>标志打开的，就可以用 <strong>read()</strong> 系统调用从该文件中读取字节</p>
+<p>函数原型：<code>ssize_t read(int fd, void *buf, size_t count);</code></p>
+<p>函数参数：</p>
+<p>​	**fd : **想要读的文件的文件描述符</p>
+<p>​	**buf : ** 指向内存块的指针，从文件读取来的字节放在这个内存块中</p>
+<p>​	**count : ** 从该文件复制到 <strong>buf</strong> 中的字节个数</p>
+<p>返回值</p>
+<p>​	如果出现错误，返回 <strong>-1</strong></p>
+<p>​	读文件结束，返回 <strong>0</strong></p>
+<p>​	否则返回从该文件复制到规定的缓冲区中的字节数</p>
 <ul>
-<li><strong>close</strong> 系统调用</li>
 <li><strong>create</strong> 系统调用</li>
-<li><strong>read</strong> 系统调用</li>
 <li><strong>write</strong> 系统调用</li>
 </ul>
 
