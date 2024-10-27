@@ -105,7 +105,41 @@
 <li>数据段：一个进程的数据段，可以是进程对应的程序加工处理的原始数据，也可以是程序执行后产生的中间或最终数据</li>
 <li><strong>PCB</strong> 是操作系统用来感知进程存在的一个重要的数据结构</li>
 </ul>
-<h1 id="进程与程序"><a href="#进程与程序" class="headerlink" title="进程与程序"></a>进程与程序</h1>
+<h1 id="进程与程序"><a href="#进程与程序" class="headerlink" title="进程与程序"></a>进程与程序</h1><ul>
+<li>进程是动态的，程序是短暂的</li>
+<li>进程的生命周期是相对短暂的，而程序是永久的</li>
+<li>进程数据结构 <strong>PCB</strong></li>
+<li>一个进程只能对应一个程序，一个程序可以对应多个进程</li>
+</ul>
+<h1 id="进程控制块"><a href="#进程控制块" class="headerlink" title="进程控制块"></a>进程控制块</h1><ul>
+<li>进程描述信息<ul>
+<li>进程标识符用于唯一的标识一个进程</li>
+</ul>
+</li>
+<li>进程控制信息<ul>
+<li>进程当前状态</li>
+<li>进程优先级</li>
+<li>程序开始地址</li>
+<li>各种计时信息</li>
+<li>通信信息</li>
+</ul>
+</li>
+<li>资源信息<ul>
+<li>占用内存大小及管理用数据结构指针</li>
+<li>交换区相关信息</li>
+<li><strong>I&#x2F;O</strong>设备号、缓冲、设备相关的数据结构</li>
+<li>文件系统相关指针</li>
+</ul>
+</li>
+<li>现场保护信息<ul>
+<li>寄存器</li>
+<li><strong>PC</strong></li>
+<li>程序状态字 <strong>PSW</strong></li>
+<li>栈指针</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
