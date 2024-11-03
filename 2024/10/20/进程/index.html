@@ -139,6 +139,43 @@
 </ul>
 </li>
 </ul>
+<h2 id="进程标识"><a href="#进程标识" class="headerlink" title="进程标识"></a>进程标识</h2><ul>
+<li>每个进程都会分配到一个独一无二的数字编号，我们称之为“进程标识”（<strong>process identifier</strong>），或者就直接叫它 <strong>PID</strong></li>
+<li>是一个正整数，取值范围从 <strong>2</strong>  到 <strong>32768</strong></li>
+<li>当一个进程被启动时，它会顺序挑选下一个未使用的编号数字作为自己的 <strong>PID</strong></li>
+<li>数字 <strong>1</strong> 一般为特殊进程 <strong>init</strong> 保留的</li>
+</ul>
+<h2 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h2><ul>
+<li>不同的操作系统所提供的进程创建原语的名称和格式不尽相同，但执行创建进程原语后，操作系统所做的工作却大致相同，都包括以下几点：<ul>
+<li>给新创建的进程分配一个内部标识，在内核中建立进程结构</li>
+<li>复制父进程的环境</li>
+<li>为进程分配资源，包括进程映像所需要的所有元素（ 程序、数据、用户栈等）</li>
+<li>复制父进程地址空间的内容到该进程地址空间中</li>
+<li>置该进程的状态为就绪，插入就绪队列</li>
+</ul>
+</li>
+</ul>
+<h1 id="SIGCHLD"><a href="#SIGCHLD" class="headerlink" title="SIGCHLD"></a>SIGCHLD</h1><ul>
+<li>当子进程退出的时候，内核会向父进程发送 <strong>SIGCHLD</strong> 信号，子进程的退出是一个异步事件（子进程可以在父进程运行的任何时刻终止）</li>
+<li>子进程退出时，内核将子进程置为僵尸状态，这个进程称为僵尸进程，它只保留最小的一些内核数据结构，以便父进程查询子进程的退出状态。</li>
+<li>父进程查询子进程的退出状态可以用 <strong>wait&#x2F;waitpid</strong> 函数</li>
+</ul>
+<h1 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h1><ul>
+<li>头文件 <code>&lt;sys/types.h&gt;</code> 和 <code>&lt;sys/wait.h&gt;</code></li>
+<li>函数功能：当我们用 <strong>fork</strong> 启动一个进程时，子进程就有了自己的生命，并将独立地运行。有时，我们需要知道某个子进程是否已经结束了，我们可以通过 <code>wait</code> 安排父进程在子进程结束之后。</li>
+<li>函数原型<ul>
+<li><code>pid_t wait(int *status)</code></li>
+</ul>
+</li>
+<li>函数参数<ul>
+<li><code>status</code>：改参数可以获得你等待子进程的信息</li>
+</ul>
+</li>
+<li>返回值<ul>
+<li>成功等待子进程函数返回等待子进程的 <strong>ID</strong></li>
+</ul>
+</li>
+</ul>
 
       
     </div>
