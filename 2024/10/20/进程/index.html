@@ -168,11 +168,24 @@
 </ul>
 </li>
 <li>函数参数<ul>
-<li><code>status</code>：改参数可以获得你等待子进程的信息</li>
+<li><code>status</code>：该参数可以获得你等待子进程的信息</li>
 </ul>
 </li>
 <li>返回值<ul>
 <li>成功等待子进程函数返回等待子进程的 <strong>ID</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="waitpid"><a href="#waitpid" class="headerlink" title="waitpid"></a>waitpid</h1><ul>
+<li>函数功能：用来等待某个特定进程的结束</li>
+<li>函数原型<ul>
+<li><code>pid_t waitpid(pid_t pid, int *status, int options)</code></li>
+</ul>
+</li>
+<li>参数：<ul>
+<li><code>status</code>: 如果不是空，会把状态信息写到它指向的位置</li>
+<li><code>options</code>：允许改变 <code>waitpid</code> 的行为，最有用的一个选项是 <code>WNOHANG</code>，它的作用是防止 <code>waitpid</code> 把调用者的执行挂起</li>
+<li>返回值：如果成功返回等待子进程的 <strong>ID</strong>，失败返回 <strong>-1</strong></li>
 </ul>
 </li>
 </ul>
