@@ -65,6 +65,57 @@
 
   
     
+    <h3 class="article-title"><a href="/2025/02/11/c笔记——反码/"><span>c笔记——反码</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/02/11/c笔记——反码/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-02-11T15:46:51.000Z">
+          2025-02-11
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="字长"><a href="#字长" class="headerlink" title="字长"></a>字长</h2><ul>
+<li>字长是CPU的主要技术指标之一，指的是 CPU 一次最大能并行处理的二进制位数 •</li>
+<li>现在主流的计算机字长是 32 位与 64 位</li>
+</ul>
+        
+          <p><a class="excerpt-btn" href="/2025/02/11/c笔记——反码/"><span>...More</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2025/02/11/c笔记——计算机组成原理/"><span>c笔记——计算机组成原理</span></a></h3>
     
   
@@ -615,63 +666,6 @@
         
           <p><a class="excerpt-btn" href="/2024/09/12/cpp面向对象之多态/"><span>...More</span></a></p>
         
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2024/09/11/C-子类父类构造的顺序/"><span>C++子类父类构造的顺序</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2024/09/11/C-子类父类构造的顺序/" rel="bookmark">
-        <time class="entry-date published" datetime="2024-09-11T13:59:09.000Z">
-          2024-09-11
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>原因：</p>
-<ol>
-<li>子类构造函数中的某些初始化可能是基于父类的，所以规定构造在类层次的<strong>最根处</strong>开始，而在<strong>每一层，首先调用基类构造函数，然后调用成员对象构造函数</strong></li>
-</ol>
-<!-- more --->
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Base()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Base构造函数!&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Base()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Base析构函数!&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Son:public Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Son()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Son构造函数!&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Son()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Son析构函数!&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test01()</span><br><span class="line">&#123;</span><br><span class="line">    // 继承中的构造和析构顺序如下：</span><br><span class="line">    // 先构造父类，再构造子类，析构的顺序与构造的顺序相反</span><br><span class="line">    Son s;</span><br><span class="line">    // Base构造函数!</span><br><span class="line">    // Son构造函数!</span><br><span class="line">    // Son析构函数!</span><br><span class="line">    // Base析构函数!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    test01();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
       
     </div>
 
