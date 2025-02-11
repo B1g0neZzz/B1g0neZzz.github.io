@@ -189,6 +189,46 @@
 </ul>
 </li>
 </ul>
+<h1 id="wait-和-waitpid-的区别"><a href="#wait-和-waitpid-的区别" class="headerlink" title="wait 和 waitpid 的区别"></a>wait 和 waitpid 的区别</h1><ul>
+<li>在一个子进程终止前，<strong>wait</strong> 使其调用者阻塞，而 <strong>waitpid</strong> 有一选择项，可使调用者不阻塞</li>
+<li><strong>waitpid</strong> 并不等待第一个终止的子进程 <strong>——</strong> 它有若干个选择项，可以控制它所等待的特定进程</li>
+<li>实际上 <strong>wait</strong> 函数是 <strong>waitpid</strong> 函数的一个特例</li>
+</ul>
+<h1 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h1><ul>
+<li>当一个子进程结束运行时，它与其父进程之间的关联还会保持到父进程也正常地结束运行或者父进程调用了 <strong>wait</strong> 才告终止。</li>
+<li>进程表中代表子进程的数据项是不会立刻释放的，虽然不再活跃了，可子进程还停留在系统里，因为它的退出码还需要保存起来以备父进程中后续的 <strong>wait</strong> 调用使用。它将称为一个”僵尸进程“。</li>
+</ul>
+<h2 id="如何避免僵尸进程"><a href="#如何避免僵尸进程" class="headerlink" title="如何避免僵尸进程"></a>如何避免僵尸进程</h2><ul>
+<li>调用 <strong>wait</strong> 或者 <strong>waitpid</strong> 函数查询子进程退出状态，此方法父进程会被挂起。</li>
+<li>如果不想让父进程挂起，可以在父进程中加入一条语句：<code>signal(SIGCHLD,SIG_IGN);</code>表示父进程忽略 <strong>SIGCHLD</strong> 信号，该信号是子进程退出的时候向父进程发送的。</li>
+</ul>
+<h1 id="system-函数"><a href="#system-函数" class="headerlink" title="system 函数"></a>system 函数</h1><ul>
+<li>功能：<strong>system()</strong> 函数调用 <code>/bin/sh -c command</code> 执行特定的命令，阻塞当前进程直到 <code>command</code> 命令执行完毕</li>
+<li>原型：<ul>
+<li><code>int system(const char *command);</code></li>
+</ul>
+</li>
+<li>返回值：<ul>
+<li>如果无法启动 <strong>shell</strong> 运行命令，<strong>system</strong> 将返回 <strong>127</strong>，出现不能执行 <strong>system</strong> 调用的其他错误时返回 <strong>-1</strong>。如果 <strong>system</strong> 能够顺利执行，返回那个命令的退出码。</li>
+</ul>
+</li>
+<li><strong>system</strong> 函数执行时，会调用 <strong>fork、execve、waitpid</strong> 等函数。</li>
+</ul>
+<h2 id="实现自己的-system-函数"><a href="#实现自己的-system-函数" class="headerlink" title="实现自己的 system 函数"></a>实现自己的 system 函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ERR_EXIT(m) \</span></span><br><span class="line"><span class="meta">        do \</span></span><br><span class="line"><span class="meta">        &#123; \</span></span><br><span class="line"><span class="meta">                perror(m); \</span></span><br><span class="line"><span class="meta">                exit(EXIT_FAILURE); \</span></span><br><span class="line"><span class="meta">        &#125; while(0) \</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">my_system</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *command)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">        my_system(<span class="string">&quot;ls -l | wc -w&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">my_system</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *command)</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="type">pid_t</span> pid;</span><br><span class="line">        <span class="type">int</span> status;</span><br><span class="line">        <span class="keyword">if</span> (command == <span class="literal">NULL</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> ((pid = fork()) &lt; <span class="number">0</span>)</span><br><span class="line">                status = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">                execl(<span class="string">&quot;/bin/sh&quot;</span>, <span class="string">&quot;sh&quot;</span>, <span class="string">&quot;-c&quot;</span>, command, <span class="literal">NULL</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">127</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">                <span class="keyword">while</span> (waitpid(pid, &amp;status, <span class="number">0</span>) &lt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="keyword">if</span> (errno == EINTR)</span><br><span class="line">                                <span class="keyword">continue</span>;</span><br><span class="line">                        </span><br><span class="line">                        status = <span class="number">-1</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h1><ul>
+<li>守护进程是在后台运行不受终端控制的进程，通常情况下守护进程在系统启动时自动运行</li>
+<li>守护进程的名称通常以 <strong>d</strong> 结尾，比如 <strong>sshd、xinetd、crond</strong> 等</li>
+</ul>
+<h2 id="创建守护进程步骤"><a href="#创建守护进程步骤" class="headerlink" title="创建守护进程步骤"></a>创建守护进程步骤</h2><ul>
+<li>调用 <code>fork()</code>，创建新进程，它会是将来的守护进程</li>
+<li>在父进程中调用 <code>exit</code>，保证子进程不是进程组组长</li>
+<li>调用 <code>setsid</code> 创建新的会话期</li>
+<li>将当前目录改为根目录</li>
+<li>将标准输入、标准输出、标准错误重定向到 <code>/dev/null</code></li>
+</ul>
 
       
     </div>
@@ -226,7 +266,7 @@
     Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
     </br>
     
-    &copy; 2024 太一
+    &copy; 2025 太一
     
   </p>
 </footer>
