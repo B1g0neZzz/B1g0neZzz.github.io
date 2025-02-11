@@ -470,39 +470,9 @@
 <li><code>run arg1 arg2</code></li>
 </ul>
 <p>例子程序：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; argc; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s &quot;</span>, argv[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241003171532982.png" alt="image-20241003171532982"></p>
-<h1 id="查看源码"><a href="#查看源码" class="headerlink" title="查看源码"></a>查看源码</h1><ul>
-<li><code>list(l)</code> - 查看最近 <strong>10</strong> 行源码</li>
-<li><code>list fun</code> - 查看 <strong>fun</strong> 函数源码</li>
-<li><code>list file:fun</code> - 查看 <strong>file</strong> 文件中的 <strong>fun</strong> 函数源码</li>
-</ul>
-<h1 id="设置断点与观察点"><a href="#设置断点与观察点" class="headerlink" title="设置断点与观察点"></a>设置断点与观察点</h1><ul>
-<li><strong>break</strong> 行号</li>
-<li><strong>break fun</strong></li>
-<li>**break file: ** 行号</li>
-<li><strong>break file:fun</strong></li>
-<li>**break if &lt;condition&gt; - ** 条件成立时程序停住</li>
-<li>**info break(i b) - **查看断点</li>
-<li>**watch expr - **一旦 <strong>expr</strong> 值发生改变，程序停住</li>
-<li><strong>delete n -</strong> 删除断点</li>
-</ul>
-<h1 id="单步调试"><a href="#单步调试" class="headerlink" title="单步调试"></a>单步调试</h1><ul>
-<li>**continue(c) - ** 运行至下一个断点</li>
-<li>**step(s) - ** 单步跟踪，进入函数</li>
-<li>**next(n) - ** 单步跟踪，不进入函数</li>
-<li>**finish - ** 运行程序，直到当前函数完成返回。并打印函数返回时的堆栈地址和返回值及参数值等信息</li>
-<li>**until - ** 当厌倦了在一个函数体内单步跟踪时，这个命令可以运行程序直到退出循环体。</li>
-</ul>
-<h1 id="查看运行时数据"><a href="#查看运行时数据" class="headerlink" title="查看运行时数据"></a>查看运行时数据</h1><ul>
-<li>**print - **查看变量值</li>
-<li>**ptype - **查看类型</li>
-<li>**print array -**查看数组</li>
-<li>**print *array@len -**查看动态内存</li>
-<li>**print x&#x3D;5 - **改变运行时数据</li>
-</ul>
-
+        
+          <p><a class="excerpt-btn" href="/2024/10/03/gdb/"><span>...More</span></a></p>
+        
       
     </div>
 
@@ -551,64 +521,9 @@
 <li>利用 <strong>make</strong>  工具可以自动完成编译工作。这些工作包括：如果仅修改了某几个源文件，则只重新编译这几个源文件；如果某个头文件被修改了，则重新编译所有包含该头文件的源文件。利用这种自动编译可大大简化开发工作，避免不必要的重新编译。</li>
 <li><strong>make</strong> 工具通过一个称为 <strong>Makefile</strong> 的文件来完成并自动维护编译工作。<strong>Makefile</strong> 文件描述了整个工程的编译、链接等规则。</li>
 </ul>
-<h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><h2 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TARGET ... : DEPENDENCIES ...</span><br><span class="line">	COMMAND</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>目标（ <strong>TARGET</strong> ）程序产生的文件，如可执行文件和目标文件；目标也可以是要执行的动作，如 <strong>clean</strong>，也称为伪目标</li>
-<li>依赖（ <strong>DEPENDENCIES</strong> ）是用来产生目标的输入文件列表，一个目标通常依赖于多个文件</li>
-<li>命令（ <strong>COMMAND</strong> ）是 <strong>make</strong> 执行的动作（命令是 <strong>shell</strong> 命令或是可在 <strong>shell</strong> 下执行的程序）。注意：<strong>每个命令行的起始字符必须为 TAB 字符</strong></li>
-<li>如果 <strong>DEPENDENCIES</strong> 中有一个或多个文件更新的话，<strong>COMMAND</strong> 就要执行，这就是 <strong>Makefile</strong> 最核心的内容</li>
-</ul>
-<h2 id="伪目标"><a href="#伪目标" class="headerlink" title="伪目标"></a>伪目标</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.PHONY:clean</span><br><span class="line">main:main.o add.o sub.o</span><br><span class="line">	gcc -Wall -g main.o add.o sub.o -o main</span><br><span class="line">main.o:main.c</span><br><span class="line">	gcc -Wall -g -c main.c -o main.o</span><br><span class="line">add.o:add.c add.h</span><br><span class="line">	gcc -Wall -g -c add.c -o add.o</span><br><span class="line">sub.o:sub.c sub.h</span><br><span class="line">	gcc -Wall -g -c sub.c -o sub.o</span><br><span class="line">clean:</span><br><span class="line">	rm -f main main.o add.o sub.o</span><br></pre></td></tr></table></figure>
-
-<p>为什么要显式指定伪目标？</p>
-<p>例如，如果当前文件夹下有clean，使用make clean就会：</p>
-<p><img src="https://taiichi.oss-cn-beijing.aliyuncs.com/img/image-20241003113736167.png" alt="image-20241003113736167"></p>
-<h2 id="Makefile-中的变量"><a href="#Makefile-中的变量" class="headerlink" title="Makefile 中的变量"></a>Makefile 中的变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$@	规则的目标文件名</span><br><span class="line">$&lt;	规则的第一个依赖文件名</span><br><span class="line">$^	规则的所有依赖文件列表</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="keyword">.PHONY</span>:clean</span></span><br><span class="line">OBJECTS=main.o add.o sub.o</span><br><span class="line"><span class="section">main:<span class="variable">$(OBJECTS)</span></span></span><br><span class="line">	gcc -Wall -g <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">add.o:add.c add.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">sub.o:sub.c sub.h</span></span><br><span class="line">	gcc -Wall -g -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f main <span class="variable">$(OBJECTS)</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Makefile-编译多个可执行文件"><a href="#Makefile-编译多个可执行文件" class="headerlink" title="Makefile 编译多个可执行文件"></a>Makefile 编译多个可执行文件</h3><ul>
-<li><p>模式规则</p>
-<ul>
-<li><code>%.o:%.c</code></li>
-</ul>
-</li>
-<li><p>后缀规则</p>
-<ul>
-<li><code>.c.o:</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">.PYHONY:clean all</span></span><br><span class="line">CC=gcc</span><br><span class="line">CFLAGS=-Wall -g</span><br><span class="line">BIN=01test 02test 03test</span><br><span class="line"><span class="section">all:<span class="variable">$(BIN)</span></span></span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">01test:01test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">02test:02test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">03test:03test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.o <span class="variable">$(BIN)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="make常用内嵌函数"><a href="#make常用内嵌函数" class="headerlink" title="make常用内嵌函数"></a>make常用内嵌函数</h2><ul>
-<li>函数调用<ul>
-<li><code>$(function arguments)</code></li>
-</ul>
-</li>
-<li><code>$(wildcard PATTERN)</code><ul>
-<li>当前目录下匹配模式的文件</li>
-<li>例如：<code>src=$(wildcard *.c)</code></li>
-</ul>
-</li>
-<li><code>$(patsubst PATTERN,REPLACEMENT,TEXT)</code><ul>
-<li>模式替换函数</li>
-<li>例如：<code>$(patsubst %.c,%.o,$src)</code></li>
-<li>等价于<code>$(sr:.c=.o)</code></li>
-</ul>
-</li>
-<li><code>shell</code> 函数<ul>
-<li>执行<code>shell</code>命令</li>
-<li>例如：<code>$(shell ls -d */)</code></li>
-</ul>
-</li>
-</ul>
-
+        
+          <p><a class="excerpt-btn" href="/2024/10/02/makefile/"><span>...More</span></a></p>
+        
       
     </div>
 

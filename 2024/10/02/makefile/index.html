@@ -91,6 +91,8 @@
 <li>利用 <strong>make</strong>  工具可以自动完成编译工作。这些工作包括：如果仅修改了某几个源文件，则只重新编译这几个源文件；如果某个头文件被修改了，则重新编译所有包含该头文件的源文件。利用这种自动编译可大大简化开发工作，避免不必要的重新编译。</li>
 <li><strong>make</strong> 工具通过一个称为 <strong>Makefile</strong> 的文件来完成并自动维护编译工作。<strong>Makefile</strong> 文件描述了整个工程的编译、链接等规则。</li>
 </ul>
+<span id="more"></span>
+
 <h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><h2 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TARGET ... : DEPENDENCIES ...</span><br><span class="line">	COMMAND</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
 
 <ul>
