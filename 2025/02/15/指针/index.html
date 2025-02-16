@@ -122,6 +122,30 @@
 <li>执行效率</li>
 </ol>
 <p>字符数组，直接访问。字符指针，间接访问。因而字符数组的执行效率更高。</p>
+<h2 id="指针与const"><a href="#指针与const" class="headerlink" title="指针与const"></a>指针与const</h2><ul>
+<li>指向常量的指针：<code>const int* p</code>，<font color="red">这里可以把*p看成常量</font></li>
+<li>指针常量，也称为常指针<code>int *const p;</code> <font color="red">这里可以把p看成常量</font></li>
+</ul>
+<p>指向常量的指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> n = <span class="number">5</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span>* p;</span><br><span class="line">	p = &amp;n;</span><br><span class="line">	*p = <span class="number">10</span>; <span class="comment">// error 因为*p指向的是常量</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指针常量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> n = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span>* <span class="type">const</span> p2 = &amp;n;</span><br><span class="line">	<span class="type">int</span> n2 = <span class="number">100</span>;</span><br><span class="line">	p2 = &amp;n2;	<span class="comment">// error: assignment of read-only variable &#x27;p2&#x27;</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
