@@ -95,6 +95,7 @@
 
 <h2 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h2><h3 id="可执行程序的产生过程"><a href="#可执行程序的产生过程" class="headerlink" title="可执行程序的产生过程"></a>可执行程序的产生过程</h3><p>配置环境（系统环境）&#x3D;&#x3D;&gt; 确定标准库和头文件的位置 &#x3D;&#x3D;&gt; 确定依赖关系（源代码之间编译的依赖关系）&#x3D;&#x3D;&gt; 头文件预编译 &#x3D;&#x3D;&gt; 预处理 &#x3D;&#x3D;&gt; 编译 &#x3D;&#x3D;&gt; 链接 &#x3D;&#x3D;&gt; 安装 &#x3D;&#x3D;&gt; 和操作系统建立联系 &#x3D;&#x3D;&gt;  生成安装包</p>
 <h3 id="Makefile-是什么"><a href="#Makefile-是什么" class="headerlink" title="Makefile 是什么"></a>Makefile 是什么</h3><p>当依赖关系复杂的时候，<strong>make</strong> 命令工具诞生了，而 <strong>Makefile</strong> 文件正是为 <strong>make</strong> 工具所使用的</p>
+<h3 id="Makefile-做了什么"><a href="#Makefile-做了什么" class="headerlink" title="Makefile 做了什么"></a>Makefile 做了什么</h3><p>它描述了整个工程所有文件的编译顺序、编译规则</p>
 <h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><h2 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TARGET ... : DEPENDENCIES ...</span><br><span class="line">	COMMAND</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
 
 <ul>
