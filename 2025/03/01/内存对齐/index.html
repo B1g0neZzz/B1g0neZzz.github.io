@@ -99,7 +99,8 @@
 </li>
 <li>如何对齐<ul>
 <li>第一个数据成员放在 <strong>offset</strong> 为 <strong>0</strong> 的位置</li>
-<li>其它成员对齐至</li>
+<li>其它成员对齐至 <code>min(sizeof(member), #pragma pack)</code> 的整数倍</li>
+<li>整个结构体也要对齐，结构体总大小</li>
 </ul>
 </li>
 </ul>
