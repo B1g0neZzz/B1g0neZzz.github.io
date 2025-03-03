@@ -87,16 +87,19 @@
   <div class="article-content">
     <div class="entry">
       
-        <h2 id="const-定义的常量与-define-定义的符号常量的区别"><a href="#const-定义的常量与-define-定义的符号常量的区别" class="headerlink" title="const 定义的常量与 #define 定义的符号常量的区别"></a><strong>const</strong> 定义的常量与 #define 定义的符号常量的区别</h2><ul>
-<li><p>const定义的常量有类型，而#define定义的没有类型，编译可以对前者进行类型安全检查，而后者仅仅只是做简单替换</p>
+        <h2 id="const与-define-的区别"><a href="#const与-define-的区别" class="headerlink" title="const与#define 的区别"></a>const与#define 的区别</h2><ul>
+<li><p><strong>const</strong> 定义的常量有类型，而 #<strong>define</strong> 定义的没有类型，编译可以对前者进行类型安全检查，而后者仅仅只是做简单替换</p>
 </li>
-<li><p>Const 定义的常量在编译时分配内存，而 #define 定义的常量是在预编译时进行替换，不分配内存</p>
+<li><p><strong>const</strong> 定义的常量在编译时分配内存，而 #<strong>define</strong> 定义的常量是在预编译时进行替换，不分配内存</p>
 </li>
-<li><p>作用域不同，const定义的常变量的作用域为该变量的作用域范围。而#define 定义的常量作用域为它的定义点到程序结束，当然也可以在某个地方用 #undef 取消</p>
+<li><p>作用域不同，<strong>const</strong> 定义的常变量的作用域为该变量的作用域范围。而 <strong>#define</strong> 定义的常量作用域为它的定义点到程序结束，当然也可以在某个地方用 #<strong>undef</strong> 取消</p>
 </li>
-<li><p>定义常量还可以用 enum，尽量用 const、enm 替换 #define 定义常量</p>
+<li><p>定义常量还可以用 <strong>enum</strong>，尽量用 <strong>const</strong>、<strong>enm</strong> 替换 <strong>#define</strong> 定义常量</p>
+</li>
+<li><p>#<strong>define</strong> 定义的常量，容易产生副作用</p>
 </li>
 </ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Effective C++ 3rd的一个例子</span><br><span class="line">#define CALL_WITH_MAX(a, b) f((a) &gt; (b) ? (a) : (b))</span><br><span class="line"></span><br><span class="line">int a = 5;</span><br><span class="line">int b = 0;</span><br><span class="line">CALL_WITH_MAX(++a, b); // a被累加二次</span><br><span class="line">CALL_WITH_MAX(++a, b+10);  // a被累加一次</span><br><span class="line"></span><br><span class="line">在这里，调用f之前，a的递增次数竟然取决于”它被拿来和谁比较“</span><br></pre></td></tr></table></figure>
 
       
     </div>
