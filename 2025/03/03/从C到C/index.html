@@ -106,9 +106,14 @@
 
 
 <h1 id="域运算符"><a href="#域运算符" class="headerlink" title="域运算符"></a>域运算符</h1><ul>
-<li><strong>C++</strong> 中增加的作用域标识符 <code>::</code><ul>
+<li><p><strong>C++</strong> 中增加的作用域标识符 <code>::</code></p>
+<ul>
 <li>用于对与局部变量同名的全局变量进行访问</li>
-<li>用于表示类的成员，这将在关于类的一节中详细说明</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">2</span>;</span><br><span class="line">	cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; ::a &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用于表示类的成员</li>
 </ul>
 </li>
 </ul>
