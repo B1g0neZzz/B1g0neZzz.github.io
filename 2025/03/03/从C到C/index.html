@@ -161,13 +161,61 @@
 </li>
 </ul>
 <h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><ul>
-<li>相同的作用域，如果两个函数名称相同，而参数不同，我们把它们称为重载 <strong>overload</strong></li>
-<li>函数重载又称为函数的多态性</li>
-<li>函数重载不同形式：<ul>
+<li><p>相同的作用域，如果两个函数名称相同，而参数不同，我们把它们称为重载 <strong>overload</strong></p>
+</li>
+<li><p>函数重载又称为函数的多态性</p>
+</li>
+<li><p>函数重载不同形式：</p>
+<ul>
 <li>形参数量不同</li>
 <li>形参类型不同</li>
 <li>形参的顺序不同</li>
 <li>形参数量和形参类型都不同</li>
+</ul>
+</li>
+<li><p>调用重载函数时，编译器通过检查实际参数的个数、类型和顺序来确定相应的被调用函数</p>
+</li>
+<li><p>合法的重载例子：</p>
+<ul>
+<li><code>int abs(int i);</code></li>
+<li><code>long abs(long l);</code></li>
+<li><code>double abs(double d);</code></li>
+</ul>
+</li>
+<li><p>非法的重载例子：</p>
+<ul>
+<li><code>int abs(int i);</code></li>
+<li><code>long abs(int i);</code></li>
+<li><code>void abs(int i);</code></li>
+<li>如果返回类型不同而函数名相同、形参也相同，则是不合法的，编译器会报“语法错误”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="name-managling-与-extern-“C”"><a href="#name-managling-与-extern-“C”" class="headerlink" title="name managling 与 extern “C”"></a>name managling 与 extern “C”</h2><ul>
+<li><strong>name managling</strong> 这里把它翻译为名字改编</li>
+<li><strong>C++</strong> 为了支持重载，需要进行 <strong>name managling</strong></li>
+<li><strong>extern “C”</strong> 实现 <strong>C</strong> 与 <strong>C++</strong> 混合编程</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="带默认形参值的函数"><a href="#带默认形参值的函数" class="headerlink" title="带默认形参值的函数"></a>带默认形参值的函数</h2><ul>
+<li>函数没有声明时，在函数定义中指定形参的默认值</li>
+<li><font color="red">函数既有定义又有声明时，声明时指定后，定义后就不能再指定默认值</font></li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><p>引用是给一个变量起别名</p>
+</li>
+<li><p>定义引用的一般格式：</p>
+<ul>
+<li><p><code>类型 &amp;引用名 = 变量名;</code></p>
+</li>
+<li><p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a = 1;</span><br><span class="line">int &amp;b = a;</span><br><span class="line">// b 是 a 的别名，因此 a 和 b 是同一个单元</span><br><span class="line">// 注意 定义引用时一定要初始化，指明该引用变量是谁的别名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在实际应用中</p>
+</li>
 </ul>
 </li>
 </ul>
