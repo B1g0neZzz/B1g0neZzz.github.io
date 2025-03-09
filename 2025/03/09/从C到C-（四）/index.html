@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从C到C++（四） | 太一的博客 | 一个程序学徒</title>
+
+  
+  <meta name="author" content="太一">
+  
+
+  
+  <meta name="description" content="Java 后端">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="从C到C++（四）"/>
+
+  <meta property="og:site_name" content="太一的博客"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="太一的博客" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">太一的博客</a>
+    </h1>
+    <p class="site-description">一个程序学徒</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+        <li><a href="/categories">Categories</a></li>
+      
+        <li><a href="/tags">Tags</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>从C到C++（四）</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2025/03/09/从C到C-（四）/" rel="bookmark">
+        <time class="entry-date published" datetime="2025-03-09T08:50:31.000Z">
+          2025-03-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h1><ul>
+<li>当程序执行函数调用时，系统要建立栈空间，保护现场，传递参数以及控制程序执行的转移等等，这些工作需要系统时间和空间的开销。有些情况下，函数本身功能简单，代码很短，但使用频率却很高，程序频繁调用该函数所花费的时间却很多，从而使得程序执行效率降低。</li>
+</ul>
+<span id="more"></span>
+
+<ul>
+<li>为了提高效率，一个解决办法就是不使用函数，直接将函数的代码嵌入到程序中。但这个办法也有缺点，一是相同代码重复书写，二是程序可读性往往没有使用函数的好。</li>
+<li>为了协调好效率和可读性之间的矛盾，<strong>C++</strong> 提供了另一种方法，即定义内联函数，方法是在定义函数时用修饰词 <strong>inline</strong>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">max</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a &gt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX(a, b) (a) &gt; (b) ? (a) : (b)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="内联函数与带参数宏区别"><a href="#内联函数与带参数宏区别" class="headerlink" title="内联函数与带参数宏区别"></a>内联函数与带参数宏区别</h2><ul>
+<li>内联函数调用时，要求实参和形参的类型一致，另外内联函数会先对实参表达式进行求值，然后传递给形参；而宏调用时只用实参简单地替换形参</li>
+<li>内联函数是在编译的时候、在调用的地方将代码展开的，而宏则是在预处理时进行替换的</li>
+<li>而 <strong>C++</strong> 中建议采用 <strong>inline</strong> 函数来替换带参数的宏</li>
+</ul>
+<h1 id="新的类型转换运算符"><a href="#新的类型转换运算符" class="headerlink" title="新的类型转换运算符"></a>新的类型转换运算符</h1><ul>
+<li>旧式转型<ul>
+<li><code>(T)expr</code></li>
+<li><code>T(expr)</code></li>
+</ul>
+</li>
+<li>新式转型<ul>
+<li><code>const_cast&lt;T&gt;(expr)</code></li>
+<li><code>static_cast&lt;T&gt;(expr)</code></li>
+<li><code>reinterpret_cast&lt;T&gt;(expr)</code></li>
+<li><code>dynamic_cast&lt;T&gt;(expr)</code><ul>
+<li>执行“安全向下”转型操作，也就是说支持运行时识别指针或所指向的对象，这是唯一一个无法用旧式语法来进行的转型操作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h2><ul>
+<li>用来移出对象的常量性</li>
+</ul>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2025 太一
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
